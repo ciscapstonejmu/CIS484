@@ -77,6 +77,8 @@ public class GUI extends Application
     TextField txtJobTitle = new TextField();
     Label lblSalary = new Label("Salary");
     TextField txtSalary = new TextField();
+    Label lblWorkPay = new Label("Work Pay");
+    TextField txtWorkPay = new TextField();
     Button addEmp = new Button("Add Employee");
     
     // Expense Management
@@ -117,12 +119,14 @@ public class GUI extends Application
     
     // Employee Report
     Label lblEmpRep = new Label("Employee Report");
+    Label lblEmpLocation = new Label("Location");
     // combobox for location
     Button btnEmpDisplay = new Button("Display");
     // create a textarea
     
     // Monthly Expense Report
     Label lblMonthRep = new Label("Monthly Expense Report");
+    Label lblMLocation = new Label("Location");
     // combobox for location
     // something to see past months
     Button btnMonthDisplay = new Button("Display");
@@ -131,6 +135,7 @@ public class GUI extends Application
     Label lblPvE = new Label("Profit v. Expense Report");
     Label lblYear = new Label("Year");
     //combobox of year
+    Label lblPLocation = new Label("Location");
     //combobox of location
     Button btnPvEDisplay = new Button("Display");
     TabPane tbPvE = new TabPane();
@@ -138,6 +143,7 @@ public class GUI extends Application
     Tab tabPPie = new Tab("Pie Graph");
     Tab tabPBar = new Tab("Bar Graph");
     Tab tabPLine = new Tab("Line Graph");
+    GridPane textPane = new GridPane();
     
     // Menu Bar for Admin
     MenuBar menuAdmin = new MenuBar();
@@ -347,6 +353,8 @@ public class GUI extends Application
             thirdPane.add(txtJobTitle, 1, 6);
             thirdPane.add(lblSalary, 0, 7);
             thirdPane.add(txtSalary, 0, 8);
+            thirdPane.add(lblWorkPay, 1, 7);
+            thirdPane.add(txtWorkPay, 1, 8);
             thirdPane.add(addEmp, 0, 9);
             
         });
@@ -444,7 +452,7 @@ public class GUI extends Application
             secondPane.add(menuAdmin, 0, 0, 4, 1);
             
             secondPane.add(lblEmpRep, 3, 3);
-            secondPane.add(lblLocation, 3, 4);
+            secondPane.add(lblEmpLocation, 3, 4);
             // combobox
             secondPane.add(btnEmpDisplay, 3, 5);
             
@@ -459,7 +467,7 @@ public class GUI extends Application
            secondPane.add(menuAdmin, 0, 0, 4, 1);
            
            secondPane.add(lblMonthRep, 3, 3);
-           secondPane.add(lblLocation, 3, 4);
+           secondPane.add(lblMLocation, 3, 4);
            // combobox
            secondPane.add(btnMonthDisplay, 3, 6);
            
@@ -470,8 +478,8 @@ public class GUI extends Application
            secondPane.getChildren().clear();
            formPane.getChildren().clear();
            secondPane.setAlignment(Pos.TOP_CENTER);
-           formPane.setAlignment(Pos.TOP_LEFT);
-           formPane.setVgap(10);
+           textPane.setAlignment(Pos.TOP_LEFT);
+           textPane.setVgap(10);
            secondStage.setTitle("Profit v. Expense Report");
            secondPane.add(menuAdmin, 0, 0, 4, 1);
            secondPane.add(tbPvE, 0, 1, 4, 1);
@@ -481,14 +489,14 @@ public class GUI extends Application
            tbPvE.getTabs().add(tabPLine);
            tbPvE.setMinWidth(secondScene.getWidth());
            
-           formPane.add(lblPvE, 0, 0);
-           formPane.add(lblYear, 0, 1);
+           textPane.add(lblPvE, 0, 0);
+           textPane.add(lblYear, 0, 1);
            //combobox
-           formPane.add(lblLocation, 0, 3);
+           textPane.add(lblPLocation, 0, 3);
            //combobox
-           formPane.add(btnPvEDisplay, 0, 5);
+           textPane.add(btnPvEDisplay, 0, 5);
            
-           tabPText.setContent(formPane);
+           tabPText.setContent(textPane);
         });
     }
 
