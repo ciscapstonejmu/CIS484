@@ -1,21 +1,24 @@
-package pkg484groupproj;
-
+package pkg484groupproj; 
 
 public class Employee {
     
     private int employeeID;
-    private String employeeName;
+    private String firstName;
+    private String lastName; 
     private String email;
     private int phoneNumber;
     private String address;
     private double salary;
+    private String jobTitle; 
     private double workPay;
     private double timeWorked;
     public static int nextID = 0;
+
     
     public Employee()
             {
-                this.employeeName = "NO NAME";
+                this.firstName = "NO NAME";
+                this.lastName = "NO NAME"; 
                 this.email = "NO EMAIL";
                 this.phoneNumber = 0;
                 this.address = "NO ADDRESS";
@@ -23,24 +26,27 @@ public class Employee {
                 this.workPay = 0.0;
                 this.timeWorked = 0.0;
                 this.employeeID = nextID++;
+                this.jobTitle = " "; 
             }        
             
     
     
-    public Employee(String employeeName, String email, int phoneNumber, String address, double salary, double workPay, double timeWorked)
+    public Employee(String firstName, String lastName, String email, int phoneNumber, String address, double salary, double workPay, double timeWorked, String jobTitle)
     {
-        this.employeeName = employeeName;
+        this.firstName = firstName;
+        this.lastName = lastName; 
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.salary = salary;
         this.workPay = workPay;
         this.timeWorked = timeWorked;
         employeeID = nextID++;
+        this.jobTitle = jobTitle; 
     }
     
     public Employee(String email, int phoneNumber, String address, double salary, double workPay, double timeWorked)
     {
-        this.employeeName = employeeName;
+        //this.employeeName = employeeName;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.salary = salary;
@@ -54,16 +60,22 @@ public class Employee {
         return this.employeeID;
     }
     
-    public void setName (String employeeName)
+    public void setFName (String firstName)
     {
-        this.employeeName = employeeName;
+        this.firstName = firstName;
     }
     
-    public String getName()
+    public String getFName()
     {
-        return this.employeeName;
+        return this.firstName;
     }
-    
+    public void setLName (String lastName) {
+        this.lastName = lastName; 
+    }
+    public String getLName () {
+        return this.lastName; 
+    }
+   
     public void setEmail(String email)
     {
         this.email = email;
@@ -123,7 +135,13 @@ public class Employee {
     {
         return this.timeWorked;
     }
-    
+    public String getJobTitle() {
+        return this.jobTitle; 
+    }
+    public void setJobTitle() {
+        this.jobTitle = jobTitle; 
+    }
+   
     public String toString()
     {
         String str = "";
