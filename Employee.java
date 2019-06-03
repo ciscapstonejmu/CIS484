@@ -1,37 +1,47 @@
 package pkg484groupproj; 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class Employee {
     
     private int employeeID;
     private String firstName;
     private String lastName; 
     private String email;
-    private int phoneNumber;
+    private String phoneNumber;
     private String address;
     private double salary;
     private String jobTitle; 
     private double workPay;
     private double timeWorked;
     public static int nextID = 0;
-
+    public static ObservableList obsEmp = FXCollections.observableArrayList();
+    private String gender; 
+    private String employeeType; 
+    private String employeeCategory; 
+    public String storeLoc; 
     
     public Employee()
             {
                 this.firstName = "NO NAME";
                 this.lastName = "NO NAME"; 
                 this.email = "NO EMAIL";
-                this.phoneNumber = 0;
+                this.phoneNumber = " ";
                 this.address = "NO ADDRESS";
                 this.salary = 0.0;
                 this.workPay = 0.0;
                 this.timeWorked = 0.0;
                 this.employeeID = nextID++;
                 this.jobTitle = " "; 
+                this.gender = " "; 
+                this.storeLoc = " "; 
             }        
             
     
     
-    public Employee(String firstName, String lastName, String email, int phoneNumber, String address, double salary, double workPay, double timeWorked, String jobTitle)
+    public Employee(String firstName, String lastName, String email, String phoneNumber, String address, double salary, double workPay, String jobTitle,
+            String employeeType, String employeeCategory, String storeLoc )  
     {
         this.firstName = firstName;
         this.lastName = lastName; 
@@ -39,12 +49,16 @@ public class Employee {
         this.address = address;
         this.salary = salary;
         this.workPay = workPay;
-        this.timeWorked = timeWorked;
+        //this.timeWorked = timeWorked;
         employeeID = nextID++;
         this.jobTitle = jobTitle; 
+        this.employeeType = employeeType; //ceo, manager, or regular 
+        this.employeeCategory = employeeCategory; //full time or part time 
+        this.storeLoc = storeLoc; 
+        
     }
     
-    public Employee(String email, int phoneNumber, String address, double salary, double workPay, double timeWorked)
+    public Employee(String email, String phoneNumber, String address, double salary, double workPay, double timeWorked)
     {
         //this.employeeName = employeeName;
         this.phoneNumber = phoneNumber;
@@ -54,6 +68,18 @@ public class Employee {
         this.timeWorked = timeWorked;
     }
     
+     public Employee(String firstName, String lastName, String email, String phoneNumber, String gender, String address, double salary, double workPay, String jobTitle)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName; 
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.salary = salary;
+        this.workPay = workPay;
+        this.gender = gender;  
+        employeeID = nextID++;
+        this.jobTitle = jobTitle; 
+    }
     
     public int getID()
     {
@@ -86,12 +112,12 @@ public class Employee {
         return this.email;
     }
     
-    public void setPhoneNumber (int phoneNumber)
+    public void setPhoneNumber (String phoneNumber)
     {
         this.phoneNumber = phoneNumber;
     }
     
-    public double getPhoneNumber()
+    public String getPhoneNumber()
     {
         return this.phoneNumber;
     }
