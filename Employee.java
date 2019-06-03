@@ -145,7 +145,7 @@ public class Employee {
     public String toString()
     {
         String str = "";
-        str += "ID: " + this.employeeID + " , Name: " + this.employeeName +  ", Email: " + this.email +
+        str += "ID: " + this.employeeID + " , First Name: " + this.firstName +  " , Last Name: " + this.lastName + ", Email: " + this.email +
                 ", Phone Number: " + this.phoneNumber + " , Address: " + this.address + " , Salary: " +
                 this.salary + " , Work Pay: " + this.workPay + " , Time Worked: " + this.timeWorked;
         return str;
