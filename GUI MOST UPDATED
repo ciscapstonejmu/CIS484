@@ -1,9 +1,8 @@
 package pkg484groupproj;
 
-import java.util.ArrayList;
+import java.util.*;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.collections.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -32,10 +31,27 @@ public class GUI extends Application
     TextField txtStoreLoc = new TextField(); 
     //TextField txtPass = new TextField();
     
+    //Array Lists
     static ArrayList<Employee> empList = new ArrayList<>();
     static ArrayList<Product> prodList = new ArrayList<>(); 
     static ArrayList<Customer> custList = new ArrayList<>(); 
     static ArrayList<Store> storeList = new ArrayList<>(); 
+    static ArrayList<Store> saleList = new ArrayList<>();
+    
+    //Observabble Lists/Combo Boxes
+    ObservableList<Employee> obsEmp = FXCollections.observableArrayList();
+    ComboBox cmboEmp = new ComboBox(obsEmp); 
+    ObservableList<Product> obsProd = FXCollections.observableArrayList(); 
+    ComboBox cmboProd = new ComboBox(obsProd); 
+    ObservableList<Customer> obsCust = FXCollections.observableArrayList();
+    ComboBox cmboCust = new ComboBox(obsCust); 
+    ObservableList<Store> obsStore = FXCollections.observableArrayList();
+    ComboBox cmboStore = new ComboBox(obsStore); 
+    //ObservableList<Store> obsStore = FXCollections.observableArrayList();
+    //ComboBox cmboStore = new ComboBox(obsStore);
+    
+    // Main Menu Buttons
+    Button btnRingSale = new Button("Ring Sale:");
     
     //Inventory Management
     Label lblInvMan = new Label("Inventory Management");
@@ -85,7 +101,13 @@ public class GUI extends Application
     TextField txtJobTitle = new TextField();
     Label lblSalary = new Label("Salary");
     TextField txtSalary = new TextField();
+    Label lblWorkPay = new Label("Work Pay");
+    TextField txtWorkPay = new TextField();
     Button addEmp = new Button("Add Employee");
+    Label empType = new Label("Employee Type "); 
+    TextField txtEmpType = new TextField(); 
+    Label empCat = new Label("Employee Category"); 
+    TextField txtEmpCat = new TextField();
     
     // Expense Management
     Label lblExpMan = new Label("Expense Management");
@@ -104,23 +126,79 @@ public class GUI extends Application
     Label lblStatus = new Label("Status");
     ObservableList<String> status = FXCollections.observableArrayList("Paid", "Ongoing");
     ComboBox cmboStatus = new ComboBox(status);
-   ObservableList<Employee> obsEmp = FXCollections.observableArrayList();
-   ComboBox cmboEmp = new ComboBox(obsEmp); 
-   ObservableList<Product> obsProd = FXCollections.observableArrayList(); 
-   ComboBox cmboProd = new ComboBox(obsProd); 
-   ObservableList<Customer> obsCust = FXCollections.observableArrayList();
-   ComboBox cmboCust = new ComboBox(obsCust); 
-   ObservableList<Store> obsStore = FXCollections.observableArrayList();
-   ComboBox cmboStore = new ComboBox(obsStore); 
     Label lblAmount = new Label("Amount");
     TextField txtAmount = new TextField();
     Button addExp = new Button("Add Expense");
-    Label lblWorkPay = new Label("Work Pay");
-    TextField txtWorkPay = new TextField();
-    Label empType = new Label("Employee Type "); 
-    TextField txtEmpType = new TextField(); 
-    Label empCat = new Label("Employee Category"); 
-    TextField txtEmpCat = new TextField(); 
+    
+    /*
+    //POS - Ring Sale/Generate Receipt
+    Label lblSaleStore = new Label("Store:");
+    Label saleCust = new Label("Customer:");
+    Label lblClubMem = new Label("Thrifty Club Member?");
+    Label lblSaleProd = new Label("Product:");
+    Label lblSaleProdQuan = new Label("Quantity:");
+    
+    TextField txtSaleQuantity = new TextField();
+    
+    
+    Button btnAddToSale = new Button("Add to Sale ->");
+    Button btnCompleteSale = new Button("Complete Sale ->");
+    Button btnReceipt = new Button("Generate Receipt ->");
+    
+    TextArea txtSaleOutput = new TextArea();
+    
+    ObservableList<String> isMemList = FXCollections.observableArrayList(
+            "Yes",
+            "No"
+            );
+    final ComboBox cmboIsMem = new ComboBox(isMemList);
+    //ComboBox cmboOrderCust = new ComboBox(Customer.obsCustomer);
+    //ComboBox cmboOrderStore = new ComboBox(Store.obsStore);
+    //ComboBox cmboOrderProd = new ComboBox(Product.obsProduct);
+    */    
+
+    //POS Report
+    Label lblPOS = new Label("Point of Sales Report");
+    Label lblViewType = new Label("View Type");
+    ObservableList<String> type = FXCollections.observableArrayList("Week - daily",
+            "Month - weekly", "Year - monthly");
+    ComboBox cmboType = new ComboBox(type);
+    Label lblLocation = new Label("Location");
+    // make combobox for locations (dont know what they are
+    Button btnPOSDisplay = new Button("Display");
+    TabPane tbPOS = new TabPane();
+    Tab tabPOSText = new Tab("Text");
+    Tab tabPOSChart = new Tab("Chart");
+    GridPane formPane = new GridPane();
+    //create text area
+    
+    // Employee Report
+    Label lblEmpRep = new Label("Employee Report");
+    Label lblEmpLocation = new Label("Location");
+    // combobox for location
+    Button btnEmpDisplay = new Button("Display");
+    // create a textarea
+    
+    // Monthly Expense Report
+    Label lblMonthRep = new Label("Monthly Expense Report");
+    Label lblMLocation = new Label("Location");
+    // combobox for location
+    // something to see past months
+    Button btnMonthDisplay = new Button("Display");
+    
+    // Profit v. Expense Report
+    Label lblPvE = new Label("Profit v. Expense Report");
+    Label lblYear = new Label("Year");
+    //combobox of year
+    Label lblPLocation = new Label("Location");
+    //combobox of location
+    Button btnPvEDisplay = new Button("Display");
+    TabPane tbPvE = new TabPane();
+    Tab tabPText = new Tab("Text");
+    Tab tabPPie = new Tab("Pie Graph");
+    Tab tabPBar = new Tab("Bar Graph");
+    Tab tabPLine = new Tab("Line Graph");
+    GridPane textPane = new GridPane();
     
     // Menu Bar for Admin
     MenuBar menuAdmin = new MenuBar();
@@ -162,6 +240,10 @@ public class GUI extends Application
         lblInvMan.setStyle("-fx-font: bold 20pt \"Arial\";");
         lblEmpMan.setStyle("-fx-font: bold 20pt \"Arial\";");
         lblExpMan.setStyle("-fx-font: bold 20pt \"Arial\";");
+        lblPOS.setStyle("-fx-font: bold 20pt \"Arial\";");
+        lblEmpRep.setStyle("-fx-font: bold 20pt \"Arial\";");
+        lblMonthRep.setStyle("-fx-font: bold 20pt \"Arial\";");
+        lblPvE.setStyle("-fx-font: bold 20pt \"Arial\";");
         lblAddProd.setStyle("-fx-font: bold 14pt \"Arial\";");
         lblAddEmp.setStyle("-fx-font: bold 14pt \"Arial\";");
         lblAddExp.setStyle("-fx-font: bold 14pt \"Arial\";");
@@ -172,7 +254,7 @@ public class GUI extends Application
             
         Label lblMain = new Label("Main Menu");
         Label lblSelect = new Label("Select an option:");
-        Scene secondScene = new Scene(secondPane, 600, 400);
+        Scene secondScene = new Scene(secondPane, 800, 500);
         Stage secondStage = new Stage();
         secondStage.setScene(secondScene);
         
@@ -220,6 +302,7 @@ public class GUI extends Application
             secondPane.add(lblStore, 3, 3);
             secondPane.add(lblMain, 3, 4);
             secondPane.add(lblSelect, 3, 5);
+            secondPane.add(btnRingSale, 3,6);
             
             
             
@@ -228,6 +311,7 @@ public class GUI extends Application
         menuAdmin.getMenus().get(0).getItems().get(0).setOnAction(e -> {
             // Main Menu
             secondPane.getChildren().clear();
+            formPane.getChildren().clear();
             secondPane.setAlignment(Pos.TOP_CENTER);
             secondStage.setTitle("Main Menu");
             secondPane.add(menuAdmin, 0, 0, 4, 1);
@@ -243,6 +327,7 @@ public class GUI extends Application
         menuAdmin.getMenus().get(1).getItems().get(1).setOnAction(e -> {
             // Inventory Management
             secondPane.getChildren().clear();
+            formPane.getChildren().clear();
             secondPane.setAlignment(Pos.TOP_CENTER);
             secondStage.setTitle("Inventory Management");
             secondPane.add(menuAdmin, 0, 0, 4, 1);
@@ -291,15 +376,16 @@ public class GUI extends Application
         menuAdmin.getMenus().get(1).getItems().get(0).setOnAction(e -> {
             // Employee Management
             secondPane.getChildren().clear();
+            formPane.getChildren().clear();
             secondPane.setAlignment(Pos.TOP_CENTER);
             secondStage.setTitle("Employee Management");
             secondPane.add(menuAdmin, 0, 0, 4, 1);
             
-            secondPane.add(lblEmpMan, 0, 1);
-            secondPane.add(lblEditEmp, 0, 3);
+            secondPane.add(lblEmpMan, 3, 1);
+            secondPane.add(lblEditEmp, 3, 3);
             //add combobox
-            secondPane.add(btnEditEmp, 0, 5);
-            secondPane.add(btnAddEmp, 0, 7);
+            secondPane.add(btnEditEmp, 3, 5);
+            secondPane.add(btnAddEmp, 3, 7);
         });
         
         btnAddEmp.setOnAction(e -> {
@@ -354,13 +440,14 @@ public class GUI extends Application
         menuAdmin.getMenus().get(1).getItems().get(2).setOnAction(e -> {
            // Expense Management
            secondPane.getChildren().clear();
+           formPane.getChildren().clear();
            secondPane.setAlignment(Pos.TOP_CENTER);
-           secondStage.setTitle("Inventory Management");
+           secondStage.setTitle("Expense Management");
            secondPane.add(menuAdmin, 0, 0, 4, 1);
            
-           secondPane.add(lblExpMan, 0, 1);
-           secondPane.add(btnAddExp, 0, 2);
-           secondPane.add(btnPayExp, 0, 3);
+           secondPane.add(lblExpMan, 3, 1);
+           secondPane.add(btnAddExp, 3, 2);
+           secondPane.add(btnPayExp, 3, 3);
            
         });
         
@@ -394,10 +481,104 @@ public class GUI extends Application
             
             thirdStage.close();
         });
+        
+        //Ring Sale Button
+        //Open new window to ring up sale 
+        
+        btnRingSale.setOnAction(e -> {
+            
+            CustSaleForm newSale = new CustSaleForm(this);
+            
+        });
+        
+        menuAdmin.getMenus().get(3).getItems().get(0).setOnAction(e -> {
+            // Point of Sales Report
+            secondPane.getChildren().clear();
+            formPane.getChildren().clear();
+            secondPane.setAlignment(Pos.TOP_CENTER);
+            formPane.setAlignment(Pos.TOP_LEFT);
+            formPane.setVgap(10);
+            secondStage.setTitle("Point of Sales Report");
+            secondPane.add(menuAdmin, 0, 0, 4, 1);
+            secondPane.add(tbPOS, 0, 1, 2, 1);
+            tbPOS.getTabs().add(tabPOSText);
+            tbPOS.getTabs().add(tabPOSChart);
+            tbPOS.setMinWidth(secondScene.getWidth());
+            //tbPOS.setMinHeight(secondScene.getHeight());
+            
+            formPane.add(lblPOS, 3, 2);
+            formPane.add(lblViewType, 3, 4);
+            formPane.add(cmboType, 3, 5);
+            formPane.add(lblLocation, 3, 6);
+            // cmbobox for location
+            formPane.add(btnPOSDisplay, 3, 8);
+            
+            //create the table
+            
+            tabPOSText.setContent(formPane);
+        });
+        
+        menuAdmin.getMenus().get(3).getItems().get(1).setOnAction(e -> {
+            // Employee Report
+            secondPane.getChildren().clear();
+            formPane.getChildren().clear();
+            
+            secondPane.setAlignment(Pos.TOP_CENTER);
+            
+            secondStage.setTitle("Employee Report");
+            secondPane.add(menuAdmin, 0, 0, 4, 1);
+            
+            secondPane.add(lblEmpRep, 3, 3);
+            secondPane.add(lblEmpLocation, 3, 4);
+            // combobox
+            secondPane.add(btnEmpDisplay, 3, 5);
+            
+        });
+        
+        menuAdmin.getMenus().get(3).getItems().get(2).setOnAction(e -> {
+           // Monthly Expense Report
+           secondPane.getChildren().clear();
+           formPane.getChildren().clear();
+           secondPane.setAlignment(Pos.TOP_CENTER);
+           secondStage.setTitle("Monthly Expense Report");
+           secondPane.add(menuAdmin, 0, 0, 4, 1);
+           
+           secondPane.add(lblMonthRep, 3, 3);
+           secondPane.add(lblMLocation, 3, 4);
+           // combobox
+           secondPane.add(btnMonthDisplay, 3, 6);
+           
+        });
+        
+        menuAdmin.getMenus().get(3).getItems().get(3).setOnAction(e -> {
+           // Profit v. Expense Report
+           secondPane.getChildren().clear();
+           formPane.getChildren().clear();
+           secondPane.setAlignment(Pos.TOP_CENTER);
+           textPane.setAlignment(Pos.TOP_LEFT);
+           textPane.setVgap(10);
+           secondStage.setTitle("Profit v. Expense Report");
+           secondPane.add(menuAdmin, 0, 0, 4, 1);
+           secondPane.add(tbPvE, 0, 1, 4, 1);
+           tbPvE.getTabs().add(tabPText);
+           tbPvE.getTabs().add(tabPPie);
+           tbPvE.getTabs().add(tabPBar);
+           tbPvE.getTabs().add(tabPLine);
+           tbPvE.setMinWidth(secondScene.getWidth());
+           
+           textPane.add(lblPvE, 0, 0);
+           textPane.add(lblYear, 0, 1);
+           //combobox
+           textPane.add(lblPLocation, 0, 3);
+           //combobox
+           textPane.add(btnPvEDisplay, 0, 5);
+           
+           tabPText.setContent(textPane);
+        });
     }
 
     public static void main(String[] args) {
         launch(args);
     }
-
-
+    
+}
