@@ -1,0 +1,47 @@
+package pkg484groupproj;
+
+public class Payroll {
+    
+    private int payrollID;
+    private Employee associatedEmployee;
+    private double amountPaid;
+    public static int nextID = 0;
+    
+    
+    public Payroll (Employee associatedEmployee, double amountPaid)
+    {
+        this.associatedEmployee = associatedEmployee;
+        this.amountPaid = amountPaid;
+        this.payrollID = nextID++;
+    }
+    
+    public int getID()
+    {
+        return this.payrollID;
+    }
+    
+    public void setAssociatedEmployee(Employee associatedEmployee)
+    {
+        this.associatedEmployee = associatedEmployee;
+    }
+    
+    public double getAmountPaid()
+    {
+        return this.amountPaid;
+    }
+    
+        public void setAmountPaid(Employee associatedEmployee)
+    {
+        this.amountPaid = amountPaid;
+    }
+    
+    public Employee getAssociatedEmployee()
+    {
+        return this.associatedEmployee;
+    }
+    
+    
+    
+    
+    
+}
