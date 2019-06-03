@@ -100,6 +100,45 @@ public class GUI extends Application
     TextField txtAmount = new TextField();
     Button addExp = new Button("Add Expense");
     
+    //POS Report
+    Label lblPOS = new Label("Point of Sales Report");
+    Label lblViewType = new Label("View Type");
+    ObservableList<String> type = FXCollections.observableArrayList("Week - daily",
+            "Month - weekly", "Year - monthly");
+    ComboBox cmboType = new ComboBox(type);
+    Label lblLocation = new Label("Location");
+    // make combobox for locations (dont know what they are
+    Button btnPOSDisplay = new Button("Display");
+    TabPane tbPOS = new TabPane();
+    Tab tabPOSText = new Tab("Text");
+    Tab tabPOSChart = new Tab("Chart");
+    GridPane formPane = new GridPane();
+    //create text area
+    
+    // Employee Report
+    Label lblEmpRep = new Label("Employee Report");
+    // combobox for location
+    Button btnEmpDisplay = new Button("Display");
+    // create a textarea
+    
+    // Monthly Expense Report
+    Label lblMonthRep = new Label("Monthly Expense Report");
+    // combobox for location
+    // something to see past months
+    Button btnMonthDisplay = new Button("Display");
+    
+    // Profit v. Expense Report
+    Label lblPvE = new Label("Profit v. Expense Report");
+    Label lblYear = new Label("Year");
+    //combobox of year
+    //combobox of location
+    Button btnPvEDisplay = new Button("Display");
+    TabPane tbPvE = new TabPane();
+    Tab tabPText = new Tab("Text");
+    Tab tabPPie = new Tab("Pie Graph");
+    Tab tabPBar = new Tab("Bar Graph");
+    Tab tabPLine = new Tab("Line Graph");
+    
     // Menu Bar for Admin
     MenuBar menuAdmin = new MenuBar();
     Menu menuHome = new Menu("Main Menu");
@@ -140,6 +179,10 @@ public class GUI extends Application
         lblInvMan.setStyle("-fx-font: bold 20pt \"Arial\";");
         lblEmpMan.setStyle("-fx-font: bold 20pt \"Arial\";");
         lblExpMan.setStyle("-fx-font: bold 20pt \"Arial\";");
+        lblPOS.setStyle("-fx-font: bold 20pt \"Arial\";");
+        lblEmpRep.setStyle("-fx-font: bold 20pt \"Arial\";");
+        lblMonthRep.setStyle("-fx-font: bold 20pt \"Arial\";");
+        lblPvE.setStyle("-fx-font: bold 20pt \"Arial\";");
         lblAddProd.setStyle("-fx-font: bold 14pt \"Arial\";");
         lblAddEmp.setStyle("-fx-font: bold 14pt \"Arial\";");
         lblAddExp.setStyle("-fx-font: bold 14pt \"Arial\";");
@@ -150,7 +193,7 @@ public class GUI extends Application
             
         Label lblMain = new Label("Main Menu");
         Label lblSelect = new Label("Select an option:");
-        Scene secondScene = new Scene(secondPane, 600, 400);
+        Scene secondScene = new Scene(secondPane, 800, 500);
         Stage secondStage = new Stage();
         secondStage.setScene(secondScene);
         
@@ -206,6 +249,7 @@ public class GUI extends Application
         menuAdmin.getMenus().get(0).getItems().get(0).setOnAction(e -> {
             // Main Menu
             secondPane.getChildren().clear();
+            formPane.getChildren().clear();
             secondPane.setAlignment(Pos.TOP_CENTER);
             secondStage.setTitle("Main Menu");
             secondPane.add(menuAdmin, 0, 0, 4, 1);
@@ -221,6 +265,7 @@ public class GUI extends Application
         menuAdmin.getMenus().get(1).getItems().get(1).setOnAction(e -> {
             // Inventory Management
             secondPane.getChildren().clear();
+            formPane.getChildren().clear();
             secondPane.setAlignment(Pos.TOP_CENTER);
             secondStage.setTitle("Inventory Management");
             secondPane.add(menuAdmin, 0, 0, 4, 1);
@@ -269,15 +314,16 @@ public class GUI extends Application
         menuAdmin.getMenus().get(1).getItems().get(0).setOnAction(e -> {
             // Employee Management
             secondPane.getChildren().clear();
+            formPane.getChildren().clear();
             secondPane.setAlignment(Pos.TOP_CENTER);
             secondStage.setTitle("Employee Management");
             secondPane.add(menuAdmin, 0, 0, 4, 1);
             
-            secondPane.add(lblEmpMan, 0, 1);
-            secondPane.add(lblEditEmp, 0, 3);
+            secondPane.add(lblEmpMan, 3, 1);
+            secondPane.add(lblEditEmp, 3, 3);
             //add combobox
-            secondPane.add(btnEditEmp, 0, 5);
-            secondPane.add(btnAddEmp, 0, 7);
+            secondPane.add(btnEditEmp, 3, 5);
+            secondPane.add(btnAddEmp, 3, 7);
         });
         
         btnAddEmp.setOnAction(e -> {
@@ -318,13 +364,14 @@ public class GUI extends Application
         menuAdmin.getMenus().get(1).getItems().get(2).setOnAction(e -> {
            // Expense Management
            secondPane.getChildren().clear();
+           formPane.getChildren().clear();
            secondPane.setAlignment(Pos.TOP_CENTER);
-           secondStage.setTitle("Inventory Management");
+           secondStage.setTitle("Expense Management");
            secondPane.add(menuAdmin, 0, 0, 4, 1);
            
-           secondPane.add(lblExpMan, 0, 1);
-           secondPane.add(btnAddExp, 0, 2);
-           secondPane.add(btnPayExp, 0, 3);
+           secondPane.add(lblExpMan, 3, 1);
+           secondPane.add(btnAddExp, 3, 2);
+           secondPane.add(btnPayExp, 3, 3);
            
         });
         
@@ -357,6 +404,91 @@ public class GUI extends Application
             //insert code to add employee to object
             
             thirdStage.close();
+        });
+        
+        menuAdmin.getMenus().get(3).getItems().get(0).setOnAction(e -> {
+            // Point of Sales Report
+            secondPane.getChildren().clear();
+            formPane.getChildren().clear();
+            secondPane.setAlignment(Pos.TOP_CENTER);
+            formPane.setAlignment(Pos.TOP_LEFT);
+            formPane.setVgap(10);
+            secondStage.setTitle("Point of Sales Report");
+            secondPane.add(menuAdmin, 0, 0, 4, 1);
+            secondPane.add(tbPOS, 0, 1, 2, 1);
+            tbPOS.getTabs().add(tabPOSText);
+            tbPOS.getTabs().add(tabPOSChart);
+            tbPOS.setMinWidth(secondScene.getWidth());
+            //tbPOS.setMinHeight(secondScene.getHeight());
+            
+            formPane.add(lblPOS, 3, 2);
+            formPane.add(lblViewType, 3, 4);
+            formPane.add(cmboType, 3, 5);
+            formPane.add(lblLocation, 3, 6);
+            // cmbobox for location
+            formPane.add(btnPOSDisplay, 3, 8);
+            
+            //create the table
+            
+            tabPOSText.setContent(formPane);
+        });
+        
+        menuAdmin.getMenus().get(3).getItems().get(1).setOnAction(e -> {
+            // Employee Report
+            secondPane.getChildren().clear();
+            formPane.getChildren().clear();
+            
+            secondPane.setAlignment(Pos.TOP_CENTER);
+            
+            secondStage.setTitle("Employee Report");
+            secondPane.add(menuAdmin, 0, 0, 4, 1);
+            
+            secondPane.add(lblEmpRep, 3, 3);
+            secondPane.add(lblLocation, 3, 4);
+            // combobox
+            secondPane.add(btnEmpDisplay, 3, 5);
+            
+        });
+        
+        menuAdmin.getMenus().get(3).getItems().get(2).setOnAction(e -> {
+           // Monthly Expense Report
+           secondPane.getChildren().clear();
+           formPane.getChildren().clear();
+           secondPane.setAlignment(Pos.TOP_CENTER);
+           secondStage.setTitle("Monthly Expense Report");
+           secondPane.add(menuAdmin, 0, 0, 4, 1);
+           
+           secondPane.add(lblMonthRep, 3, 3);
+           secondPane.add(lblLocation, 3, 4);
+           // combobox
+           secondPane.add(btnMonthDisplay, 3, 6);
+           
+        });
+        
+        menuAdmin.getMenus().get(3).getItems().get(3).setOnAction(e -> {
+           // Profit v. Expense Report
+           secondPane.getChildren().clear();
+           formPane.getChildren().clear();
+           secondPane.setAlignment(Pos.TOP_CENTER);
+           formPane.setAlignment(Pos.TOP_LEFT);
+           formPane.setVgap(10);
+           secondStage.setTitle("Profit v. Expense Report");
+           secondPane.add(menuAdmin, 0, 0, 4, 1);
+           secondPane.add(tbPvE, 0, 1, 4, 1);
+           tbPvE.getTabs().add(tabPText);
+           tbPvE.getTabs().add(tabPPie);
+           tbPvE.getTabs().add(tabPBar);
+           tbPvE.getTabs().add(tabPLine);
+           tbPvE.setMinWidth(secondScene.getWidth());
+           
+           formPane.add(lblPvE, 0, 0);
+           formPane.add(lblYear, 0, 1);
+           //combobox
+           formPane.add(lblLocation, 0, 3);
+           //combobox
+           formPane.add(btnPvEDisplay, 0, 5);
+           
+           tabPText.setContent(formPane);
         });
     }
 
