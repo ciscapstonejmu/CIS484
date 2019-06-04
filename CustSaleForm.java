@@ -57,20 +57,21 @@ public class CustSaleForm {
         
         //Set Controls
         
-        primaryPane.add(lblSaleDate, 0, 0);
+         primaryPane.add(lblSaleDate, 0, 0);
         primaryPane.add(saleDate, 1, 0);
-        saleDate.setMinWidth(3);
+        saleDate.setMinWidth(4);
         primaryPane.add(lblSaleStore, 0, 1);
-        primaryPane.add(myParent.cmboStore, 1, 1);
+        primaryPane.add(GUI.cmboStore, 1, 1);
+        GUI.cmboStore.setMinWidth(4);
         primaryPane.add(lblSaleCust, 0, 2);
-        primaryPane.add(myParent.cmboCust, 1, 2);
-        myParent.cmboCust.setMinWidth(3);
+        primaryPane.add(GUI.cmboCust, 1, 2);
+        GUI.cmboCust.setMinWidth(4);
         primaryPane.add(lblClubMem, 0, 3);
         primaryPane.add(cmboIsMem, 1, 3);
-        cmboIsMem.setMinWidth(3);
+        cmboIsMem.setMinWidth(4);
         primaryPane.add(lblSaleProd, 0, 4);
-        primaryPane.add(myParent.cmboProd, 1, 4);
-        myParent.cmboProd.setMinWidth(3);
+        primaryPane.add(GUI.cmboProd, 1, 4);
+        GUI.cmboProd.setMinWidth(4);
         //primaryPane.add(lblSaleProdQuan, 0, 5);
         //primaryPane.add(txtSaleProdQuan, 1, 5);
         primaryPane.add(btnAddToSale, 0, 5, 2, 2);
@@ -79,6 +80,10 @@ public class CustSaleForm {
         
         //txtSaleProdQuan.setPrefWidth(20);
         saleDate.setPrefWidth(100);
+        GUI.cmboStore.setPrefWidth(100);
+        GUI.cmboCust.setPrefWidth(100);
+        cmboIsMem.setPrefWidth(100);
+        GUI.cmboProd.setPrefWidth(100);
         
         Scene primaryScene = new Scene(primaryPane, 800, 600);
         
