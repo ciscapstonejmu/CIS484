@@ -29,13 +29,12 @@ public class CustSaleForm {
     public Button btnReceipt = new Button("Generate Receipt ->");
     
     public TextArea txtSaleOutput = new TextArea();
-    
+    public TextArea receiptOutput = new TextArea();
     public ObservableList<String> isMemList = FXCollections.observableArrayList(
             "Yes",
             "No"
             );
     final ComboBox cmboIsMem = new ComboBox(isMemList);
-    
     public ComboBox cmboSaleProd = new ComboBox(GUI.obsProd);
     public ComboBox cmboSaleCust = new ComboBox(GUI.obsCust);
     public ComboBox cmboSaleStore = new ComboBox(GUI.obsStore);
@@ -45,7 +44,6 @@ public class CustSaleForm {
     public ArrayList<Product> saleProducts = new ArrayList();
     
     public GUI myParent;
-    
     //Sale Constructor
     public CustSaleForm(GUI parentForm)
     {
@@ -57,7 +55,7 @@ public class CustSaleForm {
         
         //Set Controls
         
-         primaryPane.add(lblSaleDate, 0, 0);
+        primaryPane.add(lblSaleDate, 0, 0);
         primaryPane.add(saleDate, 1, 0);
         saleDate.setMinWidth(4);
         primaryPane.add(lblSaleStore, 0, 1);
@@ -85,34 +83,32 @@ public class CustSaleForm {
         cmboIsMem.setPrefWidth(100);
         GUI.cmboProd.setPrefWidth(100);
         
-        Scene primaryScene = new Scene(primaryPane, 800, 600);
-        
-        Stage primaryStage = new Stage();
+        Scene primaryScene = new Scene(primaryPane, 800, 600); Stage primaryStage = new Stage();
         primaryStage.setScene(primaryScene);
         primaryStage.setTitle("Customer Sale Form");
         primaryStage.show();
         
         
-        //Set Add Product Button
         btnAddToSale.setOnAction(e -> {
-            
+                     
             int saleProd = myParent.cmboProd.getSelectionModel().getSelectedIndex();
             this.saleProducts.add(GUI.prodList.get(saleProd));
             
             txtSaleOutput.appendText(GUI.prodList.get(saleProd).toString());
             
             cmboSaleProd.getSelectionModel().clearSelection();
-            
-        });
+            });
         
-        //Complete the Sale
+        //complete the sale
         btnCompleteSale.setOnAction(e -> {
-        primaryPane.add(receiptOutput, 5, 0);
+        primaryPane.add(receiptOutput, 5, 6);
         receiptOutput.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        receiptOutput.setText("Receipt: " + "\n");
             for (CustSale saleList : GUI.saleList) {
                 receiptOutput.appendText(saleList.toString());
             }
             });
+        
         
     }
     
