@@ -1,33 +1,38 @@
 package pkg484groupproj;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javax.imageio.ImageIO;
 
-    public class Product {
+
+public class Product {
     private int productID;
     private String productName;
     private int quantity;
     private double price;
-    private String location;
-    private String prodDescription;
+    private Store location;
+    private String foodDescription;
     private String category;
+    private int aisle;
     private BufferedImage image;
+    private int saleYear;
+    private int saleMonth;
+    private int saleDay;
     public static int nextID = 0;
-    public static ObservableList obsProd = FXCollections.observableArrayList();
-    public String supplier; 
+    public static ObservableList obsProd = FXCollections.observableArrayList(); 
     
-    
-    public Product(String productName, int quantity, double price, String location, String prodDescription, String category, BufferedImage image)
+    public Product(String productName, int quantity, double price, Store location, String foodDescription, String category)
     {
         this.productName = productName;
         this.quantity = quantity;
         this.price = price;
         this.location = location;
-        this.prodDescription = prodDescription;
+        this.foodDescription = foodDescription;
         this.category = category;
         this.image = image;
-        
         
         if (category.equalsIgnoreCase("PRODUCE"))
         {
@@ -75,33 +80,18 @@ import javafx.collections.ObservableList;
             this.aisle = 9;
         }
     }
-        
-        
-    }
-    public Product(String productName, int quantity, double price, String location, String prodDescription, String category, String supplier)
-    {
-        this.productName = productName;
-        this.quantity = quantity;
-        this.price = price;
-        this.location = location;
-        this.prodDescription = prodDescription;
-        this.category = category;
-        this.image = image;
-        this.supplier = supplier; 
-        this.productID = nextID++;
-        obsProd.add(this.productID + ": " + this.productName);
-    }
-    public int getProductID()
+    
+    public int getID()
     {
         return this.productID;
     }
     
-    public void setProductName(String productName)
+    public void setName(String productName)
     {
         this.productName = productName;
     }
     
-    public String getProductName()
+    public String getName()
     {
         return this.productName;
     }
@@ -133,17 +123,17 @@ import javafx.collections.ObservableList;
     
     public String getLocation()
     {
-        return this.location;
+        return this.location.getName();
     }
     
-    public void setFoodDescription(String prodDescription)
+    public void setDescription(String foodDescription)
     {
-        this.prodDescription = prodDescription;
+        this.foodDescription = foodDescription;
     }
     
-    public String getFoodDescription()
+    public String getDescription()
     {
-        return this.prodDescription;
+        return this.foodDescription;
     }
     
     public void setCategory(String category)
@@ -154,6 +144,16 @@ import javafx.collections.ObservableList;
     public String getCategory()
     {
         return this.category;
+    }
+    
+    public void setAisle(int aisle)
+    {
+        this.aisle = aisle;
+    }
+    
+    public int getAisle()
+    {
+        return this.aisle;
     }
     
     public void setImage (BufferedImage image)
@@ -170,9 +170,8 @@ import javafx.collections.ObservableList;
     {
         String str = "";
         str += "ID: " + this.productID + " , Name: " + this.productName + " , Quantity" + 
-                this.quantity + " , Price: " + this.price + " , Location: " + this.location +
-                " , Description: " + this.prodDescription + " , Category: " + this.category;
+                this.quantity + " , Price: " + this.price + " , Location: " + this.location.getName() +
+                " , Description: " + this.foodDescription + " , Category: " + this.category;
         return str;
     }
 }
-
