@@ -112,7 +112,7 @@ public class GUI extends Application
     TextField txtFName = new TextField();
     Label lblLName = new Label("Last Name");
     TextField txtLName = new TextField();
-    // DOB and Gender not included
+    Employee eC = null;
     Label lblEmail = new Label("Email");
     TextField txtEmail = new TextField();
     Label lblPhone = new Label("Phone#");
@@ -126,6 +126,7 @@ public class GUI extends Application
 //    Label lblWorkPay = new Label("Work Pay");
 //    TextField txtWorkPay = new TextField();
     Button addEmp = new Button("Add Employee");
+    Button editEmp = new Button("Save Edits");
     Label empType = new Label("Employee Type "); 
     ObservableList<String> eType = FXCollections.observableArrayList("Full Time", "Part Time");
     ComboBox cmboEType = new ComboBox(eType);
