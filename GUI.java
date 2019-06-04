@@ -65,6 +65,8 @@ public class GUI extends Application
     Button btnAddProd = new Button("Add Product");
     Button btnRemoveProd = new Button("Remove Product");
     
+    
+    
     //Add a Product
     Label lblAddProd = new Label("Add a Product");
     Label lblProdName = new Label("Product Name");
@@ -83,6 +85,9 @@ public class GUI extends Application
     TextField txtProdQuantity = new TextField();
     Label lblImage = new Label("Image");
     Button addProd = new Button("Add Product");
+    TextField txtSupplier = new TextField(); 
+    Label lblSupplier = new Label("Supplier"); 
+    Label lblProdStore = new Label("Store"); 
     
     // Employee Management
     Label lblEmpMan = new Label("Employee Management");
@@ -108,12 +113,16 @@ public class GUI extends Application
     TextField txtJobTitle = new TextField();
     Label lblSalary = new Label("Salary");
     TextField txtSalary = new TextField();
-    Label lblWorkPay = new Label("Work Pay");
-    TextField txtWorkPay = new TextField();
+//    Label lblWorkPay = new Label("Work Pay");
+//    TextField txtWorkPay = new TextField();
     Button addEmp = new Button("Add Employee");
     Label empType = new Label("Employee Type "); 
+    ObservableList<String> eType = FXCollections.observableArrayList("Full Time", "Part Time");
+    ComboBox cmboEType = new ComboBox(eType);
     TextField txtEmpType = new TextField(); 
     Label empCat = new Label("Employee Category"); 
+    ObservableList<String> empCategory = FXCollections.observableArrayList("Manager", "Associate");
+    ComboBox cmboEmpCat = new ComboBox(empCategory);
     TextField txtEmpCat = new TextField();
     
     // Expense Management
@@ -136,6 +145,7 @@ public class GUI extends Application
     Label lblAmount = new Label("Amount");
     TextField txtAmount = new TextField();
     Button addExp = new Button("Add Expense");
+    
     
     /*
     //POS - Ring Sale/Generate Receipt
@@ -238,11 +248,13 @@ public class GUI extends Application
         primaryPane.add(txtPass, 0, 7);
         primaryPane.add(cmboLoginType, 0, 8);
         primaryPane.add(btnSignIn, 0, 9);
-        primaryPane.add(btnForgot, 0, 10);
+        //primaryPane.add(btnForgot, 0, 10);
         
-        lblThrifty.setStyle("-fx-font: bold 20pt \"Arial\";");
-        lblStore.setStyle("-fx-font: bold 20pt \"Arial\";");
-        lblSignIn.setStyle("-fx-font: bold 14pt \"Arial\";");
+        lblThrifty.setStyle("-fx-font: bold 36pt \"Comic Sans ms\"; -fx-text-fill: red;");
+        lblStore.setStyle("-fx-font: bold 36pt \"Comic Sans ms\"; -fx-text-fill: blue;");
+        lblSignIn.setStyle("-fx-font: bold 16pt \"Arial\";");
+        
+        
         
         lblInvMan.setStyle("-fx-font: bold 20pt \"Arial\";");
         lblEmpMan.setStyle("-fx-font: bold 20pt \"Arial\";");
@@ -260,7 +272,9 @@ public class GUI extends Application
         secondPane.setHgap(10);
             
         Label lblMain = new Label("Main Menu");
-        Label lblSelect = new Label("Select an option:");
+        lblMain.setStyle("-fx-font: bold 16pt \"Arial\";");
+        Label lblSelect = new Label("Select an option from the Menu Bar above.");
+        lblSelect.setStyle("-fx-font: 12pt \"Arial\";");
         Scene secondScene = new Scene(secondPane, 800, 500);
         Stage secondStage = new Stage();
         secondStage.setScene(secondScene);
@@ -296,6 +310,8 @@ public class GUI extends Application
         TableColumn tbEmpAddress = new TableColumn("Address");
         TableColumn tbEmpSalary = new TableColumn("Salary");
         TableColumn tbEmpJTitle = new TableColumn("Job Title");
+        TableColumn tbEmpType = new TableColumn("Type");
+        TableColumn tbEmpCat = new TableColumn("Category");
         
         //ValueFactory for Employee Table
         tbEmpID.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("employeeID"));
@@ -306,6 +322,9 @@ public class GUI extends Application
         tbEmpAddress.setCellValueFactory(new PropertyValueFactory<Employee, String>("address"));
         tbEmpSalary.setCellValueFactory(new PropertyValueFactory<Employee, Double>("salary"));
         tbEmpJTitle.setCellValueFactory(new PropertyValueFactory<Employee, String>("jobTitle"));
+        tbEmpType.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeType"));
+        tbEmpCat.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeCategory"));
+        
         
         // Product Table
         TableColumn tbProdID = new TableColumn("ID");
@@ -313,7 +332,7 @@ public class GUI extends Application
         TableColumn tbProdQuantity = new TableColumn("Quantity");
         TableColumn tbProdPrice = new TableColumn("Price");
         TableColumn tbProdDesc = new TableColumn("Description");
-        TableColumn tbProdCategory = new TableColumn("ID");
+        TableColumn tbProdCategory = new TableColumn("Category");
         
         //ValueFactory for Product Table
         tbProdID.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productID"));
@@ -322,6 +341,7 @@ public class GUI extends Application
         tbProdPrice.setCellValueFactory(new PropertyValueFactory<Product, Double>("price"));
         tbProdDesc.setCellValueFactory(new PropertyValueFactory<Product, Integer>("foodDescription"));
         tbProdCategory.setCellValueFactory(new PropertyValueFactory<Product, Integer>("category"));
+        
         
         
         Scene primaryScene = new Scene(primaryPane, 500, 500);
@@ -346,7 +366,7 @@ public class GUI extends Application
             secondPane.add(lblStore, 3, 3);
             secondPane.add(lblMain, 3, 4);
             secondPane.add(lblSelect, 3, 5);
-            secondPane.add(btnRingSale, 3,6);
+            secondPane.add(btnRingSale, 3, 6);
             
             
             
@@ -365,9 +385,11 @@ public class GUI extends Application
             secondPane.add(lblStore, 3, 3);
             secondPane.add(lblMain, 3, 4);
             secondPane.add(lblSelect, 3, 5);
+            secondPane.add(btnRingSale, 3, 6);
             
         });
         
+        prodTable.getColumns().addAll(tbProdID, tbProdName, tbProdQuantity, tbProdPrice, tbProdDesc, tbProdCategory);
         menuAdmin.getMenus().get(1).getItems().get(1).setOnAction(e -> {
             // Inventory Management
             secondPane.getChildren().clear();
@@ -379,6 +401,10 @@ public class GUI extends Application
             secondPane.add(lblInvMan, 3, 2);
             secondPane.add(btnAddProd, 3, 3);
             secondPane.add(btnRemoveProd, 3, 4);
+            
+            prodTable.setItems(prodData);
+            secondPane.add(prodTable, 3, 5);
+            prodTable.setMinWidth(secondScene.getWidth());
             
         });
         
@@ -403,12 +429,23 @@ public class GUI extends Application
             thirdPane.add(lblVendor, 0, 7);
             thirdPane.add(txtVendor, 0, 8);
             thirdPane.add(lblImage, 0, 9);
+            thirdPane.add(lblProdStore, 1,7 );
+            thirdPane.add(cmboStore, 1, 8 ); //when picking which store the product is for, should be selected from already existing stores created 
+            thirdPane.add(lblSupplier, 0,13 ); 
+            thirdPane.add(txtSupplier, 1,13 ); 
             
-            thirdPane.add(addProd, 0, 10);
+            thirdPane.add(addProd, 0, 14);
+           
         });
         
         addProd.setOnAction(e -> {
             //product added clicked
+            int storeLocation = cmboStore.getSelectionModel().getSelectedIndex(); 
+            String storeLocation2 = Integer.toString(storeLocation); 
+            String productCategory = Integer.toString(cmboCategory.getSelectionModel().getSelectedIndex());  
+            prodList.add(new Product(txtProdName.getText(), Integer.parseInt(txtProdQuantity.getText()), Double.parseDouble(txtUnitPrice.getText()),
+            storeLocation2, txtProdDesc.getText(), productCategory, txtSupplier.getText())); 
+
             alert.setTitle("Success!");
             alert.setHeaderText("The product has been added!");
             alert.showAndWait();
@@ -416,6 +453,9 @@ public class GUI extends Application
             
             thirdStage.close();
         });
+        empTable.getColumns().addAll(tbEmpID, tbEmpFName, tbEmpLName, tbEmpEmail,
+                tbEmpPhone, tbEmpAddress, tbEmpSalary, tbEmpJTitle, tbEmpType, tbEmpCat);
+        
         
         menuAdmin.getMenus().get(1).getItems().get(0).setOnAction(e -> {
             // Employee Management
@@ -434,13 +474,13 @@ public class GUI extends Application
             empTable.setItems(empData);
             secondPane.add(empTable, 3, 9);
             empTable.setMinWidth(secondScene.getWidth());
-            empTable.getColumns().addAll(tbEmpID, tbEmpFName, tbEmpLName, tbEmpEmail, tbEmpPhone, tbEmpAddress, tbEmpSalary, tbEmpJTitle);
+            
         });
         
         btnAddEmp.setOnAction(e -> {
             thirdPane.getChildren().clear();
             thirdStage.setTitle("Add an Employee");
-            thirdStage.show();
+           thirdStage.show();
             thirdPane.setAlignment(Pos.TOP_CENTER);
             
             thirdPane.add(lblAddEmp, 0, 0);
@@ -459,15 +499,15 @@ public class GUI extends Application
             thirdPane.add(lblSalary, 0, 7);
             thirdPane.add(txtSalary, 0, 8);
             thirdPane.add(addEmp, 0, 13);
-            thirdPane.add(lblWorkPay, 1, 7);
-            thirdPane.add(txtWorkPay, 1, 8);
-            thirdPane.add(empType, 1, 9); 
-            thirdPane.add(txtEmpType, 1, 10); 
-            thirdPane.add(empCat, 0, 9); 
-            thirdPane.add(txtEmpCat, 0, 10);
+//            thirdPane.add(lblWorkPay, 1, 7);
+//            thirdPane.add(txtWorkPay, 1, 8);
+            thirdPane.add(empType, 1, 7); //full time or part time 
+            thirdPane.add(cmboEType, 1, 8); 
+            thirdPane.add(empCat, 0, 9); //manager or associate 
+            thirdPane.add(cmboEmpCat, 0, 10);
             //thirdPane.add (cmboEmp, 1, 13); 
-            thirdPane.add(storeLoc, 0, 11); 
-            thirdPane.add(txtStoreLoc, 0, 12); //what is put into this text box needs to be put in the store combo box 
+            thirdPane.add(storeLoc, 1, 9); 
+            thirdPane.add(txtStoreLoc, 1, 10); //what is put into this text box needs to be put in the store combo box 
                     
             //need to make and add labels and text boxes for work pay, hours worked
             
@@ -475,9 +515,12 @@ public class GUI extends Application
         
         addEmp.setOnAction(e -> {
             //emplouee added clicked
+            
+                
             empList.add(new Employee(txtFName.getText(), txtLName.getText(), txtEmail.getText(), txtPhone.getText(), 
-            txtAddress.getText(), Double.valueOf(txtSalary.getText()), Double.valueOf(txtWorkPay.getText()), 
-                    txtJobTitle.getText(), txtEmpType.getText(), txtEmpCat.getText(), txtStoreLoc.getText())); 
+            txtAddress.getText(), Double.valueOf(txtSalary.getText()),  
+                    txtJobTitle.getText(), (String)cmboEType.getValue(), 
+                    (String)cmboEmpCat.getValue(), txtStoreLoc.getText())); 
             //changed parse to valueof
             alert.setTitle("Success!");
             alert.setHeaderText("The employee has been added!");
@@ -497,7 +540,6 @@ public class GUI extends Application
             txtAddress.clear():
             txtJobTitle.clear():
             txtSalary.clear():
-            txtWorkPay.clear():
             txtJobTitle.clear():
             txtEmpType.clear():
             txtEmpCat.clear():
@@ -620,7 +662,12 @@ public class GUI extends Application
            secondPane.add(btnMonthDisplay, 3, 6);
            
         });
+           
         
+            tbPvE.getTabs().add(tabPText);
+            tbPvE.getTabs().add(tabPPie);
+            tbPvE.getTabs().add(tabPBar);
+            tbPvE.getTabs().add(tabPLine);
         menuAdmin.getMenus().get(3).getItems().get(3).setOnAction(e -> {
            // Profit v. Expense Report
            secondPane.getChildren().clear();
@@ -631,10 +678,7 @@ public class GUI extends Application
            secondStage.setTitle("Profit v. Expense Report");
            secondPane.add(menuAdmin, 0, 0, 4, 1);
            secondPane.add(tbPvE, 0, 1, 4, 1);
-           tbPvE.getTabs().add(tabPText);
-           tbPvE.getTabs().add(tabPPie);
-           tbPvE.getTabs().add(tabPBar);
-           tbPvE.getTabs().add(tabPLine);
+           
            tbPvE.setMinWidth(secondScene.getWidth());
            
            textPane.add(lblPvE, 0, 0);
