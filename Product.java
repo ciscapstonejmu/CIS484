@@ -33,6 +33,8 @@ public class Product {
         this.foodDescription = foodDescription;
         this.category = category;
         this.image = image;
+        this.productID = nextID++;
+        obsProd.add(this.productID + ": " + this.productName);
         
         if (category.equalsIgnoreCase("PRODUCE"))
         {
@@ -81,17 +83,17 @@ public class Product {
         }
     }
     
-    public int getID()
+    public int getProductID()
     {
         return this.productID;
     }
     
-    public void setName(String productName)
+    public void setProductName(String productName)
     {
         this.productName = productName;
     }
     
-    public String getName()
+    public String getProductName()
     {
         return this.productName;
     }
@@ -126,12 +128,12 @@ public class Product {
         return this.location.getName();
     }
     
-    public void setDescription(String foodDescription)
+    public void setFoodDescription(String foodDescription)
     {
         this.foodDescription = foodDescription;
     }
     
-    public String getDescription()
+    public String getFoodDescription()
     {
         return this.foodDescription;
     }
