@@ -489,12 +489,12 @@ public class GUI extends Application
         
         addEmp.setOnAction(e -> {
             //emplouee added clicked
-            if (txtEmpCat.getText() != "Manager" && txtEmpCat.getText() != "Associate") {
+            if (txtEmpCat.getText().equalsIgnoreCase("Manager") != true && txtEmpCat.getText().equalsIgnoreCase("Associate") != true) {
                 alert.setTitle("ERROR!");
                 alert.setHeaderText("The employee category you entered is invalid! ");
                 alert.showAndWait();
             }
-            if (txtEmpType.getText() != "Full Time" && txtEmpType.getText() != "Part Time") {
+            if (txtEmpType.getText().equalsIgnoreCase("Full Time") != true && txtEmpType.getText().equalsIgnoreCase("Part Time") != true) {
                 alert.setTitle("ERROR!");
                 alert.setHeaderText("The employee type you entered is invalid! ");
                 alert.showAndWait();
