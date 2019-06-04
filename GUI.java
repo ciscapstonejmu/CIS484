@@ -112,7 +112,7 @@ public class GUI extends Application
     TextField txtFName = new TextField();
     Label lblLName = new Label("Last Name");
     TextField txtLName = new TextField();
-    Employee eC = null;
+    Employee eC = null;    
     Label lblEmail = new Label("Email");
     TextField txtEmail = new TextField();
     Label lblPhone = new Label("Phone#");
@@ -126,7 +126,6 @@ public class GUI extends Application
 //    Label lblWorkPay = new Label("Work Pay");
 //    TextField txtWorkPay = new TextField();
     Button addEmp = new Button("Add Employee");
-    Button editEmp = new Button("Save Edits");
     Label empType = new Label("Employee Type "); 
     ObservableList<String> eType = FXCollections.observableArrayList("Full Time", "Part Time");
     ComboBox cmboEType = new ComboBox(eType);
@@ -135,6 +134,7 @@ public class GUI extends Application
     ObservableList<String> empCategory = FXCollections.observableArrayList("Manager", "Associate");
     ComboBox cmboEmpCat = new ComboBox(empCategory);
     TextField txtEmpCat = new TextField();
+    Button editEmp = new Button("Save Edits");
     
     // Expense Management
     Label lblExpMan = new Label("Expense Management");
@@ -610,20 +610,21 @@ public class GUI extends Application
             
             thirdStage.close();
         });
+        
         btnEditEmp.setOnAction(e -> {
             if(cmboEmp.getValue() == null){
                 alert.setTitle("Error!");
                 alert.setHeaderText("Please select an employee to edit!");
                 alert.showAndWait();
             }
-            
+
             else{
             eC = empList.get(cmboEmp.getSelectionModel().getSelectedIndex());
             thirdPane.getChildren().clear();
             thirdStage.setTitle("Edit Employee");
             thirdStage.show();
             thirdPane.setAlignment(Pos.TOP_CENTER);
-            
+
             thirdPane.add(lblFName, 0, 1);
             thirdPane.add(txtFName, 0, 2);
             thirdPane.add(lblLName, 1, 1);
@@ -649,8 +650,8 @@ public class GUI extends Application
             txtJobTitle.setText(eC.getJobTitle());
             txtSalary.setText(Double.toString(eC.getSalary()));
             txtStoreLoc.setText(eC.getStore());
-            
-            
+
+
         }
         });
         editEmp.setOnAction(e -> {
@@ -669,18 +670,18 @@ public class GUI extends Application
                     eC = null;
                 }
             }
-            
+
             alert.setTitle("Success!");
             alert.setHeaderText("The employee has been edited!");
             alert.showAndWait();
-            
+
             empData.clear();
             for(Employee emp: empList)
             {
                 empData.add(emp);
             }
-            
-            
+
+
             txtFName.clear();
             txtLName.clear();
             txtEmail.clear();
@@ -690,7 +691,7 @@ public class GUI extends Application
             txtSalary.clear();
             txtJobTitle.clear();
             txtStoreLoc.clear();
-            
+
             thirdStage.close();
         });
         
