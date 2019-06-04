@@ -27,6 +27,8 @@ import javafx.collections.ObservableList;
         this.prodDescription = prodDescription;
         this.category = category;
         this.image = image;
+        this.productID = nextID++;
+        obsProd.add(this.productID + ": " + this.productName);
         
     }
     public Product(String productName, int quantity, double price, String location, String prodDescription, String category, String supplier)
