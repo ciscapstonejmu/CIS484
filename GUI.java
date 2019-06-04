@@ -37,21 +37,21 @@ public class GUI extends Application
     static ArrayList<Product> prodList = new ArrayList<>(); 
     static ArrayList<Customer> custList = new ArrayList<>(); 
     static ArrayList<Store> storeList = new ArrayList<>(); 
-    static ArrayList<CustSale> saleList = new ArrayList<>();
+    static ArrayList<Store> saleList = new ArrayList<>();
     
     //Observabble Lists/Combo Boxes
-    public static ObservableList<Employee> obsEmp = FXCollections.observableArrayList();
-    public static ComboBox cmboEmp = new ComboBox(obsEmp); 
-    public static ObservableList<Product> obsProd = FXCollections.observableArrayList(); 
-    public static ComboBox cmboProd = new ComboBox(obsProd); 
-    public static ObservableList<Customer> obsCust = FXCollections.observableArrayList();
-    public static ComboBox cmboCust = new ComboBox(obsCust); 
-    public static ObservableList<Store> obsStore = FXCollections.observableArrayList();
-    public static ComboBox cmboStore = new ComboBox(obsStore);
-    public static ObservableList<CustSale> obsSale = FXCollections.observableArrayList();
-    public static ComboBox cmboSale = new ComboBox(obsSale);
+    ObservableList obsEmp = FXCollections.observableArrayList();
+    ComboBox cmboEmp = new ComboBox(Employee.obsEmp); 
+    ObservableList obsProd = FXCollections.observableArrayList();
+    ComboBox cmboProd = new ComboBox(Product.obsProd); 
+    ObservableList<Customer> obsCust = FXCollections.observableArrayList();
+    ComboBox cmboCust = new ComboBox(obsCust); 
+    ObservableList<Store> obsStore = FXCollections.observableArrayList();
+    ComboBox cmboStore = new ComboBox(obsStore); 
     //ObservableList<Store> obsStore = FXCollections.observableArrayList();
     //ComboBox cmboStore = new ComboBox(obsStore);
+    public static ObservableList<CustSale> obsSale = FXCollections.observableArrayList();
+    public static ComboBox cmboSale = new ComboBox(obsSale);
     
     // Main Menu Buttons
     Button btnRingSale = new Button("Ring Sale:");
@@ -90,6 +90,14 @@ public class GUI extends Application
     TextField txtSupplier = new TextField(); 
     Label lblSupplier = new Label("Supplier"); 
     Label lblProdStore = new Label("Store"); 
+    
+    //Remove a Product
+    Label lblRemoveProd = new Label("Remove a Product");
+    Label lblSelectProd = new Label("Select a Product");
+    // select a product
+    Label lblRQuantity = new Label("Select quantity to remove");
+    TextField txtRQuantity = new TextField();
+    Button removeProd = new Button("Remove Product");
     
     // Employee Management
     Label lblEmpMan = new Label("Employee Management");
@@ -268,6 +276,8 @@ public class GUI extends Application
         lblAddProd.setStyle("-fx-font: bold 14pt \"Arial\";");
         lblAddEmp.setStyle("-fx-font: bold 14pt \"Arial\";");
         lblAddExp.setStyle("-fx-font: bold 14pt \"Arial\";");
+        lblRemoveProd.setStyle("-fx-font: bold 14pt \"Arial\";");
+        
         GridPane secondPane = new GridPane();
         secondPane.setAlignment(Pos.TOP_CENTER);
         secondPane.setVgap(10);
@@ -428,13 +438,14 @@ public class GUI extends Application
             thirdPane.add(txtUnitPrice, 0, 6);
             thirdPane.add(lblQuantity, 1, 5);
             thirdPane.add(txtProdQuantity, 1, 6);
-            thirdPane.add(lblVendor, 0, 7);
-            thirdPane.add(txtVendor, 0, 8);
+//            thirdPane.add(lblVendor, 0, 7);
+//            thirdPane.add(txtVendor, 0, 8);
+            thirdPane.add(lblSupplier, 0, 7); 
+            thirdPane.add(txtSupplier, 0, 8); 
             thirdPane.add(lblImage, 0, 9);
             thirdPane.add(lblProdStore, 1,7 );
             thirdPane.add(cmboStore, 1, 8 ); //when picking which store the product is for, should be selected from already existing stores created 
-            thirdPane.add(lblSupplier, 0,13 ); 
-            thirdPane.add(txtSupplier, 1,13 ); 
+            
             
             thirdPane.add(addProd, 0, 14);
            
@@ -445,8 +456,8 @@ public class GUI extends Application
             int storeLocation = cmboStore.getSelectionModel().getSelectedIndex(); 
             String storeLocation2 = Integer.toString(storeLocation); 
             String productCategory = Integer.toString(cmboCategory.getSelectionModel().getSelectedIndex());  
-            prodList.add(new Product(txtProdName.getText(), Integer.parseInt(txtProdQuantity.getText()), Double.parseDouble(txtUnitPrice.getText()),
-            storeLocation2, txtProdDesc.getText(), productCategory, txtSupplier.getText())); 
+            prodList.add(new Product(txtProdName.getText(), Integer.parseInt(txtProdQuantity.getText()), Double.valueOf(txtUnitPrice.getText()),
+            (String) cmboStore.getValue(), txtProdDesc.getText(), (String)cmboCategory.getValue(), txtSupplier.getText())); 
 
             alert.setTitle("Success!");
             alert.setHeaderText("The product has been added!");
@@ -454,7 +465,40 @@ public class GUI extends Application
             //insert code to add product to object
             
             thirdStage.close();
+            
+            prodData.clear();
+            for(Product prod: prodList)
+            {
+                prodData.add(prod);
+            }
+            
         });
+        
+        btnRemoveProd.setOnAction(e -> {
+            thirdPane.getChildren().clear();
+            thirdStage.setTitle("Remove a Product");
+            thirdStage.show();
+            thirdPane.setAlignment(Pos.TOP_CENTER);
+            
+            thirdPane.add(lblRemoveProd, 0, 0);
+            thirdPane.add(lblSelectProd, 0, 1);
+            thirdPane.add(cmboProd, 0, 2);
+            thirdPane.add(lblRQuantity, 0, 3);
+            thirdPane.add(txtRQuantity, 0, 4);
+            thirdPane.add(removeProd, 0, 5);
+            
+        });
+        
+        removeProd.setOnAction(e -> {
+            // insert code to let you remove certain amount
+            
+            alert.setTitle("Success!");
+            alert.setHeaderText("The product has been removed!");
+            alert.showAndWait();
+            
+            thirdStage.close();
+        });
+        
         empTable.getColumns().addAll(tbEmpID, tbEmpFName, tbEmpLName, tbEmpEmail,
                 tbEmpPhone, tbEmpAddress, tbEmpSalary, tbEmpJTitle, tbEmpType, tbEmpCat);
         
@@ -521,8 +565,7 @@ public class GUI extends Application
                 
             empList.add(new Employee(txtFName.getText(), txtLName.getText(), txtEmail.getText(), txtPhone.getText(), 
             txtAddress.getText(), Double.valueOf(txtSalary.getText()),  
-                    txtJobTitle.getText(), (String)cmboEType.getValue(), 
-                    (String)cmboEmpCat.getValue(), txtStoreLoc.getText())); 
+                    txtJobTitle.getText(), (String)cmboEType.getValue(), (String)cmboEmpCat.getValue(), txtStoreLoc.getText())); 
             //changed parse to valueof
             alert.setTitle("Success!");
             alert.setHeaderText("The employee has been added!");
