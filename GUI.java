@@ -248,11 +248,16 @@ public class GUI extends Application
         primaryPane.setHgap(10);
         primaryPane.setVgap(10);
         
-            obsStore.add(new Store ("Harrisonburg", "123 lane"));
-            obsStore.add(new Store ("Winchester", "456 lane"));
-            obsStore.add(new Store ("Fairfax", "789 lane"));
-            obsStore.add(new Store ("Charlottesville", "123 way"));
-            obsStore.add(new Store ("Vegas", "456 way"));
+            Store store1 = new Store("Harrisonburg", "123 lane");
+            Store store2 = new Store ("Winchester", "456 lane");
+            Store store3 = new Store ("Fairfax", "789 lane");
+            Store store4 = new Store ("Charlottesville", "123 way");
+            Store store5 = new Store ("Vegas", "456 way");
+            obsStore.add(store1);
+            obsStore.add(store2);
+            obsStore.add(store3);
+            obsStore.add(store4);
+            obsStore.add(store5);
             obsCategory.add("PRODUCE");
             obsCategory.add("DAIRY");
             obsCategory.add("BEVERAGES");
