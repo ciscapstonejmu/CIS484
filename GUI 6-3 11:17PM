@@ -454,7 +454,7 @@ public class GUI extends Application
         btnAddEmp.setOnAction(e -> {
             thirdPane.getChildren().clear();
             thirdStage.setTitle("Add an Employee");
-            thirdStage.show();
+           thirdStage.show();
             thirdPane.setAlignment(Pos.TOP_CENTER);
             
             thirdPane.add(lblAddEmp, 0, 0);
@@ -475,9 +475,9 @@ public class GUI extends Application
             thirdPane.add(addEmp, 0, 13);
             thirdPane.add(lblWorkPay, 1, 7);
             thirdPane.add(txtWorkPay, 1, 8);
-            thirdPane.add(empType, 1, 9); 
+            thirdPane.add(empType, 1, 9); //full time or part time 
             thirdPane.add(txtEmpType, 1, 10); 
-            thirdPane.add(empCat, 0, 9); 
+            thirdPane.add(empCat, 0, 9); //manager or associate 
             thirdPane.add(txtEmpCat, 0, 10);
             //thirdPane.add (cmboEmp, 1, 13); 
             thirdPane.add(storeLoc, 0, 11); 
@@ -489,6 +489,17 @@ public class GUI extends Application
         
         addEmp.setOnAction(e -> {
             //emplouee added clicked
+            if (txtEmpCat.getText() != "Manager" && txtEmpCat.getText() != "Associate") {
+                alert.setTitle("ERROR!");
+                alert.setHeaderText("The employee category you entered is invalid! ");
+                alert.showAndWait();
+            }
+            if (txtEmpType.getText() != "Full Time" && txtEmpType.getText() != "Part Time") {
+                alert.setTitle("ERROR!");
+                alert.setHeaderText("The employee type you entered is invalid! ");
+                alert.showAndWait();
+            }
+                
             empList.add(new Employee(txtFName.getText(), txtLName.getText(), txtEmail.getText(), txtPhone.getText(), 
             txtAddress.getText(), Double.valueOf(txtSalary.getText()), Double.valueOf(txtWorkPay.getText()), 
                     txtJobTitle.getText(), txtEmpType.getText(), txtEmpCat.getText(), txtStoreLoc.getText())); 
