@@ -1,40 +1,52 @@
 package pkg484groupproj;
 
+import java.text.DecimalFormat;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import java.util.*;
 
 public class CustSale {
     private int saleID; 
     private static int saleIDCount = 0; 
-    private String saleCategory; 
-    private String saleDelDate; 
-    private double unitCost; 
-    private double subtotal; 
+    //private String saleCategory; 
+    private String saleDate;
+    private Customer customer;
+    private Store store;
+    private double subtotal;
+    private double tax;
+    private double totalCost;
     
-    public CustSale(String saleCateogry, String saleDelDate, double unitCost, double subtotal) {
-        this.saleCategory = saleCategory; 
-        this.saleDelDate = saleDelDate; 
-        this.subtotal = subtotal; 
-        this.unitCost = unitCost; 
+    private ArrayList<Product> saleProducts = new ArrayList();
+    
+    public CustSale(String saleDate, Store store, Customer customer,
+            double unitCost, double subtotal) {
+        this.saleDate = saleDate;
+        this.store = store;
+        this.customer = customer;
+        this.subtotal = subtotal;
+        this.tax = (this.subtotal * .053);
+        this.totalCost = (this.subtotal + this.tax);
         this.saleID = 100 + saleIDCount++; 
         
     }
-    public void setSaleCat(String saleCategory) {
-        this.saleCategory = saleCategory; 
-    }
-    public String getSaleCat() {
-        return this.saleCategory; 
-    }
-    public void setSaleDelDate(String saleDelDate) {
-        this.saleDelDate = saleDelDate; 
+    //public void setSaleCat(String saleCategory) {
+    //    this.saleCategory = saleCategory; 
+    //}
+    //public String getSaleCat() {
+    //    return this.saleCategory; 
+    //}
+    public void setSaleDate(String saleDate) {
+        this.saleDate = saleDate; 
     } 
-    public String getSaleDelDate() {
-        return saleDelDate; 
+    public String getSaleDate() {
+        return saleDate; 
     }
-    public void setUnitCost(double unitCost) {
-        this.unitCost = unitCost; 
-    }
-    public double getUnitCost() {
-        return unitCost; 
-    }
+    //public void setUnitCost(double unitCost) {
+    //    this.unitCost = unitCost; 
+    //}
+    //public double getUnitCost() {
+    //    return unitCost; 
+    //}
     public void setSubtotal(double subtotal) {
         this.subtotal = subtotal; 
     }
@@ -42,7 +54,7 @@ public class CustSale {
         return this.subtotal; 
     }
     public String toString() {
-        return "Sale Number: " + this.saleID + "Sale Category: " + this.saleCategory + "Delivery Date: " + this.saleDelDate 
+        return "Sale Number: " + this.saleID + "Date: " + this.saleDate 
                 + "Subtotal: " + this.subtotal; 
     }
 }
