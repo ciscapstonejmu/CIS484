@@ -609,6 +609,89 @@ public class GUI extends Application
             
             thirdStage.close();
         });
+        btnEditEmp.setOnAction(e -> {
+            if(cmboEmp.getValue() == null){
+                alert.setTitle("Error!");
+                alert.setHeaderText("Please select an employee to edit!");
+                alert.showAndWait();
+            }
+            
+            else{
+            eC = empList.get(cmboEmp.getSelectionModel().getSelectedIndex());
+            thirdPane.getChildren().clear();
+            thirdStage.setTitle("Edit Employee");
+            thirdStage.show();
+            thirdPane.setAlignment(Pos.TOP_CENTER);
+            
+            thirdPane.add(lblFName, 0, 1);
+            thirdPane.add(txtFName, 0, 2);
+            thirdPane.add(lblLName, 1, 1);
+            thirdPane.add(txtLName, 1, 2);
+            thirdPane.add(lblEmail, 0, 3);
+            thirdPane.add(txtEmail, 0, 4);
+            thirdPane.add(lblPhone, 1, 3);
+            thirdPane.add(txtPhone, 1, 4);
+            thirdPane.add(lblAddress, 0, 5);
+            thirdPane.add(txtAddress, 0, 6);
+            thirdPane.add(lblJobTitle, 1, 5);
+            thirdPane.add(txtJobTitle, 1, 6);
+            thirdPane.add(lblSalary, 0, 7);
+            thirdPane.add(txtSalary, 0, 8);
+            thirdPane.add(editEmp, 0, 13);
+            thirdPane.add(storeLoc, 1, 7); 
+            thirdPane.add(txtStoreLoc, 1, 8);
+            txtFName.setText(eC.getFirstName());
+            txtLName.setText(eC.getLastName());
+            txtEmail.setText(eC.getEmail());
+            txtPhone.setText(eC.getPhoneNumber());
+            txtAddress.setText(eC.getAddress());
+            txtJobTitle.setText(eC.getJobTitle());
+            txtSalary.setText(Double.toString(eC.getSalary()));
+            txtStoreLoc.setText(eC.getStore());
+            
+            
+        }
+        });
+        editEmp.setOnAction(e -> {
+            eC.setFName(txtFName.getText());
+            eC.setLName(txtLName.getText());
+            eC.setEmail(txtEmail.getText());
+            eC.setAddress(txtAddress.getText());
+            eC.setJobTitle(txtJobTitle.getText());
+            eC.setPhoneNumber(txtPhone.getText());
+            eC.setStore(txtStoreLoc.getText());
+            eC.setSalary(Double.valueOf(txtSalary.getText()));
+            for(int i = 0; i<empList.size(); i++){
+                if(eC.getEmployeeID() == empList.get(i).getEmployeeID()){
+                    empList.remove(i);
+                    empList.add(i, eC);
+                    eC = null;
+                }
+            }
+            
+            alert.setTitle("Success!");
+            alert.setHeaderText("The employee has been edited!");
+            alert.showAndWait();
+            
+            empData.clear();
+            for(Employee emp: empList)
+            {
+                empData.add(emp);
+            }
+            
+            
+            txtFName.clear();
+            txtLName.clear();
+            txtEmail.clear();
+            txtPhone.clear();
+            txtAddress.clear();
+            txtJobTitle.clear();
+            txtSalary.clear();
+            txtJobTitle.clear();
+            txtStoreLoc.clear();
+            
+            thirdStage.close();
+        });
         
         menuAdmin.getMenus().get(1).getItems().get(2).setOnAction(e -> {
            // Expense Management
