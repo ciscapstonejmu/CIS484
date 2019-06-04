@@ -247,7 +247,21 @@ public class GUI extends Application
         primaryPane.setHgap(10);
         primaryPane.setVgap(10);
         
-        
+    obsStore.add(new Store ("Harrisonburg", "123 lane"));
+    obsStore.add(new Store ("Winchester", "456 lane"));
+    obsStore.add(new Store ("Fairfax", "789 lane"));
+    obsStore.add(new Store ("Charlottesville", "123 way"));
+    obsStore.add(new Store ("Vegas", "456 way"));
+    obsCategory.add("PRODUCE");
+    obsCategory.add("DAIRY");
+    obsCategory.add("BEVERAGES");
+    obsCategory.add("CANDY");
+    obsCategory.add("CANNED FOODS");
+    obsCategory.add("PASTA");
+    obsCategory.add("SNACK FOODS");
+    obsCategory.add("BAKED GOODS");
+    obsCategory.add("FROZEN FOODS");
+    obsCategory.add("OTHER");
         
         primaryPane.add(lblThrifty, 0, 0);
         primaryPane.add(lblStore, 0, 1);
@@ -455,9 +469,9 @@ public class GUI extends Application
             //product added clicked
             int storeLocation = cmboStore.getSelectionModel().getSelectedIndex(); 
             String storeLocation2 = Integer.toString(storeLocation); 
-            String productCategory = Integer.toString(cmboCategory.getSelectionModel().getSelectedIndex());  
-            prodList.add(new Product(txtProdName.getText(), Integer.parseInt(txtProdQuantity.getText()), Double.valueOf(txtUnitPrice.getText()),
-            (String) cmboStore.getValue(), txtProdDesc.getText(), (String)cmboCategory.getValue(), txtSupplier.getText())); 
+            int productCategory = cmboCategory.getSelectionModel().getSelectedIndex();  
+            prodList.add(new Product(txtProdName.getText(), Integer.parseInt(txtProdQuantity.getText()), Double.parseDouble(txtUnitPrice.getText()),
+            obsStore.get(storeLocation), txtProdDesc.getText(), obsCategory.get(storeLocation))); 
 
             alert.setTitle("Success!");
             alert.setHeaderText("The product has been added!");
