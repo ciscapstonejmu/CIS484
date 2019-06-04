@@ -80,9 +80,8 @@ public class GUI extends Application
     Label lblVendor = new Label("Vendor");
     TextField txtVendor = new TextField();
     Label lblCategory = new Label("Category");
-    ObservableList<String> category = FXCollections.observableArrayList("Meats/Dairy",
-            "Produce", "Canned Goods", "Dry Stock", "Medicines/Self Care", "Other");
-    ComboBox cmboCategory = new ComboBox(category);
+    ObservableList<String> obsCategory = FXCollections.observableArrayList();
+    ComboBox cmboCategory = new ComboBox(obsCategory);
     Label lblQuantity = new Label("Quantity");
     TextField txtProdQuantity = new TextField();
     Label lblImage = new Label("Image");
