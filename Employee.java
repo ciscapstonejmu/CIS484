@@ -151,6 +151,26 @@ public class Employee {
     public void setJobTitle() {
         this.jobTitle = jobTitle; 
     }
+    
+    public void setEmployeeType (String employeeType)
+    {
+        this.employeeType = employeeType;
+    }
+    
+    public String getEmployeeType()
+    {
+        return this.employeeType;
+    }
+    
+    public void setEmployeeCategory (String employeeCategory)
+    {
+        this.employeeCategory = employeeCategory;
+    }
+    
+    public String getEmployeeCategory()
+    {
+        return this.employeeCategory;
+    }
    
     public String toString()
     {
