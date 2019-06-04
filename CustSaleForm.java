@@ -108,6 +108,9 @@ public class CustSaleForm {
             for (CustSale saleList : GUI.saleList) {
                 receiptOutput.appendText(saleList.toString());
             }
+            if(GUI.saleList.isEmpty()){
+                receiptOutput.appendText("No Sale to Complete");
+            }
             });
         
         
