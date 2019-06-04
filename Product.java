@@ -27,8 +27,7 @@ import javafx.collections.ObservableList;
         this.prodDescription = prodDescription;
         this.category = category;
         this.image = image;
-        this.productID = nextID++;
-        obsProd.add(this.productID + ": " + this.productName);
+        
         
     }
     public Product(String productName, int quantity, double price, String location, String prodDescription, String category, String supplier)
@@ -41,18 +40,20 @@ import javafx.collections.ObservableList;
         this.category = category;
         this.image = image;
         this.supplier = supplier; 
+        this.productID = nextID++;
+        obsProd.add(this.productID + ": " + this.productName);
     }
-    public int getID()
+    public int getProductID()
     {
         return this.productID;
     }
     
-    public void setName(String productName)
+    public void setProductName(String productName)
     {
         this.productName = productName;
     }
     
-    public String getName()
+    public String getProductName()
     {
         return this.productName;
     }
@@ -87,12 +88,12 @@ import javafx.collections.ObservableList;
         return this.location;
     }
     
-    public void setDescription(String prodDescription)
+    public void setFoodDescription(String prodDescription)
     {
         this.prodDescription = prodDescription;
     }
     
-    public String getDescription()
+    public String getFoodDescription()
     {
         return this.prodDescription;
     }
