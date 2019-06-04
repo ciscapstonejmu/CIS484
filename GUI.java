@@ -1,8 +1,8 @@
-package Group;
+package pkg484groupproj;
 
+import java.util.*;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.collections.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -14,6 +14,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class GUI extends Application 
 {
@@ -27,7 +28,37 @@ public class GUI extends Application
     Button btnForgot = new Button("Forgot Password");
     TextField txtUser = new TextField();
     PasswordField txtPass = new PasswordField(); 
+    Label storeLoc = new Label("Store Location"); 
+    TextField txtStoreLoc = new TextField(); 
     //TextField txtPass = new TextField();
+    
+    //Array Lists
+    static ArrayList<Employee> empList = new ArrayList<>();
+    static ArrayList<Product> prodList = new ArrayList<>(); 
+    static ArrayList<Customer> custList = new ArrayList<>(); 
+    static ArrayList<Store> storeList = new ArrayList<>(); 
+    static ArrayList<Store> saleList = new ArrayList<>();
+    
+    //Observabble Lists/Combo Boxes
+    ObservableList<Employee> obsEmp = FXCollections.observableArrayList();
+    ComboBox cmboEmp = new ComboBox(obsEmp); 
+    ObservableList<Product> obsProd = FXCollections.observableArrayList(); 
+    ComboBox cmboProd = new ComboBox(obsProd); 
+    ObservableList<Customer> obsCust = FXCollections.observableArrayList();
+    ComboBox cmboCust = new ComboBox(obsCust); 
+    ObservableList<Store> obsStore = FXCollections.observableArrayList();
+    ComboBox cmboStore = new ComboBox(obsStore); 
+    //ObservableList<Store> obsStore = FXCollections.observableArrayList();
+    //ComboBox cmboStore = new ComboBox(obsStore);
+    
+    // Main Menu Buttons
+    Button btnRingSale = new Button("Ring Sale:");
+    
+    //Tables
+    TableView<Employee> empTable = new TableView<>();
+    ObservableList<Employee> empData = FXCollections.observableArrayList(empList);
+    TableView<Product> prodTable = new TableView<>();
+    ObservableList<Product> prodData = FXCollections.observableArrayList(prodList);
     
     //Inventory Management
     Label lblInvMan = new Label("Inventory Management");
@@ -80,6 +111,10 @@ public class GUI extends Application
     Label lblWorkPay = new Label("Work Pay");
     TextField txtWorkPay = new TextField();
     Button addEmp = new Button("Add Employee");
+    Label empType = new Label("Employee Type "); 
+    TextField txtEmpType = new TextField(); 
+    Label empCat = new Label("Employee Category"); 
+    TextField txtEmpCat = new TextField();
     
     // Expense Management
     Label lblExpMan = new Label("Expense Management");
@@ -102,6 +137,33 @@ public class GUI extends Application
     TextField txtAmount = new TextField();
     Button addExp = new Button("Add Expense");
     
+    /*
+    //POS - Ring Sale/Generate Receipt
+    Label lblSaleStore = new Label("Store:");
+    Label saleCust = new Label("Customer:");
+    Label lblClubMem = new Label("Thrifty Club Member?");
+    Label lblSaleProd = new Label("Product:");
+    Label lblSaleProdQuan = new Label("Quantity:");
+    
+    TextField txtSaleQuantity = new TextField();
+    
+    
+    Button btnAddToSale = new Button("Add to Sale ->");
+    Button btnCompleteSale = new Button("Complete Sale ->");
+    Button btnReceipt = new Button("Generate Receipt ->");
+    
+    TextArea txtSaleOutput = new TextArea();
+    
+    ObservableList<String> isMemList = FXCollections.observableArrayList(
+            "Yes",
+            "No"
+            );
+    final ComboBox cmboIsMem = new ComboBox(isMemList);
+    //ComboBox cmboOrderCust = new ComboBox(Customer.obsCustomer);
+    //ComboBox cmboOrderStore = new ComboBox(Store.obsStore);
+    //ComboBox cmboOrderProd = new ComboBox(Product.obsProduct);
+    */    
+
     //POS Report
     Label lblPOS = new Label("Point of Sales Report");
     Label lblViewType = new Label("View Type");
@@ -209,7 +271,7 @@ public class GUI extends Application
         thirdPane.setHgap(10);
 
 
-        Scene thirdScene = new Scene(thirdPane, 400, 400);
+        Scene thirdScene = new Scene(thirdPane, 500, 500);
         Stage thirdStage = new Stage();
         thirdStage.setScene(thirdScene);
         
@@ -224,6 +286,43 @@ public class GUI extends Application
         menuReports.getItems().add(new MenuItem("Monthly Expenense Report"));
         menuReports.getItems().add(new MenuItem("Profit v. Expense Report"));
         menuAdmin.setMinWidth(secondScene.getWidth());
+        
+        //Employee Table
+        TableColumn tbEmpID = new TableColumn("ID");
+        TableColumn tbEmpFName = new TableColumn("First Name");
+        TableColumn tbEmpLName = new TableColumn("Last Name");
+        TableColumn tbEmpEmail = new TableColumn("Email");
+        TableColumn tbEmpPhone = new TableColumn("Phone");
+        TableColumn tbEmpAddress = new TableColumn("Address");
+        TableColumn tbEmpSalary = new TableColumn("Salary");
+        TableColumn tbEmpJTitle = new TableColumn("Job Title");
+        
+        //ValueFactory for Employee Table
+        tbEmpID.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("employeeID"));
+        tbEmpFName.setCellValueFactory(new PropertyValueFactory<Employee, String>("firstName"));
+        tbEmpLName.setCellValueFactory(new PropertyValueFactory<Employee, String>("lastName"));
+        tbEmpEmail.setCellValueFactory(new PropertyValueFactory<Employee, String>("email"));
+        tbEmpPhone.setCellValueFactory(new PropertyValueFactory<Employee, String>("phoneNumber"));
+        tbEmpAddress.setCellValueFactory(new PropertyValueFactory<Employee, String>("address"));
+        tbEmpSalary.setCellValueFactory(new PropertyValueFactory<Employee, Double>("salary"));
+        tbEmpJTitle.setCellValueFactory(new PropertyValueFactory<Employee, String>("jobTitle"));
+        
+        // Product Table
+        TableColumn tbProdID = new TableColumn("ID");
+        TableColumn tbProdName = new TableColumn("Name");
+        TableColumn tbProdQuantity = new TableColumn("Quantity");
+        TableColumn tbProdPrice = new TableColumn("Price");
+        TableColumn tbProdDesc = new TableColumn("Description");
+        TableColumn tbProdCategory = new TableColumn("ID");
+        
+        //ValueFactory for Product Table
+        tbProdID.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productID"));
+        tbProdName.setCellValueFactory(new PropertyValueFactory<Product, String>("productName"));
+        tbProdQuantity.setCellValueFactory(new PropertyValueFactory<Product, Integer>("quantity"));
+        tbProdPrice.setCellValueFactory(new PropertyValueFactory<Product, Double>("price"));
+        tbProdDesc.setCellValueFactory(new PropertyValueFactory<Product, Integer>("foodDescription"));
+        tbProdCategory.setCellValueFactory(new PropertyValueFactory<Product, Integer>("category"));
+        
         
         Scene primaryScene = new Scene(primaryPane, 500, 500);
         primaryStage.setScene(primaryScene);
@@ -247,6 +346,7 @@ public class GUI extends Application
             secondPane.add(lblStore, 3, 3);
             secondPane.add(lblMain, 3, 4);
             secondPane.add(lblSelect, 3, 5);
+            secondPane.add(btnRingSale, 3,6);
             
             
             
@@ -330,6 +430,11 @@ public class GUI extends Application
             //add combobox
             secondPane.add(btnEditEmp, 3, 5);
             secondPane.add(btnAddEmp, 3, 7);
+            
+            empTable.setItems(empData);
+            secondPane.add(empTable, 3, 9);
+            empTable.setMinWidth(secondScene.getWidth());
+            empTable.getColumns().addAll(tbEmpID, tbEmpFName, tbEmpLName, tbEmpEmail, tbEmpPhone, tbEmpAddress, tbEmpSalary, tbEmpJTitle);
         });
         
         btnAddEmp.setOnAction(e -> {
@@ -353,17 +458,51 @@ public class GUI extends Application
             thirdPane.add(txtJobTitle, 1, 6);
             thirdPane.add(lblSalary, 0, 7);
             thirdPane.add(txtSalary, 0, 8);
+            thirdPane.add(addEmp, 0, 13);
             thirdPane.add(lblWorkPay, 1, 7);
             thirdPane.add(txtWorkPay, 1, 8);
-            thirdPane.add(addEmp, 0, 9);
+            thirdPane.add(empType, 1, 9); 
+            thirdPane.add(txtEmpType, 1, 10); 
+            thirdPane.add(empCat, 0, 9); 
+            thirdPane.add(txtEmpCat, 0, 10);
+            //thirdPane.add (cmboEmp, 1, 13); 
+            thirdPane.add(storeLoc, 0, 11); 
+            thirdPane.add(txtStoreLoc, 0, 12); //what is put into this text box needs to be put in the store combo box 
+                    
+            //need to make and add labels and text boxes for work pay, hours worked
             
         });
         
         addEmp.setOnAction(e -> {
             //emplouee added clicked
+            empList.add(new Employee(txtFName.getText(), txtLName.getText(), txtEmail.getText(), txtPhone.getText(), 
+            txtAddress.getText(), Double.valueOf(txtSalary.getText()), Double.valueOf(txtWorkPay.getText()), 
+                    txtJobTitle.getText(), txtEmpType.getText(), txtEmpCat.getText(), txtStoreLoc.getText())); 
+            //changed parse to valueof
             alert.setTitle("Success!");
             alert.setHeaderText("The employee has been added!");
             alert.showAndWait();
+            
+            empData.clear();
+            for(Employee emp: empList)
+            {
+                empData.add(emp);
+            }
+            
+            /*
+            txtFName.clear():
+            txtLName.clear():
+            txtEmail.clear():
+            txtPhone.clear():
+            txtAddress.clear():
+            txtJobTitle.clear():
+            txtSalary.clear():
+            txtWorkPay.clear():
+            txtJobTitle.clear():
+            txtEmpType.clear():
+            txtEmpCat.clear():
+            txtStoreLoc.clear():
+            */
             //insert code to add employee to object
             
             thirdStage.close();
@@ -412,6 +551,15 @@ public class GUI extends Application
             //insert code to add employee to object
             
             thirdStage.close();
+        });
+        
+        //Ring Sale Button
+        //Open new window to ring up sale 
+        
+        btnRingSale.setOnAction(e -> {
+            
+            CustSaleForm newSale = new CustSaleForm(this);
+            
         });
         
         menuAdmin.getMenus().get(3).getItems().get(0).setOnAction(e -> {
