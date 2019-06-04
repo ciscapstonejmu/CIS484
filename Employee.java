@@ -13,11 +13,9 @@ public class Employee {
     private String address;
     private double salary;
     private String jobTitle; 
-    private double workPay;
     private double timeWorked;
     public static int nextID = 0;
     public static ObservableList obsEmp = FXCollections.observableArrayList();
-    private String gender; 
     private String employeeType; 
     private String employeeCategory; 
     public String storeLoc; 
@@ -29,18 +27,16 @@ public class Employee {
                 this.Email = "NO Email";
                 this.phoneNumber = " ";
                 this.address = "NO ADDRESS";
-                this.salary = 0.0;
-                this.workPay = 0.0;
+                this.salary = 0.0;                
                 this.timeWorked = 0.0;
                 this.employeeID = nextID++;
-                this.jobTitle = " "; 
-                this.gender = " "; 
+                this.jobTitle = " ";                
                 this.storeLoc = " "; 
             }        
             
     
     
-    public Employee(String firstName, String lastName, String Email, String phoneNumber, String address, double salary, double workPay, String jobTitle,
+    public Employee(String firstName, String lastName, String Email, String phoneNumber, String address, double salary, String jobTitle,
             String employeeType, String employeeCategory, String storeLoc )  
     {
         this.firstName = firstName;
@@ -49,35 +45,32 @@ public class Employee {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.salary = salary;
-        this.workPay = workPay;
         //this.timeWorked = timeWorked;
-        employeeID = nextID++;
+        this.employeeID = nextID++;
         this.jobTitle = jobTitle; 
         this.employeeType = employeeType; //ceo, manager, or regular 
         this.employeeCategory = employeeCategory; //full time or part time 
         this.storeLoc = storeLoc; 
+        obsEmp.add(this.employeeID + " " + this.firstName + " " + this.lastName);
         
     }
     
-    public Employee(String Email, String phoneNumber, String address, double salary, double workPay, double timeWorked)
+    public Employee(String Email, String phoneNumber, String address, double salary, double timeWorked)
     {
         //this.employeeName = employeeName;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.salary = salary;
-        this.workPay = workPay;
         this.timeWorked = timeWorked;
     }
     
-     public Employee(String firstName, String lastName, String Email, String phoneNumber, String gender, String address, double salary, double workPay, String jobTitle)
+     public Employee(String firstName, String lastName, String Email, String phoneNumber, String address, double salary, String jobTitle)
     {
         this.firstName = firstName;
         this.lastName = lastName; 
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.salary = salary;
-        this.workPay = workPay;
-        this.gender = gender;  
+        this.salary = salary;  
         employeeID = nextID++;
         this.jobTitle = jobTitle; 
     }
@@ -141,17 +134,7 @@ public class Employee {
     public double getSalary()
     {
         return this.salary;
-    }
-    
-        public void setPay (double workPay)
-    {
-        this.workPay = workPay;
-    }
-    
-    public double getPay()
-    {
-        return this.workPay;
-    }
+    }   
     
         public void setTimeWorked (double timeWorked)
     {
@@ -174,7 +157,7 @@ public class Employee {
         String str = "";
         str += "ID: " + this.employeeID + " , First Name: " + this.firstName +  " , Last Name: " + this.lastName + ", Email: " + this.Email +
                 ", Phone Number: " + this.phoneNumber + " , Address: " + this.address + " , Salary: " +
-                this.salary + " , Work Pay: " + this.workPay + " , Time Worked: " + this.timeWorked;
+                this.salary + " , Time Worked: " + this.timeWorked;
         return str;
                 
     }
