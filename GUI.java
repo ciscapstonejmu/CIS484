@@ -53,6 +53,7 @@ public class GUI extends Application
     public static ObservableList<CustSale> obsSale = FXCollections.observableArrayList();
     public static ComboBox cmboSale = new ComboBox(obsSale);
     
+    
     // Main Menu Buttons
     Button btnRingSale = new Button("Ring Sale:");
     
@@ -246,21 +247,21 @@ public class GUI extends Application
         primaryPane.setHgap(10);
         primaryPane.setVgap(10);
         
-    obsStore.add(new Store ("Harrisonburg", "123 lane"));
-    obsStore.add(new Store ("Winchester", "456 lane"));
-    obsStore.add(new Store ("Fairfax", "789 lane"));
-    obsStore.add(new Store ("Charlottesville", "123 way"));
-    obsStore.add(new Store ("Vegas", "456 way"));
-    obsCategory.add("PRODUCE");
-    obsCategory.add("DAIRY");
-    obsCategory.add("BEVERAGES");
-    obsCategory.add("CANDY");
-    obsCategory.add("CANNED FOODS");
-    obsCategory.add("PASTA");
-    obsCategory.add("SNACK FOODS");
-    obsCategory.add("BAKED GOODS");
-    obsCategory.add("FROZEN FOODS");
-    obsCategory.add("OTHER");
+            obsStore.add(new Store ("Harrisonburg", "123 lane"));
+            obsStore.add(new Store ("Winchester", "456 lane"));
+            obsStore.add(new Store ("Fairfax", "789 lane"));
+            obsStore.add(new Store ("Charlottesville", "123 way"));
+            obsStore.add(new Store ("Vegas", "456 way"));
+            obsCategory.add("PRODUCE");
+            obsCategory.add("DAIRY");
+            obsCategory.add("BEVERAGES");
+            obsCategory.add("CANDY");
+            obsCategory.add("CANNED FOODS");
+            obsCategory.add("PASTA");
+            obsCategory.add("SNACK FOODS");
+            obsCategory.add("BAKED GOODS");
+            obsCategory.add("FROZEN FOODS");
+            obsCategory.add("OTHER");
         
         primaryPane.add(lblThrifty, 0, 0);
         primaryPane.add(lblStore, 0, 1);
@@ -358,15 +359,16 @@ public class GUI extends Application
         TableColumn tbProdPrice = new TableColumn("Price");
         TableColumn tbProdDesc = new TableColumn("Description");
         TableColumn tbProdCategory = new TableColumn("Category");
+        TableColumn tbProdLocation = new TableColumn("Location");
         
         //ValueFactory for Product Table
         tbProdID.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productID"));
         tbProdName.setCellValueFactory(new PropertyValueFactory<Product, String>("productName"));
         tbProdQuantity.setCellValueFactory(new PropertyValueFactory<Product, Integer>("quantity"));
         tbProdPrice.setCellValueFactory(new PropertyValueFactory<Product, Double>("price"));
-        tbProdDesc.setCellValueFactory(new PropertyValueFactory<Product, Integer>("foodDescription"));
-        tbProdCategory.setCellValueFactory(new PropertyValueFactory<Product, Integer>("category"));
-        
+        tbProdDesc.setCellValueFactory(new PropertyValueFactory<Product, String>("foodDescription"));
+        tbProdCategory.setCellValueFactory(new PropertyValueFactory<Product, String>("category"));
+        tbProdLocation.setCellValueFactory(new PropertyValueFactory<Product, String>("location"));
         
         
         Scene primaryScene = new Scene(primaryPane, 500, 500);
@@ -414,7 +416,7 @@ public class GUI extends Application
             
         });
         
-        prodTable.getColumns().addAll(tbProdID, tbProdName, tbProdQuantity, tbProdPrice, tbProdDesc, tbProdCategory);
+        prodTable.getColumns().addAll(tbProdID, tbProdName, tbProdQuantity, tbProdPrice, tbProdDesc, tbProdCategory, tbProdLocation);
         menuAdmin.getMenus().get(1).getItems().get(1).setOnAction(e -> {
             // Inventory Management
             secondPane.getChildren().clear();
@@ -469,9 +471,9 @@ public class GUI extends Application
             int storeLocation = cmboStore.getSelectionModel().getSelectedIndex(); 
             String storeLocation2 = Integer.toString(storeLocation); 
             int productCategory = cmboCategory.getSelectionModel().getSelectedIndex();  
-            prodList.add(new Product(txtProdName.getText(), Integer.parseInt(txtProdQuantity.getText()), Double.parseDouble(txtUnitPrice.getText()),
-            obsStore.get(storeLocation), txtProdDesc.getText(), obsCategory.get(storeLocation))); 
-
+            
+            prodList.add(new Product(txtProdName.getText(), Integer.valueOf(txtProdQuantity.getText()), Double.valueOf(txtUnitPrice.getText()), obsStore.get(storeLocation), txtProdDesc.getText(), obsCategory.get(storeLocation)));
+            
             alert.setTitle("Success!");
             alert.setHeaderText("The product has been added!");
             alert.showAndWait();
