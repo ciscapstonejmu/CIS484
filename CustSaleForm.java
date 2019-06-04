@@ -35,9 +35,10 @@ public class CustSaleForm {
             "No"
             );
     final ComboBox cmboIsMem = new ComboBox(isMemList);
-    public ComboBox cmboSaleProd = new ComboBox(GUI.obsProd);
-    public ComboBox cmboSaleCust = new ComboBox(GUI.obsCust);
-    public ComboBox cmboSaleStore = new ComboBox(GUI.obsStore);
+    public ComboBox cmboSaleProd = new ComboBox(Product.obsProd);
+    public ComboBox cmboSaleCust = new ComboBox(Customer.obsCust);
+    public ComboBox cmboSaleStore = new ComboBox(Store.obsStore);
+    public ComboBox cmboSaleEmployee = new ComboBox(Employee.obsEmp);
     
     public DatePicker saleDate = new DatePicker();
     
@@ -59,17 +60,17 @@ public class CustSaleForm {
         primaryPane.add(saleDate, 1, 0);
         saleDate.setMinWidth(4);
         primaryPane.add(lblSaleStore, 0, 1);
-        primaryPane.add(GUI.cmboStore, 1, 1);
-        GUI.cmboStore.setMinWidth(4);
+        primaryPane.add(cmboSaleStore, 1, 1);
+        cmboSaleStore.setMinWidth(4);
         primaryPane.add(lblSaleCust, 0, 2);
-        primaryPane.add(GUI.cmboCust, 1, 2);
-        GUI.cmboCust.setMinWidth(4);
+        primaryPane.add(cmboSaleCust, 1, 2);
+        cmboSaleCust.setMinWidth(4);
         primaryPane.add(lblClubMem, 0, 3);
         primaryPane.add(cmboIsMem, 1, 3);
         cmboIsMem.setMinWidth(4);
         primaryPane.add(lblSaleProd, 0, 4);
-        primaryPane.add(GUI.cmboProd, 1, 4);
-        GUI.cmboProd.setMinWidth(4);
+        primaryPane.add(cmboSaleProd, 1, 4);
+        cmboSaleProd.setMinWidth(4);
         //primaryPane.add(lblSaleProdQuan, 0, 5);
         //primaryPane.add(txtSaleProdQuan, 1, 5);
         primaryPane.add(btnAddToSale, 0, 5, 2, 2);
@@ -78,10 +79,10 @@ public class CustSaleForm {
         
         //txtSaleProdQuan.setPrefWidth(20);
         saleDate.setPrefWidth(100);
-        GUI.cmboStore.setPrefWidth(100);
-        GUI.cmboCust.setPrefWidth(100);
+        cmboSaleStore.setPrefWidth(100);
+        cmboSaleCust.setPrefWidth(100);
         cmboIsMem.setPrefWidth(100);
-        GUI.cmboProd.setPrefWidth(100);
+        cmboSaleProd.setPrefWidth(100);
         
         Scene primaryScene = new Scene(primaryPane, 800, 600); Stage primaryStage = new Stage();
         primaryStage.setScene(primaryScene);
