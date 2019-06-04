@@ -37,7 +37,7 @@ public class GUI extends Application
     static ArrayList<Product> prodList = new ArrayList<>(); 
     static ArrayList<Customer> custList = new ArrayList<>(); 
     static ArrayList<Store> storeList = new ArrayList<>(); 
-    static ArrayList<Store> saleList = new ArrayList<>();
+    static ArrayList<CustSale> saleList = new ArrayList<>();
     
     //Observabble Lists/Combo Boxes
     ObservableList obsEmp = FXCollections.observableArrayList();
