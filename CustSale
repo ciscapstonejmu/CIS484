@@ -1,0 +1,48 @@
+package pkg484groupproj;
+
+
+public class CustSale {
+    private int saleID; 
+    private static int saleIDCount = 0; 
+    private String saleCategory; 
+    private String saleDelDate; 
+    private double unitCost; 
+    private double subtotal; 
+    
+    public CustSale(String saleCateogry, String saleDelDate, double unitCost, double subtotal) {
+        this.saleCategory = saleCategory; 
+        this.saleDelDate = saleDelDate; 
+        this.subtotal = subtotal; 
+        this.unitCost = unitCost; 
+        this.saleID = 100 + saleIDCount++; 
+        
+    }
+    public void setSaleCat(String saleCategory) {
+        this.saleCategory = saleCategory; 
+    }
+    public String getSaleCat() {
+        return this.saleCategory; 
+    }
+    public void setSaleDelDate(String saleDelDate) {
+        this.saleDelDate = saleDelDate; 
+    } 
+    public String getSaleDelDate() {
+        return saleDelDate; 
+    }
+    public void setUnitCost(double unitCost) {
+        this.unitCost = unitCost; 
+    }
+    public double getUnitCost() {
+        return unitCost; 
+    }
+    public void setSubtotal(double subtotal) {
+        this.subtotal = subtotal; 
+    }
+    public double getSubtotal() {
+        return this.subtotal; 
+    }
+    public String toString() {
+        return "Sale Number: " + this.saleID + "Sale Category: " + this.saleCategory + "Delivery Date: " + this.saleDelDate 
+                + "Subtotal: " + this.subtotal; 
+    }
+}
