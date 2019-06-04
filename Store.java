@@ -1,5 +1,8 @@
 package pkg484groupproj;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class Store {
     
     
@@ -7,12 +10,15 @@ public class Store {
     private String storeName;
     private String storeAddress;
     public static int nextID = 0;
+    public static ObservableList obsStore = FXCollections.observableArrayList();
+    
     
     public Store (String storeName, String storeAddress)
     {
         this.storeName = storeName;
         this.storeAddress = storeAddress;
         this.storeID = nextID++; 
+        obsStore.add(this.storeID + ": " + storeName);
     }
     
     public int getID()
