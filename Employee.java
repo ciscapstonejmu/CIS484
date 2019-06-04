@@ -116,7 +116,7 @@ public class Employee {
         return this.phoneNumber;
     }
     
-        public void address (String address)
+        public void setAddress (String address)
     {
         this.address = address;
     }
@@ -126,7 +126,7 @@ public class Employee {
         return this.address;
     }
     
-        public void setSalary (double Salary)
+        public void setSalary (double salary)
     {
         this.salary = salary;
     }
@@ -148,10 +148,15 @@ public class Employee {
     public String getJobTitle() {
         return this.jobTitle; 
     }
-    public void setJobTitle() {
+    public void setJobTitle(String jobTitle) {
         this.jobTitle = jobTitle; 
     }
-    
+    public String getStore(){
+        return this.storeLoc;
+    }
+    public void setStore(String storeLoc){
+        this.storeLoc = storeLoc;
+    }
     public void setEmployeeType (String employeeType)
     {
         this.employeeType = employeeType;
