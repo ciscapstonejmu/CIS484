@@ -1,79 +1,45 @@
 package pkg484groupproj;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import javax.imageio.ImageIO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
-
-public class Product {
+    public class Product {
     private int productID;
     private String productName;
     private int quantity;
     private double price;
     private String location;
-    private String foodDescription;
+    private String prodDescription;
     private String category;
-    private int aisle;
     private BufferedImage image;
-    ArrayList<Double> availableDiscounts = new ArrayList<>();
-    ArrayList<String> discountTitle = new ArrayList<>();
     public static int nextID = 0;
+    public static ObservableList obsProd = FXCollections.observableArrayList();
+    public String supplier; 
     
     
-    public Product(String productName, int quantity, double price, String location, String foodDescription, String category, BufferedImage image)
+    public Product(String productName, int quantity, double price, String location, String prodDescription, String category, BufferedImage image)
     {
         this.productName = productName;
         this.quantity = quantity;
         this.price = price;
         this.location = location;
-        this.foodDescription = foodDescription;
+        this.prodDescription = prodDescription;
         this.category = category;
         this.image = image;
         
-        if (category.equalsIgnoreCase("PRODUCE"))
-        {
-            this.aisle = 1;
-        }
-        
-        if (category.equalsIgnoreCase("DAIRY"))
-        {
-            this.aisle = 2;
-        }
-        
-        if (category.equalsIgnoreCase("CANDY"))
-        {
-            this.aisle = 3;
-        }
-        
-        
-        if (category.equalsIgnoreCase("CANNED FOODS"))
-        {
-            this.aisle = 4;
-        }
-        
-        if (category.equalsIgnoreCase("PASTA"))
-        {
-            this.aisle = 5;
-        }
-        
-        if (category.equalsIgnoreCase("SNACK FOODS"))
-        {
-            this.aisle = 6;
-        }
-        
-        if (category.equalsIgnoreCase("BAKED GOODS"))
-        {
-            this.aisle = 7;
-        }
-        
-        if (category.equalsIgnoreCase("FROZEN FOODS"))
-        {
-            this.aisle = 8;
-        }
     }
-    
+    public Product(String productName, int quantity, double price, String location, String prodDescription, String category, String supplier)
+    {
+        this.productName = productName;
+        this.quantity = quantity;
+        this.price = price;
+        this.location = location;
+        this.prodDescription = prodDescription;
+        this.category = category;
+        this.image = image;
+        this.supplier = supplier; 
+    }
     public int getID()
     {
         return this.productID;
@@ -119,14 +85,14 @@ public class Product {
         return this.location;
     }
     
-    public void setDescription(String foodDescription)
+    public void setDescription(String prodDescription)
     {
-        this.foodDescription = foodDescription;
+        this.prodDescription = prodDescription;
     }
     
     public String getDescription()
     {
-        return this.foodDescription;
+        return this.prodDescription;
     }
     
     public void setCategory(String category)
@@ -139,16 +105,6 @@ public class Product {
         return this.category;
     }
     
-    public void setAisle(int aisle)
-    {
-        this.aisle = aisle;
-    }
-    
-    public int getAisle()
-    {
-        return this.aisle;
-    }
-    
     public void setImage (BufferedImage image)
     {
         this.image = image;
@@ -159,23 +115,13 @@ public class Product {
         return this.image;
     }
     
-    public void addDiscount(String t, double d)
-    {
-        this.availableDiscounts.add(d);
-        this.discountTitle.add(t);
-    }
-    
-    public void applyDiscount(int index)
-    {
-        this.price = this.price - this.availableDiscounts.get(index);
-    }
-    
     public String toString()
     {
         String str = "";
         str += "ID: " + this.productID + " , Name: " + this.productName + " , Quantity" + 
                 this.quantity + " , Price: " + this.price + " , Location: " + this.location +
-                " , Description: " + this.foodDescription + " , Category: " + this.category;
+                " , Description: " + this.prodDescription + " , Category: " + this.category;
         return str;
     }
 }
+
