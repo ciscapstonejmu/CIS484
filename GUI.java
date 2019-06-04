@@ -46,8 +46,8 @@ public class GUI extends Application
     ComboBox cmboProd = new ComboBox(Product.obsProd); 
     ObservableList<Customer> obsCust = FXCollections.observableArrayList();
     ComboBox cmboCust = new ComboBox(obsCust); 
-    ObservableList<Store> obsStore = FXCollections.observableArrayList();
-    ComboBox cmboStore = new ComboBox(obsStore); 
+    ObservableList obsStore = FXCollections.observableArrayList();
+    ComboBox cmboStore = new ComboBox(Store.obsStore); 
     //ObservableList<Store> obsStore = FXCollections.observableArrayList();
     //ComboBox cmboStore = new ComboBox(obsStore);
     public static ObservableList<CustSale> obsSale = FXCollections.observableArrayList();
@@ -473,7 +473,7 @@ public class GUI extends Application
             String storeLocation2 = Integer.toString(storeLocation); 
             int productCategory = cmboCategory.getSelectionModel().getSelectedIndex();  
             
-            prodList.add(new Product(txtProdName.getText(), Integer.valueOf(txtProdQuantity.getText()), Double.valueOf(txtUnitPrice.getText()), obsStore.get(storeLocation), txtProdDesc.getText(), obsCategory.get(storeLocation)));
+            prodList.add(new Product(txtProdName.getText(), Integer.valueOf(txtProdQuantity.getText()), Double.valueOf(txtUnitPrice.getText()), (Store) obsStore.get(storeLocation), txtProdDesc.getText(), obsCategory.get(storeLocation)));
             
             alert.setTitle("Success!");
             alert.setHeaderText("The product has been added!");
