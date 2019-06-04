@@ -19,11 +19,17 @@ public class CustSale {
     private ArrayList<Product> saleProducts = new ArrayList();
     
     public CustSale(String saleDate, Store store, Customer customer,
-            double unitCost, double subtotal) {
+            ArrayList saleProducts) {
         this.saleDate = saleDate;
         this.store = store;
         this.customer = customer;
-        this.subtotal = subtotal;
+        this.saleProducts = saleProducts;
+        
+        for(int i=0; i<this.saleProducts.size();i++)
+        {
+            this.subtotal += this.saleProducts.get(i).getPrice();
+        }
+        
         this.tax = (this.subtotal * .053);
         this.totalCost = (this.subtotal + this.tax);
         this.saleID = 100 + saleIDCount++; 
