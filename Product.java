@@ -29,6 +29,54 @@ import javafx.collections.ObservableList;
         this.image = image;
         
         
+        if (category.equalsIgnoreCase("PRODUCE"))
+        {
+            this.aisle = 1;
+        }
+        
+        if (category.equalsIgnoreCase("DAIRY"))
+        {
+            this.aisle = 2;
+        }
+        
+        if (category.equalsIgnoreCase("BEVERAGES"))
+        {
+            this.aisle = 3;
+        }
+        
+        if (category.equalsIgnoreCase("CANDY"))
+        {
+            this.aisle = 4;
+        }
+        
+        
+        if (category.equalsIgnoreCase("CANNED FOODS"))
+        {
+            this.aisle = 5;
+        }
+        
+        if (category.equalsIgnoreCase("PASTA"))
+        {
+            this.aisle = 6;
+        }
+        
+        if (category.equalsIgnoreCase("SNACK FOODS"))
+        {
+            this.aisle = 7;
+        }
+        
+        if (category.equalsIgnoreCase("BAKED GOODS"))
+        {
+            this.aisle = 8;
+        }
+        
+        if (category.equalsIgnoreCase("FROZEN FOODS"))
+        {
+            this.aisle = 9;
+        }
+    }
+        
+        
     }
     public Product(String productName, int quantity, double price, String location, String prodDescription, String category, String supplier)
     {
