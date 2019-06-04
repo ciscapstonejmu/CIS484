@@ -8,7 +8,7 @@ public class Employee {
     private int employeeID;
     private String firstName;
     private String lastName; 
-    private String email;
+    private String Email;
     private String phoneNumber;
     private String address;
     private double salary;
@@ -26,7 +26,7 @@ public class Employee {
             {
                 this.firstName = "NO NAME";
                 this.lastName = "NO NAME"; 
-                this.email = "NO EMAIL";
+                this.Email = "NO Email";
                 this.phoneNumber = " ";
                 this.address = "NO ADDRESS";
                 this.salary = 0.0;
@@ -40,11 +40,12 @@ public class Employee {
             
     
     
-    public Employee(String firstName, String lastName, String email, String phoneNumber, String address, double salary, double workPay, String jobTitle,
+    public Employee(String firstName, String lastName, String Email, String phoneNumber, String address, double salary, double workPay, String jobTitle,
             String employeeType, String employeeCategory, String storeLoc )  
     {
         this.firstName = firstName;
         this.lastName = lastName; 
+        this.Email = Email;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.salary = salary;
@@ -58,7 +59,7 @@ public class Employee {
         
     }
     
-    public Employee(String email, String phoneNumber, String address, double salary, double workPay, double timeWorked)
+    public Employee(String Email, String phoneNumber, String address, double salary, double workPay, double timeWorked)
     {
         //this.employeeName = employeeName;
         this.phoneNumber = phoneNumber;
@@ -68,7 +69,7 @@ public class Employee {
         this.timeWorked = timeWorked;
     }
     
-     public Employee(String firstName, String lastName, String email, String phoneNumber, String gender, String address, double salary, double workPay, String jobTitle)
+     public Employee(String firstName, String lastName, String Email, String phoneNumber, String gender, String address, double salary, double workPay, String jobTitle)
     {
         this.firstName = firstName;
         this.lastName = lastName; 
@@ -81,7 +82,7 @@ public class Employee {
         this.jobTitle = jobTitle; 
     }
     
-    public int getID()
+    public int getEmployeeID()
     {
         return this.employeeID;
     }
@@ -91,25 +92,25 @@ public class Employee {
         this.firstName = firstName;
     }
     
-    public String getFName()
+    public String getFirstName()
     {
         return this.firstName;
     }
     public void setLName (String lastName) {
         this.lastName = lastName; 
     }
-    public String getLName () {
+    public String getLastName () {
         return this.lastName; 
     }
    
-    public void setEmail(String email)
+    public void setEmail(String Email)
     {
-        this.email = email;
+        this.Email = Email;
     }
          
     public String getEmail()
     {
-        return this.email;
+        return this.Email;
     }
     
     public void setPhoneNumber (String phoneNumber)
@@ -171,7 +172,7 @@ public class Employee {
     public String toString()
     {
         String str = "";
-        str += "ID: " + this.employeeID + " , First Name: " + this.firstName +  " , Last Name: " + this.lastName + ", Email: " + this.email +
+        str += "ID: " + this.employeeID + " , First Name: " + this.firstName +  " , Last Name: " + this.lastName + ", Email: " + this.Email +
                 ", Phone Number: " + this.phoneNumber + " , Address: " + this.address + " , Salary: " +
                 this.salary + " , Work Pay: " + this.workPay + " , Time Worked: " + this.timeWorked;
         return str;
