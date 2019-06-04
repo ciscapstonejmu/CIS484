@@ -48,6 +48,8 @@ public class GUI extends Application
     public static ComboBox cmboCust = new ComboBox(obsCust); 
     public static ObservableList<Store> obsStore = FXCollections.observableArrayList();
     public static ComboBox cmboStore = new ComboBox(obsStore);
+    public static ObservableList<CustSale> obsSale = FXCollections.observableArrayList();
+    public static ComboBox cmboSale = new ComboBox(obsSale);
     //ObservableList<Store> obsStore = FXCollections.observableArrayList();
     //ComboBox cmboStore = new ComboBox(obsStore);
     
