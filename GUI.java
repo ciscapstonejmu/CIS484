@@ -37,17 +37,17 @@ public class GUI extends Application
     static ArrayList<Product> prodList = new ArrayList<>(); 
     static ArrayList<Customer> custList = new ArrayList<>(); 
     static ArrayList<Store> storeList = new ArrayList<>(); 
-    static ArrayList<Store> saleList = new ArrayList<>();
+    static ArrayList<CustSale> saleList = new ArrayList<>();
     
     //Observabble Lists/Combo Boxes
-    ObservableList<Employee> obsEmp = FXCollections.observableArrayList();
-    ComboBox cmboEmp = new ComboBox(obsEmp); 
-    ObservableList<Product> obsProd = FXCollections.observableArrayList(); 
-    ComboBox cmboProd = new ComboBox(obsProd); 
-    ObservableList<Customer> obsCust = FXCollections.observableArrayList();
-    ComboBox cmboCust = new ComboBox(obsCust); 
-    ObservableList<Store> obsStore = FXCollections.observableArrayList();
-    ComboBox cmboStore = new ComboBox(obsStore); 
+    public static ObservableList<Employee> obsEmp = FXCollections.observableArrayList();
+    public static ComboBox cmboEmp = new ComboBox(obsEmp); 
+    public static ObservableList<Product> obsProd = FXCollections.observableArrayList(); 
+    public static ComboBox cmboProd = new ComboBox(obsProd); 
+    public static ObservableList<Customer> obsCust = FXCollections.observableArrayList();
+    public static ComboBox cmboCust = new ComboBox(obsCust); 
+    public static ObservableList<Store> obsStore = FXCollections.observableArrayList();
+    public static ComboBox cmboStore = new ComboBox(obsStore);
     //ObservableList<Store> obsStore = FXCollections.observableArrayList();
     //ComboBox cmboStore = new ComboBox(obsStore);
     
