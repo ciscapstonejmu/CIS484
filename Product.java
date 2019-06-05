@@ -1,10 +1,12 @@
 package pkg484groupproj;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.ImageView;
 import javax.imageio.ImageIO;
 
 
@@ -25,7 +27,7 @@ public class Product {
     public static int nextID = 0;
     public static ObservableList obsProd = FXCollections.observableArrayList(); 
     
-    public Product(String productName, int quantity, double price, Store store, String foodDescription, String category)
+    public Product(String productName, int quantity, double price, Store store, String foodDescription, String category, BufferedImage image)
     {
         this.productName = productName;
         this.quantity = quantity;
