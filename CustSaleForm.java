@@ -115,12 +115,23 @@ public class CustSaleForm {
         
         //Complete the sale
         btnCompleteSale.setOnAction(e -> {
-        primaryPane.add(receiptOutput, 5, 6);
-        receiptOutput.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        receiptOutput.setText("Receipt: " + "\n");
-            for (CustSale saleList : GUI.saleList) {
-                receiptOutput.appendText(saleList.toString());
-            }
+            primaryPane.add(receiptOutput, 5, 6);
+            receiptOutput.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+            receiptOutput.setText("Receipt: " + "\n");
+                for (CustSale saleList : GUI.saleList) {
+                   receiptOutput.appendText(saleList.toString());
+                }
+            
+                
+            int saleStore = cmboSaleStore.getSelectionModel().getSelectedIndex();
+            int saleEmp = cmboSaleEmp.getSelectionModel().getSelectedIndex();
+            int isMem = cmboIsMem.getSelectionModel().getSelectedIndex();
+            
+            
+            GUI.saleList.add(new CustSale(saleDate.toString(), GUI.storeList.get(saleStore),
+                    GUI.empList.get(saleEmp), cmboIsMem.getValue().toString(),
+                    this.saleProducts));
+                
             });
         
         
