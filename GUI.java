@@ -30,7 +30,8 @@ public class GUI extends Application
     TextField txtUser = new TextField();
     PasswordField txtPass = new PasswordField(); 
     Label storeLoc = new Label("Store Location"); 
-    TextField txtStoreLoc = new TextField(); 
+    TextField txtStoreLoc = new TextField();
+    boolean isAuthorized = false;
     //TextField txtPass = new TextField();
     
     //Array Lists
@@ -390,8 +391,17 @@ public class GUI extends Application
         btnSignIn.setOnAction(e -> {
             // code to validate log in, has to have two handlers for admin and worker
             // error handling
-            
+            if(txtUser.getText().equalsIgnoreCase("user") == false || txtPass.getText().equalsIgnoreCase("pass")== false){
+            alert.setTitle("Incorrect Login");
+            alert.setHeaderText("Username: user Password: pass");
+            alert.showAndWait();   
+            }
             //creating the second main menu gui
+            else{ 
+                if(cmboLoginType.getValue() == "Manager")
+                {    
+                    isAuthorized = true;
+                }
             secondStage.setTitle("Main Menu");
             secondStage.show();
             primaryStage.close();
@@ -404,7 +414,7 @@ public class GUI extends Application
             secondPane.add(lblMain, 3, 4);
             secondPane.add(lblSelect, 3, 5);
             secondPane.add(btnRingSale, 3, 6);
-            
+            }
             
             
         });
@@ -429,6 +439,7 @@ public class GUI extends Application
         prodTable.getColumns().addAll(tbProdID, tbProdName, tbProdQuantity, tbProdPrice, tbProdDesc, tbProdCategory, tbProdLocation, tbProdImage);
         menuAdmin.getMenus().get(1).getItems().get(1).setOnAction(e -> {
             // Inventory Management
+            
             secondPane.getChildren().clear();
             formPane.getChildren().clear();
             secondPane.setAlignment(Pos.TOP_CENTER);
@@ -556,6 +567,12 @@ public class GUI extends Application
         
         menuAdmin.getMenus().get(1).getItems().get(0).setOnAction(e -> {
             // Employee Management
+            if(isAuthorized == false){
+            alert.setTitle("Step Back");
+            alert.setHeaderText("Get promoted bitch");
+            alert.showAndWait();   
+            }   
+            else{
             secondPane.getChildren().clear();
             formPane.getChildren().clear();
             secondPane.setAlignment(Pos.TOP_CENTER);
@@ -571,7 +588,7 @@ public class GUI extends Application
             empTable.setItems(empData);
             secondPane.add(empTable, 3, 9);
             empTable.setMinWidth(secondScene.getWidth());
-            
+            }
         });
         
         btnAddEmp.setOnAction(e -> {
@@ -732,6 +749,12 @@ public class GUI extends Application
         
         menuAdmin.getMenus().get(1).getItems().get(2).setOnAction(e -> {
            // Expense Management
+           if(isAuthorized == false){
+            alert.setTitle("Step Back");
+            alert.setHeaderText("Get promoted bitch");
+            alert.showAndWait();   
+            }   
+            else{
            secondPane.getChildren().clear();
            formPane.getChildren().clear();
            secondPane.setAlignment(Pos.TOP_CENTER);
@@ -741,7 +764,7 @@ public class GUI extends Application
            secondPane.add(lblExpMan, 3, 1);
            secondPane.add(btnAddExp, 3, 2);
            secondPane.add(btnPayExp, 3, 3);
-           
+           }
         });
         
         btnAddExp.setOnAction(e -> {
@@ -877,4 +900,3 @@ public class GUI extends Application
     }
     
 }
-
