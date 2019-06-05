@@ -321,7 +321,7 @@ public class GUI extends Application
         lblMain.setStyle("-fx-font: bold 16pt \"Arial\";");
         Label lblSelect = new Label("Select an option from the Menu Bar above.");
         lblSelect.setStyle("-fx-font: 12pt \"Arial\";");
-        Scene secondScene = new Scene(secondPane, 800, 500);
+        Scene secondScene = new Scene(secondPane, 900, 500);
         Stage secondStage = new Stage();
         secondStage.setScene(secondScene);
         
@@ -358,6 +358,7 @@ public class GUI extends Application
         TableColumn tbEmpJTitle = new TableColumn("Job Title");
         TableColumn tbEmpType = new TableColumn("Type");
         TableColumn tbEmpCat = new TableColumn("Category");
+        TableColumn tbEmpLoc = new TableColumn("Location");
         
         //ValueFactory for Employee Table
         tbEmpID.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("employeeID"));
@@ -370,6 +371,7 @@ public class GUI extends Application
         tbEmpJTitle.setCellValueFactory(new PropertyValueFactory<Employee, String>("jobTitle"));
         tbEmpType.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeType"));
         tbEmpCat.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeCategory"));
+        tbEmpLoc.setCellValueFactory(new PropertyValueFactory<Employee, String>("storeLoc"));
         
         
         // Product Table
@@ -396,6 +398,13 @@ public class GUI extends Application
         primaryStage.setScene(primaryScene);
         primaryStage.setTitle("Main Form");
         primaryStage.show();
+        
+        // Makes MenuItems disabled instead of showing an alert
+        if(isAuthorized == false)
+        {
+            menuAdmin.getMenus().get(1).getItems().get(0).setDisable(true); //Employee management
+            menuAdmin.getMenus().get(1).getItems().get(2).setDisable(true); //Expense Management
+        }
         
         
         btnSignIn.setOnAction(e -> {
@@ -428,7 +437,7 @@ public class GUI extends Application
             
             
         });
-        
+                
         menuAdmin.getMenus().get(0).getItems().get(0).setOnAction(e -> {
             // Main Menu
             secondPane.getChildren().clear();
@@ -489,7 +498,7 @@ public class GUI extends Application
             thirdPane.add(lblSupplier, 0, 7); 
             thirdPane.add(txtSupplier, 0, 8); 
             thirdPane.add(lblImage, 0, 9);
-            thirdPane.add(btnImage, 1, 9);
+            thirdPane.add(btnImage, 0, 10);
             thirdPane.add(lblProdStore, 1,7 );
             thirdPane.add(cmboStore, 1, 8 ); //when picking which store the product is for, should be selected from already existing stores created 
             
@@ -591,7 +600,7 @@ public class GUI extends Application
         });
         
         empTable.getColumns().addAll(tbEmpID, tbEmpFName, tbEmpLName, tbEmpEmail,
-                tbEmpPhone, tbEmpAddress, tbEmpSalary, tbEmpJTitle, tbEmpType, tbEmpCat);
+                tbEmpPhone, tbEmpAddress, tbEmpSalary, tbEmpJTitle, tbEmpType, tbEmpCat, tbEmpLoc);
         
         
         menuAdmin.getMenus().get(1).getItems().get(0).setOnAction(e -> {
@@ -623,7 +632,7 @@ public class GUI extends Application
         btnAddEmp.setOnAction(e -> {
             thirdPane.getChildren().clear();
             thirdStage.setTitle("Add an Employee");
-           thirdStage.show();
+            thirdStage.show();
             thirdPane.setAlignment(Pos.TOP_CENTER);
             
             thirdPane.add(lblAddEmp, 0, 0);
@@ -650,19 +659,18 @@ public class GUI extends Application
             thirdPane.add(cmboEmpCat, 0, 10);
             //thirdPane.add (cmboEmp, 1, 13); 
             thirdPane.add(storeLoc, 1, 9); 
-            thirdPane.add(txtStoreLoc, 1, 10); //what is put into this text box needs to be put in the store combo box 
-                    
-            //need to make and add labels and text boxes for work pay, hours worked
+            thirdPane.add(cmboStore, 1, 10); 
+            
             
         });
         
         addEmp.setOnAction(e -> {
-            //emplouee added clicked
+            //employee added clicked
             
                 
             empList.add(new Employee(txtFName.getText(), txtLName.getText(), txtEmail.getText(), txtPhone.getText(), 
             txtAddress.getText(), Double.valueOf(txtSalary.getText()),  
-                    txtJobTitle.getText(), (String)cmboEType.getValue(), (String)cmboEmpCat.getValue(), txtStoreLoc.getText())); 
+                    txtJobTitle.getText(), (String)cmboEType.getValue(), (String)cmboEmpCat.getValue(), (String) cmboStore.getValue())); 
             //changed parse to valueof
             alert.setTitle("Success!");
             alert.setHeaderText("The employee has been added!");
@@ -687,12 +695,13 @@ public class GUI extends Application
             txtEmpCat.clear():
             txtStoreLoc.clear():
             */
-            //insert code to add employee to object
+            
             
             thirdStage.close();
         });
         
         btnEditEmp.setOnAction(e -> {
+            // They have no way of selecting an employee rn
             if(cmboEmp.getValue() == null){
                 alert.setTitle("Error!");
                 alert.setHeaderText("Please select an employee to edit!");
@@ -706,6 +715,7 @@ public class GUI extends Application
             thirdStage.show();
             thirdPane.setAlignment(Pos.TOP_CENTER);
 
+            // SHU - I switched txtStoreLoc to the cmboStore so do whatever accordingly to fix these
             thirdPane.add(lblFName, 0, 1);
             thirdPane.add(txtFName, 0, 2);
             thirdPane.add(lblLName, 1, 1);
