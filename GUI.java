@@ -76,9 +76,11 @@ public class GUI extends Application
     Label lblInvMan = new Label("Inventory Management");
     Button btnAddProd = new Button("Add Product");
     Button btnRemoveProd = new Button("Remove Product");
+    Button btnHandleImage = new Button("View/Edit Product Image");
     
     
     
+
     //Add a Product
     Label lblAddProd = new Label("Add a Product");
     Label lblProdName = new Label("Product Name");
@@ -106,6 +108,8 @@ public class GUI extends Application
     //Remove a Product
     Label lblRemoveProd = new Label("Remove a Product");
     Label lblSelectProd = new Label("Select a Product");
+    Button btnChangeImage = new Button("Change Image");
+    Button btnViewImage = new Button("View Image");
     // select a product
     Label lblRQuantity = new Label("Select quantity to remove");
     TextField txtRQuantity = new TextField();
@@ -335,6 +339,8 @@ public class GUI extends Application
         Stage thirdStage = new Stage();
         thirdStage.setScene(thirdScene);
         
+
+        
         menuAdmin.getMenus().addAll(menuHome, menuManage, menuPayroll, menuReports);
         menuHome.getItems().add(new MenuItem("Main Menu"));
         menuManage.getItems().add(new MenuItem("Employee Management"));
@@ -346,6 +352,19 @@ public class GUI extends Application
         menuReports.getItems().add(new MenuItem("Monthly Expenense Report"));
         menuReports.getItems().add(new MenuItem("Profit v. Expense Report"));
         menuAdmin.setMinWidth(secondScene.getWidth());
+        
+        GridPane fourthPane = new GridPane();
+        fourthPane.setAlignment(Pos.TOP_CENTER);
+        fourthPane.setVgap(10);
+        fourthPane.setHgap(10);
+        
+        Scene fourthScene = new Scene(fourthPane, 500, 500);
+        Stage fourthStage = new Stage();
+        fourthStage.setScene(fourthScene);
+        
+        Label lblSelectProd = new Label("Select a Product:");
+        Label lblSelectImage = new Label("Select an Image: ");
+        
         
         //Employee Table
         TableColumn tbEmpID = new TableColumn("ID");
@@ -467,6 +486,10 @@ public class GUI extends Application
             secondPane.add(lblInvMan, 3, 2);
             secondPane.add(btnAddProd, 3, 3);
             secondPane.add(btnRemoveProd, 3, 4);
+            secondPane.add(btnHandleImage, 4, 3);
+            
+           
+
             
             prodTable.setItems(prodData);
             secondPane.add(prodTable, 3, 5);
@@ -590,12 +613,32 @@ public class GUI extends Application
                 
                 myImageView = new ImageView();
                 myImageView.setImage(iImage);
-                thirdPane.add(myImageView, 0, 10, 6, 5);
+                thirdPane.add(myImageView, 0, 11, 6, 5);
+                myImageView.setFitHeight(130);
+                myImageView.setFitWidth(130);
             }
             catch(Exception ex){
                 
             }
            
+        });
+        
+        btnHandleImage.setOnAction(e -> {
+            
+            fourthPane.getChildren().clear();
+            fourthStage.setTitle("View/Edit an Image");
+            fourthStage.show();
+            fourthPane.setAlignment(Pos.TOP_LEFT);
+            
+            
+            fourthPane.add(lblSelectProd, 0, 0);
+            fourthPane.add(cmboProd, 1, 0);
+            fourthPane.add(btnViewImage, 0, 2);
+            fourthPane.add(btnChangeImage, 1, 2);
+            
+            
+            
+        
         });
         
         empTable.getColumns().addAll(tbEmpID, tbEmpFName, tbEmpLName, tbEmpEmail,
