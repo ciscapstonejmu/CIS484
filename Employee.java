@@ -151,10 +151,10 @@ public class Employee {
     public void setJobTitle(String jobTitle) {
         this.jobTitle = jobTitle; 
     }
-    public String getStore(){
+    public String getStoreLoc(){
         return this.storeLoc;
     }
-    public void setStoreLoc(String storeLoc){
+    public void setStore(String storeLoc){
         this.storeLoc = storeLoc;
     }
     public void setEmployeeType (String employeeType)
