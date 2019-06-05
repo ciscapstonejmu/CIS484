@@ -89,6 +89,11 @@ public class CustSaleForm {
         txtSaleOutput.setEditable(false);
         receiptOutput.setEditable(false);
         
+        //Set Output Perminant Text
+        txtSaleOutput.appendText("Sale Items: " + "\n");
+        txtSaleOutput.appendText("--------------------------"
+                + "----------------------------------------\n");
+        
         Scene primaryScene = new Scene(primaryPane, 800, 600); Stage primaryStage = new Stage();
         primaryStage.setScene(primaryScene);
         primaryStage.setTitle("Customer Sale Form");
@@ -96,11 +101,14 @@ public class CustSaleForm {
         
         
         btnAddToSale.setOnAction(e -> {
-                     
+            //Find products in sale         
             int saleProd = cmboSaleProd.getSelectionModel().getSelectedIndex();
             this.saleProducts.add(GUI.prodList.get(saleProd));
             
-            txtSaleOutput.appendText(GUI.prodList.get(saleProd).toString());
+            String saleOut = "";
+            saleOut += GUI.prodList.get(saleProd).toStringSale();
+            saleOut += "\n";
+            txtSaleOutput.appendText(saleOut);
             
             cmboSaleProd.getSelectionModel().clearSelection();
             });
