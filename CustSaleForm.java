@@ -17,6 +17,7 @@ public class CustSaleForm {
     
     public Label lblSaleDate = new Label("Date:");
     public Label lblSaleStore = new Label("Store:");
+    public Label lblSaleEmp = new Label("Employee");
     public Label lblSaleCust = new Label("Customer:");
     public Label lblClubMem = new Label("Thrifty Club Member?");
     public Label lblSaleProd = new Label("Product:");
@@ -38,7 +39,7 @@ public class CustSaleForm {
     public ComboBox cmboSaleProd = new ComboBox(Product.obsProd);
     public ComboBox cmboSaleCust = new ComboBox(Customer.obsCust);
     public ComboBox cmboSaleStore = new ComboBox(Store.obsStore);
-    public ComboBox cmboSaleEmployee = new ComboBox(Employee.obsEmp);
+    public ComboBox cmboSaleEmp = new ComboBox(Employee.obsEmp);
     
     public DatePicker saleDate = new DatePicker();
     
@@ -62,8 +63,8 @@ public class CustSaleForm {
         primaryPane.add(lblSaleStore, 0, 1);
         primaryPane.add(cmboSaleStore, 1, 1);
         cmboSaleStore.setMinWidth(4);
-        primaryPane.add(lblSaleCust, 0, 2);
-        primaryPane.add(cmboSaleCust, 1, 2);
+        primaryPane.add(lblSaleEmp, 0, 2);
+        primaryPane.add(cmboSaleEmp, 1, 2);
         cmboSaleCust.setMinWidth(4);
         primaryPane.add(lblClubMem, 0, 3);
         primaryPane.add(cmboIsMem, 1, 3);
@@ -81,8 +82,12 @@ public class CustSaleForm {
         saleDate.setPrefWidth(100);
         cmboSaleStore.setPrefWidth(100);
         cmboSaleCust.setPrefWidth(100);
+        cmboSaleEmp.setPrefWidth(100);
         cmboIsMem.setPrefWidth(100);
         cmboSaleProd.setPrefWidth(100);
+        
+        txtSaleOutput.setEditable(false);
+        receiptOutput.setEditable(false);
         
         Scene primaryScene = new Scene(primaryPane, 800, 600); Stage primaryStage = new Stage();
         primaryStage.setScene(primaryScene);
@@ -92,7 +97,7 @@ public class CustSaleForm {
         
         btnAddToSale.setOnAction(e -> {
                      
-            int saleProd = myParent.cmboProd.getSelectionModel().getSelectedIndex();
+            int saleProd = cmboSaleProd.getSelectionModel().getSelectedIndex();
             this.saleProducts.add(GUI.prodList.get(saleProd));
             
             txtSaleOutput.appendText(GUI.prodList.get(saleProd).toString());
@@ -100,16 +105,13 @@ public class CustSaleForm {
             cmboSaleProd.getSelectionModel().clearSelection();
             });
         
-        //complete the sale
+        //Complete the sale
         btnCompleteSale.setOnAction(e -> {
         primaryPane.add(receiptOutput, 5, 6);
         receiptOutput.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         receiptOutput.setText("Receipt: " + "\n");
             for (CustSale saleList : GUI.saleList) {
                 receiptOutput.appendText(saleList.toString());
-            }
-            if(GUI.saleList.isEmpty()){
-                receiptOutput.appendText("No Sale to Complete");
             }
             });
         
