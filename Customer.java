@@ -1,11 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pkg484groupproj;
 
 import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Customer {
     
@@ -17,6 +14,7 @@ public class Customer {
     private String paymentMethod;
     public static int nextID = 0;
     ArrayList<Product> purchasedProducts = new ArrayList<>();
+    public static ObservableList obsCust = FXCollections.observableArrayList(); 
     
     public Customer(String customerName, String email, int phoneNumber, String address, String paymentMethod)
     {
