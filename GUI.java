@@ -1,5 +1,6 @@
 package pkg484groupproj;
 
+import java.awt.image.BufferedImage;
 import java.util.*;
 import javafx.application.Application;
 import javafx.collections.*;
@@ -46,8 +47,8 @@ public class GUI extends Application
     ComboBox cmboProd = new ComboBox(Product.obsProd); 
     ObservableList<Customer> obsCust = FXCollections.observableArrayList();
     ComboBox cmboCust = new ComboBox(obsCust); 
-    ObservableList obsStore = FXCollections.observableArrayList();
-    ComboBox cmboStore = new ComboBox(Store.obsStore); 
+    static ObservableList obsStore = FXCollections.observableArrayList();
+    static ComboBox cmboStore = new ComboBox(Store.obsStore); 
     //ObservableList<Store> obsStore = FXCollections.observableArrayList();
     //ComboBox cmboStore = new ComboBox(obsStore);
     public static ObservableList<CustSale> obsSale = FXCollections.observableArrayList();
@@ -258,6 +259,8 @@ public class GUI extends Application
             obsStore.add(store3);
             obsStore.add(store4);
             obsStore.add(store5);
+            storeList.addAll(obsStore);
+            
             obsCategory.add("PRODUCE");
             obsCategory.add("DAIRY");
             obsCategory.add("BEVERAGES");
@@ -366,6 +369,7 @@ public class GUI extends Application
         TableColumn tbProdDesc = new TableColumn("Description");
         TableColumn tbProdCategory = new TableColumn("Category");
         TableColumn tbProdLocation = new TableColumn("Location");
+        TableColumn tbProdImage = new TableColumn("Image");
         
         //ValueFactory for Product Table
         tbProdID.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productID"));
@@ -375,7 +379,7 @@ public class GUI extends Application
         tbProdDesc.setCellValueFactory(new PropertyValueFactory<Product, String>("foodDescription"));
         tbProdCategory.setCellValueFactory(new PropertyValueFactory<Product, String>("category"));
         tbProdLocation.setCellValueFactory(new PropertyValueFactory<Product, String>("location"));
-        
+        tbProdImage.setCellValueFactory(new PropertyValueFactory<Product, BufferedImage>("image"));
         
         Scene primaryScene = new Scene(primaryPane, 500, 500);
         primaryStage.setScene(primaryScene);
@@ -422,7 +426,7 @@ public class GUI extends Application
             
         });
         
-        prodTable.getColumns().addAll(tbProdID, tbProdName, tbProdQuantity, tbProdPrice, tbProdDesc, tbProdCategory, tbProdLocation);
+        prodTable.getColumns().addAll(tbProdID, tbProdName, tbProdQuantity, tbProdPrice, tbProdDesc, tbProdCategory, tbProdLocation, tbProdImage);
         menuAdmin.getMenus().get(1).getItems().get(1).setOnAction(e -> {
             // Inventory Management
             secondPane.getChildren().clear();
@@ -478,7 +482,11 @@ public class GUI extends Application
             String storeLocation2 = Integer.toString(storeLocation); 
             int productCategory = cmboCategory.getSelectionModel().getSelectedIndex();  
             
-            prodList.add(new Product(txtProdName.getText(), Integer.valueOf(txtProdQuantity.getText()), Double.valueOf(txtUnitPrice.getText()), (Store) obsStore.get(storeLocation), txtProdDesc.getText(), obsCategory.get(storeLocation)));
+            prodList.add(new Product(txtProdName.getText(), 
+                    Integer.valueOf(txtProdQuantity.getText()),
+                    Double.valueOf(txtUnitPrice.getText()), 
+                     storeList.get(cmboStore.getSelectionModel().getSelectedIndex()), txtProdDesc.getText(), 
+                    (String) cmboCategory.getValue()));
             
             alert.setTitle("Success!");
             alert.setHeaderText("The product has been added!");
@@ -506,11 +514,33 @@ public class GUI extends Application
             thirdPane.add(cmboProd, 0, 2);
             thirdPane.add(lblRQuantity, 0, 3);
             thirdPane.add(txtRQuantity, 0, 4);
+            
             thirdPane.add(removeProd, 0, 5);
             
         });
         
         removeProd.setOnAction(e -> {
+            
+            int removeProd1 = cmboProd.getSelectionModel().getSelectedIndex(); 
+            Product tempProd = prodList.get(removeProd1);
+            
+            int remove = Integer.parseInt(txtRQuantity.getText());
+            
+            tempProd.setQuantity(tempProd.getQuantity()-remove);
+            
+            for(int i = 0; i<prodList.size(); i++){
+                if(tempProd.getProductID() == prodList.get(i).getProductID()){
+                    prodList.remove(i);
+                    prodList.add(i, tempProd);
+                }
+            }
+            prodData.clear();
+            for(Product prod: prodList)
+            {
+                prodData.add(prod);
+            }
+            
+            
             // insert code to let you remove certain amount
             
             alert.setTitle("Success!");
@@ -847,3 +877,4 @@ public class GUI extends Application
     }
     
 }
+
