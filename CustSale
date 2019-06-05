@@ -13,16 +13,18 @@ public class CustSale {
     private Customer customer;
     private boolean isMem;
     private Store store;
+    private Employee employee;
     private double subtotal;
     private double tax;
     private double totalCost;
     
     private ArrayList<Product> saleProducts = new ArrayList();
     
-    public CustSale(String saleDate, Store store, Customer customer,
-            ArrayList saleProducts) {
+    public CustSale(String saleDate, Store store, Employee employee,
+            Customer customer, ArrayList saleProducts) {
         this.saleDate = saleDate;
         this.store = store;
+        this.employee = employee;
         this.customer = customer;
         this.saleProducts = saleProducts;
         
@@ -37,10 +39,11 @@ public class CustSale {
         
     }
     
-    public CustSale(String saleDate, Store store, boolean isMem,
-            ArrayList saleProducts) {
+    public CustSale(String saleDate, Store store, Employee employee, 
+            boolean isMem, ArrayList saleProducts) {
         this.saleDate = saleDate;
         this.store = store;
+        this.employee = employee;
         this.isMem = isMem;
         this.saleProducts = saleProducts;
         
