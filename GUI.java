@@ -399,12 +399,6 @@ public class GUI extends Application
         primaryStage.setTitle("Main Form");
         primaryStage.show();
         
-        // Makes MenuItems disabled instead of showing an alert
-        if(isAuthorized == false)
-        {
-            menuAdmin.getMenus().get(1).getItems().get(0).setDisable(true); //Employee management
-            menuAdmin.getMenus().get(1).getItems().get(2).setDisable(true); //Expense Management
-        }
         
         
         btnSignIn.setOnAction(e -> {
@@ -421,6 +415,7 @@ public class GUI extends Application
                 {    
                     isAuthorized = true;
                 }
+                
             secondStage.setTitle("Main Menu");
             secondStage.show();
             primaryStage.close();
@@ -434,7 +429,11 @@ public class GUI extends Application
             secondPane.add(lblSelect, 3, 5);
             secondPane.add(btnRingSale, 3, 6);
             }
-            
+            if(isAuthorized == false)
+            {
+            menuAdmin.getMenus().get(1).getItems().get(0).setDisable(true); //Employee management
+            menuAdmin.getMenus().get(1).getItems().get(2).setDisable(true); //Expense Management
+            }
             
         });
                 
@@ -605,12 +604,8 @@ public class GUI extends Application
         
         menuAdmin.getMenus().get(1).getItems().get(0).setOnAction(e -> {
             // Employee Management
-            if(isAuthorized == false){
-            alert.setTitle("Step Back");
-            alert.setHeaderText("Get promoted bitch");
-            alert.showAndWait();   
-            }   
-            else{
+              
+            
             secondPane.getChildren().clear();
             formPane.getChildren().clear();
             secondPane.setAlignment(Pos.TOP_CENTER);
@@ -618,7 +613,7 @@ public class GUI extends Application
             secondPane.add(menuAdmin, 0, 0, 4, 1);
             
             secondPane.add(lblEmpMan, 3, 1);
-            secondPane.add(lblEditEmp, 3, 3);
+            secondPane.add(cmboEmp, 3, 3);
             //add combobox
             secondPane.add(btnEditEmp, 3, 5);
             secondPane.add(btnAddEmp, 3, 7);
@@ -626,7 +621,7 @@ public class GUI extends Application
             empTable.setItems(empData);
             secondPane.add(empTable, 3, 9);
             empTable.setMinWidth(secondScene.getWidth());
-            }
+            
         });
         
         btnAddEmp.setOnAction(e -> {
@@ -740,7 +735,7 @@ public class GUI extends Application
             txtAddress.setText(eC.getAddress());
             txtJobTitle.setText(eC.getJobTitle());
             txtSalary.setText(Double.toString(eC.getSalary()));
-            txtStoreLoc.setText(eC.getStore());
+            txtStoreLoc.setText(eC.getStoreLoc());
 
 
         }
