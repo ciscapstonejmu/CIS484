@@ -1,9 +1,12 @@
 package pkg484groupproj;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.*;
 import javafx.application.Application;
 import javafx.collections.*;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -16,6 +19,10 @@ import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
+import javafx.stage.FileChooser;
+import javax.imageio.ImageIO;
 
 public class GUI extends Application 
 {
@@ -88,6 +95,9 @@ public class GUI extends Application
     Label lblQuantity = new Label("Quantity");
     TextField txtProdQuantity = new TextField();
     Label lblImage = new Label("Image");
+    Button btnImage = new Button("Add Image");
+    ImageView myImageView = new ImageView();
+    BufferedImage tempImage = null;
     Button addProd = new Button("Add Product");
     TextField txtSupplier = new TextField(); 
     Label lblSupplier = new Label("Supplier"); 
@@ -479,11 +489,12 @@ public class GUI extends Application
             thirdPane.add(lblSupplier, 0, 7); 
             thirdPane.add(txtSupplier, 0, 8); 
             thirdPane.add(lblImage, 0, 9);
+            thirdPane.add(btnImage, 1, 9);
             thirdPane.add(lblProdStore, 1,7 );
             thirdPane.add(cmboStore, 1, 8 ); //when picking which store the product is for, should be selected from already existing stores created 
             
             
-            thirdPane.add(addProd, 0, 14);
+            thirdPane.add(addProd, 0, 16);
            
         });
         
@@ -497,7 +508,7 @@ public class GUI extends Application
                     Integer.valueOf(txtProdQuantity.getText()),
                     Double.valueOf(txtUnitPrice.getText()), 
                      storeList.get(cmboStore.getSelectionModel().getSelectedIndex()), txtProdDesc.getText(), 
-                    (String) cmboCategory.getValue()));
+                    (String) cmboCategory.getValue(),tempImage));
             
             alert.setTitle("Success!");
             alert.setHeaderText("The product has been added!");
@@ -559,6 +570,24 @@ public class GUI extends Application
             alert.showAndWait();
             
             thirdStage.close();
+        });
+        btnImage.setOnAction(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Choose Image");
+            File file = fileChooser.showOpenDialog(thirdStage);
+            
+            try{
+                tempImage = ImageIO.read(file);
+                WritableImage iImage = SwingFXUtils.toFXImage(tempImage, null);
+                
+                myImageView = new ImageView();
+                myImageView.setImage(iImage);
+                thirdPane.add(myImageView, 0, 10, 6, 5);
+            }
+            catch(Exception ex){
+                
+            }
+           
         });
         
         empTable.getColumns().addAll(tbEmpID, tbEmpFName, tbEmpLName, tbEmpEmail,
