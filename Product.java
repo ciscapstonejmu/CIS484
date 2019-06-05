@@ -13,7 +13,8 @@ public class Product {
     private String productName;
     private int quantity;
     private double price;
-    private Store location;
+    private Store store;
+    private String location;
     private String foodDescription;
     private String category;
     private int aisle;
@@ -24,12 +25,12 @@ public class Product {
     public static int nextID = 0;
     public static ObservableList obsProd = FXCollections.observableArrayList(); 
     
-    public Product(String productName, int quantity, double price, Store location, String foodDescription, String category)
+    public Product(String productName, int quantity, double price, Store store, String foodDescription, String category)
     {
         this.productName = productName;
         this.quantity = quantity;
         this.price = price;
-        this.location = location;
+        this.location = store.getName();
         this.foodDescription = foodDescription;
         this.category = category;
         this.image = image;
@@ -118,14 +119,14 @@ public class Product {
         return this.price;
     }
     
-    public void setLocation(String productName)
+    public void setLocation(String location)
     {
-        this.productName = productName;
+        this.location = location;
     }
     
     public String getLocation()
     {
-        return this.location.getName();
+        return this.location;
     }
     
     public void setFoodDescription(String foodDescription)
@@ -172,7 +173,7 @@ public class Product {
     {
         String str = "";
         str += "ID: " + this.productID + " , Name: " + this.productName + " , Quantity" + 
-                this.quantity + " , Price: " + this.price + " , Location: " + this.location.getName() +
+                this.quantity + " , Price: " + this.price + " , Location: " + this.location +
                 " , Description: " + this.foodDescription + " , Category: " + this.category;
         return str;
     }
