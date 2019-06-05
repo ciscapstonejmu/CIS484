@@ -12,6 +12,7 @@ public class CustSale {
     private String saleDate;
     private Customer customer;
     private boolean isMem;
+    private String memStat;
     private Store store;
     private Employee employee;
     private double subtotal;
@@ -19,6 +20,42 @@ public class CustSale {
     private double totalCost;
     
     private ArrayList<Product> saleProducts = new ArrayList();
+    
+    public CustSale(String saleDate, Store store, Employee employee, 
+            String memStat, ArrayList saleProducts) {
+        this.saleDate = saleDate;
+        this.store = store;
+        this.employee = employee;
+        this.memStat = memStat;
+        this.saleProducts = saleProducts;
+        
+        if(memStat.contains("Yes"))
+        {
+            this.isMem = true;
+        }
+        else
+        {
+            this.isMem = false;
+        }
+        
+        for(int i=0; i<this.saleProducts.size();i++)
+        {
+            //Give Thrifty Members 5% discount
+            if(this.isMem == true)
+            {
+                this.subtotal += ((this.saleProducts.get(i).getPrice()) *.95);
+            }
+            else if(this.isMem == false)
+            {
+                this.subtotal += this.saleProducts.get(i).getPrice();
+            }
+        }
+        
+        this.tax = (this.subtotal * .053);
+        this.totalCost = (this.subtotal + this.tax);
+        this.saleID = 100 + saleIDCount++; 
+        
+    }
     
     public CustSale(String saleDate, Store store, Employee employee,
             Customer customer, ArrayList saleProducts) {
@@ -39,32 +76,7 @@ public class CustSale {
         
     }
     
-    public CustSale(String saleDate, Store store, Employee employee, 
-            boolean isMem, ArrayList saleProducts) {
-        this.saleDate = saleDate;
-        this.store = store;
-        this.employee = employee;
-        this.isMem = isMem;
-        this.saleProducts = saleProducts;
-        
-        for(int i=0; i<this.saleProducts.size();i++)
-        {
-            //Give Thrifty Members 5% discount
-            if(this.isMem == true)
-            {
-                this.subtotal += ((this.saleProducts.get(i).getPrice()) *.95);
-            }
-            else if(this.isMem == false)
-            {
-                this.subtotal += this.saleProducts.get(i).getPrice();
-            }
-        }
-        
-        this.tax = (this.subtotal * .053);
-        this.totalCost = (this.subtotal + this.tax);
-        this.saleID = 100 + saleIDCount++; 
-        
-    }
+    
     
     public void setSaleDate(String saleDate) {
         this.saleDate = saleDate; 
@@ -86,6 +98,8 @@ public class CustSale {
     public double getSubtotal() {
         return this.subtotal; 
     }
+    
+    @Override
     public String toString() {
         return "Sale Number: " + this.saleID + "Date: " + this.saleDate 
                 + "Subtotal: " + this.subtotal; 
