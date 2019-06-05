@@ -179,4 +179,13 @@ public class Product {
                 " , Description: " + this.foodDescription + " , Category: " + this.category;
         return str;
     }
+    
+    public String toStringSale()
+    {
+        String str = "";
+        str += "ID: " + this.productID + " , Name: " + this.productName +  
+                " , Price: " + this.price + " , Description: " + this.foodDescription 
+                + " , Category: " + this.category;
+        return str;
+    }
 }
