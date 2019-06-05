@@ -21,6 +21,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 
@@ -64,7 +65,7 @@ public class GUI extends Application
     
     
     // Main Menu Buttons
-    Button btnRingSale = new Button("Ring Sale:");
+    Button btnRingSale = new Button("Ring Sale");
     
     //Tables
     TableView<Employee> empTable = new TableView<>();
@@ -447,6 +448,9 @@ public class GUI extends Application
             secondPane.add(lblMain, 3, 4);
             secondPane.add(lblSelect, 3, 5);
             secondPane.add(btnRingSale, 3, 6);
+            
+            btnRingSale.setPrefSize(120, 150);
+            btnRingSale.setFont(Font.font("Times New Roman", 20));
             }
             if(isAuthorized == false)
             {
