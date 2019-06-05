@@ -18,7 +18,8 @@ public class Store {
         this.storeName = storeName;
         this.storeAddress = storeAddress;
         this.storeID = nextID++; 
-        obsStore.add(this.storeID + ": " + storeName);
+        //obsStore.add(this.storeID + ": " + storeName);
+        obsStore.add(this.storeName);
     }
     
     public int getID()
