@@ -154,7 +154,7 @@ public class Employee {
     public String getStore(){
         return this.storeLoc;
     }
-    public void setStore(String storeLoc){
+    public void setStoreLoc(String storeLoc){
         this.storeLoc = storeLoc;
     }
     public void setEmployeeType (String employeeType)
