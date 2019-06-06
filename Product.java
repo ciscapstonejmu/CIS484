@@ -8,7 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.ImageView;
 import javax.imageio.ImageIO;
-
+import java.text.DecimalFormat;
 
 public class Product {
     private int productID;
@@ -26,6 +26,9 @@ public class Product {
     private int saleDay;
     public static int nextID = 0;
     public static ObservableList obsProd = FXCollections.observableArrayList(); 
+    
+    //Fromatter for money figures
+    DecimalFormat formatter = new DecimalFormat("#0.00");
     
     public Product(String productName, int quantity, double price, Store store, String foodDescription, String category, BufferedImage image)
     {
@@ -184,7 +187,7 @@ public class Product {
     {
         String str = "";
         str += "ID: " + this.productID + " , Name: " + this.productName +  
-                " , Price: " + this.price + " , Description: " + this.foodDescription 
+                " , Price: " + formatter.format(this.price) + " , Description: " + this.foodDescription 
                 + " , Category: " + this.category;
         return str;
     }
