@@ -21,6 +21,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 
@@ -65,7 +66,7 @@ public class GUI extends Application
     
     
     // Main Menu Buttons
-    Button btnRingSale = new Button("Ring Sale:");
+    Button btnRingSale = new Button("Ring Sale");
     
     //Tables
     TableView<Employee> empTable = new TableView<>();
@@ -470,6 +471,12 @@ public class GUI extends Application
             secondPane.add(lblMain, 3, 4);
             secondPane.add(lblSelect, 3, 5);
             secondPane.add(btnRingSale, 3, 6);
+            
+            //Set Ring Sale Button Formatting
+            btnRingSale.setPrefSize(120, 150);
+            btnRingSale.setFont(Font.font("Times New Roman", 20));
+            
+            
             }
             if(isAuthorized == false)
             {
@@ -534,6 +541,7 @@ public class GUI extends Application
             fifthPane.add(lblSubTotal, 1, 6); 
             fifthPane.add(btnCalcProdSubTotal, 0, 7);
             fifthPane.add(txtSubTotal, 1, 7); 
+            
      
             fifthPane.add(lblDelDate, 0, 4); 
           
@@ -548,9 +556,18 @@ public class GUI extends Application
             //thirdPane.add(btnImage, 0, 10);
             fifthPane.add(lblProdStore, 2,2);
             fifthPane.add(cmboStore, 2, 3); //when picking which store the product is for, should be selected from already existing stores created 
-           
+            
             
             fifthPane.add(btnCompleteOrder, 0, 8);
+        }); 
+        btnCalcProdSubTotal.setOnAction(e -> {
+            double quantity = Integer.parseInt(txtProdQuantity.getText());
+            double cost = Double.parseDouble(txtUnitCost.getText()); 
+            double subTotal = quantity * cost; 
+            String subTotal2 = ""; 
+            subTotal2 = Double.toString(subTotal); 
+            txtSubTotal.setText(subTotal2); 
+            
         }); 
         btnCompleteOrder.setOnAction(e -> {
             
@@ -702,7 +719,7 @@ public class GUI extends Application
             
         
         });
-        btnChangeImage.setOnAction(e -> {
+        /*btnChangeImage.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Choose Image");
             File file = fileChooser.showOpenDialog(thirdStage);
@@ -730,7 +747,7 @@ public class GUI extends Application
             catch(Exception ex){
                 
             }
-        });
+        });*/
         btnViewImage.setOnAction(e -> {
             imageChosen = cmboProd.getSelectionModel().getSelectedIndex(); 
             WritableImage theImage = imageList.get(imageChosen); 
@@ -1005,7 +1022,7 @@ public class GUI extends Application
             formPane.add(lblViewType, 3, 4);
             formPane.add(cmboType, 3, 5);
             formPane.add(lblLocation, 3, 6);
-            // cmbobox for location
+            formPane.add(cmboStore, 3, 7);
             formPane.add(btnPOSDisplay, 3, 8);
             
             //create the table
