@@ -9,11 +9,13 @@ import javafx.stage.Stage;
 import java.util.*;
 import javafx.collections.*;
 import javafx.geometry.Pos;
+import java.time.format.*;
 
 public class CustSaleForm {
     
     public String saleID;
     public static int saleCount = 0;
+    public String recItems = "";
     
     public Label lblSaleDate = new Label("Date:");
     public Label lblSaleStore = new Label("Store:");
@@ -110,6 +112,7 @@ public class CustSaleForm {
             saleOut += "\n";
             txtSaleOutput.appendText(saleOut);
             
+            recItems += saleOut;
             cmboSaleProd.getSelectionModel().clearSelection();
             });
         
@@ -117,20 +120,22 @@ public class CustSaleForm {
         btnCompleteSale.setOnAction(e -> {
             primaryPane.add(receiptOutput, 5, 6);
             receiptOutput.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-            receiptOutput.setText("Receipt: " + "\n");
-                for (CustSale saleList : GUI.saleList) {
-                   receiptOutput.appendText(saleList.toString());
-                }
-            
+            receiptOutput.appendText("Receipt: " + "\n");
                 
             int saleStore = cmboSaleStore.getSelectionModel().getSelectedIndex();
             int saleEmp = cmboSaleEmp.getSelectionModel().getSelectedIndex();
             int isMem = cmboIsMem.getSelectionModel().getSelectedIndex();
             
+            String dateOfSale = saleDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             
-            GUI.saleList.add(new CustSale(saleDate.toString(), GUI.storeList.get(saleStore),
+            GUI.saleList.add(new CustSale(dateOfSale, GUI.storeList.get(saleStore),
                     GUI.empList.get(saleEmp), cmboIsMem.getValue().toString(),
                     this.saleProducts));
+            
+            CustSale thisSale = GUI.saleList.get(saleCount-1);
+            receiptOutput.appendText(recItems);
+            receiptOutput.appendText("\n" + thisSale.toString());
+            
                 
             });
         
