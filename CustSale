@@ -26,6 +26,8 @@ public class CustSale {
     
     private ArrayList<Product> saleProducts = new ArrayList();
     
+    public static ObservableList obsSale = FXCollections.observableArrayList();
+    
     //Constructor for reading in from CustSaleForm
     public CustSale(String saleDate, Store store, Employee employee, 
             String memStat, ArrayList saleProducts) {
@@ -60,6 +62,8 @@ public class CustSale {
         this.tax = (this.subtotal * .053);
         this.totalCost = (this.subtotal + this.tax);
         this.saleID = "Sale" + saleIDCount++; 
+        
+        obsSale.add(this.saleID);
         
     }
     
