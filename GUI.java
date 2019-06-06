@@ -21,7 +21,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 
@@ -57,7 +56,8 @@ public class GUI extends Application
     ObservableList<Customer> obsCust = FXCollections.observableArrayList();
     ComboBox cmboCust = new ComboBox(obsCust); 
     static ObservableList obsStore = FXCollections.observableArrayList();
-    static ComboBox cmboStore = new ComboBox(Store.obsStore); 
+    static ComboBox cmboStore = new ComboBox(Store.obsStore);
+    ObservableList<WritableImage> imageList = FXCollections.observableArrayList();
     //ObservableList<Store> obsStore = FXCollections.observableArrayList();
     //ComboBox cmboStore = new ComboBox(obsStore);
     public static ObservableList<CustSale> obsSale = FXCollections.observableArrayList();
@@ -65,7 +65,7 @@ public class GUI extends Application
     
     
     // Main Menu Buttons
-    Button btnRingSale = new Button("Ring Sale");
+    Button btnRingSale = new Button("Ring Sale:");
     
     //Tables
     TableView<Employee> empTable = new TableView<>();
@@ -100,11 +100,16 @@ public class GUI extends Application
     Label lblImage = new Label("Image");
     Button btnImage = new Button("Add Image");
     ImageView myImageView = new ImageView();
+    ImageView imageViewTwo = new ImageView();
     BufferedImage tempImage = null;
     Button addProd = new Button("Add Product");
     TextField txtSupplier = new TextField(); 
     Label lblSupplier = new Label("Supplier"); 
     Label lblProdStore = new Label("Store"); 
+    Button btnCalcProdSubTotal = new Button("Calculate Subtotal");
+    
+    
+    int imageChosen;
     
     //Remove a Product
     Label lblRemoveProd = new Label("Remove a Product");
@@ -173,6 +178,13 @@ public class GUI extends Application
     Label lblAmount = new Label("Amount");
     TextField txtAmount = new TextField();
     Button addExp = new Button("Add Expense");
+    TextField txtUnitCost = new TextField(); 
+    Label lblUnitCost = new Label("Unit Cost"); 
+    TextField txtSubTotal = new TextField(); 
+    Label lblSubTotal = new Label("Subtotal");
+    TextField txtDelDate = new TextField(); 
+    Label lblDelDate = new Label("Delivery Date"); 
+    DatePicker calendar = new DatePicker();
     
     
     /*
@@ -223,6 +235,9 @@ public class GUI extends Application
     // combobox for location
     Button btnEmpDisplay = new Button("Display");
     // create a textarea
+    Button btnAddOrder = new Button("Create Product Order"); 
+    Button btnViewOrder = new Button("View Product Orders");
+    Button btnCompleteOrder = new Button("Complete Product Order"); 
     
     // Monthly Expense Report
     Label lblMonthRep = new Label("Monthly Expense Report");
@@ -340,7 +355,14 @@ public class GUI extends Application
         Stage thirdStage = new Stage();
         thirdStage.setScene(thirdScene);
         
-
+        GridPane fifthPane = new GridPane(); 
+        fifthPane.setAlignment(Pos.TOP_CENTER); 
+        fifthPane.setVgap(10); 
+        fifthPane.setHgap(10); 
+        
+        Scene fifthScene = new Scene(fifthPane, 500, 500); 
+        Stage fifthStage = new Stage(); 
+        fifthStage.setScene(fifthScene); 
         
         menuAdmin.getMenus().addAll(menuHome, menuManage, menuPayroll, menuReports);
         menuHome.getItems().add(new MenuItem("Main Menu"));
@@ -448,9 +470,6 @@ public class GUI extends Application
             secondPane.add(lblMain, 3, 4);
             secondPane.add(lblSelect, 3, 5);
             secondPane.add(btnRingSale, 3, 6);
-            
-            btnRingSale.setPrefSize(120, 150);
-            btnRingSale.setFont(Font.font("Times New Roman", 20));
             }
             if(isAuthorized == false)
             {
@@ -490,17 +509,52 @@ public class GUI extends Application
             secondPane.add(lblInvMan, 3, 2);
             secondPane.add(btnAddProd, 3, 3);
             secondPane.add(btnRemoveProd, 3, 4);
-            secondPane.add(btnHandleImage, 4, 3);
-            
-           
-
+            secondPane.add(btnHandleImage, 3, 5);
+            secondPane.add(btnViewOrder, 3, 7); 
+            secondPane.add(btnAddOrder, 3, 6); 
             
             prodTable.setItems(prodData);
-            secondPane.add(prodTable, 3, 5);
+            secondPane.add(prodTable, 3, 8);
             prodTable.setMinWidth(secondScene.getWidth());
             
         });
-        
+        btnAddOrder.setOnAction(e -> {
+            fifthPane.getChildren().clear();
+            fifthStage.setTitle("Create a Product Order");
+            fifthStage.show();
+            fifthPane.setAlignment(Pos.TOP_CENTER);
+            
+            
+            fifthPane.add(lblProdName, 0, 0);
+            fifthPane.add(txtProdName, 0, 1);
+            fifthPane.add(lblUnitCost, 1,4); 
+            fifthPane.add(txtUnitCost, 1, 5); 
+            fifthPane.add(lblCategory, 0, 2);
+            fifthPane.add(cmboCategory, 0, 3);
+            fifthPane.add(lblSubTotal, 1, 6); 
+            fifthPane.add(btnCalcProdSubTotal, 0, 7);
+            fifthPane.add(txtSubTotal, 1, 7); 
+     
+            fifthPane.add(lblDelDate, 0, 4); 
+          
+            fifthPane.add(calendar, 0, 5);
+            fifthPane.add(lblQuantity, 1, 0);
+            fifthPane.add(txtProdQuantity, 1, 1);
+//            thirdPane.add(lblVendor, 0, 7);
+//            thirdPane.add(txtVendor, 0, 8);
+            fifthPane.add(lblSupplier, 1, 2); 
+            fifthPane.add(txtSupplier, 1, 3); 
+            //thirdPane.add(lblImage, 0, 9);
+            //thirdPane.add(btnImage, 0, 10);
+            fifthPane.add(lblProdStore, 2,2);
+            fifthPane.add(cmboStore, 2, 3); //when picking which store the product is for, should be selected from already existing stores created 
+           
+            
+            fifthPane.add(btnCompleteOrder, 0, 8);
+        }); 
+        btnCompleteOrder.setOnAction(e -> {
+            
+        }); 
         btnAddProd.setOnAction(e -> {
             // Add a Product
             thirdPane.getChildren().clear();
@@ -620,6 +674,8 @@ public class GUI extends Application
                 thirdPane.add(myImageView, 0, 11, 6, 5);
                 myImageView.setFitHeight(130);
                 myImageView.setFitWidth(130);
+                imageList.add(iImage); 
+                
             }
             catch(Exception ex){
                 
@@ -640,10 +696,52 @@ public class GUI extends Application
             fourthPane.add(btnViewImage, 0, 2);
             fourthPane.add(btnChangeImage, 1, 2);
             
+            imageChosen = cmboProd.getSelectionModel().getSelectedIndex();
+            
             
             
         
         });
+        btnChangeImage.setOnAction(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Choose Image");
+            File file = fileChooser.showOpenDialog(thirdStage);
+            
+            try{
+                tempImage = ImageIO.read(file);
+                WritableImage iImage = SwingFXUtils.toFXImage(tempImage, null);
+                
+                myImageView = new ImageView();
+                myImageView.setImage(iImage);
+                fourthPane.add(myImageView, 0, 11, 6, 5);
+                imageList.remove(imageChosen);
+                for (int i = 0; i < imageList.size(); i++)
+                {
+                    if (i == imageChosen)
+                        imageList.remove(i); 
+                        imageList.set(imageChosen, iImage);
+                        
+                }
+                     
+                myImageView.setFitHeight(130);
+                myImageView.setFitWidth(130);
+                
+            }
+            catch(Exception ex){
+                
+            }
+        });
+        btnViewImage.setOnAction(e -> {
+            imageChosen = cmboProd.getSelectionModel().getSelectedIndex(); 
+            WritableImage theImage = imageList.get(imageChosen); 
+            imageViewTwo = new ImageView();
+            imageViewTwo.setImage(theImage);
+            fourthPane.add(imageViewTwo, 0, 11, 6, 5); 
+
+        }); 
+           
+        
+        
         
         empTable.getColumns().addAll(tbEmpID, tbEmpFName, tbEmpLName, tbEmpEmail,
                 tbEmpPhone, tbEmpAddress, tbEmpSalary, tbEmpJTitle, tbEmpType, tbEmpCat, tbEmpLoc);
