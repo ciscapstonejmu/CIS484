@@ -6,7 +6,9 @@ import javafx.collections.ObservableList;
 import java.util.*;
 
 public class CustSale {
-    private int saleID; 
+    
+    //DataFields
+    private String saleID; 
     private static int saleIDCount = 0; 
     //private String saleCategory; 
     private String saleDate;
@@ -19,8 +21,12 @@ public class CustSale {
     private double tax;
     private double totalCost;
     
+    //Fromatter for money figures
+    DecimalFormat formatter = new DecimalFormat("#0.00");
+    
     private ArrayList<Product> saleProducts = new ArrayList();
     
+    //Constructor for reading in from CustSaleForm
     public CustSale(String saleDate, Store store, Employee employee, 
             String memStat, ArrayList saleProducts) {
         this.saleDate = saleDate;
@@ -53,7 +59,7 @@ public class CustSale {
         
         this.tax = (this.subtotal * .053);
         this.totalCost = (this.subtotal + this.tax);
-        this.saleID = 100 + saleIDCount++; 
+        this.saleID = "Sale" + saleIDCount++; 
         
     }
     
@@ -72,11 +78,14 @@ public class CustSale {
         
         this.tax = (this.subtotal * .053);
         this.totalCost = (this.subtotal + this.tax);
-        this.saleID = 100 + saleIDCount++; 
+        this.saleID = "Sale" + saleIDCount++; 
         
     }
     
-    
+    public static int getSaleIDCount()
+    {
+        return saleIDCount;
+    }
     
     public void setSaleDate(String saleDate) {
         this.saleDate = saleDate; 
@@ -101,7 +110,9 @@ public class CustSale {
     
     @Override
     public String toString() {
-        return "Sale Number: " + this.saleID + "Date: " + this.saleDate 
-                + "Subtotal: " + this.subtotal; 
+        return "Sale Number: " + this.saleID + "\nDate: " + this.saleDate.toString()
+                + "\nSubtotal: $" + formatter.format(this.subtotal) 
+                + "\nTax: $" + formatter.format(this.tax)
+                + "\nTotal: $" + formatter.format(this.totalCost); 
     }
 }
