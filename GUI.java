@@ -143,8 +143,8 @@ public class GUI extends Application
     TextField txtPhone = new TextField();
     Label lblAddress = new Label("Address");
     TextField txtAddress = new TextField();
-    ObservableList<String> job = FXCollections.observableArrayList("Cashier", "Bagger", "Cleaner", "Shelfer", "Organizer","Customer Service", "General Manager", "Area Manager");
-    ComboBox cmboJob = new ComboBox(job);
+    static ObservableList<String> job = FXCollections.observableArrayList("Cashier", "Bagger", "Cleaner", "Shelfer", "Organizer","Customer Service", "General Manager", "Area Manager");
+    static ComboBox cmboJob = new ComboBox(job);
     Label lblJobTitle = new Label("Job Title");
     Label lblSalary = new Label("Salary");
     TextField txtSalary = new TextField();
