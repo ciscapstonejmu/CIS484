@@ -1,5 +1,6 @@
 package pkg484groupproj;
 
+import java.time.LocalDate;
 import javafx.application.Application;
 import javafx.event.*;
 import javafx.scene.Scene;
@@ -84,12 +85,13 @@ public class CustSaleForm {
         primaryPane.add(txtSaleOutput, 2, 0, 4, 6);
         
         //txtSaleProdQuan.setPrefWidth(20);
-        saleDate.setPrefWidth(100);
-        cmboSaleStore.setPrefWidth(100);
-        cmboSaleCust.setPrefWidth(100);
-        cmboSaleEmp.setPrefWidth(100);
-        cmboIsMem.setPrefWidth(100);
-        cmboSaleProd.setPrefWidth(100);
+        saleDate.setValue(LocalDate.now());
+        saleDate.setPrefWidth(118);
+        cmboSaleStore.setPrefWidth(118);
+        cmboSaleCust.setPrefWidth(118);
+        cmboSaleEmp.setPrefWidth(118);
+        cmboIsMem.setPrefWidth(118);
+        cmboSaleProd.setPrefWidth(118);
         
         txtSaleOutput.setEditable(false);
         receiptOutput.setEditable(false);
@@ -138,11 +140,11 @@ public class CustSaleForm {
             
             String dateOfSale = saleDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             
-            CustSale thisOne = new CustSale(dateOfSale, GUI.storeList.get(saleStore),
-                    GUI.empList.get(saleEmp), cmboIsMem.getValue().toString(),
-                    this.saleProducts);
             
-            GUI.saleList.add(thisOne);
+            
+            GUI.saleList.add(new CustSale(dateOfSale, GUI.storeList.get(saleStore),
+                    GUI.empList.get(saleEmp), cmboIsMem.getValue().toString(),
+                    this.saleProducts));
             
             CustSale thisSale = GUI.saleList.get(saleCount-1);
             receiptOutput.appendText(recItems);
@@ -157,5 +159,7 @@ public class CustSaleForm {
         
         
     }
+    
+    
     
 }
