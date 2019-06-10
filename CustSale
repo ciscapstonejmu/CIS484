@@ -20,6 +20,7 @@ public class CustSale {
     private double subtotal;
     private double tax;
     private double totalCost;
+    private double discount;
     
     //Fromatter for money figures
     DecimalFormat formatter = new DecimalFormat("#0.00");
@@ -52,10 +53,12 @@ public class CustSale {
             if(this.isMem == true)
             {
                 this.subtotal += ((this.saleProducts.get(i).getPrice()) *.95);
+                this.discount += ((this.saleProducts.get(i).getPrice()) *.05);
             }
             else if(this.isMem == false)
             {
                 this.subtotal += this.saleProducts.get(i).getPrice();
+                this.discount += 0;
             }
         }
         
@@ -82,7 +85,7 @@ public class CustSale {
         
         this.tax = (this.subtotal * .053);
         this.totalCost = (this.subtotal + this.tax);
-        this.saleID = "Sale" + saleIDCount++; 
+        this.saleID = "Sale #" + saleIDCount++; 
         
     }
     
@@ -116,7 +119,9 @@ public class CustSale {
     public String toString() {
         return "Sale Number: " + this.saleID + "\nDate: " + this.saleDate.toString()
                 + "\nSubtotal: $" + formatter.format(this.subtotal) 
+                + "\nMember Discount (%5): $" + formatter.format(this.discount)
                 + "\nTax: $" + formatter.format(this.tax)
                 + "\nTotal: $" + formatter.format(this.totalCost); 
     }
+
 }
