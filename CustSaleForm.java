@@ -35,7 +35,7 @@ public class CustSaleForm {
     public Button btnAddToSale = new Button("Add to Sale ->");
     public Button btnCompleteSale = new Button("Complete Sale ->");
     public Button btnReceipt = new Button("Generate Receipt ->");
-    public Button repeatBuy = new Button ("Repeat Purchase");
+    public Button btnRepeatBuy = new Button ("Repeat Purchase");
     //^This button has not been added yet
     public TextArea txtSaleOutput = new TextArea();
     
@@ -84,7 +84,8 @@ public class CustSaleForm {
         //primaryPane.add(lblSaleProdQuan, 0, 5);
         //primaryPane.add(txtSaleProdQuan, 1, 5);
         primaryPane.add(btnAddToSale, 0, 5, 2, 2);
-        primaryPane.add(btnCompleteSale, 0, 6, 2, 2);
+        primaryPane.add(btnRepeatBuy, 0, 6, 1, 1);
+        primaryPane.add(btnCompleteSale, 0, 7, 2, 2);
         primaryPane.add(txtSaleOutput, 2, 0, 4, 6);
         
         //txtSaleProdQuan.setPrefWidth(20);
@@ -93,6 +94,7 @@ public class CustSaleForm {
         cmboSaleStore.setPrefWidth(118);
         cmboSaleCust.setPrefWidth(118);
         cmboSaleEmp.setPrefWidth(118);
+        
         cmboIsMem.setPrefWidth(118);
         cmboSaleProd.setPrefWidth(118);
         
@@ -121,7 +123,7 @@ public class CustSaleForm {
             saleOut += "\n";
             txtSaleOutput.appendText(saleOut);            
             recItems += saleOut;
-            cmboSaleProd.getSelectionModel().clearSelection();
+            
             alert.setTitle("Success!");
             alert.setHeaderText("Sale Has Been Added!");
             alert.showAndWait();
@@ -129,13 +131,30 @@ public class CustSaleForm {
             
             });
         
+        btnRepeatBuy.setOnAction(e -> {
+            //Repeat the purchase of the same item repeatedly
+            int saleProd = cmboSaleProd.getSelectionModel().getSelectedIndex();
+            this.saleProducts.add(GUI.prodList.get(saleProd));
+             String saleOut = "";
+            saleOut += GUI.prodList.get(saleProd).toStringSale();
+            saleOut += "\n";
+            txtSaleOutput.appendText(saleOut);   
+            recItems += saleOut;
+            alert.setTitle("Success!");
+            alert.setHeaderText("Same Product Purchased!");
+            alert.showAndWait();
+            txtSaleOutput.setEditable(false);
+        });
+        
         //Complete the sale
         btnCompleteSale.setOnAction(e -> {
             receiptOutput.clear();
             primaryPane.add(receiptOutput, 5, 6);
             receiptOutput.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+            receiptOutput.appendText("Thrifty $tore: " + "\n");
             receiptOutput.appendText("Receipt: " + "\n");
-                
+            receiptOutput.appendText("--------------------------"
+                + "----------------------------------------\n");
             int saleStore = cmboSaleStore.getSelectionModel().getSelectedIndex();
             int saleEmp = cmboSaleEmp.getSelectionModel().getSelectedIndex();
             int isMem = cmboIsMem.getSelectionModel().getSelectedIndex();
@@ -152,11 +171,14 @@ public class CustSaleForm {
             receiptOutput.appendText(recItems);
             receiptOutput.appendText("\n" + thisSale.toString());
             //need to include the customer 
+            receiptOutput.appendText("--------------------------"
+                + "----------------------------------------\n");
             receiptOutput.appendText("\n" + "Thank You " + "CUSTOMER**"  + "!");
             alert.setTitle("Success!");
             alert.setHeaderText("Sale Completed!");
             alert.showAndWait();
             receiptOutput.setEditable(false);
+            cmboSaleProd.getSelectionModel().clearSelection();
             });
         
         
