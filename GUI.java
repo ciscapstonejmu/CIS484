@@ -9,7 +9,7 @@ import javafx.collections.*;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
+import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -45,6 +45,7 @@ public class GUI extends Application
     //Array Lists
     static ArrayList<Employee> empList = new ArrayList<>();
     static ArrayList<Product> prodList = new ArrayList<>(); 
+    static ArrayList<Expense> expList = new ArrayList<>();
     static ArrayList<Customer> custList = new ArrayList<>(); 
     static ArrayList<Store> storeList = new ArrayList<>(); 
     static ArrayList<CustSale> saleList = new ArrayList<>();
@@ -74,9 +75,12 @@ public class GUI extends Application
     ObservableList<Employee> empData = FXCollections.observableArrayList(empList);
     TableView<Product> prodTable = new TableView<>();
     ObservableList<Product> prodData = FXCollections.observableArrayList(prodList);
+    TableView<Expense> expTable = new TableView<>();
+    ObservableList<Expense> expData = FXCollections.observableArrayList(expList);
     
     //Inventory Management
-    Label lblInvMan = new Label("Inventory Management");
+    Label lblInvMan = new Label("Management");
+    Label lblInv = new Label("Inventory");
     Button btnAddProd = new Button("Add Product");
     Button btnRemoveProd = new Button("Remove Product");
     Button btnHandleImage = new Button("View/Edit Product Image");
@@ -124,7 +128,8 @@ public class GUI extends Application
     Button removeProd = new Button("Remove Product");
     
     // Employee Management
-    Label lblEmpMan = new Label("Employee Management");
+    Label lblEmpMan = new Label("Management");
+    Label lblEmp = new Label("Employee");
     Label lblEditEmp = new Label("Edit Employee");
     // create combobox based off of employees
     Button btnEditEmp = new Button("Edit Employee");
@@ -143,8 +148,8 @@ public class GUI extends Application
     TextField txtPhone = new TextField();
     Label lblAddress = new Label("Address");
     TextField txtAddress = new TextField();
-    static ObservableList<String> job = FXCollections.observableArrayList("Cashier", "Bagger", "Cleaner", "Shelfer", "Organizer","Customer Service", "General Manager", "Area Manager");
-    static ComboBox cmboJob = new ComboBox(job);
+    ObservableList<String> job = FXCollections.observableArrayList("Cashier", "Bagger", "Cleaner", "Shelfer", "Organizer","Customer Service", "General Manager", "Area Manager");
+    ComboBox cmboJob = new ComboBox(job);
     Label lblJobTitle = new Label("Job Title");
     Label lblSalary = new Label("Salary");
     TextField txtSalary = new TextField();
@@ -160,7 +165,8 @@ public class GUI extends Application
     Button editEmp = new Button("Save Edits");
     
     // Expense Management
-    Label lblExpMan = new Label("Expense Management");
+    Label lblExpMan = new Label("Management");
+    Label lblExp = new Label("Expense");
     Button btnAddExp = new Button("Add Expense");
     Button btnPayExp = new Button("Pay Expense");
     
@@ -250,7 +256,8 @@ public class GUI extends Application
     // Profit v. Expense Report
     Label lblPvE = new Label("Profit v. Expense Report");
     Label lblYear = new Label("Year");
-    //combobox of year
+    ObservableList<String> year = FXCollections.observableArrayList("2015", "2016", "2017", "2018", "2019");
+    ComboBox cmboYear = new ComboBox(year);
     Label lblPLocation = new Label("Location");
     //combobox of location
     Button btnPvEDisplay = new Button("Display");
@@ -277,6 +284,8 @@ public class GUI extends Application
     {
         GridPane primaryPane = new GridPane();
         primaryPane.setAlignment(Pos.CENTER);
+        
+        
         
         primaryPane.setHgap(10);
         primaryPane.setVgap(10);
@@ -322,8 +331,12 @@ public class GUI extends Application
         
         
         lblInvMan.setStyle("-fx-font: bold 20pt \"Arial\";");
+        lblInv.setStyle("-fx-font: bold 20pt \"Arial\";");
         lblEmpMan.setStyle("-fx-font: bold 20pt \"Arial\";");
+        lblEmp.setStyle("-fx-font: bold 20pt \"Arial\";");
+
         lblExpMan.setStyle("-fx-font: bold 20pt \"Arial\";");
+        lblExp.setStyle("-fx-font: bold 20pt \"Arial\";");
         lblPOS.setStyle("-fx-font: bold 20pt \"Arial\";");
         lblEmpRep.setStyle("-fx-font: bold 20pt \"Arial\";");
         lblMonthRep.setStyle("-fx-font: bold 20pt \"Arial\";");
@@ -333,18 +346,22 @@ public class GUI extends Application
         lblAddExp.setStyle("-fx-font: bold 14pt \"Arial\";");
         lblRemoveProd.setStyle("-fx-font: bold 14pt \"Arial\";");
         
+        btnSignOut.setStyle("-fx-background-color: red; -fx-text-fill: black;");
+        
         GridPane secondPane = new GridPane();
-        secondPane.setAlignment(Pos.TOP_CENTER);
+        
         secondPane.setVgap(10);
-        secondPane.setHgap(10);
+        secondPane.setHgap(15);
             
         Label lblMain = new Label("Main Menu");
         lblMain.setStyle("-fx-font: bold 16pt \"Arial\";");
         Label lblSelect = new Label("Select an option from the Menu Bar above.");
         lblSelect.setStyle("-fx-font: 12pt \"Arial\";");
-        Scene secondScene = new Scene(secondPane, 900, 500);
-        Stage secondStage = new Stage();
-        secondStage.setScene(secondScene);
+//        Scene secondScene = new Scene(secondPane, 900, 500);
+       
+        //Stage secondStage = new Stage();
+        //secondStage.setScene(secondScene);
+        
         
         GridPane thirdPane = new GridPane();
         thirdPane.setAlignment(Pos.TOP_CENTER);
@@ -375,12 +392,14 @@ public class GUI extends Application
         menuReports.getItems().add(new MenuItem("Employee Report"));
         menuReports.getItems().add(new MenuItem("Monthly Expenense Report"));
         menuReports.getItems().add(new MenuItem("Profit v. Expense Report"));
-        menuAdmin.setMinWidth(secondScene.getWidth());
+        
         
         GridPane fourthPane = new GridPane();
         fourthPane.setAlignment(Pos.TOP_CENTER);
         fourthPane.setVgap(10);
         fourthPane.setHgap(10);
+        
+        
         
         Scene fourthScene = new Scene(fourthPane, 500, 500);
         Stage fourthStage = new Stage();
@@ -427,6 +446,11 @@ public class GUI extends Application
         TableColumn tbProdLocation = new TableColumn("Location");
         TableColumn tbProdImage = new TableColumn("Image");
         
+        Label Thrifty = new Label("Thrifty");
+        Label Store = new Label("$tore");
+        Thrifty.setStyle("-fx-font: bold 36pt \"Comic Sans ms\"; -fx-text-fill: red;");
+        Store.setStyle("-fx-font: bold 36pt \"Comic Sans ms\"; -fx-text-fill: blue;");
+        
         //ValueFactory for Product Table
         //tbProdID.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productID"));
         tbProdName.setCellValueFactory(new PropertyValueFactory<Product, String>("productName"));
@@ -442,82 +466,79 @@ public class GUI extends Application
         primaryStage.setTitle("Main Form");
         primaryStage.show();
         
+        BorderPane border = new BorderPane();
+        border.setTop(menuAdmin);
+        
+        secondPane.setAlignment(Pos.TOP_CENTER);
         
         
-         btnSignIn.setOnAction(e -> {
-            // code to validate log in, has to have two handlers for admin and worker
-            // error handling
-
-  
-            try {
-            File pwTxt = new File("passwords.txt");
-            Scanner logins = new Scanner(pwTxt);
-            while (logins.hasNextLine())
-            {
-                String input = logins.next();
-                String user = input.substring(0, input.indexOf(","));
-                //System.out.println(user);
-                String pass = input.substring(input.indexOf(",")+1, input.lastIndexOf(","));
-                //System.out.println(pass);
-                
-                String empType = input.substring(input.lastIndexOf(",")+1, input.length());
-                //System.out.println(empType);
-                if (user.equalsIgnoreCase(txtUser.getText()) && (pass.equals(txtPass.getText())) && empType.equalsIgnoreCase("manager")) 
-                {
-                    found = true;
-                    isAuthorized = true;
-                    break;
-                }
-                else if(user.equalsIgnoreCase(txtUser.getText()) && (pass.equals(txtPass.getText())) && empType.equalsIgnoreCase("manager")==false)
-                {
-                    found = true;
-                    isAuthorized = false;
-                    break;
-                }
-            }
-            logins.close();  
-            } 
-            catch (Exception ex) 
-            {
-                
-            }
-           
-            if(!found) { // added the contents of the previously existing else statement here, outside the while
-            alert.setTitle("Incorrect Login");
-            alert.setHeaderText("Invalid Username or Password");
-            alert.showAndWait();
-            }
-            
-            //creating the second main menu gui
-            else{
-            primaryStage.close();
-            secondStage.setTitle("Main Menu");
-            secondStage.show();
-            
-            secondPane.getChildren().clear();
-            
-            
-            secondPane.add(menuAdmin, 0, 0, 4, 1);
-            secondPane.add(lblThrifty, 3, 2);
-            secondPane.add(lblStore, 3, 3);
+            secondPane.add(Thrifty, 3, 2);
+            secondPane.add(Store, 3, 3);
             secondPane.add(lblMain, 3, 4);
             secondPane.add(lblSelect, 3, 5);
             secondPane.add(btnRingSale, 3, 6);
             secondPane.add(btnSignOut, 5, 0);
+        border.setCenter(secondPane);
+        Scene secondScene = new Scene(border, 1050, 500);
+        Stage secondStage = new Stage();
+        secondStage.setScene(secondScene);
+        menuAdmin.setMinWidth(secondScene.getWidth());
+        
+        
+        
+        btnSignIn.setOnAction(e -> {
+            // code to validate log in, has to have two handlers for admin and worker
+            // error handling
+
+  
+            if ((txtUser.getText().equalsIgnoreCase("user") == false || txtPass .getText().equalsIgnoreCase("pass")) && (txtUser.getText().equalsIgnoreCase("jsmith") == false || txtPass.getText().equalsIgnoreCase("bananas") == false) && (txtUser.getText().equalsIgnoreCase("sjackson") == false || txtPass.getText().equalsIgnoreCase("apples") == false) && (txtUser.getText().equalsIgnoreCase("rwilliams") == false || txtPass.getText().equalsIgnoreCase("kiwis") == false) && (txtUser.getText().equalsIgnoreCase("rreynolds") == false || txtPass.getText().equalsIgnoreCase("broccoli") == false) && txtUser.getText().equalsIgnoreCase("pflowers") == false || txtPass.getText().equalsIgnoreCase("oranges")) {
+            
+            
+            alert.setTitle("Incorrect Login");
+            alert.setHeaderText("Invalid Username or Password");
+            alert.showAndWait();   
+            }
+            //creating the second main menu gui
+                else{
+                    if(txtUser.getText().equalsIgnoreCase("jsmith") || txtUser.getText().equalsIgnoreCase("rreynolds") || txtUser.getText().equalsIgnoreCase("pflowers"))
+                    {
+                        isAuthorized = false;
+                    }
+                    if (txtUser.getText().equalsIgnoreCase("sjackson") || txtUser.getText().equalsIgnoreCase("rwilliams") || txtUser.getText().equalsIgnoreCase("user"))
+                    {
+                        isAuthorized = true;
+                    }
+                }
+                
+                secondPane.setAlignment(Pos.TOP_CENTER);
+            secondStage.setTitle("Main Menu");
+            secondStage.show();
+            primaryStage.close();
+            
+            
+           
+//            
+//            secondPane.add(menuAdmin, 0, 0, 4, 1);
+//            secondPane.add(lblThrifty, 3, 2);
+//            secondPane.add(lblStore, 3, 3);
+//            secondPane.add(lblMain, 3, 4);
+//            secondPane.add(lblSelect, 3, 5);
+//            secondPane.add(btnRingSale, 3, 6);
+//            secondPane.add(btnSignOut, 5, 0);
+//            
             
             //Set Ring Sale Button Formatting
-            btnRingSale.setPrefSize(120, 150);
-            btnRingSale.setFont(Font.font("Times New Roman", 20));
+//            btnRingSale.setPrefSize(120, 150);
+//            btnRingSale.setFont(Font.font("Times New Roman", 20));
+//            
             
+            
+                
             if(isAuthorized == false)
             {
             menuAdmin.getMenus().get(1).getItems().get(0).setDisable(true); //Employee management
             menuAdmin.getMenus().get(1).getItems().get(2).setDisable(true); //Expense Management
             }
-            
-            }
-            
-            
             
         });
                 
@@ -525,16 +546,21 @@ public class GUI extends Application
             // Main Menu
             secondPane.getChildren().clear();
             formPane.getChildren().clear();
+            border.getChildren().clear();
+            
             secondPane.setAlignment(Pos.TOP_CENTER);
             secondStage.setTitle("Main Menu");
-            secondPane.add(menuAdmin, 0, 0, 4, 1);
-            
+            //secondPane.add(menuAdmin, 0, 0, 4, 1);
+            secondPane.add(btnSignOut, 5, 0);
             
             secondPane.add(lblThrifty, 3, 2);
             secondPane.add(lblStore, 3, 3);
             secondPane.add(lblMain, 3, 4);
             secondPane.add(lblSelect, 3, 5);
             secondPane.add(btnRingSale, 3, 6);
+
+            border.setTop(menuAdmin);
+            border.setCenter(secondPane);
             
         });
         
@@ -544,20 +570,36 @@ public class GUI extends Application
             
             secondPane.getChildren().clear();
             formPane.getChildren().clear();
+            border.getChildren().clear();
             secondPane.setAlignment(Pos.TOP_CENTER);
             secondStage.setTitle("Inventory Management");
-            secondPane.add(menuAdmin, 0, 0, 4, 1);
+            //secondPane.add(menuAdmin, 0, 0, 4, 1);
+            //secondPane.add(btnSignOut, 5, 0);
             
-            secondPane.add(lblInvMan, 3, 2);
-            secondPane.add(btnAddProd, 3, 3);
-            secondPane.add(btnRemoveProd, 3, 4);
-            secondPane.add(btnHandleImage, 3, 5);
-            secondPane.add(btnViewOrder, 3, 7); 
-            secondPane.add(btnAddOrder, 3, 6); 
+            //secondPane.add(lblInvMan, 3, 2);
+//            secondPane.add(btnAddProd, 3, 3);
+            btnAddProd.setMaxWidth(Double.MAX_VALUE);
+//            secondPane.add(btnRemoveProd, 3, 4);
+            btnRemoveProd.setMaxWidth(Double.MAX_VALUE);
+//            secondPane.add(btnHandleImage, 3, 5);
+            btnHandleImage.setMaxWidth(Double.MAX_VALUE);
+//            secondPane.add(btnViewOrder, 3, 7); 
+            btnViewOrder.setMaxWidth(Double.MAX_VALUE);
+//            secondPane.add(btnAddOrder, 3, 6); 
+            btnAddOrder.setMaxWidth(Double.MAX_VALUE);
+            VBox vbButtons = new VBox();
+            vbButtons.setSpacing(10);
+            vbButtons.setPadding(new Insets(10, 20, 10 , 20));
             
+            vbButtons.getChildren().addAll(lblInv, lblInvMan, btnAddProd, btnRemoveProd, btnHandleImage, btnViewOrder, btnAddOrder);
+            //secondPane.add(vbButtons, 3, 3);
             prodTable.setItems(prodData);
-            secondPane.add(prodTable, 3, 8);
+            //secondPane.add(prodTable, 5, 3);
+            border.setTop(menuAdmin);
+            border.setLeft(vbButtons);
+            border.setCenter(prodTable);
             prodTable.setMinWidth(secondScene.getWidth());
+//            secondPane.setMaxWidth(secondScene.getWidth());
             
         });
         btnAddOrder.setOnAction(e -> {
@@ -805,19 +847,35 @@ public class GUI extends Application
             
             secondPane.getChildren().clear();
             formPane.getChildren().clear();
+            border.getChildren().clear();
             secondPane.setAlignment(Pos.TOP_CENTER);
             secondStage.setTitle("Employee Management");
-            secondPane.add(menuAdmin, 0, 0, 4, 1);
             
-            secondPane.add(lblEmpMan, 3, 1);
-            secondPane.add(cmboEmp, 3, 3);
-            //add combobox
-            secondPane.add(btnEditEmp, 3, 5);
-            secondPane.add(btnAddEmp, 3, 7);
+//            secondPane.add(btnSignOut, 5, 0);
+//            
+//            secondPane.add(lblEmp, 3, 0);
+//            secondPane.add(lblEmpMan, 3, 1);
+//            secondPane.add(cmboEmp, 3, 3);
+//            secondPane.add(btnEditEmp, 3, 5);
+//            secondPane.add(btnAddEmp, 3, 7);
             
+            cmboEmp.setMaxWidth(Double.MAX_VALUE);
+            btnEditEmp.setMaxWidth(Double.MAX_VALUE);
+            btnAddEmp.setMaxWidth(Double.MAX_VALUE);
+
+            VBox empVB = new VBox();
+            empVB.setSpacing(10);
+            empVB.setPadding(new Insets(10, 20, 10 , 20));
+            
+            empVB.getChildren().addAll(lblEmp, lblEmpMan, cmboEmp, btnEditEmp, btnAddEmp);
+            
+            border.setLeft(empVB);
             empTable.setItems(empData);
-            secondPane.add(empTable, 3, 9);
+            //secondPane.add(empTable, 3, 9);
             empTable.setMinWidth(secondScene.getWidth());
+            
+            border.setTop(menuAdmin);
+            border.setCenter(empTable);
             
         });
         
@@ -843,10 +901,13 @@ public class GUI extends Application
             thirdPane.add(lblSalary, 0, 7);
             thirdPane.add(txtSalary, 0, 8);
             thirdPane.add(addEmp, 0, 13);
+//            thirdPane.add(lblWorkPay, 1, 7);
+//            thirdPane.add(txtWorkPay, 1, 8);
             thirdPane.add(empType, 1, 7); //full time or part time 
             thirdPane.add(cmboEType, 1, 8); 
             thirdPane.add(empCat, 0, 9); //manager or associate 
-            thirdPane.add(cmboEmpCat, 0, 10); 
+            thirdPane.add(cmboEmpCat, 0, 10);
+            //thirdPane.add (cmboEmp, 1, 13); 
             thirdPane.add(storeLoc, 1, 9); 
             thirdPane.add(cmboStore, 1, 10); 
             
@@ -864,16 +925,10 @@ public class GUI extends Application
                     (String)cmboJob.getValue(), (String)cmboEType.getValue(), (String)cmboEmpCat.getValue(), (String) cmboStore.getValue())); 
             //changed parse to valueof
             for(int i = 0; i<job.size(); i++){
-                if((job.get(i).equalsIgnoreCase((String)cmboJob.getValue())))
-                {
-                    break;
+                int counter = 0;
+                if(cmboJob.getValue().equals(cmboJob.getItems().get(i))){
+                    counter++;
                 }
-                else if(i == job.size()-1 && job.get(i).equalsIgnoreCase((String)cmboJob.getValue()) == false)
-                {
-                    job.add((String)cmboJob.getValue());
-                }
-                
-                
                 
             }
             alert.setTitle("Success!");
@@ -884,18 +939,18 @@ public class GUI extends Application
             for(Employee emp: empList)
             {
                 empData.add(emp);
-            }            
-           
+            }
+            
             txtFName.clear();
             txtLName.clear();
             txtEmail.clear();
             txtPhone.clear();
             txtAddress.clear();
             txtSalary.clear();
-            cmboJob.getSelectionModel().clearSelection();
-            cmboStore.getSelectionModel().clearSelection();
-            cmboEType.getSelectionModel().clearSelection();
-            cmboEmpCat.getSelectionModel().clearSelection();
+            cmboJob.setPromptText("");
+            cmboStore.setPromptText("");
+            cmboEType.setPromptText("");
+            cmboEmpCat.setPromptText("");
             
             
             thirdStage.close();
@@ -939,39 +994,16 @@ public class GUI extends Application
             thirdPane.add(cmboEType, 1, 8); 
             thirdPane.add(empCat, 0, 9); //manager or associate 
             thirdPane.add(cmboEmpCat, 0, 10);
-            
-            //Selecting cmboBox fields so that if unedited, will not give error
-            for(int i = 0; i<job.size(); i++){
-               if(eC.getJobTitle().equalsIgnoreCase((String)job.get(i)))
-               {
-                   cmboJob.getSelectionModel().select(i);
-               }
-            }
-            for(int i = 0; i<storeList.size(); i++){
-               if(eC.getStoreLoc().equalsIgnoreCase(storeList.get(i).getName()))
-               {
-                   cmboStore.getSelectionModel().select(i); 
-               }
-            }
-            for(int i = 0; i<eType.size(); i++){
-                if(eC.getEmployeeType().equalsIgnoreCase((String)eType.get(i)))
-                {
-                   cmboEType.getSelectionModel().select(i);
-                }
-            }
-            for(int i = 0; i<empCategory.size(); i++){
-                if(eC.getEmployeeCategory().equalsIgnoreCase((String)empCategory.get(i)))
-                {
-                   cmboEmpCat.getSelectionModel().select(i);
-                }
-            }
             txtFName.setText(eC.getFirstName());
             txtLName.setText(eC.getLastName());
             txtEmail.setText(eC.getEmail());
             txtPhone.setText(eC.getPhoneNumber());
             txtAddress.setText(eC.getAddress());
+            cmboJob.setPromptText(eC.getJobTitle());
             txtSalary.setText(Double.toString(eC.getSalary()));
-            
+            cmboStore.setPromptText(eC.getStoreLoc());
+            cmboEType.setPromptText(eC.getEmployeeType());
+            cmboEmpCat.setPromptText(eC.getEmployeeCategory());
 
 
         }
@@ -995,18 +1027,7 @@ public class GUI extends Application
                     eC = null;
                 }
             }
-            for(int i = 0; i<job.size(); i++)
-            {
-                if((job.get(i).equalsIgnoreCase((String)cmboJob.getValue())))
-                {
-                    break;
-                }
-                
-                else if(i == job.size()-1 && job.get(i).equalsIgnoreCase((String)cmboJob.getValue()) == false)
-                {
-                    job.add((String)cmboJob.getValue());
-                }
-            }
+
             alert.setTitle("Success!");
             alert.setHeaderText("The employee has been edited!");
             alert.showAndWait();
@@ -1024,10 +1045,10 @@ public class GUI extends Application
             txtPhone.clear();
             txtAddress.clear();
             txtSalary.clear();
-            cmboJob.getSelectionModel().clearSelection();
-            cmboStore.getSelectionModel().clearSelection();
-            cmboEType.getSelectionModel().clearSelection();
-            cmboEmpCat.getSelectionModel().clearSelection();
+            cmboJob.setPromptText("");
+            cmboStore.setPromptText("");
+            cmboEType.setPromptText("");
+            cmboEmpCat.setPromptText("");
            
 
             thirdStage.close();
@@ -1035,22 +1056,36 @@ public class GUI extends Application
         
         menuAdmin.getMenus().get(1).getItems().get(2).setOnAction(e -> {
            // Expense Management
-           if(isAuthorized == false){
-            alert.setTitle("Step Back");
-            alert.setHeaderText("Get promoted bitch");
-            alert.showAndWait();   
-            }   
-            else{
+           
            secondPane.getChildren().clear();
            formPane.getChildren().clear();
+           border.getChildren().clear();
+           
            secondPane.setAlignment(Pos.TOP_CENTER);
            secondStage.setTitle("Expense Management");
-           secondPane.add(menuAdmin, 0, 0, 4, 1);
            
-           secondPane.add(lblExpMan, 3, 1);
-           secondPane.add(btnAddExp, 3, 2);
-           secondPane.add(btnPayExp, 3, 3);
-           }
+//           secondPane.add(btnSignOut, 5, 0);
+//           
+//           secondPane.add(lblExp, 3, 0);
+//           secondPane.add(lblExpMan, 3, 1);
+//           secondPane.add(btnAddExp, 3, 2);
+//           secondPane.add(btnPayExp, 3, 3);
+            btnAddExp.setMaxWidth(Double.MAX_VALUE);
+            btnPayExp.setMaxWidth(Double.MAX_VALUE);
+            
+            expTable.setItems(expData);
+            expTable.setMinWidth(secondScene.getWidth());
+            
+           VBox expVB = new VBox();
+           expVB.setSpacing(10);
+           expVB.setPadding(new Insets(10, 20, 10 , 20));
+           
+            
+           expVB.getChildren().addAll(lblExp, lblExpMan, btnAddExp, btnPayExp);
+           border.setTop(menuAdmin);
+           border.setLeft(expVB);
+           border.setCenter(expTable);
+           
         });
         
         btnAddExp.setOnAction(e -> {
@@ -1088,21 +1123,6 @@ public class GUI extends Application
          btnSignOut.setOnAction(e -> {
         
             secondStage.close();
-            primaryPane.getChildren().clear();
-            primaryPane.add(lblThrifty, 0, 0);
-            primaryPane.add(lblStore, 0, 1);
-            primaryPane.add(lblSignIn, 0, 3);
-            primaryPane.add(lblUserName, 0, 4);
-            primaryPane.add(txtUser, 0, 5);
-            primaryPane.add(lblPassword, 0, 6);
-            primaryPane.add(txtPass, 0, 7);
-            primaryPane.add(btnSignIn, 0, 9);
-            
-            lblThrifty.setStyle("-fx-font: bold 36pt \"Comic Sans ms\"; -fx-text-fill: red;");
-            lblStore.setStyle("-fx-font: bold 36pt \"Comic Sans ms\"; -fx-text-fill: blue;");
-            lblSignIn.setStyle("-fx-font: bold 16pt \"Arial\";");
-            primaryStage.setScene(primaryScene);
-            primaryStage.setTitle("Main Form");
             primaryStage.show();
             txtUser.clear();
             txtPass.clear();
@@ -1127,6 +1147,8 @@ public class GUI extends Application
             formPane.setVgap(10);
             secondStage.setTitle("Point of Sales Report");
             secondPane.add(menuAdmin, 0, 0, 4, 1);
+            secondPane.add(btnSignOut, 5, 0);
+            
             secondPane.add(tbPOS, 0, 1, 2, 1);
             tbPOS.getTabs().add(tabPOSText);
             tbPOS.getTabs().add(tabPOSChart);
@@ -1154,11 +1176,12 @@ public class GUI extends Application
             
             secondStage.setTitle("Employee Report");
             secondPane.add(menuAdmin, 0, 0, 4, 1);
+            secondPane.add(btnSignOut, 5, 0);
             
             secondPane.add(lblEmpRep, 3, 3);
             secondPane.add(lblEmpLocation, 3, 4);
-            // combobox
-            secondPane.add(btnEmpDisplay, 3, 5);
+            secondPane.add(cmboStore, 3, 5);
+            secondPane.add(btnEmpDisplay, 3, 6);
             
         });
         
@@ -1169,10 +1192,11 @@ public class GUI extends Application
            secondPane.setAlignment(Pos.TOP_CENTER);
            secondStage.setTitle("Monthly Expense Report");
            secondPane.add(menuAdmin, 0, 0, 4, 1);
+           secondPane.add(btnSignOut, 5, 0);
            
            secondPane.add(lblMonthRep, 3, 3);
            secondPane.add(lblMLocation, 3, 4);
-           // combobox
+           secondPane.add(cmboStore, 3, 5);
            secondPane.add(btnMonthDisplay, 3, 6);
            
         });
@@ -1186,21 +1210,23 @@ public class GUI extends Application
            // Profit v. Expense Report
            secondPane.getChildren().clear();
            formPane.getChildren().clear();
+           textPane.getChildren().clear();
            secondPane.setAlignment(Pos.TOP_CENTER);
            textPane.setAlignment(Pos.TOP_LEFT);
            textPane.setVgap(10);
            secondStage.setTitle("Profit v. Expense Report");
            secondPane.add(menuAdmin, 0, 0, 4, 1);
+           secondPane.add(btnSignOut, 5, 0);
            secondPane.add(tbPvE, 0, 1, 4, 1);
            
            tbPvE.setMinWidth(secondScene.getWidth());
            
-           textPane.add(lblPvE, 0, 0);
-           textPane.add(lblYear, 0, 1);
-           //combobox
-           textPane.add(lblPLocation, 0, 3);
-           //combobox
-           textPane.add(btnPvEDisplay, 0, 5);
+           textPane.add(lblPvE, 3, 2);
+           textPane.add(lblYear, 3, 3);
+           textPane.add(cmboYear, 3, 4);
+           textPane.add(lblPLocation, 3, 5);
+           textPane.add(cmboStore, 3, 6);
+           textPane.add(btnPvEDisplay, 3, 7);
            
            tabPText.setContent(textPane);
         });
