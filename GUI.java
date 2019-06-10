@@ -310,7 +310,7 @@ public class GUI extends Application
         primaryPane.add(txtUser, 0, 5);
         primaryPane.add(lblPassword, 0, 6);
         primaryPane.add(txtPass, 0, 7);
-        primaryPane.add(cmboLoginType, 0, 8);
+        //primaryPane.add(cmboLoginType, 0, 8);
         primaryPane.add(btnSignIn, 0, 9);
         //primaryPane.add(btnForgot, 0, 10);
         
@@ -446,17 +446,27 @@ public class GUI extends Application
         btnSignIn.setOnAction(e -> {
             // code to validate log in, has to have two handlers for admin and worker
             // error handling
-            if(txtUser.getText().equalsIgnoreCase("user") == false || txtPass.getText().equalsIgnoreCase("pass")== false){
+
+  
+            if ((txtUser.getText().equalsIgnoreCase("user") == false || txtPass .getText().equalsIgnoreCase("pass")) && (txtUser.getText().equalsIgnoreCase("jsmith") == false || txtPass.getText().equalsIgnoreCase("bananas") == false) && (txtUser.getText().equalsIgnoreCase("sjackson") == false || txtPass.getText().equalsIgnoreCase("apples") == false) && (txtUser.getText().equalsIgnoreCase("rwilliams") == false || txtPass.getText().equalsIgnoreCase("kiwis") == false) && (txtUser.getText().equalsIgnoreCase("rreynolds") == false || txtPass.getText().equalsIgnoreCase("broccoli") == false) && txtUser.getText().equalsIgnoreCase("pflowers") == false || txtPass.getText().equalsIgnoreCase("oranges")) {
+            
+            
             alert.setTitle("Incorrect Login");
-            alert.setHeaderText("Username: user Password: pass");
+            alert.setHeaderText("Invalid Username or Password");
             alert.showAndWait();   
             }
             //creating the second main menu gui
-            else{ 
-                if(cmboLoginType.getValue() == "Manager")
-                {    
-                    isAuthorized = true;
+                else{
+                    if(txtUser.getText().equalsIgnoreCase("jsmith") || txtUser.getText().equalsIgnoreCase("rreynolds") || txtUser.getText().equalsIgnoreCase("pflowers"))
+                    {
+                        isAuthorized = false;
+                    }
+                    if (txtUser.getText().equalsIgnoreCase("sjackson") || txtUser.getText().equalsIgnoreCase("rwilliams") || txtUser.getText().equalsIgnoreCase("user"))
+                    {
+                        isAuthorized = true;
+                    }
                 }
+                
                 
             secondStage.setTitle("Main Menu");
             secondStage.show();
