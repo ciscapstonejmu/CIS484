@@ -14,6 +14,7 @@ import javafx.collections.*;
 import javafx.geometry.Pos;
 import java.time.format.*;
 
+
 public class CustSaleForm {
     
     public String saleID;
@@ -34,8 +35,10 @@ public class CustSaleForm {
     public Button btnAddToSale = new Button("Add to Sale ->");
     public Button btnCompleteSale = new Button("Complete Sale ->");
     public Button btnReceipt = new Button("Generate Receipt ->");
-    
+    public Button repeatBuy = new Button ("Repeat Purchase");
+    //^This button has not been added yet
     public TextArea txtSaleOutput = new TextArea();
+    
     public TextArea receiptOutput = new TextArea();
     public ObservableList<String> isMemList = FXCollections.observableArrayList(
             "Yes",
@@ -116,14 +119,13 @@ public class CustSaleForm {
             String saleOut = "";
             saleOut += GUI.prodList.get(saleProd).toStringSale();
             saleOut += "\n";
-            txtSaleOutput.appendText(saleOut);
-            
+            txtSaleOutput.appendText(saleOut);            
             recItems += saleOut;
             cmboSaleProd.getSelectionModel().clearSelection();
             alert.setTitle("Success!");
             alert.setHeaderText("Sale Has Been Added!");
             alert.showAndWait();
-            
+            txtSaleOutput.setEditable(false);
             
             });
         
@@ -150,11 +152,11 @@ public class CustSaleForm {
             receiptOutput.appendText(recItems);
             receiptOutput.appendText("\n" + thisSale.toString());
             //need to include the customer 
-            receiptOutput.appendText("\n" + "Thank You " + "Still needs to be added"  + "!");
+            receiptOutput.appendText("\n" + "Thank You " + "CUSTOMER**"  + "!");
             alert.setTitle("Success!");
             alert.setHeaderText("Sale Completed!");
             alert.showAndWait();
-                
+            receiptOutput.setEditable(false);
             });
         
         
