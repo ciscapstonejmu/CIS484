@@ -1,0 +1,21 @@
+Associate Accounts
+
+Username: jsmith 
+Password: bananas
+
+Username: rreynolds
+Password: broccoli
+
+Username: pflowers
+Password: oranges
+
+
+
+
+Manager Accounts
+
+Username: sjackson
+Password: apples
+
+Username: rwilliams
+Password: kiwis
