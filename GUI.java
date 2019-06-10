@@ -1088,6 +1088,21 @@ public class GUI extends Application
          btnSignOut.setOnAction(e -> {
         
             secondStage.close();
+            primaryPane.getChildren().clear();
+            primaryPane.add(lblThrifty, 0, 0);
+            primaryPane.add(lblStore, 0, 1);
+            primaryPane.add(lblSignIn, 0, 3);
+            primaryPane.add(lblUserName, 0, 4);
+            primaryPane.add(txtUser, 0, 5);
+            primaryPane.add(lblPassword, 0, 6);
+            primaryPane.add(txtPass, 0, 7);
+            primaryPane.add(btnSignIn, 0, 9);
+            
+            lblThrifty.setStyle("-fx-font: bold 36pt \"Comic Sans ms\"; -fx-text-fill: red;");
+            lblStore.setStyle("-fx-font: bold 36pt \"Comic Sans ms\"; -fx-text-fill: blue;");
+            lblSignIn.setStyle("-fx-font: bold 16pt \"Arial\";");
+            primaryStage.setScene(primaryScene);
+            primaryStage.setTitle("Main Form");
             primaryStage.show();
             txtUser.clear();
             txtPass.clear();
