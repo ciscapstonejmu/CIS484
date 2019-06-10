@@ -449,32 +449,53 @@ public class GUI extends Application
             // error handling
 
   
-            if ((txtUser.getText().equalsIgnoreCase("user") == false || txtPass .getText().equalsIgnoreCase("pass") == false) && (txtUser.getText().equalsIgnoreCase("jsmith") == false || txtPass.getText().equalsIgnoreCase("bananas") == false) && (txtUser.getText().equalsIgnoreCase("sjackson") == false || txtPass.getText().equalsIgnoreCase("apples") == false) && (txtUser.getText().equalsIgnoreCase("rwilliams") == false || txtPass.getText().equalsIgnoreCase("kiwis") == false) && (txtUser.getText().equalsIgnoreCase("rreynolds") == false || txtPass.getText().equalsIgnoreCase("broccoli") == false) && (txtUser.getText().equalsIgnoreCase("pflowers") == false) || (txtPass.getText().equalsIgnoreCase("oranges"))) {
-            
-            
-            txtUser.clear();
-            txtPass.clear();
+            try {
+            File pwTxt = new File("passwords.txt");
+            Scanner logins = new Scanner(pwTxt);
+            while (logins.hasNextLine())
+            {
+                String input = logins.next();
+                String user = input.substring(0, input.indexOf(","));
+                //System.out.println(user);
+                String pass = input.substring(input.indexOf(",")+1, input.lastIndexOf(","));
+                //System.out.println(pass);
+                
+                String empType = input.substring(input.lastIndexOf(",")+1, input.length());
+                //System.out.println(empType);
+                if (user.equalsIgnoreCase(txtUser.getText()) && (pass.equals(txtPass.getText())) && empType.equalsIgnoreCase("manager")) 
+                {
+                    found = true;
+                    isAuthorized = true;
+                    break;
+                }
+                else if(user.equalsIgnoreCase(txtUser.getText()) && (pass.equals(txtPass.getText())) && empType.equalsIgnoreCase("manager")==false)
+                {
+                    found = true;
+                    isAuthorized = false;
+                    break;
+                }
+            }
+            logins.close();  
+            } 
+            catch (Exception ex) 
+            {
+                
+            }
+           
+            if(!found) { // added the contents of the previously existing else statement here, outside the while
             alert.setTitle("Incorrect Login");
             alert.setHeaderText("Invalid Username or Password");
-            alert.showAndWait();   
+            alert.showAndWait();
             }
+            
             //creating the second main menu gui
-                else{
-                    if(txtUser.getText().equalsIgnoreCase("jsmith") || txtUser.getText().equalsIgnoreCase("rreynolds") || txtUser.getText().equalsIgnoreCase("pflowers"))
-                    {
-                        isAuthorized = false;
-                    }
-                    if (txtUser.getText().equalsIgnoreCase("sjackson") || txtUser.getText().equalsIgnoreCase("rwilliams") || txtUser.getText().equalsIgnoreCase("user"))
-                    {
-                        isAuthorized = true;
-                    }
-                
-            txtUser.clear();
-            txtPass.clear();
+            else{
+            primaryStage.close();
             secondStage.setTitle("Main Menu");
             secondStage.show();
-            primaryStage.close();
-            }
+            
+            secondPane.getChildren().clear();
+            
             
             secondPane.add(menuAdmin, 0, 0, 4, 1);
             secondPane.add(lblThrifty, 3, 2);
@@ -488,13 +509,15 @@ public class GUI extends Application
             btnRingSale.setPrefSize(120, 150);
             btnRingSale.setFont(Font.font("Times New Roman", 20));
             
-            
-            
             if(isAuthorized == false)
             {
             menuAdmin.getMenus().get(1).getItems().get(0).setDisable(true); //Employee management
             menuAdmin.getMenus().get(1).getItems().get(2).setDisable(true); //Expense Management
             }
+            
+            }
+            
+            
             
         });
                 
