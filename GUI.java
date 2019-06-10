@@ -142,12 +142,11 @@ public class GUI extends Application
     TextField txtPhone = new TextField();
     Label lblAddress = new Label("Address");
     TextField txtAddress = new TextField();
+    ObservableList<String> job = FXCollections.observableArrayList("Cashier", "Bagger", "Cleaner", "Shelfer", "Organizer","Customer Service", "General Manager", "Area Manager");
+    ComboBox cmboJob = new ComboBox(job);
     Label lblJobTitle = new Label("Job Title");
-    TextField txtJobTitle = new TextField();
     Label lblSalary = new Label("Salary");
     TextField txtSalary = new TextField();
-//    Label lblWorkPay = new Label("Work Pay");
-//    TextField txtWorkPay = new TextField();
     Button addEmp = new Button("Add Employee");
     Label empType = new Label("Employee Type "); 
     ObservableList<String> eType = FXCollections.observableArrayList("Full Time", "Part Time");
@@ -391,7 +390,7 @@ public class GUI extends Application
         
         
         //Employee Table
-        TableColumn tbEmpID = new TableColumn("ID");
+        //TableColumn tbEmpID = new TableColumn("ID");
         TableColumn tbEmpFName = new TableColumn("First Name");
         TableColumn tbEmpLName = new TableColumn("Last Name");
         TableColumn tbEmpEmail = new TableColumn("Email");
@@ -404,7 +403,7 @@ public class GUI extends Application
         TableColumn tbEmpLoc = new TableColumn("Location");
         
         //ValueFactory for Employee Table
-        tbEmpID.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("employeeID"));
+        //tbEmpID.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("employeeID"));
         tbEmpFName.setCellValueFactory(new PropertyValueFactory<Employee, String>("firstName"));
         tbEmpLName.setCellValueFactory(new PropertyValueFactory<Employee, String>("lastName"));
         tbEmpEmail.setCellValueFactory(new PropertyValueFactory<Employee, String>("email"));
@@ -418,7 +417,7 @@ public class GUI extends Application
         
         
         // Product Table
-        TableColumn tbProdID = new TableColumn("ID");
+        //TableColumn tbProdID = new TableColumn("ID");
         TableColumn tbProdName = new TableColumn("Name");
         TableColumn tbProdQuantity = new TableColumn("Quantity");
         TableColumn tbProdPrice = new TableColumn("Price");
@@ -428,7 +427,7 @@ public class GUI extends Application
         TableColumn tbProdImage = new TableColumn("Image");
         
         //ValueFactory for Product Table
-        tbProdID.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productID"));
+        //tbProdID.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productID"));
         tbProdName.setCellValueFactory(new PropertyValueFactory<Product, String>("productName"));
         tbProdQuantity.setCellValueFactory(new PropertyValueFactory<Product, Integer>("quantity"));
         tbProdPrice.setCellValueFactory(new PropertyValueFactory<Product, Double>("price"));
@@ -503,7 +502,7 @@ public class GUI extends Application
             
         });
         
-        prodTable.getColumns().addAll(tbProdID, tbProdName, tbProdQuantity, tbProdPrice, tbProdDesc, tbProdCategory, tbProdLocation, tbProdImage);
+        prodTable.getColumns().addAll(tbProdName, tbProdQuantity, tbProdPrice, tbProdDesc, tbProdCategory, tbProdLocation, tbProdImage);
         menuAdmin.getMenus().get(1).getItems().get(1).setOnAction(e -> {
             // Inventory Management
             
@@ -760,7 +759,7 @@ public class GUI extends Application
         
         
         
-        empTable.getColumns().addAll(tbEmpID, tbEmpFName, tbEmpLName, tbEmpEmail,
+        empTable.getColumns().addAll(tbEmpFName, tbEmpLName, tbEmpEmail,
                 tbEmpPhone, tbEmpAddress, tbEmpSalary, tbEmpJTitle, tbEmpType, tbEmpCat, tbEmpLoc);
         
         
@@ -804,7 +803,7 @@ public class GUI extends Application
             thirdPane.add(lblAddress, 0, 5);
             thirdPane.add(txtAddress, 0, 6);
             thirdPane.add(lblJobTitle, 1, 5);
-            thirdPane.add(txtJobTitle, 1, 6);
+            thirdPane.add(cmboJob, 1, 6);
             thirdPane.add(lblSalary, 0, 7);
             thirdPane.add(txtSalary, 0, 8);
             thirdPane.add(addEmp, 0, 13);
@@ -818,6 +817,8 @@ public class GUI extends Application
             thirdPane.add(storeLoc, 1, 9); 
             thirdPane.add(cmboStore, 1, 10); 
             
+            cmboJob.setEditable(true);
+            
             
         });
         
@@ -827,8 +828,15 @@ public class GUI extends Application
                 
             empList.add(new Employee(txtFName.getText(), txtLName.getText(), txtEmail.getText(), txtPhone.getText(), 
             txtAddress.getText(), Double.valueOf(txtSalary.getText()),  
-                    txtJobTitle.getText(), (String)cmboEType.getValue(), (String)cmboEmpCat.getValue(), (String) cmboStore.getValue())); 
+                    (String)cmboJob.getValue(), (String)cmboEType.getValue(), (String)cmboEmpCat.getValue(), (String) cmboStore.getValue())); 
             //changed parse to valueof
+            for(int i = 0; i<job.size(); i++){
+                int counter = 0;
+                if(cmboJob.getValue().equals(cmboJob.getItems().get(i))){
+                    counter++;
+                }
+                
+            }
             alert.setTitle("Success!");
             alert.setHeaderText("The employee has been added!");
             alert.showAndWait();
@@ -839,19 +847,16 @@ public class GUI extends Application
                 empData.add(emp);
             }
             
-            /*
-            txtFName.clear():
-            txtLName.clear():
-            txtEmail.clear():
-            txtPhone.clear():
-            txtAddress.clear():
-            txtJobTitle.clear():
-            txtSalary.clear():
-            txtJobTitle.clear():
-            txtEmpType.clear():
-            txtEmpCat.clear():
-            txtStoreLoc.clear():
-            */
+            txtFName.clear();
+            txtLName.clear();
+            txtEmail.clear();
+            txtPhone.clear();
+            txtAddress.clear();
+            txtSalary.clear();
+            cmboJob.setPromptText("");
+            cmboStore.setPromptText("");
+            cmboEType.setPromptText("");
+            cmboEmpCat.setPromptText("");
             
             
             thirdStage.close();
@@ -873,6 +878,7 @@ public class GUI extends Application
             thirdPane.setAlignment(Pos.TOP_CENTER);
 
             // SHU - I switched txtStoreLoc to the cmboStore so do whatever accordingly to fix these
+            // I adjusted for these - Shu
             thirdPane.add(lblFName, 0, 1);
             thirdPane.add(txtFName, 0, 2);
             thirdPane.add(lblLName, 1, 1);
@@ -884,20 +890,26 @@ public class GUI extends Application
             thirdPane.add(lblAddress, 0, 5);
             thirdPane.add(txtAddress, 0, 6);
             thirdPane.add(lblJobTitle, 1, 5);
-            thirdPane.add(txtJobTitle, 1, 6);
+            thirdPane.add(cmboJob, 1, 6);
             thirdPane.add(lblSalary, 0, 7);
             thirdPane.add(txtSalary, 0, 8);
             thirdPane.add(editEmp, 0, 13);
-            thirdPane.add(storeLoc, 1, 7); 
-            thirdPane.add(txtStoreLoc, 1, 8);
+            thirdPane.add(storeLoc, 1, 9); 
+            thirdPane.add(cmboStore, 1, 10);
+            thirdPane.add(empType, 1, 7); //full time or part time 
+            thirdPane.add(cmboEType, 1, 8); 
+            thirdPane.add(empCat, 0, 9); //manager or associate 
+            thirdPane.add(cmboEmpCat, 0, 10);
             txtFName.setText(eC.getFirstName());
             txtLName.setText(eC.getLastName());
             txtEmail.setText(eC.getEmail());
             txtPhone.setText(eC.getPhoneNumber());
             txtAddress.setText(eC.getAddress());
-            txtJobTitle.setText(eC.getJobTitle());
+            cmboJob.setPromptText(eC.getJobTitle());
             txtSalary.setText(Double.toString(eC.getSalary()));
-            txtStoreLoc.setText(eC.getStoreLoc());
+            cmboStore.setPromptText(eC.getStoreLoc());
+            cmboEType.setPromptText(eC.getEmployeeType());
+            cmboEmpCat.setPromptText(eC.getEmployeeCategory());
 
 
         }
@@ -907,10 +919,13 @@ public class GUI extends Application
             eC.setLName(txtLName.getText());
             eC.setEmail(txtEmail.getText());
             eC.setAddress(txtAddress.getText());
-            eC.setJobTitle(txtJobTitle.getText());
+            eC.setJobTitle((String)cmboJob.getValue());
             eC.setPhoneNumber(txtPhone.getText());
-            eC.setStore(txtStoreLoc.getText());
+            eC.setStore((String) cmboStore.getValue());
             eC.setSalary(Double.valueOf(txtSalary.getText()));
+            eC.setEmployeeCategory((String) cmboEmpCat.getValue());
+            eC.setEmployeeType((String)cmboEType.getValue());
+            
             for(int i = 0; i<empList.size(); i++){
                 if(eC.getEmployeeID() == empList.get(i).getEmployeeID()){
                     empList.remove(i);
@@ -935,10 +950,12 @@ public class GUI extends Application
             txtEmail.clear();
             txtPhone.clear();
             txtAddress.clear();
-            txtJobTitle.clear();
             txtSalary.clear();
-            txtJobTitle.clear();
-            txtStoreLoc.clear();
+            cmboJob.setPromptText("");
+            cmboStore.setPromptText("");
+            cmboEType.setPromptText("");
+            cmboEmpCat.setPromptText("");
+           
 
             thirdStage.close();
         });
