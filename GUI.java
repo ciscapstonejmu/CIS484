@@ -444,14 +444,16 @@ public class GUI extends Application
         
         
         
-        btnSignIn.setOnAction(e -> {
+         btnSignIn.setOnAction(e -> {
             // code to validate log in, has to have two handlers for admin and worker
             // error handling
 
   
-            if ((txtUser.getText().equalsIgnoreCase("user") == false || txtPass .getText().equalsIgnoreCase("pass")) && (txtUser.getText().equalsIgnoreCase("jsmith") == false || txtPass.getText().equalsIgnoreCase("bananas") == false) && (txtUser.getText().equalsIgnoreCase("sjackson") == false || txtPass.getText().equalsIgnoreCase("apples") == false) && (txtUser.getText().equalsIgnoreCase("rwilliams") == false || txtPass.getText().equalsIgnoreCase("kiwis") == false) && (txtUser.getText().equalsIgnoreCase("rreynolds") == false || txtPass.getText().equalsIgnoreCase("broccoli") == false) && txtUser.getText().equalsIgnoreCase("pflowers") == false || txtPass.getText().equalsIgnoreCase("oranges")) {
+            if ((txtUser.getText().equalsIgnoreCase("user") == false || txtPass .getText().equalsIgnoreCase("pass") == false) && (txtUser.getText().equalsIgnoreCase("jsmith") == false || txtPass.getText().equalsIgnoreCase("bananas") == false) && (txtUser.getText().equalsIgnoreCase("sjackson") == false || txtPass.getText().equalsIgnoreCase("apples") == false) && (txtUser.getText().equalsIgnoreCase("rwilliams") == false || txtPass.getText().equalsIgnoreCase("kiwis") == false) && (txtUser.getText().equalsIgnoreCase("rreynolds") == false || txtPass.getText().equalsIgnoreCase("broccoli") == false) && (txtUser.getText().equalsIgnoreCase("pflowers") == false) || (txtPass.getText().equalsIgnoreCase("oranges"))) {
             
             
+            txtUser.clear();
+            txtPass.clear();
             alert.setTitle("Incorrect Login");
             alert.setHeaderText("Invalid Username or Password");
             alert.showAndWait();   
@@ -466,14 +468,13 @@ public class GUI extends Application
                     {
                         isAuthorized = true;
                     }
-                }
                 
-                
+            txtUser.clear();
+            txtPass.clear();
             secondStage.setTitle("Main Menu");
             secondStage.show();
             primaryStage.close();
-            
-            
+            }
             
             secondPane.add(menuAdmin, 0, 0, 4, 1);
             secondPane.add(lblThrifty, 3, 2);
