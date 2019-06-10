@@ -67,6 +67,7 @@ public class GUI extends Application
     
     // Main Menu Buttons
     Button btnRingSale = new Button("Ring Sale");
+    Button btnSignOut = new Button("Sign Out");
     
     //Tables
     TableView<Employee> empTable = new TableView<>();
@@ -480,6 +481,7 @@ public class GUI extends Application
             secondPane.add(lblMain, 3, 4);
             secondPane.add(lblSelect, 3, 5);
             secondPane.add(btnRingSale, 3, 6);
+            secondPane.add(btnSignOut, 5, 0);
             
             //Set Ring Sale Button Formatting
             btnRingSale.setPrefSize(120, 150);
@@ -1021,9 +1023,19 @@ public class GUI extends Application
             thirdStage.close();
         });
         
+        
+         btnSignOut.setOnAction(e -> {
+        
+            secondStage.close();
+            primaryStage.show();
+            txtUser.clear();
+            txtPass.clear();
+        
+        });
+        
         //Ring Sale Button
         //Open new window to ring up sale 
-        
+       
         btnRingSale.setOnAction(e -> {
             
             CustSaleForm newSale = new CustSaleForm(this);
