@@ -3,6 +3,8 @@ package pkg484groupproj;
 import javafx.application.Application;
 import javafx.event.*;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -16,7 +18,8 @@ public class CustSaleForm {
     public String saleID;
     public static int saleCount = 0;
     public String recItems = "";
-    
+    public Alert alertError = new Alert(Alert.AlertType.ERROR);
+    public Alert alert = new Alert(Alert.AlertType.INFORMATION);
     public Label lblSaleDate = new Label("Date:");
     public Label lblSaleStore = new Label("Store:");
     public Label lblSaleEmp = new Label("Employee");
@@ -103,10 +106,11 @@ public class CustSaleForm {
         
         
         btnAddToSale.setOnAction(e -> {
-            //Find products in sale         
+            //Find products in sale      
+
             int saleProd = cmboSaleProd.getSelectionModel().getSelectedIndex();
+
             this.saleProducts.add(GUI.prodList.get(saleProd));
-            
             String saleOut = "";
             saleOut += GUI.prodList.get(saleProd).toStringSale();
             saleOut += "\n";
@@ -114,10 +118,16 @@ public class CustSaleForm {
             
             recItems += saleOut;
             cmboSaleProd.getSelectionModel().clearSelection();
+            alert.setTitle("Success!");
+            alert.setHeaderText("Sale Has Been Added!");
+            alert.showAndWait();
+            
+            
             });
         
         //Complete the sale
         btnCompleteSale.setOnAction(e -> {
+            receiptOutput.clear();
             primaryPane.add(receiptOutput, 5, 6);
             receiptOutput.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
             receiptOutput.appendText("Receipt: " + "\n");
@@ -128,14 +138,20 @@ public class CustSaleForm {
             
             String dateOfSale = saleDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             
-            GUI.saleList.add(new CustSale(dateOfSale, GUI.storeList.get(saleStore),
+            CustSale thisOne = new CustSale(dateOfSale, GUI.storeList.get(saleStore),
                     GUI.empList.get(saleEmp), cmboIsMem.getValue().toString(),
-                    this.saleProducts));
+                    this.saleProducts);
+            
+            GUI.saleList.add(thisOne);
             
             CustSale thisSale = GUI.saleList.get(saleCount-1);
             receiptOutput.appendText(recItems);
             receiptOutput.appendText("\n" + thisSale.toString());
-            
+            //need to include the customer 
+            receiptOutput.appendText("\n" + "Thank You " + "Still needs to be added"  + "!");
+            alert.setTitle("Success!");
+            alert.setHeaderText("Sale Completed!");
+            alert.showAndWait();
                 
             });
         
