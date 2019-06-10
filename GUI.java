@@ -819,13 +819,10 @@ public class GUI extends Application
             thirdPane.add(lblSalary, 0, 7);
             thirdPane.add(txtSalary, 0, 8);
             thirdPane.add(addEmp, 0, 13);
-//            thirdPane.add(lblWorkPay, 1, 7);
-//            thirdPane.add(txtWorkPay, 1, 8);
             thirdPane.add(empType, 1, 7); //full time or part time 
             thirdPane.add(cmboEType, 1, 8); 
             thirdPane.add(empCat, 0, 9); //manager or associate 
-            thirdPane.add(cmboEmpCat, 0, 10);
-            //thirdPane.add (cmboEmp, 1, 13); 
+            thirdPane.add(cmboEmpCat, 0, 10); 
             thirdPane.add(storeLoc, 1, 9); 
             thirdPane.add(cmboStore, 1, 10); 
             
@@ -843,10 +840,16 @@ public class GUI extends Application
                     (String)cmboJob.getValue(), (String)cmboEType.getValue(), (String)cmboEmpCat.getValue(), (String) cmboStore.getValue())); 
             //changed parse to valueof
             for(int i = 0; i<job.size(); i++){
-                int counter = 0;
-                if(cmboJob.getValue().equals(cmboJob.getItems().get(i))){
-                    counter++;
+                if((job.get(i).equalsIgnoreCase((String)cmboJob.getValue())))
+                {
+                    break;
                 }
+                else if(i == job.size()-1 && job.get(i).equalsIgnoreCase((String)cmboJob.getValue()) == false)
+                {
+                    job.add((String)cmboJob.getValue());
+                }
+                
+                
                 
             }
             alert.setTitle("Success!");
@@ -857,18 +860,18 @@ public class GUI extends Application
             for(Employee emp: empList)
             {
                 empData.add(emp);
-            }
-            
+            }            
+           
             txtFName.clear();
             txtLName.clear();
             txtEmail.clear();
             txtPhone.clear();
             txtAddress.clear();
             txtSalary.clear();
-            cmboJob.setPromptText("");
-            cmboStore.setPromptText("");
-            cmboEType.setPromptText("");
-            cmboEmpCat.setPromptText("");
+            cmboJob.getSelectionModel().clearSelection();
+            cmboStore.getSelectionModel().clearSelection();
+            cmboEType.getSelectionModel().clearSelection();
+            cmboEmpCat.getSelectionModel().clearSelection();
             
             
             thirdStage.close();
@@ -912,16 +915,39 @@ public class GUI extends Application
             thirdPane.add(cmboEType, 1, 8); 
             thirdPane.add(empCat, 0, 9); //manager or associate 
             thirdPane.add(cmboEmpCat, 0, 10);
+            
+            //Selecting cmboBox fields so that if unedited, will not give error
+            for(int i = 0; i<job.size(); i++){
+               if(eC.getJobTitle().equalsIgnoreCase((String)job.get(i)))
+               {
+                   cmboJob.getSelectionModel().select(i);
+               }
+            }
+            for(int i = 0; i<storeList.size(); i++){
+               if(eC.getStoreLoc().equalsIgnoreCase(storeList.get(i).getName()))
+               {
+                   cmboStore.getSelectionModel().select(i); 
+               }
+            }
+            for(int i = 0; i<eType.size(); i++){
+                if(eC.getEmployeeType().equalsIgnoreCase((String)eType.get(i)))
+                {
+                   cmboEType.getSelectionModel().select(i);
+                }
+            }
+            for(int i = 0; i<empCategory.size(); i++){
+                if(eC.getEmployeeCategory().equalsIgnoreCase((String)empCategory.get(i)))
+                {
+                   cmboEmpCat.getSelectionModel().select(i);
+                }
+            }
             txtFName.setText(eC.getFirstName());
             txtLName.setText(eC.getLastName());
             txtEmail.setText(eC.getEmail());
             txtPhone.setText(eC.getPhoneNumber());
             txtAddress.setText(eC.getAddress());
-            cmboJob.setPromptText(eC.getJobTitle());
             txtSalary.setText(Double.toString(eC.getSalary()));
-            cmboStore.setPromptText(eC.getStoreLoc());
-            cmboEType.setPromptText(eC.getEmployeeType());
-            cmboEmpCat.setPromptText(eC.getEmployeeCategory());
+            
 
 
         }
@@ -945,7 +971,18 @@ public class GUI extends Application
                     eC = null;
                 }
             }
-
+            for(int i = 0; i<job.size(); i++)
+            {
+                if((job.get(i).equalsIgnoreCase((String)cmboJob.getValue())))
+                {
+                    break;
+                }
+                
+                else if(i == job.size()-1 && job.get(i).equalsIgnoreCase((String)cmboJob.getValue()) == false)
+                {
+                    job.add((String)cmboJob.getValue());
+                }
+            }
             alert.setTitle("Success!");
             alert.setHeaderText("The employee has been edited!");
             alert.showAndWait();
@@ -963,10 +1000,10 @@ public class GUI extends Application
             txtPhone.clear();
             txtAddress.clear();
             txtSalary.clear();
-            cmboJob.setPromptText("");
-            cmboStore.setPromptText("");
-            cmboEType.setPromptText("");
-            cmboEmpCat.setPromptText("");
+            cmboJob.getSelectionModel().clearSelection();
+            cmboStore.getSelectionModel().clearSelection();
+            cmboEType.getSelectionModel().clearSelection();
+            cmboEmpCat.getSelectionModel().clearSelection();
            
 
             thirdStage.close();
