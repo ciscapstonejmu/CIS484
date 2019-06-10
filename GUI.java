@@ -488,7 +488,7 @@ public class GUI extends Application
             btnRingSale.setFont(Font.font("Times New Roman", 20));
             
             
-            }
+            
             if(isAuthorized == false)
             {
             menuAdmin.getMenus().get(1).getItems().get(0).setDisable(true); //Employee management
