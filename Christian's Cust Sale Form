@@ -118,6 +118,14 @@ public class CustSaleForm {
             int saleProd = cmboSaleProd.getSelectionModel().getSelectedIndex();
 
             this.saleProducts.add(GUI.prodList.get(saleProd));
+            if(saleProducts.size() > GUI.prodList.size())
+            {
+                saleProducts.remove(saleProd);
+                alertError.setTitle("Error");
+                alertError.setHeaderText("Sale Quantity exceeds Inventory!");
+                alertError.showAndWait();
+            }
+            else{
             String saleOut = "";
             saleOut += GUI.prodList.get(saleProd).toStringSale();
             saleOut += "\n";
@@ -128,6 +136,7 @@ public class CustSaleForm {
             alert.setHeaderText("Sale Has Been Added!");
             alert.showAndWait();
             txtSaleOutput.setEditable(false);
+            }
             
             });
         
@@ -151,8 +160,10 @@ public class CustSaleForm {
             receiptOutput.clear();
             primaryPane.add(receiptOutput, 5, 6);
             receiptOutput.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+            receiptOutput.appendText("Thrifty $tore: " + "\n");
             receiptOutput.appendText("Receipt: " + "\n");
-                
+            receiptOutput.appendText("--------------------------"
+                + "----------------------------------------\n");
             int saleStore = cmboSaleStore.getSelectionModel().getSelectedIndex();
             int saleEmp = cmboSaleEmp.getSelectionModel().getSelectedIndex();
             int isMem = cmboIsMem.getSelectionModel().getSelectedIndex();
@@ -169,6 +180,8 @@ public class CustSaleForm {
             receiptOutput.appendText(recItems);
             receiptOutput.appendText("\n" + thisSale.toString());
             //need to include the customer 
+            receiptOutput.appendText("--------------------------"
+                + "----------------------------------------\n");
             receiptOutput.appendText("\n" + "Thank You " + "CUSTOMER**"  + "!");
             alert.setTitle("Success!");
             alert.setHeaderText("Sale Completed!");
