@@ -186,6 +186,8 @@ public class GUI extends Application
     Label lblExp = new Label("Expense");
     Button btnAddExp = new Button("Add Expense");
     Button btnPayExp = new Button("Pay Expense");
+    Button btnEditExp = new Button("Edit Expense");
+    static ObservableList<Expense> obsExpense = FXCollections.observableArrayList();
     
     // Add Expense
     Label lblAddExp = new Label("Add an Expense");
