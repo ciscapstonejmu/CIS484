@@ -318,10 +318,10 @@ public class GUI extends Application
         primaryPane.setVgap(10);
         
             Store store1 = new Store("Harrisonburg", "123 lane");
-            Store store2 = new Store ("Winchester", "456 lane");
-            Store store3 = new Store ("Fairfax", "789 lane");
-            Store store4 = new Store ("Charlottesville", "123 way");
-            Store store5 = new Store ("Vegas", "456 way");
+            Store store2 = new Store ("New Market", "456 lane");
+            Store store3 = new Store ("Staunton", "789 lane");           
+            Store store4 = new Store ("Waynesboro", "456 way");
+            Store store5 = new Store ("Charlottesville", "123 way");
             obsStore.add(store1);
             obsStore.add(store2);
             obsStore.add(store3);
