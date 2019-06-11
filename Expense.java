@@ -56,15 +56,26 @@ public class Expense {
         return this.amountPaid;
     }
     
+    public void setDate(String d)
+    {
+        this.date = d;
+    }
+    
     public String getDate()
     {
         return this.date;
+    }
+    
+    public void setStatus(String s)
+    {
+        this.status = s;
     }
     
     public String getStatus()
     {
         return this.status;
     }
+    
     
     public String toString()
     {
