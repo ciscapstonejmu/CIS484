@@ -243,6 +243,15 @@ public class GUI extends Application
     //ComboBox cmboOrderProd = new ComboBox(Product.obsProduct);
     */    
 
+    // Payroll
+    Label lblPayroll = new Label("Payroll");
+    // managers view
+    Label lblPEEmp = new Label("Edit Employee");
+    Button btnPEEmp = new Button("Edit Employee");
+    // Both
+    Button btnEnterTime = new Button("Enter Time");
+    
+    
     //POS Report
     Label lblPOS = new Label("Point of Sales");
     Label lblViewType = new Label("View Type");
@@ -384,6 +393,7 @@ public class GUI extends Application
         lblExp.setStyle("-fx-font: bold 20pt \"Arial\";");
         lblPOS.setStyle("-fx-font: bold 20pt \"Arial\";");
         lblReport.setStyle("-fx-font: bold 20pt \"Arial\";");
+        lblPayroll.setStyle("-fx-font: bold 20pt \"Arial\";");
         lblEmpRep.setStyle("-fx-font: bold 20pt \"Arial\";");
         lblMonthRep.setStyle("-fx-font: bold 20pt \"Arial\";");
         lblPvE.setStyle("-fx-font: bold 20pt \"Arial\";");
@@ -510,7 +520,7 @@ public class GUI extends Application
         tbProdDesc.setCellValueFactory(new PropertyValueFactory<Product, String>("foodDescription"));
         tbProdCategory.setCellValueFactory(new PropertyValueFactory<Product, String>("category"));
         tbProdLocation.setCellValueFactory(new PropertyValueFactory<Product, String>("location"));
-        tbProdSupplier.setCellValueFactory(new PropertyValueFactory<Product, String>("Supplier"));
+         tbProdSupplier.setCellValueFactory(new PropertyValueFactory<Product, String>("Supplier"));
         tbProdImage.setCellValueFactory(new PropertyValueFactory<Product, BufferedImage>("image"));
         
         // Expense Table
@@ -652,8 +662,7 @@ public class GUI extends Application
             
         });
         
-        prodTable.getColumns().addAll(tbProdName, tbProdQuantity, tbProdPrice, tbProdDesc, tbProdCategory, tbProdLocation, tbProdSupplier, tbProdImage);
-        menuAdmin.getMenus().get(1).getItems().get(1).setOnAction(e -> {
+            prodTable.getColumns().addAll(tbProdName, tbProdQuantity, tbProdPrice, tbProdDesc, tbProdCategory, tbProdLocation, tbProdSupplier, tbProdImage);        menuAdmin.getMenus().get(1).getItems().get(1).setOnAction(e -> {
             // Inventory Management
             
             secondPane.getChildren().clear();
@@ -820,7 +829,7 @@ public class GUI extends Application
                     Integer.valueOf(txtProdQuantity.getText()),
                     Double.valueOf(txtUnitPrice.getText()), 
                      storeList.get(cmboStore.getSelectionModel().getSelectedIndex()), txtProdDesc.getText(), 
-                    (String) cmboCategory.getValue(),txtSupplier.getText(), tempImage));
+                    (String) cmboCategory.getValue(),tempImage));
             
             alert.setTitle("Success!");
             alert.setHeaderText("The product has been added!");
@@ -1372,6 +1381,33 @@ public class GUI extends Application
             CustSaleForm newSale = new CustSaleForm(this);
             
         });
+        
+        menuAdmin.getMenus().get(2).getItems().get(0).setOnAction(e -> {
+            // Payroll
+            secondPane.getChildren().clear();
+            border.getChildren().clear();
+            secondStage.setTitle("Payroll");
+            VBox vPay = new VBox();
+            vPay.setSpacing(10);
+            vPay.setPadding(new Insets(10, 20, 10 , 20));
+            
+            if(isAuthorized == true)
+            {
+                // What managers will see
+                vPay.getChildren().addAll(lblPayroll, lblPEEmp, cmboEmp, btnPEEmp, btnEnterTime);
+            }
+            
+            else
+            {
+                // What associates will see
+                vPay.getChildren().addAll(lblPayroll, btnEnterTime);
+            }
+            
+            border.setTop(menuAdmin);
+            border.setLeft(vPay);
+            
+        });
+        
         
         menuAdmin.getMenus().get(3).getItems().get(0).setOnAction(e -> {
             // Point of Sales Report
