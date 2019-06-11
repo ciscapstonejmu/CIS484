@@ -157,6 +157,7 @@ public class CustSaleForm {
         
         //Complete the sale
         btnCompleteSale.setOnAction(e -> {
+            try{
             receiptOutput.clear();
             primaryPane.add(receiptOutput, 5, 6);
             receiptOutput.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
@@ -188,6 +189,15 @@ public class CustSaleForm {
             alert.showAndWait();
             receiptOutput.setEditable(false);
             cmboSaleProd.getSelectionModel().clearSelection();
+            }
+            catch (Exception ex)
+            {
+                
+                receiptOutput.clear();
+                alert.setTitle("Error!");
+                alert.setHeaderText("No Sales Added!");
+                alert.showAndWait();
+            }
             });
         
         
