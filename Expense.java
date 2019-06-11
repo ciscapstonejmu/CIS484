@@ -7,6 +7,7 @@ public class Expense {
     private String date;
     private String status;
     private double amountPaid;
+    private double totalAmount;
     
     public static int nextID = 0;
     
@@ -15,6 +16,18 @@ public class Expense {
         this.category = category;
         this.description = description;
         this.amountPaid = amountPaid;
+        this.date = date;
+        this.status = status;
+        
+        expenseID = nextID++;
+    }
+    
+    public Expense(String category, String description, double amountPaid, double amount, String date, String status)
+    {
+        this.category = category;
+        this.description = description;
+        this.amountPaid = amountPaid;
+        this.totalAmount = amount;
         this.date = date;
         this.status = status;
         
@@ -44,6 +57,16 @@ public class Expense {
     public String getDescription()
     {
         return this.description;
+    }
+    
+    public void setAmount(double amount)
+    {
+        this.totalAmount = amount;
+    }
+    
+    public double getAmount()
+    {
+        return this.totalAmount;
     }
     
     public void setAmountPaid(double amountPaid)
@@ -76,6 +99,11 @@ public class Expense {
         return this.status;
     }
     
+    public void payExpense(double payment)
+    {
+        this.totalAmount = this.totalAmount - payment;
+        this.amountPaid += payment;
+    }
     
     public String toString()
     {
