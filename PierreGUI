@@ -564,46 +564,37 @@ public class GUI extends Application
         menuAdmin.setMinWidth(secondScene.getWidth());
         
         
+        try
+        {
+          ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("employees.dat"));
+           
+           savedEmp = (ArrayList<Employee>)(instanceObjectInput.readObject());
+           for(Employee emp : savedEmp){
+               System.out.println(emp.toString());
+           }
+           instanceObjectInput.close();
+        }
+        catch(Exception ex)
+        {
+            
+        }
         
         btnSignIn.setOnAction(e -> {
             // code to validate log in, has to have two handlers for admin and worker
             // error handling
-
-  try {
-
-             File pwTxt = new File("passwords.txt");
-
-             Scanner logins = new Scanner(pwTxt);
-            while (logins.hasNextLine())
-            {
-                String input = logins.next();
-                String user = input.substring(0, input.indexOf(","));
-                //System.out.println(user);
-                String pass = input.substring(input.indexOf(",")+1, input.lastIndexOf(","));
-                //System.out.println(pass);
-
-                 String empType = input.substring(input.lastIndexOf(",")+1, input.length());
-                //System.out.println(empType);
-                if (user.equalsIgnoreCase(txtUser.getText()) && (pass.equals(txtPass.getText())) && empType.equalsIgnoreCase("manager")) 
-                {
-                    found = true;
-                    isAuthorized = true;
-                    break;
-                }
-                else if(user.equalsIgnoreCase(txtUser.getText()) && (pass.equals(txtPass.getText())) && empType.equalsIgnoreCase("manager")==false)
-                {
-                    found = true;
-                    isAuthorized = false;
-                    break;
-                }
-            }
-            logins.close();  
-            } 
-            catch (Exception ex) 
-            {
-
-             }
-
+            //RUN LoadData.java BEFORE TRYING TO LOG IN.
+           for(int i = 0; i< savedEmp.size();i++)
+           {
+               Employee temp = savedEmp.get(i);
+               if(temp.getUsername().equalsIgnoreCase(txtUser.getText()) && temp.getPassword().equals(txtPass.getText()))
+               {
+                   found = true;
+                   if(temp.getEmployeeType().equalsIgnoreCase("Manager"))
+                   {
+                       isAuthorized = true;
+                   }
+               }
+           }
              if(!found) { // added the contents of the previously existing else statement here, outside the while
                 alert.setTitle("Incorrect Login");
                 alert.setHeaderText("Invalid Username or Password");
