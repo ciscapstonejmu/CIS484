@@ -70,9 +70,11 @@ public class GUI extends Application
     public static ObservableList<CustSale> obsSale = FXCollections.observableArrayList();
     public static ComboBox cmboSale = new ComboBox(obsSale);
     
+    int expVar = 0;
     
     // Main Menu Buttons
     Button btnRingSale = new Button("Ring Sale");
+    Button btnSignOut = new Button("Sign Out");
     
     //Tables
     TableView<Employee> empTable = new TableView<>();
@@ -127,7 +129,7 @@ public class GUI extends Application
     Button btnCompleteOrder = new Button("Complete Product Order"); 
     TextArea prodOrderOutput = new TextArea(); 
     Button btnDisplayPO = new Button("Display Product Order Information"); 
-    
+    DatePicker expDate = new DatePicker();
     
     int imageChosen;
     
@@ -207,6 +209,10 @@ public class GUI extends Application
     Label lblDelDate = new Label("Delivery Date"); 
     DatePicker calendar = new DatePicker();
     
+    Label lblChooseExp = new Label("Choose and expense to edit:");
+    ComboBox cmboExpense = new ComboBox(obsExpense);
+    Button editExp = new Button("Edit Expense");
+    
     
     /*
     //POS - Ring Sale/Generate Receipt
@@ -236,7 +242,7 @@ public class GUI extends Application
     */    
 
     //POS Report
-    Label lblPOS = new Label("Point of Sales");
+    Label lblPOS = new Label("Point of Sales Report");
     Label lblViewType = new Label("View Type");
     ObservableList<String> type = FXCollections.observableArrayList("Week - daily",
             "Month - weekly", "Year - monthly");
@@ -248,7 +254,6 @@ public class GUI extends Application
     Tab tabPOSText = new Tab("Text");
     Tab tabPOSChart = new Tab("Chart");
     GridPane formPane = new GridPane();
-    TextArea txtPOS = new TextArea();
     //create text area
     
     // Employee Report
@@ -256,22 +261,20 @@ public class GUI extends Application
     Label lblEmpLocation = new Label("Location");
     // combobox for location
     Button btnEmpDisplay = new Button("Display");
-    TextArea txtEmp = new TextArea();
+    // create a textarea
     //Button btnAddOrder = new Button("Create Product Order"); 
     //Button btnViewOrder = new Button("View Product Orders");
     //Button btnCompleteOrder = new Button("Complete Product Order"); 
     
     // Monthly Expense Report
-    Label lblMonthRep = new Label("Monthly Expense");
-    Label lblReport = new Label("Report");
+    Label lblMonthRep = new Label("Monthly Expense Report");
     Label lblMLocation = new Label("Location");
-    TextArea txtMonth = new TextArea();
     // combobox for location
     // something to see past months
     Button btnMonthDisplay = new Button("Display");
     
     // Profit v. Expense Report
-    Label lblPvE = new Label("Profit v. Expense");
+    Label lblPvE = new Label("Profit v. Expense Report");
     Label lblYear = new Label("Year");
     ObservableList<String> year = FXCollections.observableArrayList("2015", "2016", "2017", "2018", "2019");
     ComboBox cmboYear = new ComboBox(year);
@@ -284,7 +287,6 @@ public class GUI extends Application
     Tab tabPBar = new Tab("Bar Graph");
     Tab tabPLine = new Tab("Line Graph");
     GridPane textPane = new GridPane();
-    TextArea txtPvE = new TextArea();
     
     // Menu Bar for Admin
     MenuBar menuAdmin = new MenuBar();
@@ -292,7 +294,6 @@ public class GUI extends Application
     Menu menuManage = new Menu("Management");
     Menu menuPayroll = new Menu("Payroll");
     Menu menuReports = new Menu("Reports");
-    Menu menuSystem = new Menu("System");
     ObservableList<String> loginType = FXCollections.observableArrayList("Manager", "Associate");
     ComboBox cmboLoginType = new ComboBox(loginType);
     
@@ -352,6 +353,16 @@ public class GUI extends Application
         Stage sixthStage = new Stage(); 
         sixthStage.setScene(sixthScene);
         
+       GridPane seventhPane = new GridPane();
+       seventhPane.setAlignment(Pos.TOP_CENTER);
+       seventhPane.setVgap(10);
+       seventhPane.setHgap(10);
+      
+       Scene seventhScene = new Scene(seventhPane, 500, 500);
+       Stage seventhStage = new Stage();
+       seventhStage.setScene(seventhScene);
+        
+        
         lblThrifty.setStyle("-fx-font: bold 36pt \"Comic Sans ms\"; -fx-text-fill: red;");
         lblStore.setStyle("-fx-font: bold 36pt \"Comic Sans ms\"; -fx-text-fill: blue;");
         lblSignIn.setStyle("-fx-font: bold 16pt \"Arial\";");
@@ -366,7 +377,6 @@ public class GUI extends Application
         lblExpMan.setStyle("-fx-font: bold 20pt \"Arial\";");
         lblExp.setStyle("-fx-font: bold 20pt \"Arial\";");
         lblPOS.setStyle("-fx-font: bold 20pt \"Arial\";");
-        lblReport.setStyle("-fx-font: bold 20pt \"Arial\";");
         lblEmpRep.setStyle("-fx-font: bold 20pt \"Arial\";");
         lblMonthRep.setStyle("-fx-font: bold 20pt \"Arial\";");
         lblPvE.setStyle("-fx-font: bold 20pt \"Arial\";");
@@ -375,6 +385,7 @@ public class GUI extends Application
         lblAddExp.setStyle("-fx-font: bold 14pt \"Arial\";");
         lblRemoveProd.setStyle("-fx-font: bold 14pt \"Arial\";");
         
+        btnSignOut.setStyle("-fx-background-color: red; -fx-text-fill: black;");
         
         GridPane secondPane = new GridPane();
         
@@ -410,7 +421,7 @@ public class GUI extends Application
         Stage fifthStage = new Stage(); 
         fifthStage.setScene(fifthScene); 
         
-        menuAdmin.getMenus().addAll(menuHome, menuManage, menuPayroll, menuReports, menuSystem);
+        menuAdmin.getMenus().addAll(menuHome, menuManage, menuPayroll, menuReports);
         menuHome.getItems().add(new MenuItem("Main Menu"));
         menuManage.getItems().add(new MenuItem("Employee Management"));
         menuManage.getItems().add(new MenuItem("Inventory Management"));
@@ -420,19 +431,14 @@ public class GUI extends Application
         menuReports.getItems().add(new MenuItem("Employee Report"));
         menuReports.getItems().add(new MenuItem("Monthly Expenense Report"));
         menuReports.getItems().add(new MenuItem("Profit v. Expense Report"));
-        menuSystem.getItems().add(new MenuItem("Sign Out"));
         
-        menuAdmin.getMenus().get(4).getItems().get(0).setStyle("-fx-background-color: red; -fx-text-fill: black;");
         
         GridPane fourthPane = new GridPane();
         fourthPane.setAlignment(Pos.TOP_CENTER);
         fourthPane.setVgap(10);
         fourthPane.setHgap(10);
         
-        txtPOS.setEditable(false);
-        txtMonth.setEditable(false);
-        txtEmp.setEditable(false);
-        txtPvE.setEditable(false);
+        
         
         Scene fourthScene = new Scene(fourthPane, 500, 500);
         Stage fourthStage = new Stage();
@@ -494,6 +500,24 @@ public class GUI extends Application
         tbProdLocation.setCellValueFactory(new PropertyValueFactory<Product, String>("location"));
         tbProdImage.setCellValueFactory(new PropertyValueFactory<Product, BufferedImage>("image"));
         
+        // Expense Table
+        TableColumn tbExpID = new TableColumn("ID");
+        TableColumn tbExpCategory = new TableColumn("Category");
+        TableColumn tbExpDesc = new TableColumn("Description");
+        TableColumn tbExpAmount = new TableColumn("Amount Paid");
+        TableColumn tbExpDate = new TableColumn("Date Paid");
+        TableColumn tbExpStatus = new TableColumn("Status");
+        
+        //ValueFactory for Expense Table
+        tbExpID.setCellValueFactory(new PropertyValueFactory<Expense, Integer>("expenseID"));
+        tbExpCategory.setCellValueFactory(new PropertyValueFactory<Expense, String>("category"));
+        tbExpDesc.setCellValueFactory(new PropertyValueFactory<Expense, String>("description"));
+        tbExpAmount.setCellValueFactory(new PropertyValueFactory<Expense, Double>("amountPaid"));
+        tbExpDate.setCellValueFactory(new PropertyValueFactory<Expense, String>("date"));
+        tbExpStatus.setCellValueFactory(new PropertyValueFactory<Expense, String>("status"));
+        
+        
+        
         Scene primaryScene = new Scene(primaryPane, 500, 500);
         primaryStage.setScene(primaryScene);
         primaryStage.setTitle("Main Form");
@@ -510,6 +534,7 @@ public class GUI extends Application
             secondPane.add(lblMain, 3, 4);
             secondPane.add(lblSelect, 3, 5);
             secondPane.add(btnRingSale, 3, 6);
+            secondPane.add(btnSignOut, 5, 0);
         border.setCenter(secondPane);
         Scene secondScene = new Scene(border, 1050, 500);
         Stage secondStage = new Stage();
@@ -581,6 +606,7 @@ public class GUI extends Application
 //            secondPane.add(lblMain, 3, 4);
 //            secondPane.add(lblSelect, 3, 5);
 //            secondPane.add(btnRingSale, 3, 6);
+//            secondPane.add(btnSignOut, 5, 0);
 //            
             
             //Set Ring Sale Button Formatting
@@ -605,6 +631,7 @@ public class GUI extends Application
             secondPane.setAlignment(Pos.TOP_CENTER);
             secondStage.setTitle("Main Menu");
             //secondPane.add(menuAdmin, 0, 0, 4, 1);
+            secondPane.add(btnSignOut, 5, 0);
             
             secondPane.add(lblThrifty, 3, 2);
             secondPane.add(lblStore, 3, 3);
@@ -627,6 +654,7 @@ public class GUI extends Application
             secondPane.setAlignment(Pos.TOP_CENTER);
             secondStage.setTitle("Inventory Management");
             //secondPane.add(menuAdmin, 0, 0, 4, 1);
+            //secondPane.add(btnSignOut, 5, 0);
             
             //secondPane.add(lblInvMan, 3, 2);
 //            secondPane.add(btnAddProd, 3, 3);
@@ -859,7 +887,7 @@ public class GUI extends Application
                 
                 myImageView = new ImageView();
                 myImageView.setImage(iImage);
-                thirdPane.add(myImageView, 0, 11, 6, 5);
+                thirdPane.add(myImageView, 1, 11, 4, 4);                
                 myImageView.setFitHeight(130);
                 myImageView.setFitWidth(130);
                 imageList.add(iImage); 
@@ -945,6 +973,7 @@ public class GUI extends Application
             secondPane.setAlignment(Pos.TOP_CENTER);
             secondStage.setTitle("Employee Management");
             
+//            secondPane.add(btnSignOut, 5, 0);
 //            
 //            secondPane.add(lblEmp, 3, 0);
 //            secondPane.add(lblEmpMan, 3, 1);
@@ -1202,6 +1231,8 @@ public class GUI extends Application
            secondPane.setAlignment(Pos.TOP_CENTER);
            secondStage.setTitle("Expense Management");
            
+//           secondPane.add(btnSignOut, 5, 0);
+//           
 //           secondPane.add(lblExp, 3, 0);
 //           secondPane.add(lblExpMan, 3, 1);
 //           secondPane.add(btnAddExp, 3, 2);
@@ -1245,18 +1276,71 @@ public class GUI extends Application
             thirdPane.add(addExp, 0, 7);
         });
         
-        addExp.setOnAction(e -> {
+    addExp.setOnAction(e -> {
             //emplouee added clicked
+            
+            String description = txtExpDesc.getText();
+            String category = (String)cmboCategory.getValue();
+            String status = (String)cmboStatus.getValue();
+            Double amountPaid = Double.parseDouble(txtAmount.getText());
+            String date = expDate.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            
+            obsExpense.add(new Expense(category, description, amountPaid, date, status));
+            System.out.println(obsExpense.size());
+            //expList.add(new Expense(category, description, amountPaid, date, status));
+            expList.add(new Expense((String)cmboCategory.getValue(), txtExpDesc.getText(), Double.parseDouble(txtAmount.getText()), expDate.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), (String)cmboStatus.getValue()));
             alert.setTitle("Success!");
             alert.setHeaderText("The expense has been added!");
             alert.showAndWait();
             //insert code to add employee to object
             
             thirdStage.close();
+            
+            
+            expData.clear();
+            for(Expense exp: expList)
+            {
+                expData.add(exp);
+            }
+            System.out.println(expList.get(0).toString());
+            System.out.println(expData.get(0).toString());
+        });
+        
+        btnEditExp.setOnAction(e -> {
+        
+        seventhPane.add(lblChooseExp, 0, 1);    
+        seventhPane.add(cmboExpense, 0, 2);
+        //seventhPane.add(lblAddExp, 0, 0);
+        seventhPane.add(lblExpDesc, 0, 3);
+        seventhPane.add(txtExpDesc, 0, 4);
+        seventhPane.add(lblDate, 0, 5);
+        seventhPane.add(expDate, 0, 6);
+        seventhPane.add(lblCategory, 1, 3);
+        seventhPane.add(cmboExpCategory, 1, 4);
+        seventhPane.add(lblStatus, 1, 5);
+        seventhPane.add(cmboStatus, 1, 6);
+        seventhPane.add(lblAmount, 0, 7);
+        seventhPane.add(txtAmount, 0, 8);
+        seventhPane.add(editExp, 0, 9);
+      
+        seventhStage.show();
+       
+        expVar = cmboExpense.getSelectionModel().getSelectedIndex();
+        
+        txtExpDesc.setText(obsExpense.get(expVar).getDescription());
+        LocalDate localExpDate = LocalDate.parse(obsExpense.get(expVar).getDate());
+        expDate.setValue(localExpDate);
+        cmboExpCategory.setValue(obsExpense.get(expVar).getCategory());
+        cmboStatus.setValue(obsExpense.get(expVar).getCategory());
+        txtAmount.setText(obsExpense.get(expVar).getCategory());
+
+        
+        
+        
         });
         
         
-         menuAdmin.getMenus().get(4).getItems().get(0).setOnAction(e -> {
+         btnSignOut.setOnAction(e -> {
         
             secondStage.close();
             primaryPane.getChildren().clear();
@@ -1269,7 +1353,7 @@ public class GUI extends Application
             primaryPane.add(txtPass, 0, 7);
             primaryPane.add(btnSignIn, 0, 9);
 
-            lblThrifty.setStyle("-fx-font: bold 36pt \"Comic Sans ms\"; -fx-text-fill: red;");
+             lblThrifty.setStyle("-fx-font: bold 36pt \"Comic Sans ms\"; -fx-text-fill: red;");
             lblStore.setStyle("-fx-font: bold 36pt \"Comic Sans ms\"; -fx-text-fill: blue;");
             lblSignIn.setStyle("-fx-font: bold 16pt \"Arial\";");
             primaryStage.setScene(primaryScene);
@@ -1293,71 +1377,46 @@ public class GUI extends Application
             // Point of Sales Report
             secondPane.getChildren().clear();
             formPane.getChildren().clear();
-            border.getChildren().clear();
-            
             secondPane.setAlignment(Pos.TOP_CENTER);
             formPane.setAlignment(Pos.TOP_LEFT);
             formPane.setVgap(10);
             secondStage.setTitle("Point of Sales Report");
-//            secondPane.add(menuAdmin, 0, 0, 4, 1);
-//            secondPane.add(tbPOS, 0, 1, 2, 1);
+            secondPane.add(menuAdmin, 0, 0, 4, 1);
+            secondPane.add(btnSignOut, 5, 0);
+            
+            secondPane.add(tbPOS, 0, 1, 2, 1);
             tbPOS.getTabs().add(tabPOSText);
             tbPOS.getTabs().add(tabPOSChart);
             tbPOS.setMinWidth(secondScene.getWidth());
             //tbPOS.setMinHeight(secondScene.getHeight());
             
-//            formPane.add(lblPOS, 3, 2);
-//            formPane.add(lblViewType, 3, 4);
-//            formPane.add(cmboType, 3, 5);
-//            formPane.add(lblLocation, 3, 6);
-//            formPane.add(cmboStore, 3, 7);
-//            formPane.add(btnPOSDisplay, 3, 8);
-            cmboType.setMaxWidth(Double.MAX_VALUE);
-            cmboStore.setMaxWidth(Double.MAX_VALUE);
-            btnPOSDisplay.setMaxWidth(Double.MAX_VALUE);
-
-            VBox vPOS = new VBox();
-            vPOS.setSpacing(10);
-            vPOS.setPadding(new Insets(10, 20, 10 , 20));
-            
-            vPOS.getChildren().addAll(lblPOS, lblReport, lblViewType, cmboType, lblLocation, cmboStore, btnPOSDisplay);
-            border.setTop(menuAdmin);
-            border.setLeft(vPOS);
-            border.setCenter(tbPOS);
-            
+            formPane.add(lblPOS, 3, 2);
+            formPane.add(lblViewType, 3, 4);
+            formPane.add(cmboType, 3, 5);
+            formPane.add(lblLocation, 3, 6);
+            formPane.add(cmboStore, 3, 7);
+            formPane.add(btnPOSDisplay, 3, 8);
             
             //create the table
             
-            tabPOSText.setContent(txtPOS);
+            tabPOSText.setContent(formPane);
         });
         
         menuAdmin.getMenus().get(3).getItems().get(1).setOnAction(e -> {
             // Employee Report
             secondPane.getChildren().clear();
             formPane.getChildren().clear();
-            border.getChildren().clear();
             
             secondPane.setAlignment(Pos.TOP_CENTER);
             
             secondStage.setTitle("Employee Report");
-//            secondPane.add(menuAdmin, 0, 0, 4, 1);
-//            
-//            secondPane.add(lblEmpRep, 3, 3);
-//            secondPane.add(lblEmpLocation, 3, 4);
-//            secondPane.add(cmboStore, 3, 5);
-//            secondPane.add(btnEmpDisplay, 3, 6);
-            cmboStore.setMaxWidth(Double.MAX_VALUE);
-            btnEmpDisplay.setMaxWidth(Double.MAX_VALUE);
-
-            VBox vEmp = new VBox();
-            vEmp.setSpacing(10);
-            vEmp.setPadding(new Insets(10, 20, 10 , 20));
+            secondPane.add(menuAdmin, 0, 0, 4, 1);
+            secondPane.add(btnSignOut, 5, 0);
             
-            vEmp.getChildren().addAll(lblEmpRep, lblEmpLocation, cmboStore, btnEmpDisplay);
-            border.setTop(menuAdmin);
-            border.setLeft(vEmp);
-            border.setCenter(txtEmp);
-            
+            secondPane.add(lblEmpRep, 3, 3);
+            secondPane.add(lblEmpLocation, 3, 4);
+            secondPane.add(cmboStore, 3, 5);
+            secondPane.add(btnEmpDisplay, 3, 6);
             
         });
         
@@ -1365,28 +1424,15 @@ public class GUI extends Application
            // Monthly Expense Report
            secondPane.getChildren().clear();
            formPane.getChildren().clear();
-           border.getChildren().clear();
-           
            secondPane.setAlignment(Pos.TOP_CENTER);
            secondStage.setTitle("Monthly Expense Report");
-//           secondPane.add(menuAdmin, 0, 0, 4, 1);
-//           
-//           secondPane.add(lblMonthRep, 3, 3);
-//           secondPane.add(lblMLocation, 3, 4);
-//           secondPane.add(cmboStore, 3, 5);
-//           secondPane.add(btnMonthDisplay, 3, 6);  
-           cmboStore.setMaxWidth(Double.MAX_VALUE);
-           btnMonthDisplay.setMaxWidth(Double.MAX_VALUE);
+           secondPane.add(menuAdmin, 0, 0, 4, 1);
+           secondPane.add(btnSignOut, 5, 0);
            
-           VBox vMonth = new VBox();
-           vMonth.setSpacing(10);
-           vMonth.setPadding(new Insets(10, 20, 10 , 20));
-            
-           vMonth.getChildren().addAll(lblMonthRep, lblReport, lblMLocation, cmboStore, btnMonthDisplay);
-           border.setLeft(vMonth);
-           border.setTop(menuAdmin);
-           border.setCenter(txtMonth);
-           
+           secondPane.add(lblMonthRep, 3, 3);
+           secondPane.add(lblMLocation, 3, 4);
+           secondPane.add(cmboStore, 3, 5);
+           secondPane.add(btnMonthDisplay, 3, 6);
            
         });
            
@@ -1404,35 +1450,20 @@ public class GUI extends Application
            textPane.setAlignment(Pos.TOP_LEFT);
            textPane.setVgap(10);
            secondStage.setTitle("Profit v. Expense Report");
-           
-           
            secondPane.add(menuAdmin, 0, 0, 4, 1);
-           
+           secondPane.add(btnSignOut, 5, 0);
            secondPane.add(tbPvE, 0, 1, 4, 1);
            
            tbPvE.setMinWidth(secondScene.getWidth());
            
-//           textPane.add(lblPvE, 3, 2);
-//           textPane.add(lblYear, 3, 3);
-//           textPane.add(cmboYear, 3, 4);
-//           textPane.add(lblPLocation, 3, 5);
-//           textPane.add(cmboStore, 3, 6);
-//           textPane.add(btnPvEDisplay, 3, 7);
-            cmboYear.setMaxWidth(Double.MAX_VALUE);
-            cmboStore.setMaxWidth(Double.MAX_VALUE);
-            btnPvEDisplay.setMaxWidth(Double.MAX_VALUE);
-
-
-           VBox vPVE = new VBox();
-           vPVE.setSpacing(10);
-           vPVE.setPadding(new Insets(10, 20, 10 , 20));
-           vPVE.getChildren().addAll(lblPvE, lblReport, lblYear, cmboYear, lblPLocation, cmboStore);
+           textPane.add(lblPvE, 3, 2);
+           textPane.add(lblYear, 3, 3);
+           textPane.add(cmboYear, 3, 4);
+           textPane.add(lblPLocation, 3, 5);
+           textPane.add(cmboStore, 3, 6);
+           textPane.add(btnPvEDisplay, 3, 7);
            
-           border.setTop(menuAdmin);
-           border.setLeft(vPVE);
-           border.setCenter(tbPvE);
-           
-           tabPText.setContent(txtPvE);
+           tabPText.setContent(textPane);
         });
     }
 
