@@ -53,6 +53,8 @@ public class GUI extends Application
     static ArrayList<Store> storeList = new ArrayList<>(); 
     static ArrayList<ProductOrder> prodOrderList = new ArrayList<>(); 
     static ArrayList<CustSale> saleList = new ArrayList<>();
+    static ArrayList<String> expCategoryList = new ArrayList<>();
+    static ArrayList<String> expStatusList = new ArrayList<>();
     
     //Observabble Lists/Combo Boxes
     ObservableList obsEmp = FXCollections.observableArrayList();
@@ -1319,10 +1321,17 @@ public class GUI extends Application
             thirdStage.close();
         });
         
-        btnEditExp.setOnAction(e -> {
-
+               btnEditExp.setOnAction(e -> {
+                   
+            if(cmboExpense.getValue() == null){
+                alert.setTitle("Error!");
+                alert.setHeaderText("Please select an expense to edit!");
+                alert.showAndWait();
+            }
+            else
+            {
+        System.out.println(obsExpense.size());
         seventhPane.add(lblChooseExp, 0, 1);    
-        seventhPane.add(cmboExpense, 0, 2);
         //seventhPane.add(lblAddExp, 0, 0);
         seventhPane.add(lblExpDesc, 0, 3);
         seventhPane.add(txtExpDesc, 0, 4);
@@ -1335,19 +1344,42 @@ public class GUI extends Application
         seventhPane.add(lblAmount, 0, 7);
         seventhPane.add(txtAmount, 0, 8);
         seventhPane.add(editExp, 0, 9);
-
+      
         seventhStage.show();
-
+        
+        
+        expCategoryList.add("Store Mortgage");
+        expCategoryList.add("Utilities");
+        expCategoryList.add("Lawn Care");
+        expCategoryList.add("System Maintenance");
+        expCategoryList.add("Payroll");
+        expCategoryList.add("Inventory Purchase");
+        expStatusList.add("Paid");
+        expStatusList.add("Ongoing");
+       
         expVar = cmboExpense.getSelectionModel().getSelectedIndex();
-
+        
         txtExpDesc.setText(obsExpense.get(expVar).getDescription());
-        LocalDate localExpDate = LocalDate.parse(obsExpense.get(expVar).getDate());
-        expDate.setValue(localExpDate);
+        //LocalDate localExpDate = LocalDate.parse(obsExpense.get(expVar).getDate());
+        //expDate.setValue(localExpDate);
         cmboExpCategory.setValue(obsExpense.get(expVar).getCategory());
-        cmboStatus.setValue(obsExpense.get(expVar).getCategory());
-        txtAmount.setText(obsExpense.get(expVar).getCategory());
+        cmboStatus.setValue(obsExpense.get(expVar).getStatus());
+        txtAmount.setText((String.valueOf(obsExpense.get(expVar).getAmountPaid())));
+        
+        obsExpense.get(expVar).setDescription(txtExpDesc.getText());
+        obsExpense.get(expVar).setCategory(expCategoryList.get(cmboExpCategory.getSelectionModel().getSelectedIndex()));
+        obsExpense.get(expVar).setAmountPaid(Double.parseDouble(txtAmount.getText()));
+        obsExpense.get(expVar).setStatus(expStatusList.get(cmboStatus.getSelectionModel().getSelectedIndex()));
+        obsExpense.get(expVar).setDate(expDate.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+
+                alert.setTitle("Success");
+                alert.setHeaderText("This expense has been edited!");
+                alert.showAndWait();
+            
+            }
         
         });
+
         
          menuAdmin.getMenus().get(4).getItems().get(0).setOnAction(e -> {
              // sign out
