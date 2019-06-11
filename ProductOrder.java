@@ -105,9 +105,9 @@ public class ProductOrder {
     {
         String str = "";
         str += "ID: " + this.productOrderID + " , Order Date: " + this.orderDate + " , Quantity: " +
-                this.quantity + " , Unit Cost: " + this.unitCost + " , Subtotal: $" + this.subtotal + " , Delivery Date: " + this.deliveryDate + 
-                ", Category: " + this.category + ", Supplier: " + this.supplier
-                + ", Store: " + this.store; 
+                this.quantity + " , Unit Cost: $" + this.unitCost + " , Subtotal: $" + this.subtotal + " , Delivery Date: " + this.deliveryDate + 
+                ", Category: " + this.category + " , Supplier: " + this.supplier
+                + " , Store: " + this.store; 
         //str += "ID: " + this.productOrderID + " , Order Date: " + this.orderDate + " , Quantity: " + this.quantity; 
         //str+= 
         return str;
