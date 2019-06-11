@@ -22,6 +22,7 @@ public class Product {
     private int aisle;
     private BufferedImage image;
     private int saleYear;
+    private String supplier;
     private int saleMonth;
     private int saleDay;
     public static int nextID = 0;
@@ -30,7 +31,7 @@ public class Product {
     //Fromatter for money figures
     DecimalFormat formatter = new DecimalFormat("#0.00");
     
-    public Product(String productName, int quantity, double price, Store store, String foodDescription, String category, BufferedImage image)
+    public Product(String productName, int quantity, double price, Store store, String foodDescription, String category, String supplier, BufferedImage image)
     {
         this.productName = productName;
         this.quantity = quantity;
@@ -38,6 +39,7 @@ public class Product {
         this.location = store.getName();
         this.foodDescription = foodDescription;
         this.category = category;
+        this.supplier = supplier;
         this.image = image;
         this.productID = nextID++;
         obsProd.add(this.productID + ": " + this.productName);
@@ -132,6 +134,16 @@ public class Product {
     public String getLocation()
     {
         return this.location;
+    }
+    
+    public void setSupplier(String supplier)
+    {
+        this.supplier = supplier;
+    }
+    
+    public String getSupplier()
+    {
+        return this.supplier;
     }
     
     public void setFoodDescription(String foodDescription)
