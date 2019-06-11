@@ -714,6 +714,7 @@ public class GUI extends Application
             btnRemoveProd.setMaxWidth(Double.MAX_VALUE);
 //            secondPane.add(btnHandleImage, 3, 5);
             btnHandleImage.setMaxWidth(Double.MAX_VALUE);
+            createSupp.setMaxWidth(Double.MAX_VALUE);
 //            secondPane.add(btnViewOrder, 3, 7); 
             btnViewOrder.setMaxWidth(Double.MAX_VALUE);
 //            secondPane.add(btnAddOrder, 3, 6); 
