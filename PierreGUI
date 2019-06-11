@@ -46,6 +46,7 @@ public class GUI extends Application
     //TextField txtPass = new TextField();
     
     //Array Lists
+    static ArrayList<Employee> savedEmp;
     static ArrayList<Employee> empList = new ArrayList<>();
     static ArrayList<Product> prodList = new ArrayList<>(); 
     static ArrayList<Expense> expList = new ArrayList<>();
