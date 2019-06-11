@@ -1,0 +1,81 @@
+package pkg484groupproj;
+
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.image.ImageView;
+import javax.imageio.ImageIO;
+import java.text.DecimalFormat;
+
+public class Member {
+    
+    //Data Fields
+    private String memberID;
+    private String memFName;
+    private String memLName;
+    private String memPhone;
+    private String memEmail;
+    private static int memCount = 0;
+    public static ObservableList obsMem = FXCollections.observableArrayList();
+    
+    //Constructor
+    public Member(String fName, String lName, String phone, String email)
+    {
+        this.memFName = fName;
+        this.memLName = lName;
+        this.memPhone = phone;
+        this.memEmail = email;
+        
+        this.memberID = "Member" + memCount++;
+    }
+    
+    
+    public String getID()
+    {
+        return this.memberID;
+    }
+    
+    public void setFName(String fName)
+    {
+        this.memFName = fName;
+    }
+    
+    public String getFName()
+    {
+        return this.memFName;
+    }
+    
+    public void setLName(String lName)
+    {
+        this.memLName = lName;
+    }
+    
+    public String getLName()
+    {
+        return this.memLName;
+    }
+    
+    public void setPhone(String phone)
+    {
+        this.memPhone = phone;
+    }
+    
+    public String getPhone()
+    {
+        return this.memPhone;
+    }
+    
+    public void setEmail(String email)
+    {
+        this.memEmail = email;
+    }
+    
+    public String getEmail()
+    {
+        return this.memEmail;
+    }
+    
+}
