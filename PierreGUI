@@ -494,6 +494,7 @@ public class GUI extends Application
         TableColumn tbProdDesc = new TableColumn("Description");
         TableColumn tbProdCategory = new TableColumn("Category");
         TableColumn tbProdLocation = new TableColumn("Location");
+        TableColumn tbProdSupplier = new TableColumn("Supplier");
         TableColumn tbProdImage = new TableColumn("Image");
         
         Label Thrifty = new Label("Thrifty");
@@ -509,6 +510,7 @@ public class GUI extends Application
         tbProdDesc.setCellValueFactory(new PropertyValueFactory<Product, String>("foodDescription"));
         tbProdCategory.setCellValueFactory(new PropertyValueFactory<Product, String>("category"));
         tbProdLocation.setCellValueFactory(new PropertyValueFactory<Product, String>("location"));
+        tbProdSupplier.setCellValueFactory(new PropertyValueFactory<Product, String>("Supplier"));
         tbProdImage.setCellValueFactory(new PropertyValueFactory<Product, BufferedImage>("image"));
         
         // Expense Table
@@ -650,7 +652,7 @@ public class GUI extends Application
             
         });
         
-        prodTable.getColumns().addAll(tbProdName, tbProdQuantity, tbProdPrice, tbProdDesc, tbProdCategory, tbProdLocation, tbProdImage);
+        prodTable.getColumns().addAll(tbProdName, tbProdQuantity, tbProdPrice, tbProdDesc, tbProdCategory, tbProdLocation, tbProdSupplier, tbProdImage);
         menuAdmin.getMenus().get(1).getItems().get(1).setOnAction(e -> {
             // Inventory Management
             
