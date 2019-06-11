@@ -1,5 +1,8 @@
 package pkg484groupproj;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class Supplier {
     
     private int supplierID;
@@ -7,23 +10,27 @@ public class Supplier {
     private String supplierAddress;
     private String supplierCountry;
     private String salesContactName;
-    private int salesContactPhoneNumber;
+    private String salesContactPhoneNumber;
     private String salesContactEmail;
     private String salesContactAddress;
     public static int nextID;
-    
-    public Supplier (String supplierName, String address, String country, String salesContactName, int salesContactPhoneNumber, String salesContactEmail, String salesContactAddress)
+    private String supplierPhone; 
+    private String supplierEmail; 
+    public static ObservableList obsSupp = FXCollections.observableArrayList(); 
+ 
+     public Supplier (String supplierName, String supplierPhone, String supplierEmail, 
+             String supplierAddress, String salesContactName, String salesContactPhoneNumber, String salesContactEmail)
     {
         this.supplierName = supplierName;
+        this.supplierPhone = supplierPhone; 
         this.supplierAddress = supplierAddress;
-        this.supplierCountry = supplierCountry;
+        this.supplierEmail = supplierEmail; 
         this.salesContactName = salesContactName;
         this.salesContactPhoneNumber = salesContactPhoneNumber;
         this.salesContactEmail = salesContactEmail;
-        this.salesContactAddress = salesContactAddress;
+       
         supplierID = nextID++;
     }
-    
     public int getID()
     {
         return this.supplierID;
@@ -68,12 +75,12 @@ public class Supplier {
         return this.salesContactName;
     }
     
-    public void setContactPhone(int salesContactPhoneNumber)
+    public void setContactPhone(String salesContactPhoneNumber)
     {
         this.salesContactPhoneNumber = salesContactPhoneNumber;
     }
     
-    public int getContactPhone()
+    public String getContactPhone()
     {
         return this.salesContactPhoneNumber;
     }
@@ -101,12 +108,11 @@ public class Supplier {
     public String toString()
     {
         String str = "";
-        str += "Supplier ID: " + this.supplierID + " , Supplier Name: " + this.supplierName +
-                " , Supplier Address: " + this.supplierAddress + " , Supplier Country: " +
-                this.supplierCountry + " , Sales Contact Name: " + this.salesContactName +
+        str += "Supplier ID: " + this.supplierID + " , Supplier Name: " + this.supplierName + " , Suppler Phone Number: " +
+                this.supplierPhone + " , Supplier Email: " + this.supplierEmail + 
+                " , Supplier Address: " + this.supplierAddress + " , Sales Contact Name: " + this.salesContactName +
                 " , Sales Contact Phone Number: " + this.salesContactPhoneNumber + 
-                " , Sales Contact Email: " + this.salesContactEmail + " , Sales Contact Address: " +
-                this.salesContactAddress;
+                " , Sales Contact Email: " + this.salesContactEmail;
         return str;
     }
     
