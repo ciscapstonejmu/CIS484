@@ -1,9 +1,11 @@
 package pkg484groupproj; 
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class Employee {
+public class Employee implements Serializable{
     
     private int employeeID;
     private String firstName;
@@ -16,9 +18,16 @@ public class Employee {
     private double timeWorked;
     public static int nextID = 0;
     public static ObservableList obsEmp = FXCollections.observableArrayList();
+    public static ArrayList<Employee> empAcc = new ArrayList<>();
+    public static ArrayList<Employee> admins = new ArrayList<>();
     private String employeeType; 
     private String employeeCategory; 
-    public String storeLoc; 
+    public String storeLoc;
+    private String username;
+    private String password;
+    private ArrayList<Payroll> empPayroll;
+    
+    
     
     public Employee()
             {
@@ -31,10 +40,40 @@ public class Employee {
                 this.timeWorked = 0.0;
                 this.employeeID = nextID++;
                 this.jobTitle = " ";                
-                this.storeLoc = " "; 
+                this.storeLoc = " ";
+                this.username = "NO USERNAME";
+                this.password = "NO PASSWORD";
+                
             }        
-            
-    
+    //System Administrator Constructors for designated personel       
+    public Employee(String firstName, String lastName){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.jobTitle = "System Admin";
+        this.employeeType = "Manager";
+        this.username = firstName;
+        this.password = lastName;
+        if(admins.size() > 0)
+        {
+        int counter = 0;
+        int loop = 0;
+        while(loop < admins.size())
+        {
+            Employee temp = admins.get(loop);
+            if(temp.firstName.equalsIgnoreCase(this.firstName))
+            {
+               counter++;
+            }
+            loop++;
+        }
+        if(counter > 0)
+            {
+                this.username = this.username + counter;  
+            }            
+        }
+       admins.add(this);
+        
+    }
     
     public Employee(String firstName, String lastName, String Email, String phoneNumber, String address, double salary, String jobTitle,
             String employeeType, String employeeCategory, String storeLoc )  
@@ -50,7 +89,28 @@ public class Employee {
         this.jobTitle = jobTitle; 
         this.employeeType = employeeType; //ceo, manager, or regular 
         this.employeeCategory = employeeCategory; //full time or part time 
-        this.storeLoc = storeLoc; 
+        this.storeLoc = storeLoc;
+        this.username = this.firstName;
+        if(empAcc.size() > 0)
+        {
+            int counter = 0;
+            int loop = 0;
+            while(loop < empAcc.size())
+            {
+                Employee temp = empAcc.get(loop);
+                if(temp.firstName.equalsIgnoreCase(this.firstName))
+                {
+                   counter++;
+                }
+                loop++;
+            }
+            if(counter > 0){
+              this.username = this.username + counter;  
+            }
+            
+        }
+        this.password = this.lastName.toLowerCase();
+        empAcc.add(this);
         obsEmp.add(this.employeeID + " " + this.firstName + " " + this.lastName);
         
     }
@@ -176,11 +236,26 @@ public class Employee {
     {
         return this.employeeCategory;
     }
-   
+    public void setUsername(String username)
+    {
+        this.username = username;
+    }
+    public String getUsername()
+    {
+        return this.username;
+    }
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+    public String getPassword()
+    {
+        return this.password;
+    }
     public String toString()
     {
         String str = "";
-        str += "ID: " + this.employeeID + " , First Name: " + this.firstName +  " , Last Name: " + this.lastName + ", Email: " + this.Email +
+        str += "ID: " + this.employeeID + " , Username: "+ this.username + " , First Name: " + this.firstName +  " , Last Name: " + this.lastName + ", Email: " + this.Email +
                 ", Phone Number: " + this.phoneNumber + " , Address: " + this.address + " , Salary: " +
                 this.salary + " , Time Worked: " + this.timeWorked;
         return str;
