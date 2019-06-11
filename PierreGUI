@@ -653,14 +653,6 @@ public class GUI extends Application
             
             
            
-//            
-//            secondPane.add(menuAdmin, 0, 0, 4, 1);
-//            secondPane.add(lblThrifty, 3, 2);
-//            secondPane.add(lblStore, 3, 3);
-//            secondPane.add(lblMain, 3, 4);
-//            secondPane.add(lblSelect, 3, 5);
-//            secondPane.add(btnRingSale, 3, 6);
-//            
             
             //Set Ring Sale Button Formatting
 //            btnRingSale.setPrefSize(120, 150);
@@ -705,19 +697,12 @@ public class GUI extends Application
             border.getChildren().clear();
             secondPane.setAlignment(Pos.TOP_CENTER);
             secondStage.setTitle("Inventory Management");
-            //secondPane.add(menuAdmin, 0, 0, 4, 1);
             
-            //secondPane.add(lblInvMan, 3, 2);
-//            secondPane.add(btnAddProd, 3, 3);
             btnAddProd.setMaxWidth(Double.MAX_VALUE);
-//            secondPane.add(btnRemoveProd, 3, 4);
             btnRemoveProd.setMaxWidth(Double.MAX_VALUE);
-//            secondPane.add(btnHandleImage, 3, 5);
             btnHandleImage.setMaxWidth(Double.MAX_VALUE);
             createSupp.setMaxWidth(Double.MAX_VALUE);
-//            secondPane.add(btnViewOrder, 3, 7); 
             btnViewOrder.setMaxWidth(Double.MAX_VALUE);
-//            secondPane.add(btnAddOrder, 3, 6); 
             btnAddOrder.setMaxWidth(Double.MAX_VALUE);
             VBox vbButtons = new VBox();
             vbButtons.setSpacing(10);
@@ -1064,13 +1049,6 @@ public class GUI extends Application
             secondPane.setAlignment(Pos.TOP_CENTER);
             secondStage.setTitle("Employee Management");
             
-//            
-//            secondPane.add(lblEmp, 3, 0);
-//            secondPane.add(lblEmpMan, 3, 1);
-//            secondPane.add(cmboEmp, 3, 3);
-//            secondPane.add(btnEditEmp, 3, 5);
-//            secondPane.add(btnAddEmp, 3, 7);
-            
             cmboEmp.setMaxWidth(Double.MAX_VALUE);
             btnEditEmp.setMaxWidth(Double.MAX_VALUE);
             btnAddEmp.setMaxWidth(Double.MAX_VALUE);
@@ -1321,10 +1299,6 @@ public class GUI extends Application
            secondPane.setAlignment(Pos.TOP_CENTER);
            secondStage.setTitle("Expense Management");
            
-//           secondPane.add(lblExp, 3, 0);
-//           secondPane.add(lblExpMan, 3, 1);
-//           secondPane.add(btnAddExp, 3, 2);
-//           secondPane.add(btnPayExp, 3, 3);
             btnAddExp.setMaxWidth(Double.MAX_VALUE);
             btnPayExp.setMaxWidth(Double.MAX_VALUE);
             btnEditExp.setMaxWidth(Double.MAX_VALUE);
@@ -1527,19 +1501,10 @@ public class GUI extends Application
             formPane.setAlignment(Pos.TOP_LEFT);
             formPane.setVgap(10);
             secondStage.setTitle("Point of Sales Report");
-//            secondPane.add(menuAdmin, 0, 0, 4, 1);
-//            secondPane.add(tbPOS, 0, 1, 2, 1);
             tbPOS.getTabs().add(tabPOSText);
             tbPOS.getTabs().add(tabPOSChart);
             tbPOS.setMinWidth(secondScene.getWidth());
-            //tbPOS.setMinHeight(secondScene.getHeight());
             
-//            formPane.add(lblPOS, 3, 2);
-//            formPane.add(lblViewType, 3, 4);
-//            formPane.add(cmboType, 3, 5);
-//            formPane.add(lblLocation, 3, 6);
-//            formPane.add(cmboStore, 3, 7);
-//            formPane.add(btnPOSDisplay, 3, 8);
             cmboType.setMaxWidth(Double.MAX_VALUE);
             cmboStore.setMaxWidth(Double.MAX_VALUE);
             btnPOSDisplay.setMaxWidth(Double.MAX_VALUE);
@@ -1554,8 +1519,6 @@ public class GUI extends Application
             border.setCenter(tbPOS);
             
             
-            //create the table
-            
             tabPOSText.setContent(txtPOS);
         });
         
@@ -1568,12 +1531,6 @@ public class GUI extends Application
             secondPane.setAlignment(Pos.TOP_CENTER);
             
             secondStage.setTitle("Employee Report");
-//            secondPane.add(menuAdmin, 0, 0, 4, 1);
-//            
-//            secondPane.add(lblEmpRep, 3, 3);
-//            secondPane.add(lblEmpLocation, 3, 4);
-//            secondPane.add(cmboStore, 3, 5);
-//            secondPane.add(btnEmpDisplay, 3, 6);
             cmboStore.setMaxWidth(Double.MAX_VALUE);
             btnEmpDisplay.setMaxWidth(Double.MAX_VALUE);
 
@@ -1597,12 +1554,6 @@ public class GUI extends Application
            
            secondPane.setAlignment(Pos.TOP_CENTER);
            secondStage.setTitle("Monthly Expense Report");
-//           secondPane.add(menuAdmin, 0, 0, 4, 1);
-//           
-//           secondPane.add(lblMonthRep, 3, 3);
-//           secondPane.add(lblMLocation, 3, 4);
-//           secondPane.add(cmboStore, 3, 5);
-//           secondPane.add(btnMonthDisplay, 3, 6);  
            cmboStore.setMaxWidth(Double.MAX_VALUE);
            btnMonthDisplay.setMaxWidth(Double.MAX_VALUE);
            
@@ -1640,12 +1591,6 @@ public class GUI extends Application
            
            tbPvE.setMinWidth(secondScene.getWidth());
            
-//           textPane.add(lblPvE, 3, 2);
-//           textPane.add(lblYear, 3, 3);
-//           textPane.add(cmboYear, 3, 4);
-//           textPane.add(lblPLocation, 3, 5);
-//           textPane.add(cmboStore, 3, 6);
-//           textPane.add(btnPvEDisplay, 3, 7);
             cmboYear.setMaxWidth(Double.MAX_VALUE);
             cmboStore.setMaxWidth(Double.MAX_VALUE);
             btnPvEDisplay.setMaxWidth(Double.MAX_VALUE);
