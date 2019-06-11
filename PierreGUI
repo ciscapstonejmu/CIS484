@@ -829,7 +829,7 @@ public class GUI extends Application
                     Integer.valueOf(txtProdQuantity.getText()),
                     Double.valueOf(txtUnitPrice.getText()), 
                      storeList.get(cmboStore.getSelectionModel().getSelectedIndex()), txtProdDesc.getText(), 
-                    (String) cmboCategory.getValue(),tempImage));
+                    (String) cmboCategory.getValue(), txtSupplier.getText(),tempImage));
             
             alert.setTitle("Success!");
             alert.setHeaderText("The product has been added!");
