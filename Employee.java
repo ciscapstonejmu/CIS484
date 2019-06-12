@@ -111,7 +111,7 @@ public class Employee implements Serializable{
         }
         this.password = this.lastName.toLowerCase();
         empAcc.add(this);
-        obsEmp.add(this.employeeID + " " + this.firstName + " " + this.lastName);
+        obsEmp.add(this.employeeID + ": " + this.firstName + " " + this.lastName);
         
     }
     
