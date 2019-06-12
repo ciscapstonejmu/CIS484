@@ -155,7 +155,7 @@ public class GUI extends Application
     Button btnCalcProdSubTotal = new Button("Calculate Subtotal");
     
     Button createSupp = new Button("Create a Supplier"); 
-
+    Button editSupp = new Button("Edit Supplier");
     Label lblOrderDate = new Label("Order Date"); 
     DatePicker orderDate = new DatePicker(); 
     Button btnAddOrder = new Button("Create Product Order"); 
@@ -665,10 +665,41 @@ public class GUI extends Application
 //            
              
             if(isAuthorized == false)
-            {
+            {          
             menuAdmin.getMenus().get(1).getItems().get(0).setDisable(true); //Employee management
             menuAdmin.getMenus().get(1).getItems().get(2).setDisable(true); //Expense Management
+            createSupp.setDisable(true); //disable creat supplier button
+            editSupp.setDisable(true); //disable edit Supplier
+            btnAddOrder.setDisable(true); //disable create product order
+            btnViewOrder.setDisable(true); //disable view product order
+            
+            if(createSupp.isPressed())
+            {
+                alert.setTitle("Not Authorized");
+                alert.setHeaderText("Access Only For Management");
+                alert.showAndWait();
             }
+            if(btnAddOrder.isPressed())
+            {
+                alert.setTitle("Not Authorized");
+                alert.setHeaderText("Access Only For Management");
+                alert.showAndWait();
+            }
+            if(btnViewOrder.isPressed())
+            {
+                alert.setTitle("Not Authorized");
+                alert.setHeaderText("Access Only For Management");
+                alert.showAndWait();
+            }
+            
+            if(editSupp.isPressed())
+            {
+                alert.setTitle("Not Authorized");
+                alert.setHeaderText("Access Only For Management");
+                alert.showAndWait();
+            }
+            
+            
             }
         });
                 
