@@ -361,11 +361,38 @@ public class GUI extends Application
     //Connection dbConn;
     //Statement commStmt;
     //ResultSet dbResults;
-
+    //String sqlQuery;
     
     @Override
     public void start(Stage primaryStage) 
     {
+       /*
+        //Database example from class (Unsure how to imlement yet)
+        String jdbcConnectionURL = "jdbc:oracle:thin:@localhost:1521:XE";
+        String userID = "javauser";
+        String userPass = "javapass";
+        
+        try
+        {
+           // dbConn = getDBConnection(jdbcConnectionURL, userID, userPass);
+            stmt = dbConn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            sqlQuery = "Select * from TestTable";
+            //sqlQueery = "INSERT INTO TESTTABLE (ID, TESTNAME) VALUES (78, 'HELLO THERE')";
+            rset = stmt.executeQuery(sqlQuery);
+            
+            while (rset.next()){
+                System.out.println(rset.getString(1) + " " + rset.getString(2));
+            }
+            
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.toString());
+        }
+        
+        */    
+    
+    
         GridPane primaryPane = new GridPane();
         primaryPane.setAlignment(Pos.CENTER);
         
@@ -1784,6 +1811,16 @@ public class GUI extends Application
            cmboYear.getSelectionModel().clearSelection();
         });
     }
+    
+        //get database connection method (useable if oracle is on your computer
+    /*
+    public static Connection getDBConnection(String url, String user, String pass) throws SQLException
+    {
+        OracleDataSource ds = new OracleDataSource();
+        ds.SETURL(url);
+        return ds.getConnection(user, pass);
+    }
+*/
 
     public static void main(String[] args) {
         launch(args);
