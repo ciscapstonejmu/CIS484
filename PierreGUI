@@ -62,6 +62,7 @@ public class GUI extends Application
     static ArrayList<String> expCategoryList = new ArrayList<>();
     static ArrayList<String> expStatusList = new ArrayList<>();
     static ArrayList<Supplier> suppList = new ArrayList<>(); 
+    static ArrayList<Member> memList = new ArrayList();
     
     //Observabble Lists/Combo Boxes
     ObservableList obsEmp = FXCollections.observableArrayList();
@@ -81,6 +82,11 @@ public class GUI extends Application
     public static ComboBox cmboSale = new ComboBox(obsSale);
     public static ObservableList<Supplier> obsSupp = FXCollections.observableArrayList(); 
     public static ComboBox cmboSupp = new ComboBox(Supplier.obsSupp); 
+    public static ObservableList<Member> obsMem = FXCollections.observableArrayList();
+    public static ComboBox<Member> cmboMem = new ComboBox(Member.obsMem);
+//    ObservableList 
+    static ObservableList<Expense> obsExpense = FXCollections.observableArrayList();
+    ComboBox cmboExpense = new ComboBox(Expense.obsExpense);
     
     int expVar = 0;
     
@@ -94,6 +100,8 @@ public class GUI extends Application
     ObservableList<Product> prodData = FXCollections.observableArrayList(prodList);
     TableView<Expense> expTable = new TableView<>();
     ObservableList<Expense> expData = FXCollections.observableArrayList(expList);
+    
+    
     
     //Create Supplier Form 
     Label lblSuppName = new Label("Supplier Name: "); 
@@ -215,7 +223,7 @@ public class GUI extends Application
     Button btnAddExp = new Button("Add Expense");
     Button btnPayExp = new Button("Pay Expense");
     Button btnEditExp = new Button("Edit Expense");
-    static ObservableList<Expense> obsExpense = FXCollections.observableArrayList();
+    
     
     
     // Add Expense
@@ -242,7 +250,7 @@ public class GUI extends Application
     DatePicker calendar = new DatePicker();
     
     Label lblChooseExp = new Label("Choose and expense to edit:");
-    ComboBox cmboExpense = new ComboBox(obsExpense);
+    
     Button editExp = new Button("Edit Expense");
     /*
     //POS - Ring Sale/Generate Receipt
@@ -278,6 +286,7 @@ public class GUI extends Application
     Button btnPEEmp = new Button("Edit Employee");
     // Both
     Button btnEnterTime = new Button("Enter Time");
+    TextArea txtPayroll = new TextArea();
     
     
     //POS Report
@@ -1302,6 +1311,7 @@ public class GUI extends Application
             btnAddExp.setMaxWidth(Double.MAX_VALUE);
             btnPayExp.setMaxWidth(Double.MAX_VALUE);
             btnEditExp.setMaxWidth(Double.MAX_VALUE);
+            cmboExpense.setMaxWidth(Double.MAX_VALUE);
             
             expTable.setItems(expData);
             expTable.setMinWidth(secondScene.getWidth());
@@ -1347,10 +1357,13 @@ public class GUI extends Application
             Double amountPaid = Double.parseDouble(txtAmount.getText());
             String date = expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
 
-            obsExpense.add(new Expense(category, description, amountPaid, date, status));
+            //obsExpense.add(new Expense(category, description, amountPaid, date, status));
             System.out.println(obsExpense.size());
             //expList.add(new Expense(category, description, amountPaid, date, status));
-            expList.add(new Expense((String)expCategory.get(cmboExpCategory.getSelectionModel().getSelectedIndex()), txtExpDesc.getText(), Double.parseDouble(txtAmount.getText()), expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")), (String)obsStatus.get(cmboStatus.getSelectionModel().getSelectedIndex())));
+            expList.add(new Expense((String)expCategory.get(cmboExpCategory.getSelectionModel().getSelectedIndex()), 
+                    txtExpDesc.getText(), Double.parseDouble(txtAmount.getText()), 
+                    expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")), 
+                    (String)obsStatus.get(cmboStatus.getSelectionModel().getSelectedIndex())));
             alert.setTitle("Success!");
             alert.setHeaderText("The expense has been added!");
             alert.showAndWait();
@@ -1369,8 +1382,9 @@ public class GUI extends Application
             
             txtExpDesc.clear();
             txtAmount.clear();
-            cmboCategory.getSelectionModel().clearSelection();
+            cmboExpCategory.getSelectionModel().clearSelection();
             cmboStatus.getSelectionModel().clearSelection();
+            expDate.getEditor().clear();
             
             thirdStage.close();
         });
@@ -1484,7 +1498,7 @@ public class GUI extends Application
                 // What associates will see
                 vPay.getChildren().addAll(lblPayroll, btnEnterTime);
             }
-            
+            border.setCenter(txtPayroll);
             border.setTop(menuAdmin);
             border.setLeft(vPay);
             
