@@ -295,7 +295,7 @@ public class GUI extends Application
     Label lblPOS = new Label("Point of Sales");
     Label lblViewType = new Label("View Type");
     ObservableList<String> type = FXCollections.observableArrayList("Week - daily",
-            "Month - weekly", "Year - monthly");
+            "Month - weekly", "Year - monthly", "Total sales today");
     ComboBox cmboType = new ComboBox(type);
     Label lblLocation = new Label("Location");
     // make combobox for locations (dont know what they are
@@ -366,12 +366,12 @@ public class GUI extends Application
     @Override
     public void start(Stage primaryStage) 
     {
-       /*
+        /*
         //Database example from class (Unsure how to imlement yet)
         String jdbcConnectionURL = "jdbc:oracle:thin:@localhost:1521:XE";
         String userID = "javauser";
         String userPass = "javapass";
-        
+
         try
         {
            // dbConn = getDBConnection(jdbcConnectionURL, userID, userPass);
@@ -379,20 +379,19 @@ public class GUI extends Application
             sqlQuery = "Select * from TestTable";
             //sqlQueery = "INSERT INTO TESTTABLE (ID, TESTNAME) VALUES (78, 'HELLO THERE')";
             rset = stmt.executeQuery(sqlQuery);
-            
+
             while (rset.next()){
                 System.out.println(rset.getString(1) + " " + rset.getString(2));
             }
-            
+
         }
         catch (SQLException e)
         {
             System.out.println(e.toString());
         }
+
+        */   
         
-        */    
-    
-    
         GridPane primaryPane = new GridPane();
         primaryPane.setAlignment(Pos.CENTER);
         
@@ -1648,7 +1647,34 @@ public class GUI extends Application
            
             output += "Point of Sales Report:";
             output += "\n========================================================\n";
-
+            int type = 0;
+            type = cmboType.getSelectionModel().getSelectedIndex();
+            int storeloc = 0;
+            storeloc = cmboStore.getSelectionModel().getSelectedIndex();
+            if(type == 0)
+            {
+                output += "Week Daily Total Sales\n";
+                output += "Store: " + cmboStore.getValue().toString();
+                output += "\n------------------------------------------------------\n";
+            }
+            else if (type == 1)
+            {
+                output += "Month Weekly Total Sales\n";
+                output += "Store: " + cmboStore.getValue().toString();
+                output += "\n------------------------------------------------------\n";
+            }
+            else if (type == 2)
+            {
+                output += "Year Monthly Total Sales\n";
+                output += "Store: " + cmboStore.getValue().toString();
+                output += "\n------------------------------------------------------\n";
+            }
+            else if (type == 3)
+            {
+                output += "Total Sales Today\n";
+                output += "Store: " + cmboStore.getValue().toString();
+                output += "\n------------------------------------------------------\n";
+            }
             //create loop or whatever to print out PvE based on store
             txtPOS.setText(output);
 
@@ -1694,7 +1720,8 @@ public class GUI extends Application
            
             output += "Employee Report:";
             output += "\n========================================================\n";
-            output += "Store: "; //use store var
+            output += "Store: " + cmboStore.getValue().toString(); //use store var
+            output += "\n------------------------------------------------------\n";
             for(int i = 0; i<empList.size(); i++)
             { //get the for loop to loop through only certain stores
             output += "Employee ID#: " + empList.get(i).getEmployeeID();
@@ -1748,13 +1775,15 @@ public class GUI extends Application
            
            output += "Monthly Expense Report:";
            output += "\n========================================================\n";
-           
+           output += "Month: " + cmboMonth.getValue().toString();
+           output += "\nYear: " + cmboYear.getValue().toString();
+           output += "\n------------------------------------------------------\n";
            //create loop or whatever to print out Montly Expense based on store
            txtMonth.setText(output);
             
             
-           cmboStore.getSelectionModel().clearSelection();
-           
+           cmboMonth.getSelectionModel().clearSelection();
+           cmboYear.getSelectionModel().clearSelection();
         });
            
         
@@ -1801,6 +1830,8 @@ public class GUI extends Application
            
            output += "Profit v. Expense Report:";
            output += "\n========================================================\n";
+           output += "Year: " + cmboYear.getValue().toString();
+           output += "\n------------------------------------------------------\n";
            
            //create loop or whatever to print out PvE based on store and year
            txtPvE.setText(output);
@@ -1812,6 +1843,7 @@ public class GUI extends Application
         });
     }
     
+    
         //get database connection method (useable if oracle is on your computer
     /*
     public static Connection getDBConnection(String url, String user, String pass) throws SQLException
@@ -1821,7 +1853,7 @@ public class GUI extends Application
         return ds.getConnection(user, pass);
     }
 */
-
+    
     public static void main(String[] args) {
         launch(args);
     }
