@@ -739,13 +739,14 @@ public class GUI extends Application
             btnRemoveProd.setMaxWidth(Double.MAX_VALUE);
             btnHandleImage.setMaxWidth(Double.MAX_VALUE);
             createSupp.setMaxWidth(Double.MAX_VALUE);
+            editSupp.setMaxWidth(Double.MAX_VALUE);
             btnViewOrder.setMaxWidth(Double.MAX_VALUE);
             btnAddOrder.setMaxWidth(Double.MAX_VALUE);
             VBox vbButtons = new VBox();
             vbButtons.setSpacing(10);
             vbButtons.setPadding(new Insets(10, 20, 10 , 20));
             
-            vbButtons.getChildren().addAll(lblInv, lblInvMan, btnAddProd, btnRemoveProd, btnHandleImage, createSupp, btnAddOrder, btnViewOrder);
+            vbButtons.getChildren().addAll(lblInv, lblInvMan, btnAddProd, btnRemoveProd, btnHandleImage, createSupp, editSupp ,btnAddOrder, btnViewOrder);
             //secondPane.add(vbButtons, 3, 3);
             prodTable.setItems(prodData);
             //secondPane.add(prodTable, 5, 3);
@@ -817,6 +818,10 @@ public class GUI extends Application
             eighthPane.add(txtSuppContactEmail, 1, 8); 
 
             eighthPane.add(btnNewSupp, 0, 8); 
+        });
+        
+        editSupp.setOnAction(e ->{
+            //edit Supplier functionality
         });
         
         btnNewSupp.setOnAction(e -> {
