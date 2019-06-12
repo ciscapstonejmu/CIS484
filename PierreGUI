@@ -334,9 +334,7 @@ public class GUI extends Application
     Button btnPvEDisplay = new Button("Display");
     TabPane tbPvE = new TabPane();
     Tab tabPText = new Tab("Text");
-    Tab tabPPie = new Tab("Pie Graph");
     Tab tabPBar = new Tab("Bar Graph");
-    Tab tabPLine = new Tab("Line Graph");
     GridPane textPane = new GridPane();
     TextArea txtPvE = new TextArea();
     
@@ -508,6 +506,7 @@ public class GUI extends Application
         txtMonth.setEditable(false);
         txtEmp.setEditable(false);
         txtPvE.setEditable(false);
+        txtPayroll.setEditable(false);
         
         Scene fourthScene = new Scene(fourthPane, 500, 500);
         Stage fourthStage = new Stage();
@@ -1487,6 +1486,12 @@ public class GUI extends Application
             vPay.setSpacing(10);
             vPay.setPadding(new Insets(10, 20, 10 , 20));
             
+            cmboEmp.setMaxWidth(Double.MAX_VALUE);
+            btnPEEmp.setMaxWidth(Double.MAX_VALUE);
+            btnEnterTime.setMaxWidth(Double.MAX_VALUE);
+            
+            
+            
             if(isAuthorized == true)
             {
                 // What managers will see
@@ -1522,7 +1527,7 @@ public class GUI extends Application
             cmboType.setMaxWidth(Double.MAX_VALUE);
             cmboStore.setMaxWidth(Double.MAX_VALUE);
             btnPOSDisplay.setMaxWidth(Double.MAX_VALUE);
-
+            
             VBox vPOS = new VBox();
             vPOS.setSpacing(10);
             vPOS.setPadding(new Insets(10, 20, 10 , 20));
@@ -1534,6 +1539,28 @@ public class GUI extends Application
             
             
             tabPOSText.setContent(txtPOS);
+            
+            String output = "";
+           
+            output += "Point of Sales Report:";
+            output += "\n========================================================\n";
+
+            txtPOS.setText(output);
+
+        });
+        
+        btnPOSDisplay.setOnAction(e -> {
+            String output = "";
+           
+            output += "Point of Sales Report:";
+            output += "\n========================================================\n";
+
+            //create loop or whatever to print out PvE based on store
+            txtPOS.setText(output);
+
+            
+            cmboType.getSelectionModel().clearSelection();
+            cmboStore.getSelectionModel().clearSelection();
         });
         
         menuAdmin.getMenus().get(3).getItems().get(1).setOnAction(e -> {
@@ -1557,7 +1584,28 @@ public class GUI extends Application
             border.setLeft(vEmp);
             border.setCenter(txtEmp);
             
+            String output = "";
+           
+            output += "Employee Report:";
+            output += "\n========================================================\n";
+
+            //create loop or whatever to print out PvE based on store
+            txtEmp.setText(output);
+
             
+        });
+        
+        btnEmpDisplay.setOnAction(e -> {
+            String output = "";
+           
+            output += "Employee Report:";
+            output += "\n========================================================\n";
+
+            //create loop or whatever to print out PvE based on store
+            txtEmp.setText(output);
+
+            
+            cmboStore.getSelectionModel().clearSelection();
         });
         
         menuAdmin.getMenus().get(3).getItems().get(2).setOnAction(e -> {
@@ -1580,14 +1628,34 @@ public class GUI extends Application
            border.setTop(menuAdmin);
            border.setCenter(txtMonth);
            
+           String output = "";
+           
+           output += "Monthly Expense Report:";
+           output += "\n========================================================\n";
+           
+           //create loop or whatever to print out PvE based on store
+           txtMonth.setText(output);
+           
+           
+        });
+        
+        btnMonthDisplay.setOnAction(e -> {
+            String output = "";
+           
+           output += "Monthly Expense Report:";
+           output += "\n========================================================\n";
+           
+           //create loop or whatever to print out PvE based on store
+           txtMonth.setText(output);
+            
+            
+           cmboStore.getSelectionModel().clearSelection();
            
         });
            
         
             tbPvE.getTabs().add(tabPText);
-            tbPvE.getTabs().add(tabPPie);
             tbPvE.getTabs().add(tabPBar);
-            tbPvE.getTabs().add(tabPLine);
         menuAdmin.getMenus().get(3).getItems().get(3).setOnAction(e -> {
            // Profit v. Expense Report
            secondPane.getChildren().clear();
@@ -1599,10 +1667,6 @@ public class GUI extends Application
            secondStage.setTitle("Profit v. Expense Report");
            
            
-           secondPane.add(menuAdmin, 0, 0, 4, 1);
-           
-           secondPane.add(tbPvE, 0, 1, 4, 1);
-           
            tbPvE.setMinWidth(secondScene.getWidth());
            
             cmboYear.setMaxWidth(Double.MAX_VALUE);
@@ -1613,13 +1677,35 @@ public class GUI extends Application
            VBox vPVE = new VBox();
            vPVE.setSpacing(10);
            vPVE.setPadding(new Insets(10, 20, 10 , 20));
-           vPVE.getChildren().addAll(lblPvE, lblReport, lblYear, cmboYear, lblPLocation, cmboStore);
+           vPVE.getChildren().addAll(lblPvE, lblReport, lblYear, cmboYear, lblPLocation, cmboStore, btnPvEDisplay);
            
            border.setTop(menuAdmin);
            border.setLeft(vPVE);
            border.setCenter(tbPvE);
            
+           String output = "";
+           
+           output += "Profit v. Expense Report:";
+           output += "\n========================================================\n";
+           
+           txtPvE.setText(output);
+           
            tabPText.setContent(txtPvE);
+        });
+        
+        btnPvEDisplay.setOnAction(e -> {
+            String output = "";
+           
+           output += "Profit v. Expense Report:";
+           output += "\n========================================================\n";
+           
+           //create loop or whatever to print out PvE based on store
+           txtPvE.setText(output);
+           
+           tabPText.setContent(txtPvE);
+           
+           cmboStore.getSelectionModel().clearSelection();
+           cmboYear.getSelectionModel().clearSelection();
         });
     }
 
