@@ -318,11 +318,14 @@ public class GUI extends Application
     // Monthly Expense Report
     Label lblMonthRep = new Label("Monthly Expense");
     Label lblReport = new Label("Report");
-    Label lblMLocation = new Label("Location");
+    Label lblMonth = new Label("Month");
     TextArea txtMonth = new TextArea();
     // combobox for location
     // something to see past months
     Button btnMonthDisplay = new Button("Display");
+    ObservableList<String> month = FXCollections.observableArrayList("January", "February", "March", "April", "May",
+            "June", "July", "August", "September", "October", "November", "December");
+    ComboBox cmboMonth = new ComboBox(month);
     
     // Profit v. Expense Report
     Label lblPvE = new Label("Profit v. Expense");
@@ -1589,7 +1592,7 @@ public class GUI extends Application
             output += "Employee Report:";
             output += "\n========================================================\n";
 
-            //create loop or whatever to print out PvE based on store
+            //create loop or whatever to print out Employee based on store
             txtEmp.setText(output);
 
             
@@ -1600,10 +1603,20 @@ public class GUI extends Application
            
             output += "Employee Report:";
             output += "\n========================================================\n";
-
-            //create loop or whatever to print out PvE based on store
+            output += "Store: "; //use store var
+            for(int i = 0; i<empList.size(); i++)
+            { //get the for loop to loop through only certain stores
+            output += "Employee ID#: " + empList.get(i).getEmployeeID();
+            output += " Name: " + empList.get(i).getFirstName() + " " + empList.get(i).getLastName();
+            output += " Job Title: " + empList.get(i).getJobTitle();
+            //NEED HOURS WORKED (per week)
+            // WAGES EARNED
+            // for those on POS, how many sales rang up
+            
+            //create loop or whatever to print out Employee based on store
+            }
             txtEmp.setText(output);
-
+            
             
             cmboStore.getSelectionModel().clearSelection();
         });
@@ -1616,14 +1629,15 @@ public class GUI extends Application
            
            secondPane.setAlignment(Pos.TOP_CENTER);
            secondStage.setTitle("Monthly Expense Report");
-           cmboStore.setMaxWidth(Double.MAX_VALUE);
+           cmboYear.setMaxWidth(Double.MAX_VALUE);
+           cmboMonth.setMaxWidth(Double.MAX_VALUE);
            btnMonthDisplay.setMaxWidth(Double.MAX_VALUE);
            
            VBox vMonth = new VBox();
            vMonth.setSpacing(10);
            vMonth.setPadding(new Insets(10, 20, 10 , 20));
             
-           vMonth.getChildren().addAll(lblMonthRep, lblReport, lblMLocation, cmboStore, btnMonthDisplay);
+           vMonth.getChildren().addAll(lblMonthRep, lblReport, lblMonth, cmboMonth, lblYear, cmboYear, btnMonthDisplay);
            border.setLeft(vMonth);
            border.setTop(menuAdmin);
            border.setCenter(txtMonth);
@@ -1633,7 +1647,6 @@ public class GUI extends Application
            output += "Monthly Expense Report:";
            output += "\n========================================================\n";
            
-           //create loop or whatever to print out PvE based on store
            txtMonth.setText(output);
            
            
@@ -1645,7 +1658,7 @@ public class GUI extends Application
            output += "Monthly Expense Report:";
            output += "\n========================================================\n";
            
-           //create loop or whatever to print out PvE based on store
+           //create loop or whatever to print out Montly Expense based on store
            txtMonth.setText(output);
             
             
@@ -1670,14 +1683,13 @@ public class GUI extends Application
            tbPvE.setMinWidth(secondScene.getWidth());
            
             cmboYear.setMaxWidth(Double.MAX_VALUE);
-            cmboStore.setMaxWidth(Double.MAX_VALUE);
             btnPvEDisplay.setMaxWidth(Double.MAX_VALUE);
 
 
            VBox vPVE = new VBox();
            vPVE.setSpacing(10);
            vPVE.setPadding(new Insets(10, 20, 10 , 20));
-           vPVE.getChildren().addAll(lblPvE, lblReport, lblYear, cmboYear, lblPLocation, cmboStore, btnPvEDisplay);
+           vPVE.getChildren().addAll(lblPvE, lblReport, lblYear, cmboYear, btnPvEDisplay);
            
            border.setTop(menuAdmin);
            border.setLeft(vPVE);
@@ -1699,7 +1711,7 @@ public class GUI extends Application
            output += "Profit v. Expense Report:";
            output += "\n========================================================\n";
            
-           //create loop or whatever to print out PvE based on store
+           //create loop or whatever to print out PvE based on store and year
            txtPvE.setText(output);
            
            tabPText.setContent(txtPvE);
