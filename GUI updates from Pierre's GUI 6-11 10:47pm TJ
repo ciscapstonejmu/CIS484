@@ -701,6 +701,7 @@ public class GUI extends Application
             
             
             }
+            }
         });
                 
         menuAdmin.getMenus().get(0).getItems().get(0).setOnAction(e -> {
