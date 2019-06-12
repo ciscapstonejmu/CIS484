@@ -17,6 +17,7 @@ import java.time.format.*;
 
 public class CustSaleForm {
     
+    //Ring Sale Controls
     public String saleID;
     public static int saleCount = 0;
     public String recItems = "";
@@ -36,7 +37,7 @@ public class CustSaleForm {
     public Button btnCompleteSale = new Button("Complete Sale ->");
     public Button btnReceipt = new Button("Generate Receipt ->");
     public Button btnRepeatBuy = new Button ("Repeat Purchase");
-    //^This button has not been added yet
+    public Button btnAddMember = new Button("Add Thrifty Member");
     public TextArea txtSaleOutput = new TextArea();
     
     public TextArea receiptOutput = new TextArea();
@@ -56,6 +57,21 @@ public class CustSaleForm {
     
     public GUI myParent;
     //Sale Constructor
+    
+    //Add Member Controls
+    Label lblAddMem = new Label("Add Member");
+    Label lblMemFName = new Label("First Name:");
+    Label lblMemLName = new Label("Last Name:");
+    Label lblMemPhone = new Label("Phone:");
+    Label lblMemEmail = new Label("Email:");
+    
+    TextField txtMemFName = new TextField();
+    TextField txtMemLName = new TextField();
+    TextField txtMemPhone = new TextField();
+    TextField txtMemEmail = new TextField();
+    
+    Button btnCreateMem = new Button("Create Member");
+    
     public CustSaleForm(GUI parentForm)
     {
         this.myParent = parentForm;
@@ -78,14 +94,17 @@ public class CustSaleForm {
         primaryPane.add(lblClubMem, 0, 3);
         primaryPane.add(cmboIsMem, 1, 3);
         cmboIsMem.setMinWidth(4);
-        primaryPane.add(lblSaleProd, 0, 4);
-        primaryPane.add(cmboSaleProd, 1, 4);
+        primaryPane.add(GUI.cmboMem, 1, 4);
+        GUI.cmboMem.setMinWidth(4);
+        primaryPane.add(btnAddMember, 1, 5);
+        primaryPane.add(lblSaleProd, 0, 6);
+        primaryPane.add(cmboSaleProd, 1, 6);
         cmboSaleProd.setMinWidth(4);
         //primaryPane.add(lblSaleProdQuan, 0, 5);
         //primaryPane.add(txtSaleProdQuan, 1, 5);
-        primaryPane.add(btnAddToSale, 0, 5, 2, 2);
-        primaryPane.add(btnRepeatBuy, 0, 6, 1, 1);
-        primaryPane.add(btnCompleteSale, 0, 7, 2, 2);
+        primaryPane.add(btnAddToSale, 0, 7, 1, 1);
+        primaryPane.add(btnRepeatBuy, 0, 8, 1, 1);
+        primaryPane.add(btnCompleteSale, 0, 10, 2, 2);
         primaryPane.add(txtSaleOutput, 2, 0, 4, 6);
         
         //txtSaleProdQuan.setPrefWidth(20);
@@ -98,8 +117,25 @@ public class CustSaleForm {
         cmboIsMem.setPrefWidth(118);
         cmboSaleProd.setPrefWidth(118);
         
+        lblAddMem.setStyle("-fx-font: bold 14pt \"Arial\";");
+        
+        //Outputs cannot be edited by User
         txtSaleOutput.setEditable(false);
         receiptOutput.setEditable(false);
+        
+        //AddMemPane
+        GridPane addMemPane = new GridPane();
+        addMemPane.setAlignment(Pos.TOP_CENTER);
+        addMemPane.setVgap(10);
+        addMemPane.setHgap(10);
+        
+        Scene addMemScene = new Scene(addMemPane, 500, 300);
+        Stage addMemStage = new Stage();
+        addMemStage.setScene(addMemScene);
+        
+        //Diable Add Member button unless not already a memeber
+        
+        //Not sure how to do this^^
         
         //Set Output Perminant Text
         txtSaleOutput.appendText("Sale Items: " + "\n");
@@ -118,6 +154,15 @@ public class CustSaleForm {
             int saleProd = cmboSaleProd.getSelectionModel().getSelectedIndex();
 
             this.saleProducts.add(GUI.prodList.get(saleProd));
+            
+            if(saleProducts.size() > GUI.prodList.size())
+            {
+                saleProducts.remove(saleProd);
+                alertError.setTitle("Error");
+                alertError.setHeaderText("Sale Quantity exceeds Inventory!");
+                alertError.showAndWait();
+            }
+            else{
             String saleOut = "";
             saleOut += GUI.prodList.get(saleProd).toStringSale();
             saleOut += "\n";
@@ -129,6 +174,7 @@ public class CustSaleForm {
             alert.showAndWait();
             txtSaleOutput.setEditable(false);
             
+            }
             });
         
         btnRepeatBuy.setOnAction(e -> {
@@ -144,6 +190,41 @@ public class CustSaleForm {
             alert.setHeaderText("Same Product Purchased!");
             alert.showAndWait();
             txtSaleOutput.setEditable(false);
+        });
+        
+        btnAddMember.setOnAction(e -> {
+            
+            addMemStage.setTitle("Add a Thrifty Member");
+            addMemStage.show();
+            addMemPane.setAlignment(Pos.TOP_CENTER);
+            
+            addMemPane.add(lblAddMem, 0, 0);
+            addMemPane.add(lblMemFName, 0, 1);
+            addMemPane.add(txtMemFName, 0, 2);
+            addMemPane.add(lblMemLName, 1, 1);
+            addMemPane.add(txtMemLName, 1, 2);
+            addMemPane.add(lblMemPhone, 0, 3);
+            addMemPane.add(txtMemPhone, 0, 4);
+            addMemPane.add(lblMemEmail, 1, 3);
+            addMemPane.add(txtMemEmail, 1, 4);
+            addMemPane.add(btnCreateMem, 1, 5);
+            
+        });
+        
+        btnCreateMem.setOnAction(e -> {
+            
+            GUI.memList.add(new Member(txtMemFName.getText(), 
+                    txtMemLName.getText(), txtMemPhone.getText(), 
+                    txtMemEmail.getText()));
+            
+            alert.setTitle("Success!");
+            alert.setHeaderText("New Member Added!");
+            alert.showAndWait();
+            
+            addMemStage.close();
+            
+            Member.obsMem.add(txtMemLName.getText() + ", " + txtMemFName.getText());
+            
         });
         
         //Complete the sale
