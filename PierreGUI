@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import static pkg484groupproj.GUI.expList;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+//import oracle.jdbc.pool.*;
 
 public class GUI extends Application 
 {
@@ -352,6 +353,13 @@ public class GUI extends Application
     ComboBox cmboLoginType = new ComboBox(loginType);
     
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    
+    // Our Database Connection method needs these 
+    // objects. We declare them here and point them
+    // to instance objects below.
+    //Connection dbConn;
+    //Statement commStmt;
+    //ResultSet dbResults;
     
     @Override
     public void start(Stage primaryStage) 
