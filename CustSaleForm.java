@@ -254,7 +254,15 @@ public class CustSaleForm {
             //need to include the customer 
             receiptOutput.appendText("--------------------------"
                 + "----------------------------------------\n");
-            receiptOutput.appendText("\n" + "Thank You " + "CUSTOMER**"  + "!");
+            receiptOutput.appendText("\n" + "Thank You ");
+            if(txtMemFName.getText().isEmpty())
+            {
+                receiptOutput.appendText("Customer!");
+            }
+            else
+            {
+                receiptOutput.appendText(txtMemFName.getText() + "!");
+            }
             alert.setTitle("Success!");
             alert.setHeaderText("Sale Completed!");
             alert.showAndWait();
