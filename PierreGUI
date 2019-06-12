@@ -31,8 +31,8 @@ import java.util.ArrayList;
 import static pkg484groupproj.GUI.expList;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
-import java.sql.*;
 //import oracle.jdbc.pool.*;
+import java.sql.*;
 
 public class GUI extends Application 
 {
@@ -361,6 +361,7 @@ public class GUI extends Application
     //Connection dbConn;
     //Statement commStmt;
     //ResultSet dbResults;
+
     
     @Override
     public void start(Stage primaryStage) 
@@ -599,6 +600,10 @@ public class GUI extends Application
         tbExpStatus.setCellValueFactory(new PropertyValueFactory<Expense, String>("status"));
         
         
+        //main menu bottom
+        Label lblMenu1 = new Label("123 Lane   Harrisonburg, VA 22801");
+        Label lblMenu2 = new Label("(540) 123-1234   (540) 123-1244 (fax)");
+        Label lblMenu3 = new Label("http://www.thrifty-store.com");
         
         Scene primaryScene = new Scene(primaryPane, 500, 500);
         primaryStage.setScene(primaryScene);
@@ -608,6 +613,12 @@ public class GUI extends Application
         BorderPane border = new BorderPane();
         border.setTop(menuAdmin);
         
+        GridPane mainPane = new GridPane();
+        
+        mainPane.setVgap(10);
+        mainPane.setHgap(15);
+        
+        mainPane.setAlignment(Pos.TOP_CENTER);
         secondPane.setAlignment(Pos.TOP_CENTER);
         
         
@@ -616,7 +627,12 @@ public class GUI extends Application
             secondPane.add(lblMain, 3, 4);
             secondPane.add(lblSelect, 3, 5);
             secondPane.add(btnRingSale, 3, 6);
+            mainPane.add(lblMenu1, 0, 0);
+            mainPane.add(lblMenu2, 1, 0);
+            mainPane.add(lblMenu3, 0, 1);
+            
         border.setCenter(secondPane);
+        border.setBottom(mainPane);
         Scene secondScene = new Scene(border, 1050, 500);
         Stage secondStage = new Stage();
         secondStage.setScene(secondScene);
@@ -680,14 +696,15 @@ public class GUI extends Application
 //            
              
             if(isAuthorized == false)
-            {          
+            {
             menuAdmin.getMenus().get(1).getItems().get(0).setDisable(true); //Employee management
             menuAdmin.getMenus().get(1).getItems().get(2).setDisable(true); //Expense Management
+            
             createSupp.setDisable(true); //disable creat supplier button
             editSupp.setDisable(true); //disable edit Supplier
             btnAddOrder.setDisable(true); //disable create product order
             btnViewOrder.setDisable(true); //disable view product order
-            
+
             if(createSupp.isPressed())
             {
                 alert.setTitle("Not Authorized");
@@ -706,14 +723,13 @@ public class GUI extends Application
                 alert.setHeaderText("Access Only For Management");
                 alert.showAndWait();
             }
-            
+
             if(editSupp.isPressed())
             {
                 alert.setTitle("Not Authorized");
                 alert.setHeaderText("Access Only For Management");
                 alert.showAndWait();
             }
-            
             
             }
             }
@@ -761,7 +777,9 @@ public class GUI extends Application
             vbButtons.setSpacing(10);
             vbButtons.setPadding(new Insets(10, 20, 10 , 20));
             
-            vbButtons.getChildren().addAll(lblInv, lblInvMan, btnAddProd, btnRemoveProd, btnHandleImage, createSupp, editSupp ,btnAddOrder, btnViewOrder);
+             vbButtons.getChildren().addAll(lblInv, lblInvMan, btnAddProd, 
+                     btnRemoveProd, btnHandleImage, createSupp, editSupp, 
+                     btnAddOrder, btnViewOrder);
             //secondPane.add(vbButtons, 3, 3);
             prodTable.setItems(prodData);
             //secondPane.add(prodTable, 5, 3);
@@ -837,8 +855,7 @@ public class GUI extends Application
         
         editSupp.setOnAction(e ->{
             //edit Supplier functionality
-        });        
-        
+        }); 
         
         btnNewSupp.setOnAction(e -> {
             suppList.add(new Supplier(txtSuppName.getText(), 
