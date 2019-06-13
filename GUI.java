@@ -33,7 +33,7 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import static pkg484groupproj.GUI.obsExpense;
 
-public class GUI extends Application 
+public class GUI3 extends Application 
 {
     // Sign In Menu
     Label lblThrifty = new Label("Thrifty");
@@ -103,6 +103,8 @@ public class GUI extends Application
     ObservableList<Product> prodData = FXCollections.observableArrayList(prodList);
     TableView<Expense> expTable = new TableView<>();
     ObservableList<Expense> expData = FXCollections.observableArrayList(expList);
+    TableView<Store> storeTable = new TableView<>();
+    ObservableList<Store> storeData = FXCollections.observableArrayList(storeList);
     
     
     
@@ -228,6 +230,7 @@ public class GUI extends Application
     Button btnAddExp = new Button("Add Expense");
     Button btnPayExp = new Button("Pay Expense");
     Button btnEditExp = new Button("Edit Expense");
+    Button btnAddExpType = new Button("Add Expense Category");
     
     
     
@@ -269,6 +272,25 @@ public class GUI extends Application
     TextField txtChoosePayment = new TextField();
     Label lblDisplayExpAmount = new Label("New Expense Balance");
     TextField txtDisplayExpAmount = new TextField();
+    
+    Label lblNewExpenseTypeHeader = new Label("Add New Expense Type");
+    Label lblAddNewExpenseType = new Label("Enter an expense type to add");
+    TextField txtAddNewExpenseType = new TextField();
+    Button btnConfirmNewExp = new Button("Add New Expense Type");
+    
+    Label lblStoreMan = new Label("Store Management");
+    Button btnAddStore = new Button("Add Store");
+    Button btnEditStore = new Button("Edit Store");
+    
+    
+    Label lblStoreName = new Label("Enter Store Name");
+    TextField txtStoreName = new TextField();
+    Label lblStoreAddress = new Label("Enter Store Address");
+    TextField txtStoreAddress = new TextField();
+    
+    Button btnConfirmAddStore = new Button("Add Store");
+    
+    
     
     //Label lblChooseExp = new Label("Choose and expense to edit:");
     
@@ -395,6 +417,10 @@ public class GUI extends Application
             obsStore.add(store4);
             obsStore.add(store5);
             storeList.addAll(obsStore);
+            for (Store s: storeList)
+            {
+                storeData.add(s);
+            }
             
             obsCategory.add("PRODUCE");
             obsCategory.add("DAIRY");
@@ -445,6 +471,24 @@ public class GUI extends Application
        Scene eighthScene = new Scene(eighthPane, 500, 500);
        Stage eighthStage = new Stage();
        eighthStage.setScene(eighthScene);
+       
+       GridPane ninthPane = new GridPane();
+       ninthPane.setAlignment(Pos.TOP_CENTER);
+       ninthPane.setVgap(10);
+       ninthPane.setHgap(10);
+       
+       Scene ninthScene = new Scene(ninthPane, 500, 500);
+       Stage ninthStage = new Stage();
+       ninthStage.setScene(ninthScene);
+       
+       GridPane tenthPane = new GridPane();
+       tenthPane.setAlignment(Pos.TOP_CENTER);
+       tenthPane.setVgap(10);
+       tenthPane.setHgap(10);
+       
+       Scene tenthScene = new Scene(tenthPane, 500, 500);
+       Stage tenthStage = new Stage();
+       tenthStage.setScene(tenthScene);
         
         lblThrifty.setStyle("-fx-font: bold 36pt \"Comic Sans ms\"; -fx-text-fill: red;");
         lblStore.setStyle("-fx-font: bold 36pt \"Comic Sans ms\"; -fx-text-fill: blue;");
@@ -511,6 +555,7 @@ public class GUI extends Application
         menuManage.getItems().add(new MenuItem("Employee Management"));
         menuManage.getItems().add(new MenuItem("Inventory Management"));
         menuManage.getItems().add(new MenuItem("Expense Management"));
+        menuManage.getItems().add(new MenuItem("Store Management"));
         menuPayroll.getItems().add(new MenuItem("Payroll"));
         menuReports.getItems().add(new MenuItem("POS Report"));
         menuReports.getItems().add(new MenuItem("Employee Report"));
@@ -609,6 +654,17 @@ public class GUI extends Application
         tbExpTtlAmount.setCellValueFactory(new PropertyValueFactory<Expense, Double>("totalAmount"));
         tbExpDate.setCellValueFactory(new PropertyValueFactory<Expense, String>("date"));
         tbExpStatus.setCellValueFactory(new PropertyValueFactory<Expense, String>("status"));
+        
+        //Store Table
+        TableColumn tbStoreID = new TableColumn("ID");
+        TableColumn tbStoreName = new TableColumn("Name");
+        TableColumn tbStoreAddress = new TableColumn("Address");
+
+        
+        //ValueFactory for Store Table
+        tbStoreID.setCellValueFactory(new PropertyValueFactory<Store, Integer>("storeID"));
+        tbStoreName.setCellValueFactory(new PropertyValueFactory<Expense, Integer>("storeName"));
+        tbStoreAddress.setCellValueFactory(new PropertyValueFactory<Expense, Integer>("storeAddress"));
         
         
         
@@ -1344,7 +1400,7 @@ public class GUI extends Application
            expVB.setPadding(new Insets(10, 20, 10 , 20));
            
             
-           expVB.getChildren().addAll(lblExp, lblExpMan, cmboExpense, btnAddExp, btnPayExp, btnEditExp);
+           expVB.getChildren().addAll(lblExp, lblExpMan, cmboExpense, btnAddExp, btnPayExp, btnEditExp, btnAddExpType);
            border.setTop(menuAdmin);
            border.setLeft(expVB);
            border.setCenter(expTable);
@@ -1593,14 +1649,54 @@ public class GUI extends Application
            txtExpCurrentAmount.setText(String.valueOf(expList.get(0).getAmountPaid()));
            //System.out.println(expList.get(0).payExpense(Double.parseDouble(txtChoosePayment.getText())));
            
-       
-           
-       
-           
-       
-       });
+        });
+      btnAddExpType.setOnAction(e -> {
+          
+          
+          ninthPane.add(lblNewExpenseTypeHeader, 0, 0);
+          ninthPane.add(lblAddNewExpenseType, 0, 1);
+          ninthPane.add(txtAddNewExpenseType, 0, 2);
+          ninthPane.add(btnConfirmNewExp, 0, 3);
+          ninthStage.show();
+          
+          
+      });
+      btnConfirmNewExp.setOnAction(e -> {
+          
+      expCategory.add(txtAddNewExpenseType.getText());
+            
+      });    
 
-        
+        expTable.getColumns().addAll(tbExpID, tbExpCategory, tbExpDesc, tbExpAmount, tbExpTtlAmount, tbExpDate, tbExpStatus); 
+        menuAdmin.getMenus().get(1).getItems().get(2).setOnAction(e -> {
+           // Expense Management
+           
+           tenthPane.getChildren().clear();
+           formPane.getChildren().clear();
+           border.getChildren().clear();
+           
+           secondPane.setAlignment(Pos.TOP_CENTER);
+           secondStage.setTitle("Store Management");
+           
+            btnAddExp.setMaxWidth(Double.MAX_VALUE);
+            btnPayExp.setMaxWidth(Double.MAX_VALUE);
+            btnEditExp.setMaxWidth(Double.MAX_VALUE);
+            cmboExpense.setMaxWidth(Double.MAX_VALUE);
+            
+            storeTable.setItems(storeData);
+            storeTable.setMinWidth(tenthScene.getWidth());
+            
+           VBox storeVB = new VBox();
+           storeVB.setSpacing(10);
+           storeVB.setPadding(new Insets(10, 20, 10 , 20));
+           
+           storeVB.getChildren().addAll(lblStoreMan, btnAddStore, btnEditStore);
+           border.setTop(menuAdmin);
+           border.setLeft(storeVB);
+           border.setCenter(storeTable);
+           tenthStage.show();
+           
+        });
         
          menuAdmin.getMenus().get(4).getItems().get(0).setOnAction(e -> {
              // sign out
