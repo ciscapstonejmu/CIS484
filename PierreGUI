@@ -33,6 +33,7 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 //import oracle.jdbc.pool.*;
 import java.sql.*;
+import java.text.DecimalFormat;
 
 public class GUI extends Application 
 {
@@ -464,28 +465,68 @@ public class GUI extends Application
         
         lblThrifty.setStyle("-fx-font: bold 36pt \"Comic Sans ms\"; -fx-text-fill: red;");
         lblStore.setStyle("-fx-font: bold 36pt \"Comic Sans ms\"; -fx-text-fill: blue;");
-        lblSignIn.setStyle("-fx-font: bold 16pt \"Arial\";");
+        lblSignIn.setStyle("-fx-font: bold 16pt \"bookman\";");
+        
+        btnSignIn.setStyle("-fx-font:10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnAddEmp.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnEditEmp.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        addEmp.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        cmboEmp.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnAddExp.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        addExp.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        addProd.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnAddOrder.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnAddProd.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnCalcProdSubTotal.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnChangeImage.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnCompleteOrder.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnDisplayPO.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnEditExp.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnEmpDisplay.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnEnterTime.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnHandleImage.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnImage.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnMonthDisplay.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnNewSupp.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnPEEmp.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnPOSDisplay.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnPayExp.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnPvEDisplay.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnRemoveProd.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnRingSale.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnViewImage.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnViewOrder.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        createSupp.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        editEmp.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        editExp.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        editSupp.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        removeProd.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         
         
         
-        lblInvMan.setStyle("-fx-font: bold 20pt \"Arial\";");
-        lblInv.setStyle("-fx-font: bold 20pt \"Arial\";");
-        lblEmpMan.setStyle("-fx-font: bold 20pt \"Arial\";");
-        lblEmp.setStyle("-fx-font: bold 20pt \"Arial\";");
+        empCat.setStyle("-fx-font: 9pt \"bookman\";");
+        empType.setStyle("-fx-font: 9pt \"bookman\";");
+        empType.setStyle("-fx-font: 9pt \"bookman\";");
+        
+        
+        lblInvMan.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblInv.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblEmpMan.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblEmp.setStyle("-fx-font: bold 20pt \"bookman\";");
 
-        lblExpMan.setStyle("-fx-font: bold 20pt \"Arial\";");
-        lblExp.setStyle("-fx-font: bold 20pt \"Arial\";");
-        lblPOS.setStyle("-fx-font: bold 20pt \"Arial\";");
-        lblReport.setStyle("-fx-font: bold 20pt \"Arial\";");
-        lblPayroll.setStyle("-fx-font: bold 20pt \"Arial\";");
-        lblEmpRep.setStyle("-fx-font: bold 20pt \"Arial\";");
-        lblMonthRep.setStyle("-fx-font: bold 20pt \"Arial\";");
-        lblPvE.setStyle("-fx-font: bold 20pt \"Arial\";");
-        lblAddProd.setStyle("-fx-font: bold 14pt \"Arial\";");
-        lblAddEmp.setStyle("-fx-font: bold 14pt \"Arial\";");
-        lblAddExp.setStyle("-fx-font: bold 14pt \"Arial\";");
-        lblRemoveProd.setStyle("-fx-font: bold 14pt \"Arial\";");
-        lblAddSupp.setStyle("-fx-font: bold 14pt \"Arial\";"); 
+        lblExpMan.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblExp.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblPOS.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblReport.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblPayroll.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblEmpRep.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblMonthRep.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblPvE.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblAddProd.setStyle("-fx-font: bold 14pt \"bookman\";");
+        lblAddEmp.setStyle("-fx-font: bold 14pt \"bookman\";");
+        lblAddExp.setStyle("-fx-font: bold 14pt \"bookman\";");
+        lblRemoveProd.setStyle("-fx-font: bold 14pt \"bookman\";");
+        lblAddSupp.setStyle("-fx-font: bold 14pt \"bookman\";"); 
         
         
         GridPane secondPane = new GridPane();
@@ -663,6 +704,8 @@ public class GUI extends Application
         Stage secondStage = new Stage();
         secondStage.setScene(secondScene);
         menuAdmin.setMinWidth(secondScene.getWidth());
+        
+        border.setStyle("-fx-background-color: white;");
         
         try
         {
@@ -1210,7 +1253,23 @@ public class GUI extends Application
         addEmp.setOnAction(e -> {
             //employee added clicked
             
-                
+            //data validation
+            if(txtFName.getText().trim().length() == 0 || txtLName.getText().trim().length() == 0 ||
+                    txtEmail.getText().trim().length() == 0 || txtPhone.getText().trim().length() == 0 ||
+                    txtAddress.getText().trim().length() == 0 || txtSalary.getText().trim().length() == 0 ||
+                    (cmboJob.getSelectionModel().getSelectedItem().toString().isEmpty()) || 
+                    (cmboEType.getValue().toString().equals("") && cmboEType.getValue() == null) ||
+                    (cmboEmpCat.getValue().toString().equals("") && cmboEmpCat.getValue() == null) || 
+                    (cmboStore.getValue().toString().equals("") && cmboStore.getValue() == null))
+                // keep on getting nullpointer for combobox ones
+            {
+               alert.setTitle("Error!");
+               alert.setHeaderText("Error! Please enter data!");
+               alert.showAndWait();
+            }
+            
+            else
+            {
             empList.add(new Employee(txtFName.getText(), txtLName.getText(), txtEmail.getText(), txtPhone.getText(), 
             txtAddress.getText(), Double.valueOf(txtSalary.getText()),  
                     (String)cmboJob.getValue(), (String)cmboEType.getValue(), (String)cmboEmpCat.getValue(), (String) cmboStore.getValue())); 
@@ -1249,6 +1308,7 @@ public class GUI extends Application
             
             
             thirdStage.close();
+            }
         });
         
         btnEditEmp.setOnAction(e -> {
@@ -1717,16 +1777,23 @@ public class GUI extends Application
         
         btnEmpDisplay.setOnAction(e -> {
             String output = "";
-           
+            DecimalFormat decimal = new DecimalFormat("0.00");
             output += "Employee Report:";
             output += "\n========================================================\n";
             output += "Store: " + cmboStore.getValue().toString(); //use store var
             output += "\n------------------------------------------------------\n";
             for(int i = 0; i<empList.size(); i++)
             { //get the for loop to loop through only certain stores
-            output += "Employee ID#: " + empList.get(i).getEmployeeID();
-            output += " Name: " + empList.get(i).getFirstName() + " " + empList.get(i).getLastName();
-            output += " Job Title: " + empList.get(i).getJobTitle();
+                if(cmboStore.getValue().toString() == empList.get(i).getStoreLoc())
+                {
+                    output += "Employee ID#: " + empList.get(i).getEmployeeID();
+                    output += ", Name: " + empList.get(i).getFirstName() + " " + empList.get(i).getLastName();
+                    output += ", Job Title: " + empList.get(i).getJobTitle();
+                    output += ", Salary: $" + decimal.format(empList.get(i).getSalary());
+                    output += ", Hours Worked: " + empList.get(i).getTimeWorked();
+                    
+                    output += "\n";
+                }
             //NEED HOURS WORKED (per week)
             // WAGES EARNED
             // for those on POS, how many sales rang up
