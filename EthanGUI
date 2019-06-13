@@ -92,6 +92,7 @@ public class GUI3 extends Application
     int expVar = 0;
     int unpaidExpVar = 0;
     String payExpVar = "";
+    int expCatVar = 0;
     
     // Main Menu Buttons
     Button btnRingSale = new Button("Ring Sale");
@@ -279,6 +280,10 @@ public class GUI3 extends Application
     Label lblAddNewExpenseType = new Label("Enter an expense type to add");
     TextField txtAddNewExpenseType = new TextField();
     Button btnConfirmNewExp = new Button("Add New Expense Type");
+    
+    Label lblRemoveExpTypeHeader = new Label("Remove Expense Type");
+    Label lblChooseExpType = new Label("Choose Expense Type to Remove");
+    Button btnConfirmRemExpType = new Button("Remove Expense Type");
     
     Label lblStoreMan = new Label("Store Management");
     Button btnAddStore = new Button("Add Store");
@@ -1489,7 +1494,7 @@ public class GUI3 extends Application
         });
         
         btnEditExp.setOnAction(e -> {
-            if(cmboExpense.getValue() == null || obsExpense.size() > 1){
+            if(cmboExpense.getValue() == null || obsExpense.size() < 1){
                     alert.setTitle("Error!");
                 alert.setHeaderText("Please select an expense to edit!");
                 alert.showAndWait();
@@ -1674,10 +1679,18 @@ public class GUI3 extends Application
           ninthStage.show();
           
           
+          
       });
       btnConfirmNewExp.setOnAction(e -> {
           
       expCategory.add(txtAddNewExpenseType.getText());
+      
+            alert.setTitle("Success!");
+            alert.setHeaderText("The expense type has been added!");
+            alert.showAndWait();
+            //insert code to add employee to object
+
+            ninthStage.close();
             
       });    
 
@@ -1729,6 +1742,31 @@ public class GUI3 extends Application
         }
         
         }); 
+        
+        btnRemExpType.setOnAction(e -> {
+        
+        ninthPane.getChildren().clear();
+        ninthPane.add(lblRemoveExpTypeHeader, 0, 0);
+        ninthPane.add(lblChooseExpType, 0, 1);
+        ninthPane.add(cmboExpCategory, 0, 2);
+        ninthPane.add(btnConfirmRemExpType, 0, 3); 
+        ninthStage.show();
+        });
+        
+        btnConfirmRemExpType.setOnAction(e -> {
+        
+        expCatVar = cmboExpCategory.getSelectionModel().getSelectedIndex();
+        expCategory.remove(expCatVar);
+        
+            alert.setTitle("Success!");
+            alert.setHeaderText("The expense type has been removed!");
+            alert.showAndWait();
+            //insert code to add employee to object
+
+            ninthStage.close();
+        
+        
+        });
        
         btnAddStore.setOnAction(e -> {
         
@@ -1756,13 +1794,20 @@ public class GUI3 extends Application
         });
         
         btnRemoveStore.setOnAction(e -> {
-        
+            
+        if(cmboExpense.getValue() == null || obsExpense.size() > 1){
+                alert.setTitle("Error!");
+                alert.setHeaderText("Please select an expense to edit!");
+                alert.showAndWait();
+            }
+        else
+        {
         tenthPane.getChildren().clear();
         tenthPane.add(lblRemoveStore, 0, 1);
         tenthPane.add(cmboStore, 0, 2);
         tenthPane.add(btnConfirmRemoveStore, 0, 3);
         tenthStage.show();
-        
+        }
         });
         
         btnConfirmRemoveStore.setOnAction(e -> {
