@@ -104,7 +104,12 @@ public class Supplier {
     {
         return this.salesContactAddress;
     }
-    
+    public void setSupplierPhone(String supplierPhone) {
+        this.supplierPhone = supplierPhone; 
+    }
+    public void setSupplierEmail(String supplier) {
+        this.supplierEmail = supplierEmail; 
+    }
     public String toString()
     {
         String str = "";
