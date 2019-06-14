@@ -90,6 +90,66 @@ public class Product {
             this.aisle = 9;
         }
     }
+    public Product(String productName, double price, Store store, String foodDescription, String category, String supplier)
+    {
+        this.productName = productName;
+        this.quantity = quantity;
+        this.price = price;
+        this.location = store.getName();
+        this.foodDescription = foodDescription;
+        this.category = category;
+        this.supplier = supplier;
+        this.image = image;
+        this.productID = nextID++;
+        obsProd.add(this.productID + ": " + this.productName);
+        
+        if (category.equalsIgnoreCase("PRODUCE"))
+        {
+            this.aisle = 1;
+        }
+        
+        if (category.equalsIgnoreCase("DAIRY"))
+        {
+            this.aisle = 2;
+        }
+        
+        if (category.equalsIgnoreCase("BEVERAGES"))
+        {
+            this.aisle = 3;
+        }
+        
+        if (category.equalsIgnoreCase("CANDY"))
+        {
+            this.aisle = 4;
+        }
+        
+        
+        if (category.equalsIgnoreCase("CANNED FOODS"))
+        {
+            this.aisle = 5;
+        }
+        
+        if (category.equalsIgnoreCase("PASTA"))
+        {
+            this.aisle = 6;
+        }
+        
+        if (category.equalsIgnoreCase("SNACK FOODS"))
+        {
+            this.aisle = 7;
+        }
+        
+        if (category.equalsIgnoreCase("BAKED GOODS"))
+        {
+            this.aisle = 8;
+        }
+        
+        if (category.equalsIgnoreCase("FROZEN FOODS"))
+        {
+            this.aisle = 9;
+        }
+    }
+     
     
     public int getProductID()
     {
@@ -185,7 +245,12 @@ public class Product {
     {
         return this.image;
     }
-    
+    public void setStore(Store store) {
+        this.store = store; 
+    }
+    public Store getStore() {
+        return this.store; 
+    }
     public String toString()
     {
         String str = "";
