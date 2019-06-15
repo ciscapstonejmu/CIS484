@@ -104,11 +104,17 @@ public class Supplier {
     {
         return this.salesContactAddress;
     }
+    public String getSupplierPhone() {
+        return this.supplierPhone; 
+    }
     public void setSupplierPhone(String supplierPhone) {
         this.supplierPhone = supplierPhone; 
     }
     public void setSupplierEmail(String supplier) {
         this.supplierEmail = supplierEmail; 
+    }
+    public String getSupplierEmail() {
+        return this.supplierEmail; 
     }
     public String toString()
     {
