@@ -62,8 +62,7 @@ public class GUI extends Application
     static ArrayList<String> expCategoryList = new ArrayList<>();
     static ArrayList<String> expStatusList = new ArrayList<>();
     static ArrayList<Supplier> suppList = new ArrayList<>(); 
-    static ArrayList<Member> memList = new ArrayList<>();
-    static ArrayList<String> categoryList = new ArrayList<>();
+    static ArrayList<Member> memList = new ArrayList<>(); 
     
     //Observabble Lists/Combo Boxes
     ObservableList obsEmp = FXCollections.observableArrayList();
@@ -213,6 +212,8 @@ public class GUI extends Application
     Employee eC = null; 
     Product pC = null; 
     Supplier sC = null; 
+    ProductOrder poC = null;
+    //need expense, store, member
     Label lblEmail = new Label("Email");
     TextField txtEmail = new TextField();
     Label lblPhone = new Label("Phone#");
@@ -402,17 +403,6 @@ public class GUI extends Application
             obsCategory.add("BAKED GOODS");
             obsCategory.add("FROZEN FOODS");
             obsCategory.add("OTHER");
-            
-            categoryList.add("Produce");
-            categoryList.add("DAIRY");
-            categoryList.add("BEVERAGES");
-            categoryList.add("CANDY");
-            categoryList.add("CANNED FOODS");
-            categoryList.add("PASTA");
-            categoryList.add("SNACK FOODS");
-            categoryList.add("BAKED GOODS");
-            categoryList.add("FROZEN FOODS");
-            categoryList.add("OTHER");
         
         primaryPane.add(lblThrifty, 0, 0);
         primaryPane.add(lblStore, 0, 1);
@@ -765,7 +755,7 @@ public class GUI extends Application
             vbButtons.setSpacing(10);
             vbButtons.setPadding(new Insets(10, 20, 10 , 20));
             
-            vbButtons.getChildren().addAll(lblInv, lblInvMan, createSupp, btnEditSupp, btnAddProd,cmboProd, btnRemoveProd, btnDisProd, btnHandleImage, btnAddOrder, btnEditPO, btnViewOrder);
+            vbButtons.getChildren().addAll(lblInv, lblInvMan, createSupp, cmboSupp, btnEditSupp, btnAddProd, cmboProd, btnRemoveProd, btnDisProd, btnHandleImage, btnAddOrder, btnEditPO, btnViewOrder);
             //secondPane.add(vbButtons, 3, 3);
             prodTable.setItems(prodData);
             //secondPane.add(prodTable, 5, 3);
@@ -814,14 +804,146 @@ public class GUI extends Application
             fifthPane.add(btnSavePO, 0, 10);
             fifthPane.add(btnCancelPO, 1, 10); 
         }); 
+        btnCancelPO.setOnAction(e -> {
+             if(cmboProdOrder.getValue() == null){
+                alert.setTitle("Error!");
+                alert.setHeaderText("Please select a Product Order to Cancel!");
+                alert.showAndWait();
+            }
+             else {
+            int removeProd1 = cmboProdOrder.getSelectionModel().getSelectedIndex(); 
+            ProductOrder tempProd = prodOrderList.get(removeProd1);
+
+            for(int i = 0; i<prodOrderList.size(); i++){
+                if(tempProd.getID() == prodOrderList.get(i).getID()){
+                    prodOrderList.remove(i);
+                    cmboProdOrder.getItems().remove(i);
+                }
+            alert.setTitle("Success!");
+            alert.setHeaderText("The product order has been canceled!");
+            alert.showAndWait();
+            
+            }
+             }
+
+        }); 
+        btnSavePO.setOnAction(e -> {
+            if(cmboProdOrder.getValue() == null){
+                alert.setTitle("Error!");
+                alert.setHeaderText("Please select Product Order to edit!");
+                alert.showAndWait();
+            }
+            else{
+            String date = calendar.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
+            String orderDate2 = orderDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
+            poC = prodOrderList.get(cmboProdOrder.getSelectionModel().getSelectedIndex());
+            poC.setProdOName(txtProdName.getText()); 
+            poC.setUnitCost((Double.parseDouble(txtUnitPrice.getText())));  
+            poC.setCategory((String)cmboCategory.getValue());
+            poC.setQuantity(Integer.parseInt(txtProdQuantity.getText()));
+            poC.setSubtotal(Double.parseDouble(txtSubTotal.getText())); 
+            poC.setDeliveryDate(date); 
+            poC.setOrderDate(orderDate2); 
+
+            poC.setStore((String) cmboStore.getValue());
+                     
+            poC.setSupplier((String)cmboSupp.getValue());
+            
+            for(int i = 0; i<prodOrderList.size(); i++){
+                if(poC.getID() == prodOrderList.get(i).getID()){
+                    prodOrderList.remove(i);
+                    cmboProdOrder.getItems().remove(i); 
+                    prodOrderList.add(i, poC);
+                    cmboProdOrder.getItems().add(i, poC);
+                    
+                    pC = null;
+                }
+            }
+            
+            for(int i = 0; i<storeList.size(); i++)
+            {
+                if((storeList.get(i).getName().equalsIgnoreCase((String)cmboStore.getValue())))
+                {
+                    break;
+                }
+
+                 else if(i == storeList.size()-1 && storeList.get(i).getName().equalsIgnoreCase((String)cmboStore.getValue()) == false)
+                {
+                    storeList.add((Store)cmboStore.getValue());
+                }
+            }
+           // for (int i = 0; i < obsCategory.size(); i++) {
+                
+            //}
+
+            alert.setTitle("Success!");
+            alert.setHeaderText("The product has been edited!");
+            alert.showAndWait();
+            }
+        }); 
+        createSupp.setOnAction(e -> {
+            eighthPane.getChildren().clear();
+            eighthStage.setTitle("Add a Supplier");
+            eighthStage.show();
+            eighthPane.setAlignment(Pos.TOP_CENTER);       
+            eighthPane.add(lblAddSupp, 0, 0); 
+            eighthPane.add(lblSuppName, 0,1); 
+            eighthPane.add(txtSuppName, 0, 2); 
+            eighthPane.add(lblSuppPhone, 1,1); 
+            eighthPane.add(txtSuppPhone, 1,2); 
+            eighthPane.add(lblSuppEmail, 0, 3);
+            eighthPane.add(txtSuppEmail, 0, 4);
+            eighthPane.add(lblSuppAdd, 0, 5);
+            eighthPane.add(txtSuppAdd, 0, 6);
+            eighthPane.add(lblSuppContactName, 1, 3);
+            eighthPane.add(txtSuppContactName, 1, 4);
+            eighthPane.add(lblSuppContactPhone, 1, 5);
+            eighthPane.add(txtSuppContactPhone, 1, 6);
+            eighthPane.add(lblSuppContactEmail, 1, 7);
+            eighthPane.add(txtSuppContactEmail, 1, 8); 
+
+            eighthPane.add(btnNewSupp, 0, 8); 
+        });
+        
+        btnNewSupp.setOnAction(e -> {
+            suppList.add(new Supplier(txtSuppName.getText(), 
+                    txtSuppPhone.getText(), txtSuppEmail.getText(), txtSuppAdd.getText(), txtSuppContactName.getText(), 
+                    txtSuppContactPhone.getText(), txtSuppContactEmail.getText())); 
+            Supplier.obsSupp.add(txtSuppName.getText());
+            System.out.println(suppList.get(0).toString());
+            alert.setTitle("Success!");
+            alert.setHeaderText("The new supplier has been created!");
+            alert.showAndWait();
+            //insert code to add product to object
+            
+            txtSuppName.clear();
+            txtSuppPhone.clear();
+            txtSuppEmail.clear();
+            txtSuppAdd.clear();
+            txtSuppContactName.clear();
+            txtSuppContactPhone.clear();
+            txtSuppContactEmail.clear(); 
+
+            eighthStage.close();  
+
+        });
         btnEditSupp.setOnAction (e -> {
+            if(cmboSupp.getValue() == null){
+                alert.setTitle("Error!");
+                alert.setHeaderText("Please select a Supplier to Edit!");
+                alert.showAndWait();
+            }
+            else 
+            {
+            sC = suppList.get(cmboSupp.getSelectionModel().getSelectedIndex());
+            cmboSupp.getSelectionModel().clearSelection();
             eighthPane.getChildren().clear();
             eighthStage.setTitle("Edit a Supplier");
             eighthStage.show();
             eighthPane.setAlignment(Pos.TOP_CENTER);   
             eighthPane.add(lblESupplier, 0, 0); 
-            eighthPane.add(lblESupp, 0, 1); 
-            eighthPane.add(cmboSupp, 1, 1);
+            //eighthPane.add(lblESupp, 0, 1); 
+            //eighthPane.add(cmboSupp, 1, 1);
             eighthPane.add(lblSuppName, 0,2); 
             eighthPane.add(txtSuppName, 0, 3); 
             eighthPane.add(lblSuppPhone, 1,2); 
@@ -838,30 +960,34 @@ public class GUI extends Application
             eighthPane.add(txtSuppContactEmail, 1, 9); 
 
             eighthPane.add(btnConfirmSuppChanges, 0, 9); 
+            
+            txtSuppName.setText(sC.getName());
+            txtSuppPhone.setText(sC.getSupplierPhone());
+            txtSuppEmail.setText(sC.getSupplierEmail());
+            txtSuppAdd.setText(sC.getSupplierAddress());
+            txtSuppContactName.setText(sC.getContactName());
+            txtSuppContactPhone.setText(sC.getContactPhone()); 
+            txtSuppContactEmail.setText(sC.getContactEmail()); 
+            }
+            
         }); 
        btnConfirmSuppChanges.setOnAction(e -> {
-            if(cmboSupp.getValue() == null){
-                alert.setTitle("Error!");
-                alert.setHeaderText("Please select a Supplier to edit!");
-                alert.showAndWait();
-            }
-            else{
+           
             //change of supp name needs to show up in combo box and on associated product's table 
-            sC = suppList.get(cmboSupp.getSelectionModel().getSelectedIndex());
+            //sC = suppList.get(cmboSupp.getSelectionModel().getSelectedIndex());
             sC.setName(txtSuppName.getText());
-            //if (txtUnitPrice.getText() != null) {
             sC.setSupplierPhone(txtSuppPhone.getText());
             sC.setSupplierEmail(txtSuppEmail.getText()); 
             sC.setSupplierAddress(txtSuppAdd.getText());
             sC.setContactName(txtSuppContactName.getText());
             sC.setContactPhone(txtSuppContactPhone.getText());
             sC.setContactEmail(txtSuppContactEmail.getText());
-          
+            Supplier temp = sC;
             for(int i = 0; i<suppList.size(); i++){
-                if(sC.getID() == suppList.get(i).getID()){
+                if(temp.getID() == suppList.get(i).getID()){
                     suppList.remove(i);
-                    cmboSupp.getItems().remove(i); 
                     suppList.add(i, sC);
+                    cmboSupp.getItems().remove(i); 
                     cmboSupp.getItems().add(i, sC.getName()); 
                     //this doesnt change the supplier name on the product table when product name is updated 
                     sC = null;
@@ -880,21 +1006,35 @@ public class GUI extends Application
             {
                 prodData.add(prod);
             }
+            txtSuppName.clear();
+            txtSuppPhone.clear();
+            txtSuppEmail.clear();
+            txtSuppAdd.clear();
+            txtSuppContactName.clear();
+            txtSuppContactPhone.clear();
+            txtSuppContactEmail.clear(); 
             
-        }
+        eighthStage.close();
             
         }); 
         
         btnDisProd.setOnAction(e -> {
-            if(cmboProd.getValue() == null){
-                alert.setTitle("Error!");
-                alert.setHeaderText("Please select a product to discontinue!");
-                alert.showAndWait();
-            }
-            else{
+            fifthPane.getChildren().clear();
+            fifthStage.setTitle("Discontinue a Product");
+            fifthStage.show();
+            fifthPane.setAlignment(Pos.TOP_CENTER);
             
-            int remove = cmboProd.getSelectionModel().getSelectedIndex();
-            cmboProd.getSelectionModel().clearSelection();
+            
+            fifthPane.add(lblDisProd, 0, 0);
+            fifthPane.add(lblChooseProd, 0, 2);
+            fifthPane.add(cmboProd, 1,2); 
+            //fifthPane.add(lblChooseStore, 0,3); 
+            //fifthPane.add(cmboStore, 0, 4); 
+            fifthPane.add(btnConfirmChange, 0, 5); 
+
+        }); 
+        btnConfirmChange.setOnAction(e -> {
+            int remove = cmboProd.getSelectionModel().getSelectedIndex(); 
             
             for (int i = 0; i < prodList.size(); i++) {
                 prodList.remove(remove); 
@@ -910,9 +1050,8 @@ public class GUI extends Application
             {
                 prodData.add(prod);
             }
-            }
+                   
         }); 
-        
         btnAddOrder.setOnAction(e -> {
             fifthPane.getChildren().clear();
             fifthStage.setTitle("Create a Product Order");
@@ -952,46 +1091,7 @@ public class GUI extends Application
             fifthPane.add(btnCompleteOrder, 0, 10);
         }); 
         
-        createSupp.setOnAction(e -> {
-            eighthPane.getChildren().clear();
-            eighthStage.setTitle("Add a Supplier");
-            eighthStage.show();
-            eighthPane.setAlignment(Pos.TOP_CENTER);       
-            eighthPane.add(lblAddSupp, 0, 0); 
-            eighthPane.add(lblSuppName, 0,1); 
-            eighthPane.add(txtSuppName, 0, 2); 
-            eighthPane.add(lblSuppPhone, 1,1); 
-            eighthPane.add(txtSuppPhone, 1,2); 
-            eighthPane.add(lblSuppEmail, 0, 3);
-            eighthPane.add(txtSuppEmail, 0, 4);
-            eighthPane.add(lblSuppAdd, 0, 5);
-            eighthPane.add(txtSuppAdd, 0, 6);
-            eighthPane.add(lblSuppContactName, 1, 3);
-            eighthPane.add(txtSuppContactName, 1, 4);
-            eighthPane.add(lblSuppContactPhone, 1, 5);
-            eighthPane.add(txtSuppContactPhone, 1, 6);
-            eighthPane.add(lblSuppContactEmail, 1, 7);
-            eighthPane.add(txtSuppContactEmail, 1, 8); 
-
-            eighthPane.add(btnNewSupp, 0, 8); 
-        });
-        
-        btnNewSupp.setOnAction(e -> {
-            suppList.add(new Supplier(txtSuppName.getText(), 
-                    txtSuppPhone.getText(), txtSuppEmail.getText(), txtSuppAdd.getText(), txtSuppContactName.getText(), 
-                    txtSuppContactPhone.getText(), txtSuppContactEmail.getText())); 
-            Supplier.obsSupp.add(txtSuppName.getText());
-            alert.setTitle("Success!");
-            alert.setHeaderText("The new supplier has been created!");
-            alert.showAndWait();
-            //insert code to add product to object
-
-            eighthStage.close();  
-
-            for (int i = 0; i <suppList.size(); i ++) {
-                System.out.println(suppList.get(i)); 
-            }
-        }); 
+         
         
         btnCalcProdSubTotal.setOnAction(e -> {
             double quantity = Integer.parseInt(txtProdQuantity.getText());
@@ -1000,12 +1100,11 @@ public class GUI extends Application
             String subTotal2 = ""; 
             subTotal2 = Double.toString(subTotal); 
             txtSubTotal.setText(subTotal2); 
-            
         }); 
         
         btnCompleteOrder.setOnAction(e -> {
 
-             String date = calendar.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
+            String date = calendar.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
             String orderDate2 = orderDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
             prodOrderList.add(new ProductOrder(Integer.parseInt(txtProdQuantity.getText()), txtProdName.getText(), Double.parseDouble(txtUnitCost.getText()),
                     Double.parseDouble(txtSubTotal.getText()), date, orderDate2, (String)cmboSupp.getValue(), (String)cmboStore.getValue(), (String)cmboCategory.getValue())); 
@@ -1087,13 +1186,6 @@ public class GUI extends Application
             alert.setHeaderText("The product has been added!");
             alert.showAndWait();
             //insert code to add product to object
-            txtProdName.clear();
-            txtProdQuantity.clear();
-            txtUnitPrice.clear();
-            cmboStore.getSelectionModel().clearSelection();
-            txtProdDesc.clear();
-            cmboCategory.getSelectionModel().clearSelection();
-            cmboSupp.getSelectionModel().clearSelection();
             
             thirdStage.close();
             
@@ -1103,25 +1195,26 @@ public class GUI extends Application
                 prodData.add(prod);
             }
             
+            /*txtProdName.clear();
+            txtProdQuantity.clear();
+            txtProdDesc.clear();
+            
+            cmboCategory.getSelectionModel().clearSelection();
+            cmboStore.getSelectionModel().clearSelection();
+            cmboSupp.getSelectionModel().clearSelection();*/
             
         });
         
         btnRemoveProd.setOnAction(e -> {
-            if(cmboProd.getValue() == null){
-                alert.setTitle("Error!");
-                alert.setHeaderText("Please select a product to edit!");
-                alert.showAndWait();
-            }
-            else{
+            
             pC = prodList.get(cmboProd.getSelectionModel().getSelectedIndex());
             thirdPane.getChildren().clear();
             thirdStage.setTitle("Remove a Product");
             thirdStage.show();
-            thirdPane.setAlignment(Pos.TOP_CENTER);
-            
+            thirdPane.setAlignment(Pos.TOP_CENTER);          
             thirdPane.add(lblRemoveProd, 0, 0);
-//          thirdPane.add(lblSelectProd, 0, 1);
-//          thirdPane.add(cmboProd, 0, 2);
+            //thirdPane.add(lblSelectProd, 0, 1);
+            //thirdPane.add(cmboProd, 0, 2);
             thirdPane.add(lblRQuantity, 0, 3);
             thirdPane.add(txtRQuantity, 0, 4);
             thirdPane.add(lblEName, 1, 3); 
@@ -1136,33 +1229,38 @@ public class GUI extends Application
             thirdPane.add(cmboCategory, 1,9 );
             thirdPane.add(lblESupp, 0, 10); 
             thirdPane.add(cmboSupp, 0, 11); 
-            
             thirdPane.add(removeProd, 0, 5);
             thirdPane.add(editProd, 0, 12); 
-            for(int i = 0; i<categoryList.size(); i++){
-              if(pC.getCategory().equalsIgnoreCase(categoryList.get(i)))
-              {
+            
+           
+           //i CANNOT GET THE RIGHT BOXES TO BE PREFILLED WITH THE RIGHT INFO FROM THE PRODUCT SELECTED SO WHEN YOU 
+           //EDIT IT YOU DONT HAVE TO EDIT EACH FIELD OR SO IT DOESNT GO BLANK 
+            for(int i = 0; i<obsCategory.size(); i++){
+               if(pC.getCategory().equalsIgnoreCase((String)obsCategory.get(i)))
+               {
                    cmboCategory.getSelectionModel().select(i);
                }
             }
             for(int i = 0; i<storeList.size(); i++){
-               if(pC.getLocation().equalsIgnoreCase(storeList.get(i).getName()))
+               if(pC.getStore().equals(storeList.get(i)))
                {
                    cmboStore.getSelectionModel().select(i); 
                }
             }
-            for(int i = 0; i<suppList.size(); i++){
-                if(pC.getSupplier().equalsIgnoreCase(suppList.get(i).getName()))
+            for(int i = 0; i<obsSupp.size(); i++){
+                String s2 = String.valueOf(obsSupp.get(i));
+                if(pC.getSupplier().equalsIgnoreCase(s2))
                 {
                    cmboSupp.getSelectionModel().select(i);
                 }
             }
-            
-            
+
             txtProdName.setText(pC.getProductName());
             txtUnitPrice.setText(Double.toString(pC.getPrice()));
             txtProdDesc.setText(pC.getFoodDescription());
-            } 
+           cmboStore.setPromptText(pC.getLocation()); 
+           cmboSupp.setPromptText(pC.getSupplier());
+           cmboCategory.setPromptText(pC.getCategory());
             
         });
         
@@ -1172,7 +1270,8 @@ public class GUI extends Application
             Product tempProd = prodList.get(removeProd1);
             
             int remove = Integer.parseInt(txtRQuantity.getText());
-            int removeOrig = pC.getQuantity(); 
+            int removeOrig = Integer.parseInt(txtProdQuantity.getText()); 
+            int removeNew = Integer.parseInt(txtRQuantity.getText()); 
             if (remove > removeOrig) {
                 alert.setTitle("Error!");
                 alert.setHeaderText("The quantity entered is greater than total product Quantity! Please enter another amount.");
@@ -1180,17 +1279,17 @@ public class GUI extends Application
             }
 
             else {
-            pC.setQuantity(removeOrig-remove);
+            tempProd.setQuantity(tempProd.getQuantity()-remove);
             
             for(int i = 0; i<prodList.size(); i++){
                 if(tempProd.getProductID() == prodList.get(i).getProductID()){
                     prodList.remove(i);
-                    prodList.add(i, pC);
+                    prodList.add(i, tempProd);
                 }
             alert.setTitle("Success!");
             alert.setHeaderText("The product has been removed!");
             alert.showAndWait();
-            txtRQuantity.clear();
+            
             }
             }
             prodData.clear();
@@ -1198,22 +1297,26 @@ public class GUI extends Application
             {
                 prodData.add(prod);
             }
-
+           txtRQuantity.clear();
         });
         editProd.setOnAction(e -> { 
+            if(cmboProd.getValue() == null){
+                alert.setTitle("Error!");
+                alert.setHeaderText("Please select a Product to edit!");
+                alert.showAndWait();
+            }
+            else{
             
-           
+            pC = prodList.get(cmboProd.getSelectionModel().getSelectedIndex());
             pC.setProductName(txtProdName.getText());
             //if (txtUnitPrice.getText() != null) {
-            pC.setPrice((Double.parseDouble(txtUnitPrice.getText())));
-           // } 
-           // else 
-           //pC.setPrice((Double.parseDouble(txtUnitPrice.getText()))); 
+            //pC.setPrice((Double.parseDouble(txtUnitPrice.getText())));
+            pC.setPrice((Double.parseDouble(txtUnitPrice.getText()))); 
                 
             pC.setFoodDescription(txtProdDesc.getText());
-            
+           
             pC.setLocation((String) cmboStore.getValue());
-            
+     
             pC.setCategory((String) cmboCategory.getValue());
             pC.setSupplier((String)cmboSupp.getValue());
             
@@ -1221,8 +1324,6 @@ public class GUI extends Application
                 if(pC.getProductID() == prodList.get(i).getProductID()){
                     prodList.remove(i);
                     prodList.add(i, pC);
-                    cmboProd.getItems().remove(i);
-                    cmboProd.getItems().add(i, pC.getProductID() + ": " + pC.getProductName());
                     pC = null;
                 }
             }
@@ -1252,9 +1353,9 @@ public class GUI extends Application
             {
                 prodData.add(prod);
             }
-            //cmboProd.setItems(Product.obsProd);
-            thirdStage.close();
-            });  
+            
+        }
+        });  
         
     
         btnImage.setOnAction(e -> {
@@ -1417,9 +1518,7 @@ public class GUI extends Application
         });
         
         addEmp.setOnAction(e -> {
-            //employee added clicked
-            
-                
+            //employee added clicked    
             empList.add(new Employee(txtFName.getText(), txtLName.getText(), txtEmail.getText(), txtPhone.getText(), 
             txtAddress.getText(), Double.valueOf(txtSalary.getText()),  
                     (String)cmboJob.getValue(), (String)cmboEType.getValue(), (String)cmboEmpCat.getValue(), (String) cmboStore.getValue())); 
@@ -1555,8 +1654,6 @@ public class GUI extends Application
                 if(eC.getEmployeeID() == empList.get(i).getEmployeeID()){
                     empList.remove(i);
                     empList.add(i, eC);
-                    cmboEmp.getItems().remove(i);
-                    cmboEmp.getItems().add(i, eC.getEmployeeID() + " " + eC.getFirstName() + ", " + eC.getLastName());
                     eC = null;
                 }
             }
