@@ -45,11 +45,17 @@ public class CustSaleForm {
             "Yes",
             "No"
             );
+    
+    public ObservableList<ArrayList> EmployList = FXCollections.observableArrayList(
+            
+            );
+    
     final ComboBox cmboIsMem = new ComboBox(isMemList);
     public ComboBox cmboSaleProd = new ComboBox(Product.obsProd);
     public ComboBox cmboSaleCust = new ComboBox(Customer.obsCust);
     public ComboBox cmboSaleStore = new ComboBox(Store.obsStore);
     public ComboBox cmboSaleEmp = new ComboBox(Employee.obsEmp);
+    
     
     public DatePicker saleDate = new DatePicker();
     
@@ -113,6 +119,19 @@ public class CustSaleForm {
         cmboSaleStore.setPrefWidth(118);
         cmboSaleCust.setPrefWidth(118);
         cmboSaleEmp.setPrefWidth(118);
+        cmboSaleEmp.getSelectionModel().selectFirst();
+        
+        
+        for(int i = 0; i< GUI.savedEmp.size();i++)
+           {
+               if(GUI.empList.get(i).getUsername().equalsIgnoreCase(GUI.currentUser))
+                   cmboSaleEmp.getSelectionModel().select(i);
+//               Employee temp = GUI.savedEmp.get(i);
+//               if (temp.getUsername().equalsIgnoreCase(GUI.txtUser.toString())){
+//               String userTemp = temp.getUsername();
+//               cmboSaleEmp.getSelectionModel().select(userTemp);
+//               }
+           }        
         
         cmboIsMem.setPrefWidth(118);
         cmboSaleProd.setPrefWidth(118);
@@ -252,7 +271,7 @@ public class CustSaleForm {
             receiptOutput.appendText(recItems);
             receiptOutput.appendText("\n" + thisSale.toString());
             //need to include the customer 
-            receiptOutput.appendText("--------------------------"
+            receiptOutput.appendText("\n" + "--------------------------"
                 + "----------------------------------------\n");
             receiptOutput.appendText("\n" + "Thank You ");
             if(txtMemFName.getText().isEmpty())
