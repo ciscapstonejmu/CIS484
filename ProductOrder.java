@@ -50,7 +50,15 @@ public class ProductOrder {
     {
         return this.productOrderID;
     }
-    
+    public void setID() {
+        this.productOrderID = productOrderID; 
+    }
+    public String getProdOName() {
+        return this.prodName; 
+    }
+    public void setProdOName(String prodName) {
+        this.prodName = prodName; 
+    }
     public void setDate(String orderDate)
     {
         this.orderDate = orderDate;
@@ -100,7 +108,18 @@ public class ProductOrder {
     {
         return this.deliveryDate;
     }
-    
+    public void setCategory(String category) {
+        this.category = category; 
+    }
+    public void setStore(String store) {
+        this.store = store; 
+    }
+    public void setSupplier(String supplier) {
+        this.supplier = supplier; 
+    }
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate; 
+    }
     public String toString()
     {
         String str = "";
