@@ -290,7 +290,38 @@ public class GUI extends Application
     // Both
     Button btnEnterTime = new Button("Enter Time");
     TextArea txtPayroll = new TextArea();
+    static ObservableList<String> timeIn = FXCollections.observableArrayList("7:00am", "7:30am", "8:00am", "8:30am", "9:00am", "9:30am", "10:00am", "10:30am", "11:00am", "11:30am",
+            "12:00pm", "12:30pm", "1:00pm", "1:30pm", "2:00pm", "2:30pm", "3:00pm", "3:30pm", "4:00pm", "4:30pm", "5:00pm", "5:30pm", "6:00pm", "6:30pm", "7:00pm", "7:30pm",
+            "8:00pm", "8:30pm", "9:00pm", "9:30pm", "10:00pm");
+    static ObservableList<String> timeOut = FXCollections.observableArrayList("7:30am", "8:00am", "8:30am", "9:00am", "9:30am", "10:00am", "10:30am", "11:00am", "11:30am",
+            "12:00pm", "12:30pm", "1:00pm", "1:30pm", "2:00pm", "2:30pm", "3:00pm", "3:30pm", "4:00pm", "4:30pm", "5:00pm", "5:30pm", "6:00pm", "6:30pm", "7:00pm", "7:30pm",
+            "8:00pm", "8:30pm", "9:00pm", "9:30pm", "10:00pm");
+    Label lblSun = new Label("Sunday");
+    Label lblMon = new Label("Monday");
+    Label lblTues = new Label("Tuesday");
+    Label lblWed = new Label("Wednesday");
+    Label lblThur = new Label("Thursday");
+    Label lblFri = new Label("Friday");
+    Label lblSat = new Label("Saturday");
     
+    Label lblEnterTimes = new Label("Enter Times");
+    Label lblTimeIn = new Label("Time In");
+    Label lblTimeOut = new Label("Time Out");
+    static ComboBox cmboSunTimeIn = new ComboBox(timeIn);
+    static ComboBox cmboSunTimeOut = new ComboBox(timeOut);
+    static ComboBox cmboMonTimeIn = new ComboBox(timeIn);
+    static ComboBox cmboMonTimeOut = new ComboBox(timeOut);
+    static ComboBox cmboTuesTimeIn = new ComboBox(timeIn);
+    static ComboBox cmboTuesTimeOut = new ComboBox(timeOut);
+    static ComboBox cmboWedTimeIn = new ComboBox(timeIn);
+    static ComboBox cmboWedTimeOut = new ComboBox(timeOut);
+    static ComboBox cmboThurTimeIn = new ComboBox(timeIn);
+    static ComboBox cmboThurTimeOut = new ComboBox(timeOut);
+    static ComboBox cmboFriTimeIn = new ComboBox(timeIn);
+    static ComboBox cmboFriTimeOut = new ComboBox(timeOut);
+    static ComboBox cmboSatTimeIn = new ComboBox(timeIn);
+    static ComboBox cmboSatTimeOut = new ComboBox(timeOut);
+    Button btnEnterTimes = new Button("Enter Times");
     
     //POS Report
     Label lblPOS = new Label("Point of Sales");
@@ -501,7 +532,7 @@ public class GUI extends Application
         editExp.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         editSupp.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         removeProd.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        
+        btnEnterTimes.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         
         
         empCat.setStyle("-fx-font: 9pt \"bookman\";");
@@ -527,7 +558,7 @@ public class GUI extends Application
         lblAddExp.setStyle("-fx-font: bold 14pt \"bookman\";");
         lblRemoveProd.setStyle("-fx-font: bold 14pt \"bookman\";");
         lblAddSupp.setStyle("-fx-font: bold 14pt \"bookman\";"); 
-        
+        lblEnterTimes.setStyle("-fx-font: bold 14pt \"bookman\";");
         
         GridPane secondPane = new GridPane();
         
@@ -1660,6 +1691,39 @@ public class GUI extends Application
             border.setTop(menuAdmin);
             border.setLeft(vPay);
             
+        });
+        
+        btnEnterTime.setOnAction(e -> {
+            thirdPane.getChildren().clear();
+            thirdStage.setTitle("Enter Time");
+            thirdStage.show();
+            thirdPane.setAlignment(Pos.TOP_CENTER);
+            
+            thirdPane.add(lblEnterTimes, 1, 0);
+            thirdPane.add(lblTimeIn, 1, 1);
+            thirdPane.add(lblTimeOut, 2, 1);
+            thirdPane.add(lblSun, 0, 2);
+            thirdPane.add(cmboSunTimeIn, 1, 2);
+            thirdPane.add(cmboSunTimeOut, 2, 2);
+            thirdPane.add(lblMon, 0, 3);
+            thirdPane.add(cmboMonTimeIn, 1, 3);
+            thirdPane.add(cmboMonTimeOut, 2, 3);
+            thirdPane.add(lblTues, 0, 4);
+            thirdPane.add(cmboTuesTimeIn, 1, 4);
+            thirdPane.add(cmboTuesTimeOut, 2, 4);
+            thirdPane.add(lblWed, 0, 5);
+            thirdPane.add(cmboWedTimeIn, 1, 5);
+            thirdPane.add(cmboWedTimeOut, 2, 5);
+            thirdPane.add(lblThur, 0, 6);
+            thirdPane.add(cmboThurTimeIn, 1, 6);
+            thirdPane.add(cmboThurTimeOut, 2, 6);
+            thirdPane.add(lblFri, 0, 7);
+            thirdPane.add(cmboFriTimeIn, 1, 7);
+            thirdPane.add(cmboFriTimeOut, 2, 7);
+            thirdPane.add(lblSat, 0, 8);
+            thirdPane.add(cmboSatTimeIn, 1, 8);
+            thirdPane.add(cmboSatTimeOut, 2, 8);
+            thirdPane.add(btnEnterTimes, 1, 9);
         });
         
         
