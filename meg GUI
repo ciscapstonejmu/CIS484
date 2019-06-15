@@ -62,7 +62,8 @@ public class GUI extends Application
     static ArrayList<String> expCategoryList = new ArrayList<>();
     static ArrayList<String> expStatusList = new ArrayList<>();
     static ArrayList<Supplier> suppList = new ArrayList<>(); 
-    static ArrayList<Member> memList = new ArrayList<>(); 
+    static ArrayList<Member> memList = new ArrayList<>();
+    static ArrayList<String> categoryList = new ArrayList<>();
     
     //Observabble Lists/Combo Boxes
     ObservableList obsEmp = FXCollections.observableArrayList();
@@ -753,7 +754,7 @@ public class GUI extends Application
             vbButtons.setSpacing(10);
             vbButtons.setPadding(new Insets(10, 20, 10 , 20));
             
-            vbButtons.getChildren().addAll(lblInv, lblInvMan, createSupp, btnEditSupp, btnAddProd, btnRemoveProd, btnDisProd, btnHandleImage, btnAddOrder, btnEditPO, btnViewOrder);
+            vbButtons.getChildren().addAll(lblInv, lblInvMan, createSupp, btnEditSupp, btnAddProd,cmboProd, btnRemoveProd, btnDisProd, btnHandleImage, btnAddOrder, btnEditPO, btnViewOrder);
             //secondPane.add(vbButtons, 3, 3);
             prodTable.setItems(prodData);
             //secondPane.add(prodTable, 5, 3);
@@ -874,22 +875,15 @@ public class GUI extends Application
         }); 
         
         btnDisProd.setOnAction(e -> {
-            fifthPane.getChildren().clear();
-            fifthStage.setTitle("Discontinue a Product");
-            fifthStage.show();
-            fifthPane.setAlignment(Pos.TOP_CENTER);
+            if(cmboProd.getValue() == null){
+                alert.setTitle("Error!");
+                alert.setHeaderText("Please select a product to discontinue!");
+                alert.showAndWait();
+            }
+            else{
             
-            
-            fifthPane.add(lblDisProd, 0, 0);
-            fifthPane.add(lblChooseProd, 0, 2);
-            fifthPane.add(cmboProd, 1,2); 
-            //fifthPane.add(lblChooseStore, 0,3); 
-            //fifthPane.add(cmboStore, 0, 4); 
-            fifthPane.add(btnConfirmChange, 0, 5); 
-
-        }); 
-        btnConfirmChange.setOnAction(e -> {
-            int remove = cmboProd.getSelectionModel().getSelectedIndex(); 
+            int remove = cmboProd.getSelectionModel().getSelectedIndex();
+            cmboProd.getSelectionModel().clearSelection();
             
             for (int i = 0; i < prodList.size(); i++) {
                 prodList.remove(remove); 
@@ -905,8 +899,9 @@ public class GUI extends Application
             {
                 prodData.add(prod);
             }
-                   
+            }
         }); 
+        
         btnAddOrder.setOnAction(e -> {
             fifthPane.getChildren().clear();
             fifthStage.setTitle("Create a Product Order");
@@ -1081,6 +1076,13 @@ public class GUI extends Application
             alert.setHeaderText("The product has been added!");
             alert.showAndWait();
             //insert code to add product to object
+            txtProdName.clear();
+            txtProdQuantity.clear();
+            txtUnitPrice.clear();
+            cmboStore.getSelectionModel().clearSelection();
+            txtProdDesc.clear();
+            cmboCategory.getSelectionModel().clearSelection();
+            cmboSupp.getSelectionModel().clearSelection();
             
             thirdStage.close();
             
@@ -1094,14 +1096,21 @@ public class GUI extends Application
         });
         
         btnRemoveProd.setOnAction(e -> {
+            if(cmboProd.getValue() == null){
+                alert.setTitle("Error!");
+                alert.setHeaderText("Please select a product to edit!");
+                alert.showAndWait();
+            }
+            else{
+            pC = prodList.get(cmboProd.getSelectionModel().getSelectedIndex());
             thirdPane.getChildren().clear();
             thirdStage.setTitle("Remove a Product");
             thirdStage.show();
             thirdPane.setAlignment(Pos.TOP_CENTER);
             
             thirdPane.add(lblRemoveProd, 0, 0);
-            thirdPane.add(lblSelectProd, 0, 1);
-            thirdPane.add(cmboProd, 0, 2);
+//            thirdPane.add(lblSelectProd, 0, 1);
+//            thirdPane.add(cmboProd, 0, 2);
             thirdPane.add(lblRQuantity, 0, 3);
             thirdPane.add(txtRQuantity, 0, 4);
             thirdPane.add(lblEName, 1, 3); 
@@ -1119,8 +1128,30 @@ public class GUI extends Application
             
             thirdPane.add(removeProd, 0, 5);
             thirdPane.add(editProd, 0, 12); 
+//            for(int i = 0; i<categoryList.size(); i++){
+//               if(pC.getCategory().equalsIgnoreCase(categoryList.get(i)))
+//               {
+//                   cmboCategory.getSelectionModel().select(i);
+//               }
+//            }
+            for(int i = 0; i<storeList.size(); i++){
+               if(pC.getLocation().equalsIgnoreCase(storeList.get(i).getName()))
+               {
+                   cmboStore.getSelectionModel().select(i); 
+               }
+            }
+            for(int i = 0; i<suppList.size(); i++){
+                if(pC.getSupplier().equalsIgnoreCase(suppList.get(i).getName()))
+                {
+                   cmboSupp.getSelectionModel().select(i);
+                }
+            }
             
             
+            txtProdName.setText(pC.getProductName());
+            txtUnitPrice.setText(Double.toString(pC.getPrice()));
+            txtProdDesc.setText(pC.getFoodDescription());
+            } 
             
         });
         
@@ -1160,14 +1191,8 @@ public class GUI extends Application
 
         });
         editProd.setOnAction(e -> { 
-            if(cmboProd.getValue() == null){
-                alert.setTitle("Error!");
-                alert.setHeaderText("Please select a Product to edit!");
-                alert.showAndWait();
-            }
-            else{
             
-            pC = prodList.get(cmboProd.getSelectionModel().getSelectedIndex());
+           
             pC.setProductName(txtProdName.getText());
             //if (txtUnitPrice.getText() != null) {
                 pC.setPrice((Double.parseDouble(txtUnitPrice.getText())));
@@ -1188,6 +1213,8 @@ public class GUI extends Application
                 if(pC.getProductID() == prodList.get(i).getProductID()){
                     prodList.remove(i);
                     prodList.add(i, pC);
+                    cmboProd.getItems().remove(i);
+                    cmboProd.getItems().add(i, pC.getProductName());
                     pC = null;
                 }
             }
@@ -1217,10 +1244,9 @@ public class GUI extends Application
             {
                 prodData.add(prod);
             }
-            
-        }
-            }  
-                );  
+            //cmboProd.setItems(Product.obsProd);
+        
+            });  
         
     
         btnImage.setOnAction(e -> {
