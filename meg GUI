@@ -46,7 +46,6 @@ public class GUI extends Application
     PasswordField txtPass = new PasswordField(); 
     Label storeLoc = new Label("Store Location"); 
     TextField txtStoreLoc = new TextField();
-    static String currentUser;
     boolean isAuthorized = false;
     boolean found = false;
     //TextField txtPass = new TextField();
@@ -403,6 +402,17 @@ public class GUI extends Application
             obsCategory.add("BAKED GOODS");
             obsCategory.add("FROZEN FOODS");
             obsCategory.add("OTHER");
+            
+            categoryList.add("Produce");
+            categoryList.add("DAIRY");
+            categoryList.add("BEVERAGES");
+            categoryList.add("CANDY");
+            categoryList.add("CANNED FOODS");
+            categoryList.add("PASTA");
+            categoryList.add("SNACK FOODS");
+            categoryList.add("BAKED GOODS");
+            categoryList.add("FROZEN FOODS");
+            categoryList.add("OTHER");
         
         primaryPane.add(lblThrifty, 0, 0);
         primaryPane.add(lblStore, 0, 1);
@@ -658,7 +668,6 @@ public class GUI extends Application
                if(temp.getUsername().equalsIgnoreCase(txtUser.getText()) && temp.getPassword().equals(txtPass.getText()))
                {
                    found = true;
-                   currentUser = temp.getUsername();
                    if(temp.getEmployeeType().equalsIgnoreCase("Manager"))
                    {
                        isAuthorized = true;
@@ -1111,8 +1120,8 @@ public class GUI extends Application
             thirdPane.setAlignment(Pos.TOP_CENTER);
             
             thirdPane.add(lblRemoveProd, 0, 0);
-//            thirdPane.add(lblSelectProd, 0, 1);
-//            thirdPane.add(cmboProd, 0, 2);
+//          thirdPane.add(lblSelectProd, 0, 1);
+//          thirdPane.add(cmboProd, 0, 2);
             thirdPane.add(lblRQuantity, 0, 3);
             thirdPane.add(txtRQuantity, 0, 4);
             thirdPane.add(lblEName, 1, 3); 
@@ -1130,12 +1139,12 @@ public class GUI extends Application
             
             thirdPane.add(removeProd, 0, 5);
             thirdPane.add(editProd, 0, 12); 
-//            for(int i = 0; i<categoryList.size(); i++){
-//               if(pC.getCategory().equalsIgnoreCase(categoryList.get(i)))
-//               {
-//                   cmboCategory.getSelectionModel().select(i);
-//               }
-//            }
+            for(int i = 0; i<categoryList.size(); i++){
+              if(pC.getCategory().equalsIgnoreCase(categoryList.get(i)))
+              {
+                   cmboCategory.getSelectionModel().select(i);
+               }
+            }
             for(int i = 0; i<storeList.size(); i++){
                if(pC.getLocation().equalsIgnoreCase(storeList.get(i).getName()))
                {
@@ -1163,8 +1172,7 @@ public class GUI extends Application
             Product tempProd = prodList.get(removeProd1);
             
             int remove = Integer.parseInt(txtRQuantity.getText());
-            int removeOrig = Integer.parseInt(txtProdQuantity.getText()); 
-            int removeNew = Integer.parseInt(txtRQuantity.getText()); 
+            int removeOrig = pC.getQuantity(); 
             if (remove > removeOrig) {
                 alert.setTitle("Error!");
                 alert.setHeaderText("The quantity entered is greater than total product Quantity! Please enter another amount.");
@@ -1172,17 +1180,17 @@ public class GUI extends Application
             }
 
             else {
-            tempProd.setQuantity(tempProd.getQuantity()-remove);
+            pC.setQuantity(removeOrig-remove);
             
             for(int i = 0; i<prodList.size(); i++){
                 if(tempProd.getProductID() == prodList.get(i).getProductID()){
                     prodList.remove(i);
-                    prodList.add(i, tempProd);
+                    prodList.add(i, pC);
                 }
             alert.setTitle("Success!");
             alert.setHeaderText("The product has been removed!");
             alert.showAndWait();
-            
+            txtRQuantity.clear();
             }
             }
             prodData.clear();
@@ -1197,17 +1205,15 @@ public class GUI extends Application
            
             pC.setProductName(txtProdName.getText());
             //if (txtUnitPrice.getText() != null) {
-                pC.setPrice((Double.parseDouble(txtUnitPrice.getText())));
+            pC.setPrice((Double.parseDouble(txtUnitPrice.getText())));
            // } 
            // else 
-                pC.setPrice((Double.parseDouble(txtUnitPrice.getText()))); 
+           //pC.setPrice((Double.parseDouble(txtUnitPrice.getText()))); 
                 
             pC.setFoodDescription(txtProdDesc.getText());
-            //pC.setAddress(txtAddress.getText());
-            //eC.setJobTitle((String)cmboJob.getValue());
-            //eC.setPhoneNumber(txtPhone.getText());
+            
             pC.setLocation((String) cmboStore.getValue());
-            //eC.setSalary(Double.valueOf(txtSalary.getText()));
+            
             pC.setCategory((String) cmboCategory.getValue());
             pC.setSupplier((String)cmboSupp.getValue());
             
@@ -1216,7 +1222,7 @@ public class GUI extends Application
                     prodList.remove(i);
                     prodList.add(i, pC);
                     cmboProd.getItems().remove(i);
-                    cmboProd.getItems().add(i, pC.getProductName());
+                    cmboProd.getItems().add(i, pC.getProductID() + ": " + pC.getProductName());
                     pC = null;
                 }
             }
@@ -1247,7 +1253,7 @@ public class GUI extends Application
                 prodData.add(prod);
             }
             //cmboProd.setItems(Product.obsProd);
-        
+            thirdStage.close();
             });  
         
     
