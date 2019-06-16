@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import static pkg484groupproj.GUI.expList;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
-import static pkg484groupproj.GUI.obsExpense;
+import static pkg484groupproj.GUI3.obsExpense;
 
 public class GUI3 extends Application {
 
@@ -87,7 +87,7 @@ public class GUI3 extends Application {
     public static ComboBox<Member> cmboMem = new ComboBox(Member.obsMem);
 //    ObservableList 
     static ObservableList<Expense> obsExpense = FXCollections.observableArrayList();
-    ComboBox cmboExpense = new ComboBox(obsExpense);
+    ComboBox cmboExpense = new ComboBox(Expense.obsExpense);
 
     int expVar = 0;
     int unpaidExpVar = 0;
@@ -282,6 +282,7 @@ public class GUI3 extends Application {
 
     Label lblStoreMan = new Label("Store Management");
     Button btnAddStore = new Button("Add Store");
+    Button btnViewStore = new Button("View Store");
     Button btnEditStore = new Button("Edit Store");
     Button btnRemoveStore = new Button("Remove Store");
 
@@ -1367,7 +1368,7 @@ public class GUI3 extends Application {
         });
 
         addExp.setOnAction(e -> {
-            //employee added clicked
+            //employee added click
             String description = txtExpDesc.getText();
             String category = (String) cmboCategory.getValue();
             String status = (String) cmboStatus.getValue();
@@ -1634,6 +1635,7 @@ public class GUI3 extends Application {
             secondStage.setTitle("Store Management");
 
             btnAddStore.setMaxWidth(Double.MAX_VALUE);
+            btnViewStore.setMaxWidth(Double.MAX_VALUE);
             btnEditStore.setMaxWidth(Double.MAX_VALUE);
             btnRemoveStore.setMaxWidth(Double.MAX_VALUE);
 
@@ -1644,7 +1646,7 @@ public class GUI3 extends Application {
             storeVB.setSpacing(10);
             storeVB.setPadding(new Insets(10, 20, 10, 20));
 
-            storeVB.getChildren().addAll(lblStoreMan, cmboStore, btnAddStore, btnEditStore, btnRemoveStore);
+            storeVB.getChildren().addAll(lblStoreMan, cmboStore, btnAddStore, btnViewStore, btnEditStore, btnRemoveStore);
             border.setTop(menuAdmin);
             border.setLeft(storeVB);
             border.setCenter(storeTable);
@@ -1655,7 +1657,7 @@ public class GUI3 extends Application {
         btnRemExp.setOnAction(e -> {
 
             expVar = cmboExpense.getSelectionModel().getSelectedIndex();
-            obsExpense.remove(obsExpense.get(expVar));
+            Expense.obsExpense.remove(Expense.obsExpense.get(expVar));
             expList.remove(expList.get(expVar));
 
             alert.setTitle("Success!");
@@ -1706,9 +1708,10 @@ public class GUI3 extends Application {
         });
 
         btnConfirmAddStore.setOnAction(e -> {
-
-            obsStore.add(new Store(txtStoreName.getText(), txtStoreAddress.getText()));
-            storeList.add(new Store(txtStoreName.getText(), txtStoreAddress.getText()));
+            Store store6 = new Store(txtStoreName.getText(), txtStoreAddress.getText());
+            obsStore.add(store6);
+            //Store.obsStore(new Store(txtStoreName.getText(), txtStoreAddress.getText()));
+            storeList.add(store6);
             storeData.clear();
             for (Store s : storeList) {
                 storeData.add(s);
@@ -1721,6 +1724,14 @@ public class GUI3 extends Application {
 
             tenthStage.close();
 
+        });
+        
+        btnViewStore.setOnAction(e -> {
+            tenthPane.getChildren().clear();
+            tenthStage.show();
+        
+        
+        
         });
 
         btnEditStore.setOnAction(e -> {
@@ -1748,7 +1759,21 @@ public class GUI3 extends Application {
             
             sC.setName(txtStoreName.getText());
             sC.setAddress(txtStoreAddress.getText());
-        
+            
+            
+            alert.setTitle("Success!");
+            alert.setHeaderText("Store has been Edited!");
+            alert.showAndWait();
+            tenthStage.close();
+            storeData.clear();
+            for (Store s : storeList) {
+                storeData.add(s);
+            }
+            for (int i = 0; i < obsStore.size(); i++)
+            {
+                System.out.println(obsStore.get(i).toString());
+            }
+            
         
         
         });
