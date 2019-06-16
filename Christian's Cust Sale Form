@@ -1,6 +1,5 @@
 package pkg484groupproj;
 
-import java.time.LocalDate;
 import javafx.application.Application;
 import javafx.event.*;
 import javafx.scene.Scene;
@@ -13,7 +12,6 @@ import java.util.*;
 import javafx.collections.*;
 import javafx.geometry.Pos;
 import java.time.format.*;
-
 
 public class CustSaleForm {
     
@@ -35,10 +33,8 @@ public class CustSaleForm {
     public Button btnAddToSale = new Button("Add to Sale ->");
     public Button btnCompleteSale = new Button("Complete Sale ->");
     public Button btnReceipt = new Button("Generate Receipt ->");
-    public Button btnRepeatBuy = new Button ("Repeat Purchase");
-    //^This button has not been added yet
-    public TextArea txtSaleOutput = new TextArea();
     
+    public TextArea txtSaleOutput = new TextArea();
     public TextArea receiptOutput = new TextArea();
     public ObservableList<String> isMemList = FXCollections.observableArrayList(
             "Yes",
@@ -84,19 +80,16 @@ public class CustSaleForm {
         //primaryPane.add(lblSaleProdQuan, 0, 5);
         //primaryPane.add(txtSaleProdQuan, 1, 5);
         primaryPane.add(btnAddToSale, 0, 5, 2, 2);
-        primaryPane.add(btnRepeatBuy, 0, 6, 1, 1);
-        primaryPane.add(btnCompleteSale, 0, 7, 2, 2);
+        primaryPane.add(btnCompleteSale, 0, 6, 2, 2);
         primaryPane.add(txtSaleOutput, 2, 0, 4, 6);
         
         //txtSaleProdQuan.setPrefWidth(20);
-        saleDate.setValue(LocalDate.now());
-        saleDate.setPrefWidth(118);
-        cmboSaleStore.setPrefWidth(118);
-        cmboSaleCust.setPrefWidth(118);
-        cmboSaleEmp.setPrefWidth(118);
-        
-        cmboIsMem.setPrefWidth(118);
-        cmboSaleProd.setPrefWidth(118);
+        saleDate.setPrefWidth(100);
+        cmboSaleStore.setPrefWidth(100);
+        cmboSaleCust.setPrefWidth(100);
+        cmboSaleEmp.setPrefWidth(100);
+        cmboIsMem.setPrefWidth(100);
+        cmboSaleProd.setPrefWidth(100);
         
         txtSaleOutput.setEditable(false);
         receiptOutput.setEditable(false);
@@ -118,91 +111,50 @@ public class CustSaleForm {
             int saleProd = cmboSaleProd.getSelectionModel().getSelectedIndex();
 
             this.saleProducts.add(GUI.prodList.get(saleProd));
-            if(saleProducts.size() > GUI.prodList.size())
-            {
-                saleProducts.remove(saleProd);
-                alertError.setTitle("Error");
-                alertError.setHeaderText("Sale Quantity exceeds Inventory!");
-                alertError.showAndWait();
-            }
-            else{
             String saleOut = "";
             saleOut += GUI.prodList.get(saleProd).toStringSale();
             saleOut += "\n";
-            txtSaleOutput.appendText(saleOut);            
-            recItems += saleOut;
+            txtSaleOutput.appendText(saleOut);
             
+            recItems += saleOut;
+            cmboSaleProd.getSelectionModel().clearSelection();
             alert.setTitle("Success!");
             alert.setHeaderText("Sale Has Been Added!");
             alert.showAndWait();
-            txtSaleOutput.setEditable(false);
-            }
+            
             
             });
         
-        btnRepeatBuy.setOnAction(e -> {
-            //Repeat the purchase of the same item repeatedly
-            int saleProd = cmboSaleProd.getSelectionModel().getSelectedIndex();
-            this.saleProducts.add(GUI.prodList.get(saleProd));
-             String saleOut = "";
-            saleOut += GUI.prodList.get(saleProd).toStringSale();
-            saleOut += "\n";
-            txtSaleOutput.appendText(saleOut);   
-            recItems += saleOut;
-            alert.setTitle("Success!");
-            alert.setHeaderText("Same Product Purchased!");
-            alert.showAndWait();
-            txtSaleOutput.setEditable(false);
-        });
-        
         //Complete the sale
         btnCompleteSale.setOnAction(e -> {
-            try{
             receiptOutput.clear();
             primaryPane.add(receiptOutput, 5, 6);
             receiptOutput.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-            receiptOutput.appendText("Thrifty $tore: " + "\n");
             receiptOutput.appendText("Receipt: " + "\n");
-            receiptOutput.appendText("--------------------------"
-                + "----------------------------------------\n");
+                
             int saleStore = cmboSaleStore.getSelectionModel().getSelectedIndex();
             int saleEmp = cmboSaleEmp.getSelectionModel().getSelectedIndex();
             int isMem = cmboIsMem.getSelectionModel().getSelectedIndex();
             
             String dateOfSale = saleDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             
-            
-            
-            GUI.saleList.add(new CustSale(dateOfSale, GUI.storeList.get(saleStore),
+            CustSale thisOne = new CustSale(dateOfSale, GUI.storeList.get(saleStore),
                     GUI.empList.get(saleEmp), cmboIsMem.getValue().toString(),
-                    this.saleProducts));
+                    this.saleProducts);
+            
+            GUI.saleList.add(thisOne);
             
             CustSale thisSale = GUI.saleList.get(saleCount-1);
             receiptOutput.appendText(recItems);
             receiptOutput.appendText("\n" + thisSale.toString());
-            //need to include the customer 
-            receiptOutput.appendText("--------------------------"
-                + "----------------------------------------\n");
-            receiptOutput.appendText("\n" + "Thank You " + "CUSTOMER**"  + "!");
+            receiptOutput.appendText("\n" + "Thank You "  + "!");
             alert.setTitle("Success!");
             alert.setHeaderText("Sale Completed!");
             alert.showAndWait();
-            receiptOutput.setEditable(false);
-            cmboSaleProd.getSelectionModel().clearSelection();
-            }
-            catch (Exception ex)
-            {
                 
-                receiptOutput.clear();
-                alert.setTitle("Error!");
-                alert.setHeaderText("No Sales Added!");
-                alert.showAndWait();
-            }
             });
         
         
     }
-    
-    
     
 }
