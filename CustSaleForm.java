@@ -45,11 +45,7 @@ public class CustSaleForm {
             "Yes",
             "No"
             );
-    
-    public ObservableList<ArrayList> EmployList = FXCollections.observableArrayList(
-            
-            );
-    
+        
     final ComboBox cmboIsMem = new ComboBox(isMemList);
     public ComboBox cmboSaleProd = new ComboBox(Product.obsProd);
     public ComboBox cmboSaleCust = new ComboBox(Customer.obsCust);
@@ -121,7 +117,7 @@ public class CustSaleForm {
         cmboSaleEmp.setPrefWidth(118);
         cmboSaleEmp.getSelectionModel().selectFirst();
         
-        
+        /*
         for(int i = 0; i< GUI.savedEmp.size();i++)
            {
                if(GUI.empList.get(i).getUsername().equalsIgnoreCase(GUI.currentUser))
@@ -132,7 +128,7 @@ public class CustSaleForm {
 //               cmboSaleEmp.getSelectionModel().select(userTemp);
 //               }
            }        
-        
+        */
         cmboIsMem.setPrefWidth(118);
         cmboSaleProd.setPrefWidth(118);
         
@@ -173,7 +169,7 @@ public class CustSaleForm {
             int saleProd = cmboSaleProd.getSelectionModel().getSelectedIndex();
 
             this.saleProducts.add(GUI.prodList.get(saleProd));
-            
+            //this isn't woring
             if(saleProducts.size() > GUI.prodList.size())
             {
                 saleProducts.remove(saleProd);
