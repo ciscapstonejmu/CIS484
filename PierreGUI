@@ -1547,6 +1547,7 @@ public class GUI extends Application
             eC.setAddress(txtAddress.getText());
             eC.setJobTitle((String)cmboJob.getValue());
             eC.setPhoneNumber(txtPhone.getText());
+            eC.setStore((storeList.get(cmboStore.getSelectionModel().getSelectedIndex())));
             eC.setStore((String) cmboStore.getValue());
             eC.setSalary(Double.valueOf(txtSalary.getText()));
             eC.setEmployeeCategory((String) cmboEmpCat.getValue());
