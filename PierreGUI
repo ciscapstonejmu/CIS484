@@ -1359,25 +1359,7 @@ public class GUI extends Application
         });
         
         addEmp.setOnAction(e -> {
-            //employee added clicked
-            
-            //data validation
-            if(txtFName.getText().trim().length() == 0 || txtLName.getText().trim().length() == 0 ||
-                    txtEmail.getText().trim().length() == 0 || txtPhone.getText().trim().length() == 0 ||
-                    txtAddress.getText().trim().length() == 0 || txtSalary.getText().trim().length() == 0 ||
-                    (cmboJob.getSelectionModel().getSelectedItem().toString().isEmpty()) || 
-                    (cmboEType.getValue().toString().equals("") && cmboEType.getValue() == null) ||
-                    (cmboEmpCat.getValue().toString().equals("") && cmboEmpCat.getValue() == null) || 
-                    (cmboStore.getValue().toString().equals("") && cmboStore.getValue() == null))
-                // keep on getting nullpointer for combobox ones
-            {
-               alert.setTitle("Error!");
-               alert.setHeaderText("Error! Please enter data!");
-               alert.showAndWait();
-            }
-            
-            else
-            {
+            //employee added clicked    
             empList.add(new Employee(txtFName.getText(), txtLName.getText(), txtEmail.getText(), txtPhone.getText(), 
             txtAddress.getText(), Double.valueOf(txtSalary.getText()),  
                     (String)cmboJob.getValue(), (String)cmboEType.getValue(), (String)cmboEmpCat.getValue(), storeList.get(cmboStore.getSelectionModel().getSelectedIndex()))); 
@@ -1416,7 +1398,6 @@ public class GUI extends Application
             
             
             thirdStage.close();
-            }
         });
         
         btnEditEmp.setOnAction(e -> {
@@ -1426,9 +1407,9 @@ public class GUI extends Application
                 alert.setHeaderText("Please select an employee to edit!");
                 alert.showAndWait();
             }
-
             else{
             eC = empList.get(cmboEmp.getSelectionModel().getSelectedIndex());
+            cmboEmp.getSelectionModel().clearSelection();
             thirdPane.getChildren().clear();
             thirdStage.setTitle("Edit Employee");
             thirdStage.show();
@@ -1498,6 +1479,66 @@ public class GUI extends Application
 
 
         }
+        });
+        editEmp.setOnAction(e -> {
+            eC.setFName(txtFName.getText());
+            eC.setLName(txtLName.getText());
+            eC.setEmail(txtEmail.getText());
+            eC.setAddress(txtAddress.getText());
+            eC.setJobTitle((String)cmboJob.getValue());
+            eC.setPhoneNumber(txtPhone.getText());
+            eC.setStore((cmboStore.getSelectionModel().getSelectedItem()));
+            eC.setSalary(Double.valueOf(txtSalary.getText()));
+            eC.setEmployeeCategory((String) cmboEmpCat.getValue());
+            eC.setEmployeeType((String)cmboEType.getValue());
+            
+            for(int i = 0; i<empList.size(); i++){
+                if(eC.getEmployeeID() == empList.get(i).getEmployeeID()){
+                    empList.remove(i);
+                    empList.add(i, eC);
+                    cmboEmp.getItems().remove(i);
+                    cmboEmp.getItems().add(i, eC.getEmployeeID() + " " + eC.getFirstName() + " " + eC.getLastName());
+                    eC = null;
+                }
+            }
+            
+            for(int i = 0; i<job.size(); i++)
+            {
+                if((job.get(i).equalsIgnoreCase((String)cmboJob.getValue())))
+                {
+                    break;
+                }
+
+                 else if(i == job.size()-1 && job.get(i).equalsIgnoreCase((String)cmboJob.getValue()) == false)
+                {
+                    job.add((String)cmboJob.getValue());
+                }
+            }
+
+            alert.setTitle("Success!");
+            alert.setHeaderText("The employee has been edited!");
+            alert.showAndWait();
+
+            empData.clear();
+            for(Employee emp: empList)
+            {
+                empData.add(emp);
+            }
+
+
+            txtFName.clear();
+            txtLName.clear();
+            txtEmail.clear();
+            txtPhone.clear();
+            txtAddress.clear();
+            txtSalary.clear();
+            cmboJob.getSelectionModel().clearSelection();
+            cmboStore.getSelectionModel().clearSelection();
+            cmboEType.getSelectionModel().clearSelection();
+            cmboEmpCat.getSelectionModel().clearSelection();
+           
+
+            thirdStage.close();
         });
         editEmp.setOnAction(e -> {
             eC.setFName(txtFName.getText());
