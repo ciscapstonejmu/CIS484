@@ -62,7 +62,8 @@ public class GUI extends Application
     static ArrayList<String> expCategoryList = new ArrayList<>();
     static ArrayList<String> expStatusList = new ArrayList<>();
     static ArrayList<Supplier> suppList = new ArrayList<>(); 
-    static ArrayList<Member> memList = new ArrayList<>(); 
+    static ArrayList<Member> memList = new ArrayList<>();
+     static ArrayList<String> categoryList = new ArrayList<>();
     
     //Observabble Lists/Combo Boxes
     ObservableList obsEmp = FXCollections.observableArrayList();
@@ -404,6 +405,16 @@ public class GUI extends Application
             obsCategory.add("BAKED GOODS");
             obsCategory.add("FROZEN FOODS");
             obsCategory.add("OTHER");
+            categoryList.add("Produce");	
+            categoryList.add("DAIRY");	
+            categoryList.add("BEVERAGES");	
+            categoryList.add("CANDY");	
+            categoryList.add("CANNED FOODS");	
+            categoryList.add("PASTA");	
+            categoryList.add("SNACK FOODS");	
+            categoryList.add("BAKED GOODS");	
+            categoryList.add("FROZEN FOODS");	
+            categoryList.add("OTHER");
         
         primaryPane.add(lblThrifty, 0, 0);
         primaryPane.add(lblStore, 0, 1);
@@ -758,7 +769,7 @@ public class GUI extends Application
             vbButtons.setSpacing(10);
             vbButtons.setPadding(new Insets(10, 20, 10 , 20));
             
-            vbButtons.getChildren().addAll(lblInv, lblInvMan, createSupp, cmboSupp, btnEditSupp, btnAddProd, cmboProd, btnRemoveProd, btnDisProd, btnHandleImage, btnAddOrder, btnEditPO, btnViewOrder);
+            vbButtons.getChildren().addAll(lblInv, lblInvMan, createSupp, cmboSupp2, btnEditSupp, btnAddProd, cmboProd, btnRemoveProd, btnDisProd, btnHandleImage, btnAddOrder, btnEditPO, btnViewOrder);
             //secondPane.add(vbButtons, 3, 3);
             prodTable.setItems(prodData);
             //secondPane.add(prodTable, 5, 3);
@@ -1022,19 +1033,24 @@ public class GUI extends Application
         }); 
         
         btnDisProd.setOnAction(e -> {
-            fifthPane.getChildren().clear();
-            fifthStage.setTitle("Discontinue a Product");
-            fifthStage.show();
-            fifthPane.setAlignment(Pos.TOP_CENTER);
-            
-            
-            fifthPane.add(lblDisProd, 0, 0);
-            fifthPane.add(lblChooseProd, 0, 2);
-            fifthPane.add(cmboProd, 1,2); 
-            //fifthPane.add(lblChooseStore, 0,3); 
-            //fifthPane.add(cmboStore, 0, 4); 
-            fifthPane.add(btnConfirmChange, 0, 5); 
-
+            if(cmboProd.getValue() == null){	            
+                alert.setTitle("Error!");	           
+                alert.setHeaderText("Please select a product to discontinue!");	          
+                alert.showAndWait();	           
+            }	
+            else
+            {
+            int remove = cmboProd.getSelectionModel().getSelectedIndex();	           
+            cmboProd.getSelectionModel().clearSelection();
+            prodList.remove(remove);
+            cmboProd.getItems().remove(remove);            
+            }
+            prodData.clear();
+            for(Product prod: prodList)
+            {
+                prodData.add(prod);
+            }
+              
         }); 
         btnConfirmChange.setOnAction(e -> {
             int remove = cmboProd.getSelectionModel().getSelectedIndex(); 
@@ -1191,6 +1207,13 @@ public class GUI extends Application
             //insert code to add product to object
             
             thirdStage.close();
+            txtProdName.clear();	
+            txtProdQuantity.clear();	
+            txtUnitPrice.clear();	
+            cmboStore.getSelectionModel().clearSelection();	
+            txtProdDesc.clear();	
+            cmboCategory.getSelectionModel().clearSelection();	
+            cmboSupp.getSelectionModel().clearSelection();
             
             prodData.clear();
             for(Product prod: prodList)
@@ -1209,6 +1232,12 @@ public class GUI extends Application
         });
         
         btnRemoveProd.setOnAction(e -> {
+            if(cmboProd.getValue() == null){	
+                alert.setTitle("Error!");	
+                alert.setHeaderText("Please select a product to edit!");	
+                alert.showAndWait();	
+            }	
+            else{
             
             pC = prodList.get(cmboProd.getSelectionModel().getSelectedIndex());
             thirdPane.getChildren().clear();
@@ -1261,10 +1290,10 @@ public class GUI extends Application
             txtProdName.setText(pC.getProductName());
             txtUnitPrice.setText(Double.toString(pC.getPrice()));
             txtProdDesc.setText(pC.getFoodDescription());
-           cmboStore.setPromptText(pC.getLocation()); 
-           cmboSupp.setPromptText(pC.getSupplier());
-           cmboCategory.setPromptText(pC.getCategory());
-            
+            cmboStore.setPromptText(pC.getLocation()); 
+            cmboSupp.setPromptText(pC.getSupplier());
+            cmboCategory.setPromptText(pC.getCategory());
+            }
         });
         
         removeProd.setOnAction(e -> {
@@ -1273,7 +1302,7 @@ public class GUI extends Application
             Product tempProd = prodList.get(removeProd1);
             
             int remove = Integer.parseInt(txtRQuantity.getText());
-            int removeOrig = Integer.parseInt(txtProdQuantity.getText()); 
+            int removeOrig = pC.getQuantity();
             int removeNew = Integer.parseInt(txtRQuantity.getText()); 
             if (remove > removeOrig) {
                 alert.setTitle("Error!");
@@ -1318,7 +1347,7 @@ public class GUI extends Application
                 
             pC.setFoodDescription(txtProdDesc.getText());
            
-            pC.setLocation((String) cmboStore.getValue());
+            pC.setLocation((String)cmboStore.getValue());
      
             pC.setCategory((String) cmboCategory.getValue());
             pC.setSupplier((String)cmboSupp.getValue());
@@ -1327,6 +1356,8 @@ public class GUI extends Application
                 if(pC.getProductID() == prodList.get(i).getProductID()){
                     prodList.remove(i);
                     prodList.add(i, pC);
+                    cmboProd.getItems().remove(i);
+                    cmboProd.getItems().add(i, pC.getProductID()+": " + pC.getProductName());
                     pC = null;
                 }
             }
@@ -1356,7 +1387,7 @@ public class GUI extends Application
             {
                 prodData.add(prod);
             }
-            
+            thirdStage.close();
         }
         });  
         
