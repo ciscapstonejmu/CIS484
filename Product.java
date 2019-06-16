@@ -40,6 +40,7 @@ public class Product {
         this.location = store.getName();
         this.foodDescription = foodDescription;
         this.category = category;
+        this.store = store;
         this.supp = supp; 
         this.supplier = supp.getName();
         this.image = image;
