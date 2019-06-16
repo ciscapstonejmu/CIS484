@@ -202,6 +202,7 @@ public class CustSaleForm {
         btnRepeatBuy.setOnAction(e -> {
                //Repeat the purchase of the same item repeatedly
             int saleProd = cmboSaleProd.getSelectionModel().getSelectedIndex();
+        try{
             this.saleProducts.add(GUI.prodList.get(saleProd));
              String saleOut = "";
             saleOut += GUI.prodList.get(saleProd).toStringSale();
@@ -212,12 +213,19 @@ public class CustSaleForm {
             alert.setHeaderText("Same Product Purchased!");
             alert.showAndWait();
             txtSaleOutput.setEditable(false);
+            }
+        catch(Exception ex)
+        {
+            System.out.println("Given:" + ex + "Repeat Buy Data Has Not Been Fully Recorded");
+        }
+        
+        
         
         });
         */
         /*
         btnAddMember.setOnAction(e -> {
-            
+            try{
             addMemStage.setTitle("Add a Thrifty Member");
             addMemStage.show();
             addMemPane.setAlignment(Pos.TOP_CENTER);
@@ -245,7 +253,11 @@ public class CustSaleForm {
             txtMemEmail.setStyle("-fx-font: bold 9pt \"bookman\";");
             
             btnCreateMem.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue;");
-            
+                }
+        catch(Exception ex)
+        {
+            System.out.println("Given:" + ex + "Add Member Data Has Not Been Fully Recorded");
+        }
             }); */   
         /*
         btnCreateMem.setOnAction(e -> {
