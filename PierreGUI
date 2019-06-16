@@ -85,7 +85,8 @@ public class GUI extends Application
     public static ObservableList<CustSale> obsSale = FXCollections.observableArrayList();
     public static ComboBox cmboSale = new ComboBox(obsSale);
     public static ObservableList<Supplier> obsSupp = FXCollections.observableArrayList(); 
-    public static ComboBox cmboSupp = new ComboBox(Supplier.obsSupp); 
+    public static ComboBox cmboSupp = new ComboBox(Supplier.obsSupp);
+    public static ComboBox cmboSupp2 = new ComboBox(Supplier.obsSupp);
     public static ObservableList<Member> obsMem = FXCollections.observableArrayList();
     public static ComboBox<Member> cmboMem = new ComboBox(Member.obsMem);
 //    ObservableList 
