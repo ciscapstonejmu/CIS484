@@ -77,6 +77,7 @@ public class GUI extends Application
     ObservableList<WritableImage> imageList = FXCollections.observableArrayList();
     static ObservableList obsProdOrder = FXCollections.observableArrayList();
     static ComboBox cmboProdOrder = new ComboBox(ProductOrder.obsProdOrder); 
+    static ComboBox cmboProdOrder2 = new ComboBox(ProductOrder.obsProdOrder); 
     //ObservableList<Store> obsStore = FXCollections.observableArrayList();
     //ComboBox cmboStore = new ComboBox(obsStore);
     public static ObservableList<CustSale> obsSale = FXCollections.observableArrayList();
@@ -130,6 +131,12 @@ public class GUI extends Application
     Button btnSavePO = new Button("Save Changes"); 
     Button btnCancelPO = new Button("Cancel Product Order"); 
     Label lblProdO = new Label("Product Order: "); 
+    Button btnviewSupp = new Button("View Suppliers");
+    Button viewSupp = new Button("View Supplier"); 
+    Button btnViewAllSupp = new Button("View All"); 
+    Label lblChooseSupp = new Label("Choose a Supplier: "); 
+    Label lblViewSupp = new Label("View Supplier Information"); 
+    TextArea suppOutput = new TextArea(); 
     //Add a Product
     Label lblEPO = new Label("Edit or Cancel a Product Order");
     Label lblPO = new Label("Create a Product Order"); 
@@ -769,7 +776,7 @@ public class GUI extends Application
             vbButtons.setSpacing(10);
             vbButtons.setPadding(new Insets(10, 20, 10 , 20));
             
-            vbButtons.getChildren().addAll(lblInv, lblInvMan, createSupp, cmboSupp2, btnEditSupp, btnAddProd, cmboProd, btnRemoveProd, btnDisProd, btnHandleImage, btnAddOrder, btnEditPO, btnViewOrder);
+            vbButtons.getChildren().addAll(lblInv, lblInvMan, createSupp, cmboSupp2, btnEditSupp, btnviewSupp, btnAddProd, cmboProd, btnRemoveProd, btnDisProd, btnHandleImage, btnAddOrder, cmboProdOrder2, btnEditPO, btnViewOrder);
             //secondPane.add(vbButtons, 3, 3);
             prodTable.setItems(prodData);
             //secondPane.add(prodTable, 5, 3);
@@ -781,13 +788,23 @@ public class GUI extends Application
             
         });
         btnEditPO.setOnAction(e -> {
+            if(cmboProdOrder2.getValue() == null){
+                alert.setTitle("Error!");
+                alert.setHeaderText("Please select a product order to Edit!");
+                alert.showAndWait();
+            }
+            else 
+            {
+            poC = prodOrderList.get(cmboProdOrder2.getSelectionModel().getSelectedIndex());
+            cmboProdOrder2.getSelectionModel().clearSelection();
             fifthPane.getChildren().clear();
             fifthStage.setTitle("Edit or Cancel a Product Order");
             fifthStage.show();
             fifthPane.setAlignment(Pos.TOP_CENTER);
             
-              fifthPane.add(lblProdO, 0, 1);
-            fifthPane.add(cmboProdOrder, 0, 2);
+            fifthPane.add(lblEPO, 0, 0);
+            fifthPane.add(lblProdName, 0, 1);
+            fifthPane.add(txtProdName, 0, 2);
             fifthPane.add(lblUnitCost, 1,5); 
             fifthPane.add(txtUnitCost, 1, 6); 
             fifthPane.add(lblCategory, 0, 3);
@@ -805,26 +822,38 @@ public class GUI extends Application
             fifthPane.add(calendar, 0, 6);
             fifthPane.add(lblQuantity, 1, 1);
             fifthPane.add(txtProdQuantity, 1, 2);
-//            thirdPane.add(lblVendor, 0, 7);
-//            thirdPane.add(txtVendor, 0, 8);
+
             fifthPane.add(lblSupplier, 1, 3); 
             fifthPane.add(cmboSupp, 1, 4);
-            //thirdPane.add(lblImage, 0, 9);
-            //thirdPane.add(btnImage, 0, 10);
+
             fifthPane.add(lblProdStore, 2,3);
             fifthPane.add(cmboStore, 2, 4); //when picking which store the product is for, should be selected from already existing stores created 
-            
-            
+
             fifthPane.add(btnSavePO, 0, 10);
             fifthPane.add(btnCancelPO, 1, 10); 
+            
+            txtProdName.setText(poC.getProdOName()); 
+            Double poUnitCost2 = poC.getUnitCost(); 
+            String poUnitCost = Double.toString(poUnitCost2); 
+            txtUnitCost.setText(poUnitCost);
+            cmboStore.setPromptText(poC.getStore());
+            cmboCategory.setPromptText(poC.getCategory());
+            cmboSupp.setPromptText(poC.getSupplier());
+            Double poSubTotal = poC.getSubtotal(); 
+            String poSubTotal2 = Double.toString(poSubTotal); 
+            txtSubTotal.setText(poSubTotal2);
+            int poQ = poC.getQuantity(); 
+            String poQ2 = Integer.toString(poQ); 
+            txtProdQuantity.setText(poQ2);
+            String date = calendar.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
+            String orderDate2 = orderDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
+            orderDate2 = poC.getDate(); 
+            date = poC.getDeliveryDate(); 
+            }
+       
         }); 
         btnCancelPO.setOnAction(e -> {
-             if(cmboProdOrder.getValue() == null){
-                alert.setTitle("Error!");
-                alert.setHeaderText("Please select a Product Order to Cancel!");
-                alert.showAndWait();
-            }
-             else {
+             
             int removeProd1 = cmboProdOrder.getSelectionModel().getSelectedIndex(); 
             ProductOrder tempProd = prodOrderList.get(removeProd1);
 
@@ -838,16 +867,11 @@ public class GUI extends Application
             alert.showAndWait();
             
             }
-             }
+             
 
         }); 
         btnSavePO.setOnAction(e -> {
-            if(cmboProdOrder.getValue() == null){
-                alert.setTitle("Error!");
-                alert.setHeaderText("Please select Product Order to edit!");
-                alert.showAndWait();
-            }
-            else{
+            
             String date = calendar.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
             String orderDate2 = orderDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
             poC = prodOrderList.get(cmboProdOrder.getSelectionModel().getSelectedIndex());
@@ -866,11 +890,12 @@ public class GUI extends Application
             for(int i = 0; i<prodOrderList.size(); i++){
                 if(poC.getID() == prodOrderList.get(i).getID()){
                     prodOrderList.remove(i);
-                    cmboProdOrder.getItems().remove(i); 
                     prodOrderList.add(i, poC);
-                    cmboProdOrder.getItems().add(i, poC);
-                    
-                    pC = null;
+                    cmboProdOrder.getItems().remove(i); 
+                    cmboProdOrder.getItems().add(i, poC.getProdOName()); 
+                    cmboProdOrder2.getItems().remove(i);
+                    cmboProdOrder2.getItems().add(i, poC.getProdOName()); 
+                    poC = null;
                 }
             }
             
@@ -893,7 +918,7 @@ public class GUI extends Application
             alert.setTitle("Success!");
             alert.setHeaderText("The product has been edited!");
             alert.showAndWait();
-            }
+            
         }); 
         createSupp.setOnAction(e -> {
             eighthPane.getChildren().clear();
@@ -942,15 +967,15 @@ public class GUI extends Application
 
         });
         btnEditSupp.setOnAction (e -> {
-            if(cmboSupp.getValue() == null){
+            if(cmboSupp2.getValue() == null){
                 alert.setTitle("Error!");
                 alert.setHeaderText("Please select a Supplier to Edit!");
                 alert.showAndWait();
             }
             else 
             {
-            sC = suppList.get(cmboSupp.getSelectionModel().getSelectedIndex());
-            cmboSupp.getSelectionModel().clearSelection();
+            sC = suppList.get(cmboSupp2.getSelectionModel().getSelectedIndex());
+            cmboSupp2.getSelectionModel().clearSelection();
             eighthPane.getChildren().clear();
             eighthStage.setTitle("Edit a Supplier");
             eighthStage.show();
@@ -986,7 +1011,6 @@ public class GUI extends Application
             
         }); 
        btnConfirmSuppChanges.setOnAction(e -> {
-           
             //change of supp name needs to show up in combo box and on associated product's table 
             //sC = suppList.get(cmboSupp.getSelectionModel().getSelectedIndex());
             sC.setName(txtSuppName.getText());
@@ -1003,21 +1027,25 @@ public class GUI extends Application
                     suppList.add(i, sC);
                     cmboSupp.getItems().remove(i); 
                     cmboSupp.getItems().add(i, sC.getName()); 
-                    //this doesnt change the supplier name on the product table when product name is updated 
-                    sC = null;
+                    cmboSupp2.getItems().remove(i);
+                    cmboSupp2.getItems().add(i, sC.getName()); 
 
+                    sC = null;
                 }
             }
             
             alert.setTitle("Success!");
             alert.setHeaderText("The supplier has been edited!");
             alert.showAndWait();
-            for (int i = 0; i < suppList.size(); i++) {
-                System.out.println(suppList.get(i)); 
-            }
-            prodData.clear(); //keeping this so if supplier name is updated it shows on the product table? 
+            
+            
+            prodData.clear(); 
             for(Product prod: prodList)
-            {
+            {   
+                if(prod.getSupp().getID() == temp.getID())
+                {
+                    prod.updateSupp(temp);
+                }
                 prodData.add(prod);
             }
             txtSuppName.clear();
@@ -1031,7 +1059,31 @@ public class GUI extends Application
         eighthStage.close();
             
         }); 
-        
+       btnviewSupp.setOnAction(e -> {
+            fifthPane.getChildren().clear();
+            fifthStage.setTitle("View Suppliers");
+            fifthStage.show();
+            fifthPane.setAlignment(Pos.TOP_CENTER);
+            fifthPane.add(lblViewSupp, 0, 0);
+            fifthPane.add(lblChooseSupp, 0, 1); 
+            fifthPane.add(cmboSupp, 0, 2); 
+            fifthPane.add(viewSupp, 0, 3); 
+            fifthPane.add(btnViewAllSupp, 0, 4); 
+            fifthPane.add(suppOutput, 2, 2, 12, 15);  
+        }); 
+
+        viewSupp.setOnAction(e -> {
+            Supplier tempSupp = suppList.get(cmboSupp.getSelectionModel().getSelectedIndex());
+            //String prodOrderSelect2 = Integer.toString(prodOrderSelect); 
+           suppOutput.setText(tempSupp.toString());   
+        }); 
+        btnViewAllSupp.setOnAction(e -> {
+            String suppOutput2 = ""; 
+            for(int i =0; i < suppList.size(); i++) {
+                suppOutput2 += suppList.get(i).toString(); 
+            }
+            suppOutput.setText(suppOutput2); 
+        }); 
         btnDisProd.setOnAction(e -> {
             if(cmboProd.getValue() == null){	            
                 alert.setTitle("Error!");	           
@@ -1194,12 +1246,12 @@ public class GUI extends Application
             int storeLocation = cmboStore.getSelectionModel().getSelectedIndex(); 
             String storeLocation2 = Integer.toString(storeLocation); 
             int productCategory = cmboCategory.getSelectionModel().getSelectedIndex();  
-            
+            int suppLoc = cmboSupp.getSelectionModel().getSelectedIndex(); 
             prodList.add(new Product(txtProdName.getText(), 
                     Integer.valueOf(txtProdQuantity.getText()),
                     Double.valueOf(txtUnitPrice.getText()), 
                     storeList.get(cmboStore.getSelectionModel().getSelectedIndex()), txtProdDesc.getText(), 
-                    (String) cmboCategory.getValue(), (String)cmboSupp.getValue(), tempImage));
+                    (String) cmboCategory.getValue(), suppList.get(suppLoc), tempImage));
             
             alert.setTitle("Success!");
             alert.setHeaderText("The product has been added!");
