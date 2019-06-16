@@ -93,7 +93,7 @@ public class Product {
             this.aisle = 9;
         }
     }
-    public Product(String productName, double price, Store store, String foodDescription, String category, Supplier supp)
+    public Product(String productName, double price,int quantity, Store store, String foodDescription, String category, Supplier supp)
     {
         this.productName = productName;
         this.quantity = quantity;
