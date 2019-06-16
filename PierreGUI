@@ -2218,6 +2218,7 @@ public class GUI extends Application
             thirdPane.add(lblTtlAmount, 1, 5);
             thirdPane.add(txtTtlAmount, 1, 6);
             thirdPane.add(addExp, 0, 7);
+            expDate.setValue(LocalDate.now());
         });
         
         addExp.setOnAction(e -> {
