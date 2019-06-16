@@ -1308,30 +1308,11 @@ public class GUI extends Application
             
             
         });
-        
         addEmp.setOnAction(e -> {
-            //employee added clicked
-            
-            //data validation
-            if(txtFName.getText().trim().length() == 0 || txtLName.getText().trim().length() == 0 ||
-                    txtEmail.getText().trim().length() == 0 || txtPhone.getText().trim().length() == 0 ||
-                    txtAddress.getText().trim().length() == 0 || txtSalary.getText().trim().length() == 0 ||
-                    (cmboJob.getSelectionModel().getSelectedItem().toString().isEmpty()) || 
-                    (cmboEType.getValue().toString().equals("") && cmboEType.getValue() == null) ||
-                    (cmboEmpCat.getValue().toString().equals("") && cmboEmpCat.getValue() == null) || 
-                    (cmboStore.getValue().toString().equals("") && cmboStore.getValue() == null))
-                // keep on getting nullpointer for combobox ones
-            {
-               alert.setTitle("Error!");
-               alert.setHeaderText("Error! Please enter data!");
-               alert.showAndWait();
-            }
-            
-            else
-            {
+            //employee added clicked    
             empList.add(new Employee(txtFName.getText(), txtLName.getText(), txtEmail.getText(), txtPhone.getText(), 
             txtAddress.getText(), Double.valueOf(txtSalary.getText()),  
-                    (String)cmboJob.getValue(), (String)cmboEType.getValue(), (String)cmboEmpCat.getValue(), (String) cmboStore.getValue())); 
+                    (String)cmboJob.getValue(), (String)cmboEType.getValue(), (String)cmboEmpCat.getValue(), storeList.get(cmboStore.getSelectionModel().getSelectedIndex()))); 
             //changed parse to valueof
             for(int i = 0; i<job.size(); i++){
                 if((job.get(i).equalsIgnoreCase((String)cmboJob.getValue())))
@@ -1367,19 +1348,17 @@ public class GUI extends Application
             
             
             thirdStage.close();
-            }
         });
         
         btnEditEmp.setOnAction(e -> {
-            // They have no way of selecting an employee rn
             if(cmboEmp.getValue() == null){
                 alert.setTitle("Error!");
                 alert.setHeaderText("Please select an employee to edit!");
                 alert.showAndWait();
             }
-
             else{
             eC = empList.get(cmboEmp.getSelectionModel().getSelectedIndex());
+            cmboEmp.getSelectionModel().clearSelection();
             thirdPane.getChildren().clear();
             thirdStage.setTitle("Edit Employee");
             thirdStage.show();
@@ -1457,7 +1436,7 @@ public class GUI extends Application
             eC.setAddress(txtAddress.getText());
             eC.setJobTitle((String)cmboJob.getValue());
             eC.setPhoneNumber(txtPhone.getText());
-            eC.setStore((String) cmboStore.getValue());
+            eC.setStore((cmboStore.getSelectionModel().getSelectedItem()));
             eC.setSalary(Double.valueOf(txtSalary.getText()));
             eC.setEmployeeCategory((String) cmboEmpCat.getValue());
             eC.setEmployeeType((String)cmboEType.getValue());
@@ -1510,6 +1489,7 @@ public class GUI extends Application
 
             thirdStage.close();
         });
+
         expTable.getColumns().addAll(tbExpID, tbExpCategory, tbExpDesc, tbExpAmount, tbExpDate, tbExpStatus); 
         menuAdmin.getMenus().get(1).getItems().get(2).setOnAction(e -> {
            // Expense Management
