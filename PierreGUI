@@ -47,6 +47,7 @@ public class GUI extends Application
     Button btnForgot = new Button("Forgot Password");
     TextField txtUser = new TextField();
     PasswordField txtPass = new PasswordField(); 
+    static String currentUser;
     Label storeLoc = new Label("Store Location"); 
     TextField txtStoreLoc = new TextField();
     boolean isAuthorized = false;
@@ -793,6 +794,7 @@ public class GUI extends Application
                if(temp.getUsername().equalsIgnoreCase(txtUser.getText()) && temp.getPassword().equals(txtPass.getText()))
                {
                    found = true;
+                   currentUser = temp.getUsername();
                    if(temp.getEmployeeType().equalsIgnoreCase("Manager"))
                    {
                        isAuthorized = true;
