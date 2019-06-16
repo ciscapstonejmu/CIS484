@@ -124,7 +124,7 @@ public class Supplier {
                 " , Supplier Address: " + this.supplierAddress + " , Sales Contact Name: " + this.salesContactName +
                 " , Sales Contact Phone Number: " + this.salesContactPhoneNumber + 
                 " , Sales Contact Email: " + this.salesContactEmail;
-        return str;
+         return str;
     }
     
     
