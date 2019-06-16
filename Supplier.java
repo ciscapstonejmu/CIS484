@@ -1,9 +1,10 @@
 package pkg484groupproj;
 
+import java.io.Serializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class Supplier {
+public class Supplier implements Serializable{
     
     private int supplierID;
     private String supplierName;
