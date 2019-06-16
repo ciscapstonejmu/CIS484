@@ -23,6 +23,7 @@ public class Product {
     private BufferedImage image;
     private int saleYear;
     private String supplier;
+    private Supplier supp; 
     private int saleMonth;
     private int saleDay;
     public static int nextID = 0;
@@ -31,7 +32,7 @@ public class Product {
     //Fromatter for money figures
     DecimalFormat formatter = new DecimalFormat("#0.00");
     
-    public Product(String productName, int quantity, double price, Store store, String foodDescription, String category, String supplier, BufferedImage image)
+    public Product(String productName, int quantity, double price, Store store, String foodDescription, String category, Supplier supp, BufferedImage image)
     {
         this.productName = productName;
         this.quantity = quantity;
@@ -39,7 +40,8 @@ public class Product {
         this.location = store.getName();
         this.foodDescription = foodDescription;
         this.category = category;
-        this.supplier = supplier;
+        this.supp = supp; 
+        this.supplier = supp.getName();
         this.image = image;
         this.productID = nextID++;
         obsProd.add(this.productID + ": " + this.productName);
@@ -90,7 +92,7 @@ public class Product {
             this.aisle = 9;
         }
     }
-    public Product(String productName, double price, Store store, String foodDescription, String category, String supplier)
+    public Product(String productName, double price, Store store, String foodDescription, String category, Supplier supp)
     {
         this.productName = productName;
         this.quantity = quantity;
@@ -98,7 +100,8 @@ public class Product {
         this.location = store.getName();
         this.foodDescription = foodDescription;
         this.category = category;
-        this.supplier = supplier;
+        this.supp = supp; 
+        this.supplier = supp.getName();
         this.image = image;
         this.productID = nextID++;
         obsProd.add(this.productID + ": " + this.productName);
@@ -251,6 +254,19 @@ public class Product {
     public Store getStore() {
         return this.store; 
     }
+    public Supplier getSupp(){
+        return this.supp;
+    }
+    public void updateSupp(Supplier supp) {
+        this.supp = supp; 
+        this.supplier = supp.getName(); 
+    }
+    public void updateCmboBox(Product prod, int spot){
+        
+        obsProd.remove(spot);
+        obsProd.add(spot, prod.productID + "" + prod.productName);
+    }
+  
     public String toString()
     {
         String str = "";
