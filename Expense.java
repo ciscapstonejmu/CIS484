@@ -11,11 +11,13 @@ public class Expense {
     private String status;
     private double amountPaid;
     private double totalAmount;
+    private double remainingBalance;
+    private Store payableStore;
     public static ObservableList obsExpense = FXCollections.observableArrayList();
     
     public static int nextID = 0;
     
-    public Expense(String category, String description, double amountPaid, String date, String status)
+    /*public Expense(String category, String description, double amountPaid, String date, String status)
     {
         this.category = category;
         this.description = description;
@@ -25,9 +27,11 @@ public class Expense {
         
         expenseID = nextID++;
         obsExpense.add(this.date + ": " + this.category);
-    }
+        
+       
+    }*/
     
-    public Expense(String category, String description, double amountPaid, double amount, String date, String status)
+    public Expense(String category, String description, double amountPaid, double amount, String date)
     {
         this.category = category;
         this.description = description;
@@ -35,11 +39,23 @@ public class Expense {
         this.totalAmount = amount;
         this.date = date;
         this.status = status;
+        this.remainingBalance = totalAmount - amountPaid;
+        //this.payableStore = payableStore;
+       
         
         expenseID = nextID++;
+        
+        if (amountPaid < amount)
+        {
+            this.status = "Ongoing";
+        }
+        if (amountPaid >= amount)
+        {
+            this.status = "Paid";
+        }
     }
     
-    public int getID()
+    public int getExpenseID()
     {
         return this.expenseID;
     }
@@ -64,12 +80,12 @@ public class Expense {
         return this.description;
     }
     
-    public void setAmount(double amount)
+    public void setTotalAmount(double amount)
     {
         this.totalAmount = amount;
     }
     
-    public double getAmount()
+    public double getTotalAmount()
     {
         return this.totalAmount;
     }
@@ -104,18 +120,34 @@ public class Expense {
         return this.status;
     }
     
+    public void setStore(Store s)
+    {
+        this.payableStore = s;
+    }
+    
+    public Store getStore()
+    {
+        return this.payableStore;
+    }
+    
+    public double getRemainingBalance()
+    {
+        return this.remainingBalance;
+    }
+    
     public void payExpense(double payment)
     {
-        this.totalAmount = this.totalAmount - payment;
         this.amountPaid += payment;
+        this.remainingBalance = totalAmount - amountPaid;
     }
+    
     
     public String toString()
     {
         String str = "";
         str += "ID: " + this.expenseID + "Description: " + this.description + 
-                " Category: " + this.category + " Amount Paid: " + this.amountPaid +
-                " Date: " + this.date + " Status: " + this.status;
+                " Category: " + this.category + " Amount Paid: " + this.amountPaid + "Total Amount: " 
+                + this.totalAmount + " Date: " + this.date + " Status: " + this.status;
         return str;
     }
     
