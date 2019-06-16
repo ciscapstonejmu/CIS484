@@ -67,6 +67,7 @@ public class GUI extends Application
     static ArrayList<String> expStatusList = new ArrayList<>();
     static ArrayList<Supplier> suppList = new ArrayList<>(); 
     static ArrayList<Member> memList = new ArrayList();
+    static ArrayList<String> categoryList = new ArrayList<>();
     
     //Observabble Lists/Combo Boxes
     ObservableList obsEmp = FXCollections.observableArrayList();
@@ -79,7 +80,8 @@ public class GUI extends Application
     static ComboBox cmboStore = new ComboBox(Store.obsStore);
     ObservableList<WritableImage> imageList = FXCollections.observableArrayList();
     static ObservableList obsProdOrder = FXCollections.observableArrayList();
-    static ComboBox cmboProdOrder = new ComboBox(ProductOrder.obsProdOrder); 
+    static ComboBox cmboProdOrder = new ComboBox(ProductOrder.obsProdOrder);
+    static ComboBox cmboProdOrder2 = new ComboBox(ProductOrder.obsProdOrder);
     //ObservableList<Store> obsStore = FXCollections.observableArrayList();
     //ComboBox cmboStore = new ComboBox(obsStore);
     public static ObservableList<CustSale> obsSale = FXCollections.observableArrayList();
@@ -123,20 +125,31 @@ public class GUI extends Application
     TextField txtSuppPhone = new TextField(); 
     Label lblAddSupp = new Label("Create a New Supplier");
     Button btnNewSupp = new Button("Create New Supplier"); 
-    Label lblSuppContactEmail = new Label("Suppler Contact Email Address: "); 
+    Label lblSuppContactEmail = new Label("Supplier Contact Email Address: "); 
     TextField txtSuppContactEmail = new TextField(); 
     
     //Inventory Management
     Label lblInvMan = new Label("Management");
     Label lblInv = new Label("Inventory");
     Button btnAddProd = new Button("Add Product");
-    Button btnRemoveProd = new Button("Remove Product");
+    Button btnRemoveProd = new Button("Edit/Remove Product");
     Button btnHandleImage = new Button("View/Edit Product Image");
-    
-    
-    
-
+    Button btnEditSupp = new Button("Edit a Supplier"); 
+    Button btnEditPO = new Button("Edit/Cancel a Product Order"); 
+    Button btnDisProd = new Button("Discontinue Product"); 
+    Button btnConfirmSuppChanges = new Button("Save Changes"); 
+    Button btnSavePO = new Button("Save Changes"); 
+    Button btnCancelPO = new Button("Cancel Product Order"); 
+    Label lblProdO = new Label("Product Order: "); 
+    Button btnviewSupp = new Button("View Suppliers");
+    Button viewSupp = new Button("View Supplier"); 
+    Button btnViewAllSupp = new Button("View All"); 
+    Label lblChooseSupp = new Label("Choose a Supplier: "); 
+    Label lblViewSupp = new Label("View Supplier Information"); 
+    TextArea suppOutput = new TextArea(); 
     //Add a Product
+    Label lblEPO = new Label("Edit or Cancel a Product Order");
+    Label lblPO = new Label("Create a Product Order"); 
     Label lblAddProd = new Label("Add a Product");
     Label lblProdName = new Label("Product Name");
     TextField txtProdName = new TextField();
@@ -162,8 +175,14 @@ public class GUI extends Application
     Label lblProdStore = new Label("Store"); 
     Button btnCalcProdSubTotal = new Button("Calculate Subtotal");
     
-    Button createSupp = new Button("Create a Supplier"); 
-    Button editSupp = new Button("Edit Supplier");
+    Button createSupp = new Button("Add a Supplier"); 
+    
+    //Discontinue a Product 
+    Label lblDisProd = new Label("Discontinue a Product"); 
+    Label lblChooseProd = new Label("Choose Product: "); 
+    Label lblChooseStore = new Label("Choose Store: "); 
+    Button btnConfirmChange = new Button("Save Changes"); 
+    
     Label lblOrderDate = new Label("Order Date"); 
     DatePicker orderDate = new DatePicker(); 
     Button btnAddOrder = new Button("Create Product Order"); 
@@ -176,7 +195,7 @@ public class GUI extends Application
     int imageChosen;
     
     //Remove a Product
-    Label lblRemoveProd = new Label("Remove a Product");
+    Label lblRemoveProd = new Label("Remove or Edit a Product");
     Label lblSelectProd = new Label("Select a Product");
     Button btnChangeImage = new Button("Change Image");
     Button btnViewImage = new Button("View Image");
@@ -184,6 +203,18 @@ public class GUI extends Application
     Label lblRQuantity = new Label("Select quantity to remove");
     TextField txtRQuantity = new TextField();
     Button removeProd = new Button("Remove Product");
+    Button editProd = new Button("Save Changes"); 
+    Label lblEName = new Label("Name: "); 
+    TextField txtEName = new TextField(); 
+    Label lblEPrice = new Label("Unit Price: "); 
+    TextField txtEPrice = new TextField(); 
+    Label lblEStore = new Label("Store: "); 
+    Label lblEDesc = new Label("Description: "); 
+    TextField txtEDesc = new TextField(); 
+    Label lblECat = new Label("Category: "); 
+    Label lblESupp = new Label("Supplier: "); 
+    Label lblESupplier = new Label("Edit Supplier"); 
+    
     
     // Employee Management
     Label lblEmpMan = new Label("Management");
@@ -199,7 +230,10 @@ public class GUI extends Application
     TextField txtFName = new TextField();
     Label lblLName = new Label("Last Name");
     TextField txtLName = new TextField();
-    Employee eC = null;    
+    Employee eC = null;
+    Product pC = null; 
+    Supplier sC = null; 
+    ProductOrder poC = null;    
     Label lblEmail = new Label("Email");
     TextField txtEmail = new TextField();
     Label lblPhone = new Label("Phone#");
@@ -518,7 +552,7 @@ public class GUI extends Application
         btnRemoveProd.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnViewOrder.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         createSupp.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        editSupp.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnEditSupp.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         
         btnRingSale.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         
@@ -888,7 +922,7 @@ public class GUI extends Application
             
             
             createSupp.setDisable(true); //disable creat supplier button
-            editSupp.setDisable(true); //disable edit Supplier
+            btnEditSupp.setDisable(true); //disable edit Supplier
             btnAddOrder.setDisable(true); //disable create product order
             btnViewOrder.setDisable(true); //disable view product order
 
@@ -911,7 +945,7 @@ public class GUI extends Application
                 alert.showAndWait();
             }
 
-            if(editSupp.isPressed())
+            if(btnEditSupp.isPressed())
             {
                 alert.setTitle("Not Authorized");
                 alert.setHeaderText("Access Only For Management");
@@ -1938,7 +1972,7 @@ public class GUI extends Application
             eC.setAddress(txtAddress.getText());
             eC.setJobTitle((String)cmboJob.getValue());
             eC.setPhoneNumber(txtPhone.getText());
-            eC.setStore((String) cmboStore.getValue());
+            eC.setStore(storeList.get(cmboStore.getSelectionModel().getSelectedIndex()));
             eC.setSalary(Double.valueOf(txtSalary.getText()));
             eC.setEmployeeCategory((String) cmboEmpCat.getValue());
             eC.setEmployeeType((String)cmboEType.getValue());
