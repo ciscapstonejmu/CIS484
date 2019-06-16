@@ -816,8 +816,10 @@ public class GUI extends Application
         {
           ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("employees.dat"));
 
-           savedEmp = (ArrayList<Employee>)(instanceObjectInput.readObject());
-           for(Employee emp : savedEmp){
+           empList = (ArrayList<Employee>)(instanceObjectInput.readObject());
+           for(Employee emp : empList){
+               Employee.nextID++;
+               Employee.obsEmp.add(emp.getFirstName() + " " + emp.getLastName() );
                System.out.println(emp.toString());
            }
            instanceObjectInput.close();
@@ -833,13 +835,12 @@ public class GUI extends Application
             // error handling
 
    //RUN LoadData.java BEFORE TRYING TO LOG IN.
-           for(int i = 0; i< savedEmp.size();i++)
+           for(int i = 0; i< empList.size();i++)
            {
-               Employee temp = savedEmp.get(i);
+               Employee temp = empList.get(i);
                if(temp.getUsername().equalsIgnoreCase(txtUser.getText()) && temp.getPassword().equals(txtPass.getText()))
                {
                    found = true;
-                   currentUser = temp.getUsername();
                    if(temp.getEmployeeType().equalsIgnoreCase("Manager"))
                    {
                        isAuthorized = true;
@@ -864,6 +865,14 @@ public class GUI extends Application
             
             
            
+//            
+//            secondPane.add(menuAdmin, 0, 0, 4, 1);
+//            secondPane.add(lblThrifty, 3, 2);
+//            secondPane.add(lblStore, 3, 3);
+//            secondPane.add(lblMain, 3, 4);
+//            secondPane.add(lblSelect, 3, 5);
+//            secondPane.add(btnRingSale, 3, 6);
+//            
             
             //Set Ring Sale Button Formatting
 //            btnRingSale.setPrefSize(120, 150);
@@ -874,6 +883,8 @@ public class GUI extends Application
             {
             menuAdmin.getMenus().get(1).getItems().get(0).setDisable(true); //Employee management
             menuAdmin.getMenus().get(1).getItems().get(2).setDisable(true); //Expense Management
+            
+            
             
             createSupp.setDisable(true); //disable creat supplier button
             editSupp.setDisable(true); //disable edit Supplier
