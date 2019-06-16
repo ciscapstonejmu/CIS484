@@ -1466,6 +1466,8 @@ public class GUI extends Application
                 if(eC.getEmployeeID() == empList.get(i).getEmployeeID()){
                     empList.remove(i);
                     empList.add(i, eC);
+                    cmboEmp.getItems().remove(i);
+                    cmboEmp.getItems().add(i, eC.getEmployeeID() + " " + eC.getFirstName() + " " + eC.getLastName());
                     eC = null;
                 }
             }
