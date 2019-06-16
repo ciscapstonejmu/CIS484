@@ -56,10 +56,10 @@ public class Employee implements Serializable{
         this.address = "800 S Main St";
         this.salary = 100000.00;
         this.jobTitle = "System Admin";
-        this.employeeType = "Manager";
+        this.employeeType = "Full Time";
         this.storeLoc = "Harrisonburg";
-        this.employeeCategory = "Full-Time";
-       
+        this.employeeCategory = "Manager";
+        this.employeeID = nextID++;
         this.username = firstName;
         this.password = lastName;
         if(admins.size() > 0)
