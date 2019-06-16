@@ -626,6 +626,9 @@ public class GUI extends Application
         btnRemoveProd.setStyle("-fx-font: 11pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnViewOrder.setStyle("-fx-font: 11pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         createSupp.setStyle("-fx-font: 11pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnAddStore.setStyle("-fx-font: 11pt \"bookman\"; -fx-background-color: lightskyblue;");
+        btnEditStore.setStyle("-fx-font: 11pt \"bookman\"; -fx-background-color: lightskyblue;");
+        btnRemoveStore.setStyle("-fx-font: 11pt \"bookman\"; -fx-background-color: lightskyblue;");
         
         btnRingSale.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         
