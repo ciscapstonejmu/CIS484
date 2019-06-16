@@ -47,11 +47,11 @@ public class GUI extends Application
     Button btnForgot = new Button("Forgot Password");
     TextField txtUser = new TextField();
     PasswordField txtPass = new PasswordField(); 
-    static String currentUser;
     Label storeLoc = new Label("Store Location"); 
     TextField txtStoreLoc = new TextField();
     boolean isAuthorized = false;
     boolean found = false;
+    static String currentUser;
     //TextField txtPass = new TextField();
     
     //Array Lists
@@ -563,11 +563,12 @@ public class GUI extends Application
         cmboWedTimeIn.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         cmboWedTimeOut.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         
-        cmboType.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
-        cmboYear.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
-        cmboMonth.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
-        cmboEmp.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill: white;");
+        cmboType.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
+        cmboYear.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
+        cmboMonth.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
+        cmboEmp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill: white;");
         cmboStore.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill: white;");
+        cmboExpense.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill: white;");
         
         lblInvMan.setStyle("-fx-font: bold 20pt \"bookman\";");
         lblInv.setStyle("-fx-font: bold 20pt \"bookman\";");
@@ -595,9 +596,9 @@ public class GUI extends Application
         secondPane.setHgap(15);
             
         Label lblMain = new Label("Main Menu");
-        lblMain.setStyle("-fx-font: bold 16pt \"Arial\";");
+        lblMain.setStyle("-fx-font: bold 16pt \"bookman\";");
         Label lblSelect = new Label("Select an option from the Menu Bar above.");
-        lblSelect.setStyle("-fx-font: 12pt \"Arial\";");
+        lblSelect.setStyle("-fx-font: 12pt \"bookman\";");
 //        Scene secondScene = new Scene(secondPane, 900, 500);
        
         //Stage secondStage = new Stage();
@@ -731,6 +732,37 @@ public class GUI extends Application
         Label lblMenu1 = new Label("123 Lane   Harrisonburg, VA 22801");
         Label lblMenu2 = new Label("(540) 123-1234   (540) 123-1244 (fax)");
         Label lblMenu3 = new Label("http://www.thrifty-store.com");
+        lblMenu1.setStyle("-fx-font: 9pt \"bookman\"; -fx-text-fill: gray;");
+        lblMenu2.setStyle("-fx-font: 9pt \"bookman\"; -fx-text-fill: gray;");
+        lblMenu3.setStyle("-fx-font: 9pt \"bookman\"; -fx-text-fill: gray;");
+        
+        Label lblLeft1 = new Label("Welcome to Thrifty $tore!");
+        Label lblLeft2 = new Label("Providing 'Thrifty Saves!' all around the");
+        Label lblLeft3 = new Label("Shenandoah!");
+        Label lblLeft4 = new Label("Stores include: Harrisonburg, New Market,");
+        Label lblLeft5 = new Label("Stauton, Waynesboro, & Charlottesville!");
+        lblLeft1.setStyle("-fx-font: bold 14pt \"bookman\";");
+        
+        
+        Label lblRight1 = new Label("Latest Updates");
+        Label lblRight2 = new Label("Company-Wide Picnic this Saturday!");
+        Label lblRight3 = new Label("We will be having a picnic this Saturday");
+        Label lblRight4 = new Label("at UPark from 3:00pm-7:00pm.");
+        Label lblRight5 = new Label("Employee of the Month Announced!");
+        Label lblRight6 = new Label("Our employee of the month is Jeremy Ezell!");
+        lblRight1.setStyle("-fx-font: bold 14pt \"bookman\";");
+        lblRight2.setStyle("-fx-font: bold 12pt \"bookman\";");
+        lblRight5.setStyle("-fx-font: bold 12pt \"bookman\";");
+        
+        GridPane leftPane = new GridPane();
+        leftPane.setVgap(10);
+        leftPane.setHgap(15);
+        leftPane.setAlignment(Pos.TOP_CENTER);
+        
+        GridPane rightPane = new GridPane();
+        rightPane.setVgap(10);
+        rightPane.setHgap(15);
+        rightPane.setAlignment(Pos.TOP_CENTER);
         
         Scene primaryScene = new Scene(primaryPane, 500, 500);
         primaryStage.setScene(primaryScene);
@@ -757,9 +789,22 @@ public class GUI extends Application
             mainPane.add(lblMenu1, 0, 0);
             mainPane.add(lblMenu2, 1, 0);
             mainPane.add(lblMenu3, 0, 1);
+            leftPane.add(lblLeft1, 0, 0);
+            leftPane.add(lblLeft2, 0, 1);
+            leftPane.add(lblLeft3, 0, 2);
+            leftPane.add(lblLeft4, 0, 3);
+            leftPane.add(lblLeft5, 0, 4);
+            rightPane.add(lblRight1, 0, 0);
+            rightPane.add(lblRight2, 0, 1);
+            rightPane.add(lblRight3, 0, 2);
+            rightPane.add(lblRight4, 0, 3);
+            rightPane.add(lblRight5, 0, 5);
+            rightPane.add(lblRight6, 0, 6);
             
         border.setCenter(secondPane);
         border.setBottom(mainPane);
+        border.setLeft(leftPane);
+        border.setRight(rightPane);
         Scene secondScene = new Scene(border, 1050, 500);
         Stage secondStage = new Stage();
         secondStage.setScene(secondScene);
@@ -873,16 +918,18 @@ public class GUI extends Application
             
             secondPane.setAlignment(Pos.TOP_CENTER);
             secondStage.setTitle("Main Menu");
-            //secondPane.add(menuAdmin, 0, 0, 4, 1);
             
-            secondPane.add(lblThrifty, 3, 2);
-            secondPane.add(lblStore, 3, 3);
+            secondPane.add(Thrifty, 3, 2);
+            secondPane.add(Store, 3, 3);
             secondPane.add(lblMain, 3, 4);
             secondPane.add(lblSelect, 3, 5);
             secondPane.add(btnRingSale, 3, 6);
-
+            
             border.setTop(menuAdmin);
             border.setCenter(secondPane);
+            border.setBottom(mainPane);
+            border.setLeft(leftPane);
+            border.setRight(rightPane);
             
         });
         
@@ -1310,11 +1357,30 @@ public class GUI extends Application
             
             
         });
+        
         addEmp.setOnAction(e -> {
-            //employee added clicked    
+            //employee added clicked
+            
+            //data validation
+            if(txtFName.getText().trim().length() == 0 || txtLName.getText().trim().length() == 0 ||
+                    txtEmail.getText().trim().length() == 0 || txtPhone.getText().trim().length() == 0 ||
+                    txtAddress.getText().trim().length() == 0 || txtSalary.getText().trim().length() == 0 ||
+                    (cmboJob.getSelectionModel().getSelectedItem().toString().isEmpty()) || 
+                    (cmboEType.getValue().toString().equals("") && cmboEType.getValue() == null) ||
+                    (cmboEmpCat.getValue().toString().equals("") && cmboEmpCat.getValue() == null) || 
+                    (cmboStore.getValue().toString().equals("") && cmboStore.getValue() == null))
+                // keep on getting nullpointer for combobox ones
+            {
+               alert.setTitle("Error!");
+               alert.setHeaderText("Error! Please enter data!");
+               alert.showAndWait();
+            }
+            
+            else
+            {
             empList.add(new Employee(txtFName.getText(), txtLName.getText(), txtEmail.getText(), txtPhone.getText(), 
             txtAddress.getText(), Double.valueOf(txtSalary.getText()),  
-                    (String)cmboJob.getValue(), (String)cmboEType.getValue(), (String)cmboEmpCat.getValue(), storeList.get(cmboStore.getSelectionModel().getSelectedIndex()))); 
+                    (String)cmboJob.getValue(), (String)cmboEType.getValue(), (String)cmboEmpCat.getValue(), (String) cmboStore.getValue())); 
             //changed parse to valueof
             for(int i = 0; i<job.size(); i++){
                 if((job.get(i).equalsIgnoreCase((String)cmboJob.getValue())))
@@ -1350,17 +1416,19 @@ public class GUI extends Application
             
             
             thirdStage.close();
+            }
         });
         
         btnEditEmp.setOnAction(e -> {
+            // They have no way of selecting an employee rn
             if(cmboEmp.getValue() == null){
                 alert.setTitle("Error!");
                 alert.setHeaderText("Please select an employee to edit!");
                 alert.showAndWait();
             }
+
             else{
             eC = empList.get(cmboEmp.getSelectionModel().getSelectedIndex());
-            cmboEmp.getSelectionModel().clearSelection();
             thirdPane.getChildren().clear();
             thirdStage.setTitle("Edit Employee");
             thirdStage.show();
@@ -1438,7 +1506,7 @@ public class GUI extends Application
             eC.setAddress(txtAddress.getText());
             eC.setJobTitle((String)cmboJob.getValue());
             eC.setPhoneNumber(txtPhone.getText());
-            eC.setStore((cmboStore.getSelectionModel().getSelectedItem()));
+            eC.setStore((String) cmboStore.getValue());
             eC.setSalary(Double.valueOf(txtSalary.getText()));
             eC.setEmployeeCategory((String) cmboEmpCat.getValue());
             eC.setEmployeeType((String)cmboEType.getValue());
@@ -1447,8 +1515,6 @@ public class GUI extends Application
                 if(eC.getEmployeeID() == empList.get(i).getEmployeeID()){
                     empList.remove(i);
                     empList.add(i, eC);
-                    cmboEmp.getItems().remove(i);
-                    cmboEmp.getItems().add(i, eC.getEmployeeID() + " " + eC.getFirstName() + " " + eC.getLastName());
                     eC = null;
                 }
             }
@@ -1491,7 +1557,6 @@ public class GUI extends Application
 
             thirdStage.close();
         });
-
         expTable.getColumns().addAll(tbExpID, tbExpCategory, tbExpDesc, tbExpAmount, tbExpDate, tbExpStatus); 
         menuAdmin.getMenus().get(1).getItems().get(2).setOnAction(e -> {
            // Expense Management
