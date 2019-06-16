@@ -4,13 +4,14 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.ImageView;
 import javax.imageio.ImageIO;
 import java.text.DecimalFormat;
 
-public class Product {
+public class Product implements Serializable{
     private int productID;
     private String productName;
     private int quantity;
