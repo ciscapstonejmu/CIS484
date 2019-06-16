@@ -1110,9 +1110,8 @@ public class GUI extends Application
             
             String date = calendar.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
             String orderDate2 = orderDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
-            poC = prodOrderList.get(cmboProdOrder.getSelectionModel().getSelectedIndex());
             poC.setProdOName(txtProdName.getText()); 
-            poC.setUnitCost((Double.parseDouble(txtUnitPrice.getText())));  
+            poC.setUnitCost((Double.parseDouble(txtUnitCost.getText())));  
             poC.setCategory((String)cmboCategory.getValue());
             poC.setQuantity(Integer.parseInt(txtProdQuantity.getText()));
             poC.setSubtotal(Double.parseDouble(txtSubTotal.getText())); 
