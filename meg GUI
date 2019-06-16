@@ -81,7 +81,8 @@ public class GUI extends Application
     public static ObservableList<CustSale> obsSale = FXCollections.observableArrayList();
     public static ComboBox cmboSale = new ComboBox(obsSale);
     public static ObservableList<Supplier> obsSupp = FXCollections.observableArrayList(); 
-    public static ComboBox cmboSupp = new ComboBox(Supplier.obsSupp); 
+    public static ComboBox cmboSupp = new ComboBox(Supplier.obsSupp);
+    public static ComboBox cmboSupp2 = new ComboBox(Supplier.obsSupp);
     public static ObservableList<Member> obsMem = FXCollections.observableArrayList(); 
     public static ComboBox cmboMem = new ComboBox(Member.obsMem); 
     int expVar = 0;
@@ -635,8 +636,10 @@ public class GUI extends Application
         {
           ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("employees.dat"));
 
-           savedEmp = (ArrayList<Employee>)(instanceObjectInput.readObject());
-           for(Employee emp : savedEmp){
+           empList = (ArrayList<Employee>)(instanceObjectInput.readObject());
+           for(Employee emp : empList){
+               Employee.nextID++;
+               Employee.obsEmp.add(emp.getFirstName() + " " + emp.getLastName() );
                System.out.println(emp.toString());
            }
            instanceObjectInput.close();
@@ -652,9 +655,9 @@ public class GUI extends Application
             // error handling
 
    //RUN LoadData.java BEFORE TRYING TO LOG IN.
-           for(int i = 0; i< savedEmp.size();i++)
+           for(int i = 0; i< empList.size();i++)
            {
-               Employee temp = savedEmp.get(i);
+               Employee temp = empList.get(i);
                if(temp.getUsername().equalsIgnoreCase(txtUser.getText()) && temp.getPassword().equals(txtPass.getText()))
                {
                    found = true;
@@ -1521,7 +1524,7 @@ public class GUI extends Application
             //employee added clicked    
             empList.add(new Employee(txtFName.getText(), txtLName.getText(), txtEmail.getText(), txtPhone.getText(), 
             txtAddress.getText(), Double.valueOf(txtSalary.getText()),  
-                    (String)cmboJob.getValue(), (String)cmboEType.getValue(), (String)cmboEmpCat.getValue(), (String) cmboStore.getValue())); 
+                    (String)cmboJob.getValue(), (String)cmboEType.getValue(), (String)cmboEmpCat.getValue(), storeList.get(cmboStore.getSelectionModel().getSelectedIndex()))); 
             //changed parse to valueof
             for(int i = 0; i<job.size(); i++){
                 if((job.get(i).equalsIgnoreCase((String)cmboJob.getValue())))
@@ -1568,6 +1571,7 @@ public class GUI extends Application
             }
             else{
             eC = empList.get(cmboEmp.getSelectionModel().getSelectedIndex());
+            cmboEmp.getSelectionModel().clearSelection();
             thirdPane.getChildren().clear();
             thirdStage.setTitle("Edit Employee");
             thirdStage.show();
@@ -1645,7 +1649,7 @@ public class GUI extends Application
             eC.setAddress(txtAddress.getText());
             eC.setJobTitle((String)cmboJob.getValue());
             eC.setPhoneNumber(txtPhone.getText());
-            eC.setStore((String) cmboStore.getValue());
+            eC.setStore((cmboStore.getSelectionModel().getSelectedItem()));
             eC.setSalary(Double.valueOf(txtSalary.getText()));
             eC.setEmployeeCategory((String) cmboEmpCat.getValue());
             eC.setEmployeeType((String)cmboEType.getValue());
@@ -1654,6 +1658,8 @@ public class GUI extends Application
                 if(eC.getEmployeeID() == empList.get(i).getEmployeeID()){
                     empList.remove(i);
                     empList.add(i, eC);
+                    cmboEmp.getItems().remove(i);
+                    cmboEmp.getItems().add(i, eC.getEmployeeID() + " " + eC.getFirstName() + " " + eC.getLastName());
                     eC = null;
                 }
             }
