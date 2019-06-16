@@ -165,7 +165,20 @@ public class CustSaleForm {
             //Find products in sale      
 
             int saleProd = cmboSaleProd.getSelectionModel().getSelectedIndex();
-
+            if(cmboSaleStore.getSelectionModel().isEmpty())
+            {
+                alertError.setTitle("Error");
+                alertError.setHeaderText("Please Select Store!");
+                alertError.showAndWait();
+            }
+            if(cmboSaleProd.getSelectionModel().isEmpty())
+            {
+                alertError.setTitle("Error");
+                alertError.setHeaderText("Please Select Product!");
+                alertError.showAndWait();
+            }
+            
+            else{
             this.saleProducts.add(GUI.prodList.get(saleProd));
             String saleOut = "";
             saleOut += GUI.prodList.get(saleProd).toStringSale();
@@ -177,6 +190,7 @@ public class CustSaleForm {
             alert.setTitle("Success!");
             alert.setHeaderText("Sale Has Been Added!");
             alert.showAndWait();
+            }
             });
         
         /*repeat Buy doesn't work rn
