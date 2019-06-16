@@ -626,9 +626,6 @@ public class GUI extends Application
         btnRemoveProd.setStyle("-fx-font: 11pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnViewOrder.setStyle("-fx-font: 11pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         createSupp.setStyle("-fx-font: 11pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        btnAddStore.setStyle("-fx-font: 11pt \"bookman\"; -fx-background-color: lightskyblue;");
-        btnEditStore.setStyle("-fx-font: 11pt \"bookman\"; -fx-background-color: lightskyblue;");
-        btnRemoveStore.setStyle("-fx-font: 11pt \"bookman\"; -fx-background-color: lightskyblue;");
         
         btnRingSale.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         
@@ -944,21 +941,53 @@ public class GUI extends Application
         
         border.setStyle("-fx-background-color: white;");
         
+        //Import data from files
         try
         {
           ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("employees.dat"));
 
-           empList = (ArrayList<Employee>)(instanceObjectInput.readObject());
+           empList.addAll((ArrayList<Employee>)(instanceObjectInput.readObject()));
            for(Employee emp : empList){
                Employee.nextID++;
-               Employee.obsEmp.add(emp.getFirstName() + " " + emp.getLastName() );
-               System.out.println(emp.toString());
+               emp.setStore(store1);
+               Employee.obsEmp.add(emp.getEmployeeID()+ " " + emp.getFirstName() + " " + emp.getLastName());
+               empData.add(emp);
            }
            instanceObjectInput.close();
         }
         catch(Exception ex)
         {
+         System.out.println("Given:" + ex + "Employees were not imported");
+        }
+        try
+        {
+          ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("suppliers.dat"));
 
+           suppList = (ArrayList<Supplier>)(instanceObjectInput.readObject());
+           for(Supplier supp : suppList){
+               Supplier.obsSupp.add(supp.getName());
+           }
+           instanceObjectInput.close();
+        }
+        catch(Exception ex)
+        {
+           System.out.println("Given:" + ex + "Suppliers were not imported");
+        }
+        try
+        {
+          ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("products.dat"));
+
+           prodList = (ArrayList<Product>)(instanceObjectInput.readObject());
+           for(Product prod : prodList){
+               Product.obsProd.add(prod.getProductID() +": "+ prod.getProductName());
+               prodData.add(prod);
+           }
+        
+           instanceObjectInput.close();
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Given:" + ex + "Products were not imported");
         }
         
         
@@ -973,7 +1002,7 @@ public class GUI extends Application
                if(temp.getUsername().equalsIgnoreCase(txtUser.getText()) && temp.getPassword().equals(txtPass.getText()))
                {
                    found = true;
-                   if(temp.getEmployeeType().equalsIgnoreCase("Manager"))
+                   if(temp.getEmployeeCategory().equalsIgnoreCase("Manager"))
                    {
                        isAuthorized = true;
                    }
@@ -2058,7 +2087,7 @@ public class GUI extends Application
             eC.setAddress(txtAddress.getText());
             eC.setJobTitle((String)cmboJob.getValue());
             eC.setPhoneNumber(txtPhone.getText());
-            eC.setStore((cmboStore.getSelectionModel().getSelectedItem()));
+            eC.setStore(storeList.get(cmboStore.getSelectionModel().getSelectedIndex()));
             eC.setSalary(Double.valueOf(txtSalary.getText()));
             eC.setEmployeeCategory((String) cmboEmpCat.getValue());
             eC.setEmployeeType((String)cmboEType.getValue());
@@ -2111,64 +2140,7 @@ public class GUI extends Application
 
             thirdStage.close();
         });
-        editEmp.setOnAction(e -> {
-            eC.setFName(txtFName.getText());
-            eC.setLName(txtLName.getText());
-            eC.setEmail(txtEmail.getText());
-            eC.setAddress(txtAddress.getText());
-            eC.setJobTitle((String)cmboJob.getValue());
-            eC.setPhoneNumber(txtPhone.getText());
-            eC.setStore(storeList.get(cmboStore.getSelectionModel().getSelectedIndex()));
-            eC.setSalary(Double.valueOf(txtSalary.getText()));
-            eC.setEmployeeCategory((String) cmboEmpCat.getValue());
-            eC.setEmployeeType((String)cmboEType.getValue());
-            
-            for(int i = 0; i<empList.size(); i++){
-                if(eC.getEmployeeID() == empList.get(i).getEmployeeID()){
-                    empList.remove(i);
-                    empList.add(i, eC);
-                    eC = null;
-                }
-            }
-            
-            for(int i = 0; i<job.size(); i++)
-            {
-                if((job.get(i).equalsIgnoreCase((String)cmboJob.getValue())))
-                {
-                    break;
-                }
-
-                 else if(i == job.size()-1 && job.get(i).equalsIgnoreCase((String)cmboJob.getValue()) == false)
-                {
-                    job.add((String)cmboJob.getValue());
-                }
-            }
-
-            alert.setTitle("Success!");
-            alert.setHeaderText("The employee has been edited!");
-            alert.showAndWait();
-
-            empData.clear();
-            for(Employee emp: empList)
-            {
-                empData.add(emp);
-            }
-
-
-            txtFName.clear();
-            txtLName.clear();
-            txtEmail.clear();
-            txtPhone.clear();
-            txtAddress.clear();
-            txtSalary.clear();
-            cmboJob.getSelectionModel().clearSelection();
-            cmboStore.getSelectionModel().clearSelection();
-            cmboEType.getSelectionModel().clearSelection();
-            cmboEmpCat.getSelectionModel().clearSelection();
-           
-
-            thirdStage.close();
-        });
+        
         expTable.getColumns().addAll(tbExpID, tbExpCategory, tbExpDesc, tbExpAmount, tbExpDate, tbExpStatus); 
         menuAdmin.getMenus().get(1).getItems().get(2).setOnAction(e -> {
            // Expense Management
