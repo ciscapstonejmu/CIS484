@@ -14,6 +14,7 @@ public class Employee implements Serializable{
     private String phoneNumber;
     private String address;
     private double salary;
+    private double hourly;
     private String jobTitle; 
     private double timeWorked;
     public static int nextID = 0;
@@ -23,9 +24,10 @@ public class Employee implements Serializable{
     private String employeeType; 
     private String employeeCategory; 
     public String storeLoc;
+    private Store store;
     private String username;
     private String password;
-    private ArrayList<Payroll> empPayroll;
+    public ArrayList<Payroll> empPayroll;
     
     
     
@@ -49,8 +51,15 @@ public class Employee implements Serializable{
     public Employee(String firstName, String lastName){
         this.firstName = firstName;
         this.lastName = lastName;
+        this.Email = "jmudukes@jmu.edu";
+        this.phoneNumber = "571-GODUKES";
+        this.address = "800 S Main St";
+        this.salary = 100000.00;
         this.jobTitle = "System Admin";
         this.employeeType = "Manager";
+        this.storeLoc = "Harrisonburg";
+        this.employeeCategory = "Full-Time";
+       
         this.username = firstName;
         this.password = lastName;
         if(admins.size() > 0)
@@ -76,7 +85,7 @@ public class Employee implements Serializable{
     }
     
     public Employee(String firstName, String lastName, String Email, String phoneNumber, String address, double salary, String jobTitle,
-            String employeeType, String employeeCategory, String storeLoc )  
+            String employeeType, String employeeCategory, Store store )  
     {
         this.firstName = firstName;
         this.lastName = lastName; 
@@ -84,12 +93,14 @@ public class Employee implements Serializable{
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.salary = salary;
-        //this.timeWorked = timeWorked;
         this.employeeID = nextID++;
         this.jobTitle = jobTitle; 
         this.employeeType = employeeType; //ceo, manager, or regular 
-        this.employeeCategory = employeeCategory; //full time or part time 
-        this.storeLoc = storeLoc;
+        this.employeeCategory = employeeCategory; //full time or part time
+        if(this.employeeCategory.equalsIgnoreCase("Part Time"))
+            this.hourly = salary;
+        this.store = store;
+        this.storeLoc = store.getName();
         this.username = this.firstName;
         if(empAcc.size() > 0)
         {
@@ -109,9 +120,9 @@ public class Employee implements Serializable{
             }
             
         }
-        this.password = this.lastName.toLowerCase();
+        this.password = this.lastName;
         empAcc.add(this);
-        obsEmp.add(this.employeeID + ": " + this.firstName + " " + this.lastName);
+        obsEmp.add(this.employeeID + " " + this.firstName + " " + this.lastName);
         
     }
     
@@ -127,18 +138,43 @@ public class Employee implements Serializable{
      public Employee(String firstName, String lastName, String Email, String phoneNumber, String address, double salary, String jobTitle)
     {
         this.firstName = firstName;
-        this.lastName = lastName; 
+        this.lastName = lastName;
+        this.Email = Email;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.salary = salary;  
         employeeID = nextID++;
         this.jobTitle = jobTitle; 
+        this.username = firstName;
+        this.password = lastName;
+        if(admins.size() > 0)
+        {
+        int counter = 0;
+        int loop = 0;
+        while(loop < admins.size())
+        {
+            Employee temp = admins.get(loop);
+            if(temp.firstName.equalsIgnoreCase(this.firstName))
+            {
+               counter++;
+            }
+            loop++;
+        }
+        if(counter > 0)
+            {
+                this.username = this.username + counter;  
+            }            
+        }
+       admins.add(this);
+        
+    
     }
     
     public int getEmployeeID()
     {
         return this.employeeID;
     }
+    
     
     public void setFName (String firstName)
     {
@@ -194,9 +230,17 @@ public class Employee implements Serializable{
     public double getSalary()
     {
         return this.salary;
-    }   
+    }  
+    public void setHourly (double hourly)
+    {
+        this.hourly = hourly;
+    }
+    public double getHourly()
+    {
+        return this.hourly;
+    }
     
-        public void setTimeWorked (double timeWorked)
+    public void setTimeWorked (double timeWorked)
     {
         this.timeWorked = timeWorked;
     }
@@ -211,10 +255,17 @@ public class Employee implements Serializable{
     public void setJobTitle(String jobTitle) {
         this.jobTitle = jobTitle; 
     }
+    public Store getStore(){
+        return this.store;
+    }
+    public void setStore(Store store){
+        this.store = store;
+        this.storeLoc = store.getName();
+    }
     public String getStoreLoc(){
         return this.storeLoc;
     }
-    public void setStore(String storeLoc){
+    public void setStoreLoc(String storeLoc){
         this.storeLoc = storeLoc;
     }
     public void setEmployeeType (String employeeType)
