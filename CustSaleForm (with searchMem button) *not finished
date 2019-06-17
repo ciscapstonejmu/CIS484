@@ -81,6 +81,14 @@ public class CustSaleForm {
     
     Button btnCreateMem = new Button("Create Member");
     
+    //Search Member Controls
+    Label lblSearchMem = new Label("Search Member");
+    Label lblSCustPhone = new Label("Phone Number: ");
+    
+    TextField txtSCustPhone = new TextField();
+    
+    Button btnFindMem = new Button("Find Member ->");
+    
     public CustSaleForm(GUI parentForm)
     {
         this.myParent = parentForm;
@@ -168,9 +176,15 @@ public class CustSaleForm {
         Stage addMemStage = new Stage();
         addMemStage.setScene(addMemScene);
         
-        //Diable Add Member button unless not already a memeber
+        //SearchMemPane
+        GridPane searchMemPane = new GridPane();
+        searchMemPane.setAlignment(Pos.TOP_CENTER);
+        searchMemPane.setVgap(10);
+        searchMemPane.setHgap(10);
         
-        //Not sure how to do this^^
+        Scene searchMemScene = new Scene(searchMemPane, 400, 200);
+        Stage searchMemStage = new Stage();
+        searchMemStage.setScene(searchMemScene);
         
         //Set Output Perminant Text
         txtSaleOutput.appendText("Sale Items: " + "\n");
@@ -304,6 +318,37 @@ public class CustSaleForm {
             Member.obsMem.add(txtMemLName.getText() + ", " + txtMemFName.getText());
             //GUI.cmboMem.setSelectionModel(memCount);
             
+        });
+        
+        btnSearchMem.setOnAction(e -> {
+            searchMemStage.setTitle("Search Member by Phone Number");
+            searchMemStage.show();
+            searchMemPane.setAlignment(Pos.TOP_CENTER);
+            
+            searchMemPane.add(lblSearchMem, 0, 0);
+            searchMemPane.add(lblSCustPhone, 0, 1);
+            searchMemPane.add(txtSCustPhone, 1, 1);
+            searchMemPane.add(btnFindMem, 1, 2);
+            
+        });
+        
+        btnFindMem.setOnAction(e -> {
+            
+            for(int i=0; i<GUI.memList.size(); i++)
+            {
+                if(GUI.memList.get(i).getPhone() != null 
+                        && GUI.memList.get(i).getPhone().contains(txtSCustPhone.getText()))
+                {
+                    int thisMem = i;
+                    GUI.cmboMem.getSelectionModel().select(i);
+                    
+                    alert.setTitle("Success!");
+                    alert.setHeaderText("Member Found!");
+                    alert.showAndWait();
+            
+                    searchMemStage.close();
+                }
+            }
         });
         
         //Complete the sale
