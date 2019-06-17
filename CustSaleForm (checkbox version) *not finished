@@ -118,6 +118,26 @@ public class CustSaleForm {
         primaryPane.add(btnCompleteSale, 0, 11, 2, 2);
         primaryPane.add(txtSaleOutput, 4, 0, 4, 6);
         
+        lblSaleDate.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblSaleStore.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblSaleEmp.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblClubMem.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblSaleProd.setStyle("-fx-font: bold 20pt \"bookman\";");
+        txtSaleOutput.setStyle("-fx-font: bold 9pt \"bookman\";");
+        
+        btnRepeatBuy.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue;");
+        btnAddToSale.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue;");
+        btnCompleteSale.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue;");
+        btnAddMember.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue;");
+        
+        saleDate.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
+        cmboSaleStore.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
+        cmboSaleEmp.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
+        cmboSaleCust.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
+        cmboIsMem.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
+        cmboSaleProd.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
+        GUI.cmboMem.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
+        
         //txtSaleProdQuan.setPrefWidth(20);
         saleDate.setValue(LocalDate.now());
         saleDate.setPrefWidth(118);
