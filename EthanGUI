@@ -2575,7 +2575,13 @@ public class GUI extends Application
         });
 
         btnConfirmAddStore.setOnAction(e -> {
-
+            if (txtStoreName.getText().isEmpty() || txtStoreAddress.getText().isEmpty())
+            {
+                alert.setTitle("Error");
+                alert.setHeaderText("All Fields Must Be Filled!");
+                alert.showAndWait();
+            }
+            else{
             obsStore.add(new Store(txtStoreName.getText(), txtStoreAddress.getText()));
             storeList.add(new Store(txtStoreName.getText(), txtStoreAddress.getText()));
             storeData.clear();
@@ -2589,7 +2595,7 @@ public class GUI extends Application
             //insert code to add employee to object
 
             tenthStage.close();
-
+            }
         });
 
         btnEditStore.setOnAction(e -> {
@@ -2619,7 +2625,14 @@ public class GUI extends Application
         });
 
         btnConfirmEditStore.setOnAction(e -> {
-
+            if (txtStoreName.getText().isEmpty() || txtStoreAddress.getText().isEmpty())
+            {
+                alert.setTitle("Error");
+                alert.setHeaderText("All Fields Must Be Filled!");
+                alert.showAndWait();
+            }
+            else
+            {
             stC.setName(txtStoreName.getText());
             stC.setAddress(txtStoreAddress.getText());
             
@@ -2629,7 +2642,7 @@ public class GUI extends Application
             //insert code to add product to object
 
             tenthStage.close();
-
+            }
 
 
         });
