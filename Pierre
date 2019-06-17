@@ -22,7 +22,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
+import javafx.scene.image.*;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
@@ -924,6 +924,7 @@ public class GUI extends Application
         
         mainPane.setVgap(10);
         mainPane.setHgap(15);
+        
         
         mainPane.setAlignment(Pos.TOP_CENTER);
         secondPane.setAlignment(Pos.TOP_CENTER);
@@ -2636,7 +2637,8 @@ public class GUI extends Application
         });
 
         btnAddStore.setOnAction(e -> {
-
+            
+            
             tenthPane.getChildren().clear();
             tenthPane.add(lblStoreName, 0, 1);
             tenthPane.add(txtStoreName, 0, 2);
@@ -2648,21 +2650,28 @@ public class GUI extends Application
         });
 
         btnConfirmAddStore.setOnAction(e -> {
-
-            obsStore.add(new Store(txtStoreName.getText(), txtStoreAddress.getText()));
-            storeList.add(new Store(txtStoreName.getText(), txtStoreAddress.getText()));
-            storeData.clear();
-            for (Store s : storeList) {
-                storeData.add(s);
+            if(txtStoreName.getText().trim().length() == 0 || txtStoreAddress.getText().trim().length() == 0)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Enter Data!");
+                alert.showAndWait();
             }
+            else
+            {
+                obsStore.add(new Store(txtStoreName.getText(), txtStoreAddress.getText()));
+                storeList.add(new Store(txtStoreName.getText(), txtStoreAddress.getText()));
+                storeData.clear();
+                for (Store s : storeList) {
+                    storeData.add(s);
+                }
 
-            alert.setTitle("Success!");
-            alert.setHeaderText("The store has been added!");
-            alert.showAndWait();
-            //insert code to add employee to object
+                alert.setTitle("Success!");
+                alert.setHeaderText("The store has been added!");
+                alert.showAndWait();
+                //insert code to add employee to object
 
-            tenthStage.close();
-
+                tenthStage.close();
+            }
         });
 
         btnEditStore.setOnAction(e -> {
@@ -2864,6 +2873,14 @@ public class GUI extends Application
         });
         
         btnPOSDisplay.setOnAction(e -> {
+            if(cmboType.getValue() == null || cmboStore.getValue() == null)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Enter Data!");
+                alert.showAndWait();
+            }
+            else
+            {
             String output = "";
            
             output += "Point of Sales Report:";
@@ -2902,6 +2919,7 @@ public class GUI extends Application
             
             cmboType.getSelectionModel().clearSelection();
             cmboStore.getSelectionModel().clearSelection();
+            }
         });
         
         menuAdmin.getMenus().get(3).getItems().get(1).setOnAction(e -> {
@@ -2937,34 +2955,43 @@ public class GUI extends Application
         });
         
         btnEmpDisplay.setOnAction(e -> {
-            String output = "";
-            DecimalFormat decimal = new DecimalFormat("0.00");
-            output += "Employee Report:";
-            output += "\n========================================================\n";
-            output += "Store: " + cmboStore.getValue().toString(); //use store var
-            output += "\n------------------------------------------------------\n";
-            for(int i = 0; i<empList.size(); i++)
-            { //get the for loop to loop through only certain stores
-                if(cmboStore.getValue().toString() == empList.get(i).getStoreLoc())
-                {
-                    output += "Employee ID#: " + empList.get(i).getEmployeeID();
-                    output += ", Name: " + empList.get(i).getFirstName() + " " + empList.get(i).getLastName();
-                    output += ", Job Title: " + empList.get(i).getJobTitle();
-                    output += ", Salary: $" + decimal.format(empList.get(i).getSalary());
-                    output += ", Hours Worked: " + empList.get(i).getTimeWorked();
-                    
-                    output += "\n";
-                }
-            //NEED HOURS WORKED (per week)
-            // WAGES EARNED
-            // for those on POS, how many sales rang up
-            
-            //create loop or whatever to print out Employee based on store
+            if(cmboStore.getValue() == null)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Enter Data!");
+                alert.showAndWait();
             }
-            txtEmp.setText(output);
-            
-            
-            cmboStore.getSelectionModel().clearSelection();
+            else
+            {
+                String output = "";
+                DecimalFormat decimal = new DecimalFormat("0.00");
+                output += "Employee Report:";
+                output += "\n========================================================\n";
+                output += "Store: " + cmboStore.getValue().toString(); //use store var
+                output += "\n------------------------------------------------------\n";
+                for(int i = 0; i<empList.size(); i++)
+                { //get the for loop to loop through only certain stores
+                    if(cmboStore.getValue().toString() == empList.get(i).getStoreLoc())
+                    {
+                        output += "Employee ID#: " + empList.get(i).getEmployeeID();
+                        output += ", Name: " + empList.get(i).getFirstName() + " " + empList.get(i).getLastName();
+                        output += ", Job Title: " + empList.get(i).getJobTitle();
+                        output += ", Salary: $" + decimal.format(empList.get(i).getSalary());
+                        output += ", Hours Worked: " + empList.get(i).getTimeWorked();
+
+                        output += "\n";
+                    }
+                //NEED HOURS WORKED (per week)
+                // WAGES EARNED
+                // for those on POS, how many sales rang up
+
+                //create loop or whatever to print out Employee based on store
+                }
+                txtEmp.setText(output);
+
+
+                cmboStore.getSelectionModel().clearSelection();
+            }
         });
         
         menuAdmin.getMenus().get(3).getItems().get(2).setOnAction(e -> {
@@ -2999,28 +3026,38 @@ public class GUI extends Application
         });
         
         btnMonthDisplay.setOnAction(e -> {
-            String output = "";
-           
-           output += "Monthly Expense Report:";
-           output += "\n========================================================\n";
-           output += "Month: " + cmboMonth.getValue().toString();
-           output += "\nYear: " + cmboYear.getValue().toString();
-           output += "\n------------------------------------------------------\n";
-           //create loop or whatever to print out Montly Expense based on store
-           for(int i = 0; i < expList.size(); i++)
-           {
-               //DO SOMETHING WITH COMPARING MONTHS
-           }
-           txtMonth.setText(output);
-            
-            
-           cmboMonth.getSelectionModel().clearSelection();
-           cmboYear.getSelectionModel().clearSelection();
+            if(cmboMonth.getValue() == null || cmboYear.getValue() == null)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Enter Data!");
+                alert.showAndWait();
+            }
+            else
+            {
+                String output = "";
+
+                output += "Monthly Expense Report:";
+                output += "\n========================================================\n";
+                output += "Month: " + cmboMonth.getValue().toString();
+                output += "\nYear: " + cmboYear.getValue().toString();
+                output += "\n------------------------------------------------------\n";
+                //create loop or whatever to print out Montly Expense based on store
+                for(int i = 0; i < expList.size(); i++)
+                {
+                    //DO SOMETHING WITH COMPARING MONTHS
+                }
+                txtMonth.setText(output);
+
+
+                cmboMonth.getSelectionModel().clearSelection();
+                cmboYear.getSelectionModel().clearSelection();
+            }
         });
            
         
             tbPvE.getTabs().add(tabPText);
             tbPvE.getTabs().add(tabPBar);
+            
         menuAdmin.getMenus().get(3).getItems().get(3).setOnAction(e -> {
            // Profit v. Expense Report
            secondPane.getChildren().clear();
@@ -3058,22 +3095,31 @@ public class GUI extends Application
         });
         
         btnPvEDisplay.setOnAction(e -> {
-            String output = "";
-           
-           output += "Profit v. Expense Report:";
-           output += "\n========================================================\n";
-           output += "Year: " + cmboYear.getValue().toString();
-           output += "\n------------------------------------------------------\n";
-           
-           //create loop or whatever to print out PvE based on store and year
-           
-           
-           txtPvE.setText(output);
-           
-           tabPText.setContent(txtPvE);
-           
-           cmboStore.getSelectionModel().clearSelection();
-           cmboYear.getSelectionModel().clearSelection();
+            if(cmboYear.getValue() == null)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Enter Data!");
+                alert.showAndWait();
+            }
+            else
+            {
+                String output = "";
+
+                output += "Profit v. Expense Report:";
+                output += "\n========================================================\n";
+                output += "Year: " + cmboYear.getValue().toString();
+                output += "\n------------------------------------------------------\n";
+
+                //create loop or whatever to print out PvE based on store and year
+
+
+                txtPvE.setText(output);
+
+                tabPText.setContent(txtPvE);
+
+                cmboStore.getSelectionModel().clearSelection();
+                cmboYear.getSelectionModel().clearSelection();
+            }
         });
     }
     
