@@ -13,6 +13,7 @@ public class CustSale {
     //private String saleCategory; 
     private String saleDate;
     private Customer customer;
+    private Member member;
     private boolean isMem;
     private String memStat;
     private Store store;
@@ -29,37 +30,18 @@ public class CustSale {
     
     public static ObservableList obsSale = FXCollections.observableArrayList();
     
-    //Constructor for reading in from CustSaleForm
+    //Constructor for reading in from CustSaleForm - non member
     public CustSale(String saleDate, Store store, Employee employee, 
-            String memStat, ArrayList saleProducts) {
+            ArrayList saleProducts) {
         this.saleDate = saleDate;
         this.store = store;
         this.employee = employee;
-        this.memStat = memStat;
         this.saleProducts = saleProducts;
-        
-        if(memStat.contains("Yes"))
-        {
-            this.isMem = true;
-        }
-        else
-        {
-            this.isMem = false;
-        }
         
         for(int i=0; i<this.saleProducts.size();i++)
         {
-            //Give Thrifty Members 5% discount
-            if(this.isMem == true)
-            {
-                this.subtotal += ((this.saleProducts.get(i).getPrice()) *.95);
-                this.discount += ((this.saleProducts.get(i).getPrice()) *.05);
-            }
-            else if(this.isMem == false)
-            {
-                this.subtotal += this.saleProducts.get(i).getPrice();
-                this.discount += 0;
-            }
+            this.subtotal += this.saleProducts.get(i).getPrice();
+            this.discount += 0;
         }
         
         this.tax = (this.subtotal * .053);
@@ -70,23 +52,27 @@ public class CustSale {
         
     }
     
+    //Constructor for reading in from CustSaleForm - member
     public CustSale(String saleDate, Store store, Employee employee,
-            Customer customer, ArrayList saleProducts) {
+            Member member, ArrayList saleProducts) {
         this.saleDate = saleDate;
         this.store = store;
         this.employee = employee;
-        this.customer = customer;
+        this.member = member;
         this.saleProducts = saleProducts;
         
         for(int i=0; i<this.saleProducts.size();i++)
         {
-            this.subtotal += this.saleProducts.get(i).getPrice();
+            //Give Thrifty Members 5% discount
+            this.subtotal += ((this.saleProducts.get(i).getPrice()) *.95);
+            this.discount += ((this.saleProducts.get(i).getPrice()) *.05);
         }
         
         this.tax = (this.subtotal * .053);
         this.totalCost = (this.subtotal + this.tax);
-        this.saleID = "Sale #" + saleIDCount++; 
+        this.saleID = "Sale" + saleIDCount++;
         
+        obsSale.add(this.saleID);
     }
     
     public static int getSaleIDCount()
