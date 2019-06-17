@@ -2769,6 +2769,11 @@ public class GUI extends Application
             thirdPane.add(btnEnterTimes, 1, 9);
         });
         
+            btnEnterTimes.setOnAction(e ->{
+            //Enter Times into Payroll
+            
+        });
+        
         
         menuAdmin.getMenus().get(3).getItems().get(0).setOnAction(e -> {
             // Point of Sales Report
