@@ -146,6 +146,13 @@ public class Payroll implements Serializable{
     {
         return this.payrollPeriod;
     }
+    public void updateWork(){
+        for(Double dub : this.hoursWorked)
+        {
+            this.totalWork+= dub;
+            this.emp.setTimeWorked(totalWork);
+        }
+    }
     public String toString(){
         String print = this.emp.getFirstName() + " " + this.emp.getLastName() + "\n" + this.payrollPeriod;
         for(int i = 0; i<7; i++){
