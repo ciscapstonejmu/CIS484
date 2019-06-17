@@ -2581,6 +2581,14 @@ public class GUI extends Application
         });
 
         btnConfirmAddStore.setOnAction(e -> {
+            if (txtStoreName.getText().isEmpty() || txtStoreAddress.getText().isEmpty())
+            {
+                alert.setTitle("Error");
+                alert.setHeaderText("All Fields Must Be Filled!");
+                alert.showAndWait();
+            }
+            else{
+            
             Store store6 = new Store(txtStoreName.getText(), txtStoreAddress.getText());
             obsStore.add(store6);
             storeList.add(store6);
@@ -2608,6 +2616,7 @@ public class GUI extends Application
             System.out.println(obsStore.get(i).toString());
             }
             */
+            }
         });
 
         btnEditStore.setOnAction(e -> {
@@ -2637,6 +2646,14 @@ public class GUI extends Application
         });
 
         btnConfirmEditStore.setOnAction(e -> {
+            if (txtStoreName.getText().isEmpty() || txtStoreAddress.getText().isEmpty())
+            {
+                alert.setTitle("Error");
+                alert.setHeaderText("All Fields Must Be Filled!");
+                alert.showAndWait();
+            }
+            else
+            {
             
             stC.setName(txtStoreName.getText());
             stC.setAddress(txtStoreAddress.getText());
@@ -2662,7 +2679,7 @@ public class GUI extends Application
             tenthStage.close();
 
 
-
+            }
         });
 
         btnRemoveStore.setOnAction(e -> {
