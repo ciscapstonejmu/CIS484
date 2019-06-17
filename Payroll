@@ -1,18 +1,84 @@
 package pkg484groupproj;
 
-public class Payroll {
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.time.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+public class Payroll implements Serializable{
     
     private int payrollID;
-    private Employee associatedEmployee;
+    public String payrollPeriod;
+    private Date start;
+    private Date end;
+    public ArrayList<Double> hoursWorked = new ArrayList<>();
+    public ArrayList<String> schedule = new ArrayList<>();
+    public ArrayList<String> scheduleDay = new ArrayList<>();
+    public ArrayList<Integer> arrTimeIn = new ArrayList<>();
+    public ArrayList<Integer> arrTimeOut = new ArrayList<>();
+    public double totalWork;
+    private Employee emp;
     private double amountPaid;
     public static int nextID = 0;
+    public SimpleDateFormat sDF = new SimpleDateFormat("E");
     
     
-    public Payroll (Employee associatedEmployee, double amountPaid)
+    public Payroll (Employee emp)
     {
-        this.associatedEmployee = associatedEmployee;
-        this.amountPaid = amountPaid;
+        //Set Time for Payroll Object
+        
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.DAY_OF_WEEK, c.getFirstDayOfWeek());
+        
+        start = new Date();
+        String nowDate = new SimpleDateFormat("MM/dd/yyyy").format(start);
+        String sDate = sDF.format(start);
+        schedule.add(nowDate);
+        scheduleDay.add(sDate);
+        c.setTime(start);
+        for(int i = 0; i<5; i++)
+        {
+            c.add(Calendar.DAY_OF_MONTH, 1);
+            Date tempDate = c.getTime();
+            String date = new SimpleDateFormat("MM/dd").format(tempDate);
+            String day = sDF.format(tempDate);
+            schedule.add(date);
+            scheduleDay.add(day);
+        }
+        c.add(Calendar.DAY_OF_MONTH, 1);
+        end = c.getTime();
+        String endDate = new SimpleDateFormat("MM.dd").format(end);
+        String Eday = sDF.format(end);
+        schedule.add(endDate);
+        scheduleDay.add(Eday);
+        
+        this.payrollPeriod = nowDate + "-" + endDate;
+        this.emp = emp;
+        if(hoursWorked.size() > 0)
+        {
+            for(int i = 0; i <hoursWorked.size(); i++)
+            {
+                this.totalWork += hoursWorked.get(i);
+            }
+        }
+        else
+        {
+            this.totalWork = 0.0;
+        }
+        if(this.emp.getEmployeeCategory().equalsIgnoreCase("Part Time"))
+        {
+            this.amountPaid = totalWork * this.emp.getHourly();
+        }
+        else
+        {
+            this.amountPaid = (this.emp.getSalary()/26);
+        }
         this.payrollID = nextID++;
+        
     }
     
     public int getID()
@@ -20,26 +86,64 @@ public class Payroll {
         return this.payrollID;
     }
     
-    public void setAssociatedEmployee(Employee associatedEmployee)
+    public void setEmp(Employee emp)
     {
-        this.associatedEmployee = associatedEmployee;
+        this.emp = emp;
     }
-    
+    public Employee getEmp()
+    {
+        return this.emp;
+    }
+    public void setHoursWorked(Double hours){
+        this.hoursWorked.add(hours);
+    }
+    public ArrayList<Double> getHoursWorked()
+    {
+        return this.hoursWorked;
+    }
     public double getAmountPaid()
     {
         return this.amountPaid;
     }
     
-        public void setAmountPaid(Employee associatedEmployee)
+    public void setAmountPaid(Double amountPaid)
     {
         this.amountPaid = amountPaid;
     }
-    
-    public Employee getAssociatedEmployee()
+    public void setPayrollPeriod(Date date)
     {
-        return this.associatedEmployee;
+        Calendar c = Calendar.getInstance();
+        start = date;
+        String nowDate = new SimpleDateFormat("MM.dd.yyyy").format(start);
+        c.setTime(start);
+        for(int i = 0; i<5; i++){
+        c.add(Calendar.DAY_OF_MONTH, 1);
+        Date tempDate = c.getTime();
+        String dayte = new SimpleDateFormat("MM.dd.yyyy").format(tempDate);
+        String day = sDF.format(tempDate);
+        schedule.add(dayte);
+        scheduleDay.add(day);
+        }
+        c.add(Calendar.DAY_OF_MONTH, 1);
+        Date end = c.getTime();
+        String endDate = new SimpleDateFormat("MM.dd.yyyy").format(end);
+        
+        this.payrollPeriod = nowDate + "-" + endDate;
     }
-    
+    public String getPayrollPeriod()
+    {
+        return this.payrollPeriod;
+    }
+    public String toString(){
+        String print = this.emp.getFirstName() + " " + this.emp.getLastName() + "\n" + this.payrollPeriod;
+        for(int i = 0; i<7; i++){
+            if(!this.hoursWorked.isEmpty())
+                print += "\n" + this.schedule.get(i) + ": " + this.hoursWorked.get(i);
+            else
+                print += "\n" + this.schedule.get(i) + ": 0";
+        }
+        return print;
+    }
     
     
     
