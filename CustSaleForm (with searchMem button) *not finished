@@ -134,6 +134,14 @@ public class CustSaleForm {
         lblSaleEmp.setStyle("-fx-font: bold 20pt \"bookman\";");
         lblMem.setStyle("-fx-font: bold 20pt \"bookman\";");
         lblSaleProd.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblMemFName.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblMemLName.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblMemPhone.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblMemEmail.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblSearchMem.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblSCustPhone.setStyle("-fx-font: bold 20pt \"bookman\";");
+               
+        
         txtSaleOutput.setStyle("-fx-font: bold 9pt \"bookman\";");
         
         btnRepeatBuy.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue;");
@@ -141,7 +149,9 @@ public class CustSaleForm {
         btnCompleteSale.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue;");
         btnSearchMem.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue;");
         btnAddMember.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue;");
-        
+        btnCreateMem.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue;");
+        btnFindMem.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue;");
+                
         saleDate.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         cmboSaleStore.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         cmboSaleEmp.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
@@ -347,6 +357,12 @@ public class CustSaleForm {
                     alert.showAndWait();
             
                     searchMemStage.close();
+                }
+                else
+                {
+                    alertError.setTitle("Error");
+                    alertError.setHeaderText("Phone Number Not Found!");
+                    alertError.showAndWait();
                 }
             }
         });
