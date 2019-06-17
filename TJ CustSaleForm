@@ -408,6 +408,7 @@ public class CustSaleForm{
                 alert.showAndWait();
                 receiptOutput.setEditable(false);
                 cmboSaleProd.getSelectionModel().clearSelection();
+                GUI.cmboMem.getSelectionModel().clearSelection();
             }
             else
             {
@@ -427,6 +428,7 @@ public class CustSaleForm{
                 alert.showAndWait();
                 receiptOutput.setEditable(false);
                 cmboSaleProd.getSelectionModel().clearSelection();
+                GUI.cmboMem.getSelectionModel().clearSelection();
             }});
         
         
