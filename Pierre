@@ -1146,6 +1146,7 @@ public class GUI extends Application
             secondPane.add(lblMain, 3, 4);
             secondPane.add(lblSelect, 3, 5);
             secondPane.add(btnRingSale, 3, 6);
+            secondPane.add(btnEnterTime, 3, 7);
             
             border.setTop(menuAdmin);
             border.setCenter(secondPane);
@@ -2841,12 +2842,11 @@ public class GUI extends Application
             
             cmboEmp.setMaxWidth(Double.MAX_VALUE);
             btnPEEmp.setMaxWidth(Double.MAX_VALUE);
-            btnEnterTime.setMaxWidth(Double.MAX_VALUE);
             btnSelect.setMaxWidth(Double.MAX_VALUE);
             showHours.setMaxWidth(Double.MAX_VALUE);
             addTimeSheet.setMaxWidth(Double.MAX_VALUE);
             
-                 vPay.getChildren().addAll(lblPayroll, lblPEEmp, cmboEmp, btnPEEmp, btnEnterTime);
+                 vPay.getChildren().addAll(lblPayroll, lblPEEmp, cmboEmp, btnPEEmp);
             
             border.setCenter(txtPayroll);
             border.setTop(menuAdmin);
