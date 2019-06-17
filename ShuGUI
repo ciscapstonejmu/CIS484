@@ -330,6 +330,11 @@ public class GUI extends Application
     Button btnEnterTime = new Button("Enter Time");
     TextArea txtPayroll = new TextArea();
     Payroll tempPay;
+    double hourStart = 7.0;
+    double hourEnd = 7.5;
+    double cutOff = 22.0;
+    ArrayList<Double> hoursIn = new ArrayList<>();
+    ArrayList<Double> hoursOut = new ArrayList<>();
     static ObservableList<String> timeI = FXCollections.observableArrayList("07:00am", "07:30am", "08:00am", "08:30am", "09:00am", "09:30am", "10:00am", "10:30am", "11:00am", "11:30am",
             "12:00pm", "12:30pm", "01:00pm", "01:30pm", "02:00pm", "02:30pm", "03:00pm", "03:30pm", "04:00pm", "04:30pm", "05:00pm", "05:30pm", "06:00pm", "06:30pm", "07:00pm", "07:30pm",
             "08:00pm", "08:30pm", "09:00pm", "09:30pm", "10:00pm");
@@ -343,8 +348,7 @@ public class GUI extends Application
     Label lblThur = new Label("Thursday");
     Label lblFri = new Label("Friday");
     Label lblSat = new Label("Saturday");
-    
-    Label lblEnterTimes = new Label("Enter Times");
+    Button addTimeSheet = new Button("Create New TimeSheet");
     Label lblTimeIn = new Label("Time In");
     Label lblTimeOut = new Label("Time Out");
     ComboBox<String> cmboPeriod = new ComboBox<String>();
@@ -494,6 +498,17 @@ public class GUI extends Application
             obsCategory.add("BAKED GOODS");
             obsCategory.add("FROZEN FOODS");
             obsCategory.add("OTHER");
+        //Populate ArrayLists to calculate hoursWorked for payroll
+        for(int i = 0; i <31; i++)
+        {
+           hoursIn.add(hourStart);
+           hourStart += .5;
+        }
+        for(int i = 0; i <30; i++)
+        {
+           hoursOut.add(hourEnd);
+           hourEnd += .5;
+        } 
         
         primaryPane.add(lblThrifty, 0, 0);
         primaryPane.add(lblStore, 0, 1);
@@ -628,7 +643,7 @@ public class GUI extends Application
         lblAddExp.setStyle("-fx-font: bold 14pt \"bookman\";");
         lblRemoveProd.setStyle("-fx-font: bold 14pt \"bookman\";");
         lblAddSupp.setStyle("-fx-font: bold 14pt \"bookman\";"); 
-        lblEnterTimes.setStyle("-fx-font: bold 14pt \"bookman\";");
+        //lblEnterTimes.setStyle("-fx-font: bold 14pt \"bookman\";");
         
         GridPane secondPane = new GridPane();
         
@@ -896,7 +911,7 @@ public class GUI extends Application
         {
           ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("products.dat"));
 
-           prodList = (ArrayList<Product>)(instanceObjectInput.readObject());
+           prodList.addAll((ArrayList<Product>)(instanceObjectInput.readObject()));
            for(Product prod : prodList){
                Product.obsProd.add(prod.getProductID() +": "+ prod.getProductName());
                prodData.add(prod);
@@ -1602,7 +1617,7 @@ public class GUI extends Application
                }
             }
             for(int i = 0; i<storeList.size(); i++){
-               if(pC.getStore().getName().equalsIgnoreCase(storeList.get(i).getName()))
+               if(pC.getStore() == storeList.get(i))
                {
                    cmboStore.getSelectionModel().select(i); 
                }
@@ -1624,27 +1639,22 @@ public class GUI extends Application
             }
         });
         
-        removeProd.setOnAction(e -> {
-            
-            int removeProd1 = cmboProd.getSelectionModel().getSelectedIndex(); 
-            Product tempProd = prodList.get(removeProd1);
-            
-            int remove = Integer.parseInt(txtRQuantity.getText());
-            
+        removeProd.setOnAction(e -> {            
+            Product tempProd = pC;            
+            int remove = Integer.parseInt(txtRQuantity.getText());            
             int removeOrig = pC.getQuantity(); 
             if (remove > removeOrig) {
                 alert.setTitle("Error!");
                 alert.setHeaderText("The quantity entered is greater than total product Quantity! Please enter another amount.");
                 alert.showAndWait();
             }
-
             else {
-            tempProd.setQuantity(tempProd.getQuantity()-remove);
-            
+            tempProd.setQuantity(tempProd.getQuantity()-remove);            
             for(int i = 0; i<prodList.size(); i++){
                 if(tempProd.getProductID() == prodList.get(i).getProductID()){
                     prodList.remove(i);
                     prodList.add(i, tempProd);
+                    break;
                 }
                 alert.setTitle("Success!");
             alert.setHeaderText("The product has been removed!");
@@ -1660,14 +1670,10 @@ public class GUI extends Application
             txtRQuantity.clear();
         });
         editProd.setOnAction(e -> { 
-            if(cmboProd.getValue() == null){
-                alert.setTitle("Error!");
-                alert.setHeaderText("Please select a Product to edit!");
-                alert.showAndWait();
-            }
-            else{
-            
-            pC = prodList.get(cmboProd.getSelectionModel().getSelectedIndex());
+            //for(storeList.size()
+                //If storeList.get(i).getName().eIC(pC.getStore.getName())
+                    //cmboStore.getSelectionMethod.select(i);
+                    //break;
             pC.setProductName(txtProdName.getText());
             //if (txtUnitPrice.getText() != null) {
             //pC.setPrice((Double.parseDouble(txtUnitPrice.getText())));
@@ -1686,6 +1692,7 @@ public class GUI extends Application
                     cmboProd.getItems().remove(i);
                     cmboProd.getItems().add(i, pC.getProductID()+": " + pC.getProductName());
                     pC = null;
+                    break;
                 }
             }
             for(int i = 0; i<storeList.size(); i++)
@@ -1714,7 +1721,7 @@ public class GUI extends Application
             }
             
             thirdStage.close();
-            }
+            
         });
         btnImage.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser();
@@ -2262,6 +2269,7 @@ public class GUI extends Application
             cmboEmp.setMaxWidth(Double.MAX_VALUE);
             btnPEEmp.setMaxWidth(Double.MAX_VALUE);
             btnEnterTime.setMaxWidth(Double.MAX_VALUE);
+            addTimeSheet.setMaxWidth(Double.MAX_VALUE);
             
             
             
@@ -2290,19 +2298,68 @@ public class GUI extends Application
             }
 
             else{
+            eC = null;
+            tempPay = null;
             eC = empList.get(cmboEmp.getSelectionModel().getSelectedIndex());
             cmboEmp.getSelectionModel().clearSelection();
             cmboPeriod.getItems().clear();
             if(eC.payRoll.isEmpty())
             {
                 eC.payRoll.add(new Payroll(eC));
-                cmboPeriod.getItems().add(eC.payRoll.get(0).getPayrollPeriod());
-                
+                tempPay = eC.payRoll.get(0);
+                cmboPeriod.getItems().add(tempPay.getPayrollPeriod());
+                cmboPeriod.getSelectionModel().select(0);
             }
             else
             {
                 for(int i = 0; i<eC.payRoll.size(); i++)
+                {
                     cmboPeriod.getItems().add(i,eC.payRoll.get(i).getPayrollPeriod());
+                }
+                cmboPeriod.getSelectionModel().select(eC.payRoll.size()-1);
+                tempPay = eC.payRoll.get(eC.payRoll.size()-1);
+            }
+            lblSun.setText(tempPay.schedule.get(0) + ": " + tempPay.scheduleDay.get(0));
+            lblMon.setText(tempPay.schedule.get(1)+ ": " + tempPay.scheduleDay.get(1));
+            lblTues.setText(tempPay.schedule.get(2)+ ": " + tempPay.scheduleDay.get(2));
+            lblWed.setText(tempPay.schedule.get(3)+ ": " + tempPay.scheduleDay.get(3));
+            lblThur.setText(tempPay.schedule.get(4)+ ": " + tempPay.scheduleDay.get(4));
+            lblFri.setText(tempPay.schedule.get(5)+ ": " + tempPay.scheduleDay.get(5));
+            lblSat.setText(tempPay.schedule.get(6)+ ": " + tempPay.scheduleDay.get(6));
+            
+            if(!tempPay.arrTimeIn.isEmpty())
+            {
+                try
+                {
+                    cmboSunTimeIn.getSelectionModel().select(tempPay.arrTimeIn.get(0));
+                    cmboMonTimeIn.getSelectionModel().select(tempPay.arrTimeIn.get(1));
+                    cmboTuesTimeIn.getSelectionModel().select(tempPay.arrTimeIn.get(2));
+                    cmboWedTimeIn.getSelectionModel().select(tempPay.arrTimeIn.get(3));
+                    cmboThurTimeIn.getSelectionModel().select(tempPay.arrTimeIn.get(4));
+                    cmboFriTimeIn.getSelectionModel().select(tempPay.arrTimeIn.get(5));
+                    cmboSatTimeIn.getSelectionModel().select(tempPay.arrTimeIn.get(6));
+                }
+                catch(Exception ex)
+                {
+                
+                }
+            }
+            if(!tempPay.arrTimeOut.isEmpty())
+            {
+                try
+                {
+                    cmboSunTimeOut.getSelectionModel().select(tempPay.arrTimeOut.get(0));
+                    cmboMonTimeOut.getSelectionModel().select(tempPay.arrTimeOut.get(1));
+                    cmboTuesTimeOut.getSelectionModel().select(tempPay.arrTimeOut.get(2));
+                    cmboWedTimeOut.getSelectionModel().select(tempPay.arrTimeOut.get(3));
+                    cmboThurTimeOut.getSelectionModel().select(tempPay.arrTimeOut.get(4));
+                    cmboFriTimeOut.getSelectionModel().select(tempPay.arrTimeOut.get(5));
+                    cmboSatTimeOut.getSelectionModel().select(tempPay.arrTimeOut.get(6));
+                }
+                catch(Exception ex)
+                {
+                
+                }
             }
             thirdPane.getChildren().clear();
             thirdStage.setTitle("Enter Time");
@@ -2311,7 +2368,7 @@ public class GUI extends Application
             
             thirdPane.add(cmboPeriod,0,0);
             thirdPane.add(btnPeriodSelect, 0,1);
-            thirdPane.add(lblEnterTimes, 1, 0);
+            thirdPane.add(addTimeSheet, 1, 0,2,1);
             thirdPane.add(lblTimeIn, 1, 1);
             thirdPane.add(lblTimeOut, 2, 1);
             thirdPane.add(lblSun, 0, 2);
@@ -2349,14 +2406,14 @@ public class GUI extends Application
                    tempPay = eC.payRoll.get(i);
             }
             
-            
-            lblSun.setText(tempPay.schedule.get(0) + " " + tempPay.scheduleDay.get(0));
-            lblMon.setText(tempPay.schedule.get(1));
-            lblTues.setText(tempPay.schedule.get(2));
-            lblWed.setText(tempPay.schedule.get(3));
-            lblThur.setText(tempPay.schedule.get(4));
-            lblFri.setText(tempPay.schedule.get(5));
-            lblSat.setText(tempPay.schedule.get(6));
+            //Changing labels to match the week of payroll
+            lblSun.setText(tempPay.schedule.get(0) + ": " + tempPay.scheduleDay.get(0));
+            lblMon.setText(tempPay.schedule.get(1)+ ": " + tempPay.scheduleDay.get(1));
+            lblTues.setText(tempPay.schedule.get(2)+ ": " + tempPay.scheduleDay.get(2));
+            lblWed.setText(tempPay.schedule.get(3)+ ": " + tempPay.scheduleDay.get(3));
+            lblThur.setText(tempPay.schedule.get(4)+ ": " + tempPay.scheduleDay.get(4));
+            lblFri.setText(tempPay.schedule.get(5)+ ": " + tempPay.scheduleDay.get(5));
+            lblSat.setText(tempPay.schedule.get(6)+ ": " + tempPay.scheduleDay.get(6));
             
             if(!tempPay.arrTimeIn.isEmpty())
             {
@@ -2400,7 +2457,7 @@ public class GUI extends Application
             
             thirdPane.add(cmboPeriod,0,0);
             thirdPane.add(btnPeriodSelect, 0,1);
-            thirdPane.add(lblEnterTimes, 1, 0);
+            thirdPane.add(addTimeSheet, 1, 0,2,1);
             thirdPane.add(lblTimeIn, 1, 1);
             thirdPane.add(lblTimeOut, 2, 1);
             thirdPane.add(lblSun, 0, 2);
@@ -2428,11 +2485,21 @@ public class GUI extends Application
             
             
         });
+        addTimeSheet.setOnAction(e -> {
+            Payroll addPayroll = new Payroll(eC);
+            if(tempPay.payrollPeriod.equalsIgnoreCase(addPayroll.payrollPeriod)){
+                alert.setTitle("Error!");
+                alert.setHeaderText("A Timesheet for this period already exists!");
+                alert.showAndWait();
+                }
+            else
+            {
+                eC.payRoll.add(new Payroll(eC));
+            }
+            
+        });
         btnEnterTimes.setOnAction(e ->{
-            String timeIn = "";
-            String timeOut = "";
-            String tempI = "";
-            String tempO = "";
+            
             double tI = 0;
             double tO = 0;
             
@@ -2440,267 +2507,79 @@ public class GUI extends Application
             {
                tempPay.arrTimeIn.add(0,cmboSunTimeIn.getSelectionModel().getSelectedIndex());
                tempPay.arrTimeOut.add(0,cmboSunTimeOut.getSelectionModel().getSelectedIndex());
-               if(cmboSunTimeIn.getSelectionModel().getSelectedIndex()%2 == 1)
-               {
-                  tempI = (String)cmboSunTimeIn.getValue();
-                  timeIn = tempI.substring(0, 2);
-                  timeIn += .5;
-                  tI = Double.parseDouble(timeIn);
-                  if(cmboSunTimeIn.getSelectionModel().getSelectedIndex()>=12)
-                  {
-                      tI += 12;
-                  }
-                  
-               }
-               else
-               {
-                  tempI = (String)cmboSunTimeIn.getValue();
-                  timeIn = tempI.substring(0, 2);
-                  tI = Double.parseDouble(timeIn);
-                  if(cmboSunTimeIn.getSelectionModel().getSelectedIndex()>=12)
-                      tI += 12;
-               }
-               if(cmboSunTimeOut.getSelectionModel().getSelectedIndex()%2 == 1)
-               {
-                  tempO = (String)cmboSunTimeOut.getValue();
-                  timeOut = tempO.substring(0, 2);
-                  timeOut += .5;
-                  tI = Double.parseDouble(timeIn);
-                  if(cmboSunTimeOut.getSelectionModel().getSelectedIndex()>=12)
-                      tI += 12;
-               }
-               else
-               {
-                  tempO = (String)cmboSunTimeOut.getValue();
-                  timeOut = tempO.substring(0, 2);
-                  tO = Double.parseDouble(timeIn);
-                  if(cmboSunTimeOut.getSelectionModel().getSelectedIndex()>=12)
-                      tO += 12;
-               }
+               tI = hoursIn.get(cmboSunTimeIn.getSelectionModel().getSelectedIndex());
+               tO = hoursOut.get(cmboSunTimeOut.getSelectionModel().getSelectedIndex());
+               tempPay.hoursWorked.add(0,tO-tI);
+               
             }
             if(cmboMonTimeIn.getValue() != null && cmboMonTimeOut.getValue() != null)
             {
-               if(cmboMonTimeIn.getSelectionModel().getSelectedIndex()%2 == 1)
-               {
-                  tempI = (String)cmboMonTimeIn.getValue();
-                  timeIn = tempI.substring(0, 2);
-                  timeIn += .5;
-                  tI = Double.parseDouble(timeIn);
-                  if(cmboMonTimeIn.getSelectionModel().getSelectedIndex()>=12)
-                      tI += 12;
-               }
-               else
-               {
-                  tempI = (String)cmboMonTimeIn.getValue();
-                  timeIn = tempI.substring(0, 2);
-                  tI = Double.parseDouble(timeIn);
-                  if(cmboMonTimeIn.getSelectionModel().getSelectedIndex()>=12)
-                      tI += 12;
-               }
-               if(cmboMonTimeOut.getSelectionModel().getSelectedIndex()%2 == 1)
-               {
-                  tempO = (String)cmboMonTimeOut.getValue();
-                  timeOut = tempO.substring(0, 2);
-                  timeOut += .5;
-                  tI = Double.parseDouble(timeIn);
-                  if(cmboMonTimeOut.getSelectionModel().getSelectedIndex()>=12)
-                      tI += 12;
-               }
-               else
-               {
-                  tempO = (String)cmboMonTimeOut.getValue();
-                  timeOut = tempO.substring(0, 2);
-                  tO = Double.parseDouble(timeIn);
-                  if(cmboMonTimeOut.getSelectionModel().getSelectedIndex()>=12)
-                      tO += 12;
-               }
-            }    
-            if(cmboTuesTimeIn.getValue() != null && cmboTuesTimeIn.getValue() != null)
-            {
-               if(cmboTuesTimeIn.getSelectionModel().getSelectedIndex()%2 == 1)
-               {
-                  tempI = (String)cmboTuesTimeIn.getValue();
-                  timeIn = tempI.substring(0, 2);
-                  timeIn += .5;
-                  tI = Double.parseDouble(timeIn);
-                  if(cmboTuesTimeIn.getSelectionModel().getSelectedIndex()>=12)
-                      tI += 12;
-               }
-               else
-               {
-                  tempI = (String)cmboTuesTimeIn.getValue();
-                  timeIn = tempI.substring(0, 2);
-                  tI = Double.parseDouble(timeIn);
-                  if(cmboTuesTimeIn.getSelectionModel().getSelectedIndex()>=12)
-                      tI += 12;
-               }
-               if(cmboTuesTimeOut.getSelectionModel().getSelectedIndex()%2 == 1)
-               {
-                  tempO = (String)cmboTuesTimeOut.getValue();
-                  timeOut = tempO.substring(0, 2);
-                  timeOut += .5;
-                  tI = Double.parseDouble(timeIn);
-                  if(cmboTuesTimeOut.getSelectionModel().getSelectedIndex()>=12)
-                      tI += 12;
-               }
-               else
-               {
-                  tempO = (String)cmboTuesTimeOut.getValue();
-                  timeOut = tempO.substring(0, 2);
-                  tO = Double.parseDouble(timeIn);
-                  if(cmboTuesTimeOut.getSelectionModel().getSelectedIndex()>=12)
-                      tO += 12;
-               }
+               tempPay.arrTimeIn.add(1,cmboMonTimeIn.getSelectionModel().getSelectedIndex());
+               tempPay.arrTimeOut.add(1,cmboMonTimeOut.getSelectionModel().getSelectedIndex());
+               tI = hoursIn.get(cmboMonTimeIn.getSelectionModel().getSelectedIndex());
+               tO = hoursOut.get(cmboMonTimeOut.getSelectionModel().getSelectedIndex());
+               tempPay.hoursWorked.add(1,tO-tI);
+               
             }
-            if(cmboWedTimeIn.getValue() != null && cmboWedTimeIn.getValue() != null)
+    
+            if(cmboTuesTimeIn.getValue() != null && cmboTuesTimeOut.getValue() != null)
             {
-               if(cmboWedTimeIn.getSelectionModel().getSelectedIndex()%2 == 1)
-               {
-                  tempI = (String)cmboWedTimeIn.getValue();
-                  timeIn = tempI.substring(0, 2);
-                  timeIn += .5;
-                  tI = Double.parseDouble(timeIn);
-                  if(cmboWedTimeIn.getSelectionModel().getSelectedIndex()>=12)
-                      tI += 12;
-               }
-               else
-               {
-                  tempI = (String)cmboWedTimeIn.getValue();
-                  timeIn = tempI.substring(0, 2);
-                  tI = Double.parseDouble(timeIn);
-                  if(cmboWedTimeIn.getSelectionModel().getSelectedIndex()>=12)
-                      tI += 12;
-               }
-               if(cmboWedTimeOut.getSelectionModel().getSelectedIndex()%2 == 1)
-               {
-                  tempO = (String)cmboWedTimeOut.getValue();
-                  timeOut = tempO.substring(0, 2);
-                  timeOut += .5;
-                  tI = Double.parseDouble(timeIn);
-                  if(cmboWedTimeOut.getSelectionModel().getSelectedIndex()>=12)
-                      tI += 12;
-               }
-               else
-               {
-                  tempO = (String)cmboWedTimeOut.getValue();
-                  timeOut = tempO.substring(0, 2);
-                  tO = Double.parseDouble(timeIn);
-                  if(cmboWedTimeOut.getSelectionModel().getSelectedIndex()>=12)
-                      tO += 12;
-               }
+               tempPay.arrTimeIn.add(2,cmboTuesTimeIn.getSelectionModel().getSelectedIndex());
+               tempPay.arrTimeOut.add(2,cmboTuesTimeOut.getSelectionModel().getSelectedIndex());
+               tI = hoursIn.get(cmboTuesTimeIn.getSelectionModel().getSelectedIndex());
+               tO = hoursOut.get(cmboTuesTimeOut.getSelectionModel().getSelectedIndex());
+               tempPay.hoursWorked.add(2,tO-tI);
+               
             }
-            if(cmboThurTimeIn.getValue() != null && cmboThurTimeIn.getValue() != null)
+
+            if(cmboWedTimeIn.getValue() != null && cmboWedTimeOut.getValue() != null)
             {
-               if(cmboThurTimeIn.getSelectionModel().getSelectedIndex()%2 == 1)
-               {
-                  tempI = (String)cmboThurTimeIn.getValue();
-                  timeIn = tempI.substring(0, 2);
-                  timeIn += .5;
-                  tI = Double.parseDouble(timeIn);
-                  if(cmboThurTimeIn.getSelectionModel().getSelectedIndex()>=12)
-                      tI += 12;
-               }
-               else
-               {
-                  tempI = (String)cmboThurTimeIn.getValue();
-                  timeIn = tempI.substring(0, 2);
-                  tI = Double.parseDouble(timeIn);
-                  if(cmboThurTimeIn.getSelectionModel().getSelectedIndex()>=12)
-                      tI += 12;
-               }
-               if(cmboThurTimeOut.getSelectionModel().getSelectedIndex()%2 == 1)
-               {
-                  tempO = (String)cmboThurTimeOut.getValue();
-                  timeOut = tempO.substring(0, 2);
-                  timeOut += .5;
-                  tI = Double.parseDouble(timeIn);
-                  if(cmboThurTimeOut.getSelectionModel().getSelectedIndex()>=12)
-                      tI += 12;
-               }
-               else
-               {
-                  tempO = (String)cmboThurTimeOut.getValue();
-                  timeOut = tempO.substring(0, 2);
-                  tO = Double.parseDouble(timeIn);
-                  if(cmboThurTimeOut.getSelectionModel().getSelectedIndex()>=12)
-                      tO += 12;
-               }
+               tempPay.arrTimeIn.add(3,cmboWedTimeIn.getSelectionModel().getSelectedIndex());
+               tempPay.arrTimeOut.add(3,cmboWedTimeOut.getSelectionModel().getSelectedIndex());
+               tI = hoursIn.get(cmboWedTimeIn.getSelectionModel().getSelectedIndex());
+               tO = hoursOut.get(cmboWedTimeOut.getSelectionModel().getSelectedIndex());
+               tempPay.hoursWorked.add(3,tO-tI);
+               
             }
-            if(cmboFriTimeIn.getValue() != null && cmboFriTimeIn.getValue() != null)
+
+            if(cmboThurTimeIn.getValue() != null && cmboThurTimeOut.getValue() != null)
             {
-               if(cmboFriTimeIn.getSelectionModel().getSelectedIndex()%2 == 1)
-               {
-                  tempI = (String)cmboFriTimeIn.getValue();
-                  timeIn = tempI.substring(0, 2);
-                  timeIn += .5;
-                  tI = Double.parseDouble(timeIn);
-                  if(cmboFriTimeIn.getSelectionModel().getSelectedIndex()>=12)
-                      tI += 12;
-               }
-               else
-               {
-                  tempI = (String)cmboFriTimeIn.getValue();
-                  timeIn = tempI.substring(0, 2);
-                  tI = Double.parseDouble(timeIn);
-                  if(cmboFriTimeIn.getSelectionModel().getSelectedIndex()>=12)
-                      tI += 12;
-               }
-               if(cmboFriTimeOut.getSelectionModel().getSelectedIndex()%2 == 1)
-               {
-                  tempO = (String)cmboFriTimeOut.getValue();
-                  timeOut = tempO.substring(0, 2);
-                  timeOut += .5;
-                  tI = Double.parseDouble(timeIn);
-                  if(cmboFriTimeOut.getSelectionModel().getSelectedIndex()>=12)
-                      tI += 12;
-               }
-               else
-               {
-                  tempO = (String)cmboFriTimeOut.getValue();
-                  timeOut = tempO.substring(0, 2);
-                  tO = Double.parseDouble(timeIn);
-                  if(cmboFriTimeOut.getSelectionModel().getSelectedIndex()>=12)
-                      tO += 12;
-               }
+               tempPay.arrTimeIn.add(4,cmboThurTimeIn.getSelectionModel().getSelectedIndex());
+               tempPay.arrTimeOut.add(4,cmboThurTimeOut.getSelectionModel().getSelectedIndex());
+               tI = hoursIn.get(cmboThurTimeIn.getSelectionModel().getSelectedIndex());
+               tO = hoursOut.get(cmboThurTimeOut.getSelectionModel().getSelectedIndex());
+               tempPay.hoursWorked.add(4,tO-tI);
+               
             }
-            if(cmboSatTimeIn.getValue() != null && cmboSatTimeIn.getValue() != null)
+
+            if(cmboFriTimeIn.getValue() != null && cmboFriTimeOut.getValue() != null)
             {
-               if(cmboSatTimeIn.getSelectionModel().getSelectedIndex()%2 == 1)
-               {
-                  tempI = (String)cmboSatTimeIn.getValue();
-                  timeIn = tempI.substring(0, 2);
-                  timeIn += .5;
-                  tI = Double.parseDouble(timeIn);
-                  if(cmboSatTimeIn.getSelectionModel().getSelectedIndex()>=12)
-                      tI += 12;
-               }
-               else
-               {
-                  tempI = (String)cmboSatTimeIn.getValue();
-                  timeIn = tempI.substring(0, 2);
-                  tI = Double.parseDouble(timeIn);
-                  if(cmboSatTimeIn.getSelectionModel().getSelectedIndex()>=12)
-                      tI += 12;
-               }
-               if(cmboSatTimeOut.getSelectionModel().getSelectedIndex()%2 == 1)
-               {
-                  tempO = (String)cmboSatTimeOut.getValue();
-                  timeOut = tempO.substring(0, 2);
-                  timeOut += .5;
-                  tI = Double.parseDouble(timeIn);
-                  if(cmboSatTimeOut.getSelectionModel().getSelectedIndex()>=12)
-                      tI += 12;
-               }
-               else
-               {
-                  tempO = (String)cmboSunTimeOut.getValue();
-                  timeOut = tempO.substring(0, 2);
-                  tO = Double.parseDouble(timeIn);
-                  if(cmboSunTimeOut.getSelectionModel().getSelectedIndex()>=12)
-                      tO += 12;
-               }
+               tempPay.arrTimeIn.add(5,cmboFriTimeIn.getSelectionModel().getSelectedIndex());
+               tempPay.arrTimeOut.add(5,cmboFriTimeOut.getSelectionModel().getSelectedIndex());
+               tI = hoursIn.get(cmboFriTimeIn.getSelectionModel().getSelectedIndex());
+               tO = hoursOut.get(cmboFriTimeOut.getSelectionModel().getSelectedIndex());
+               tempPay.hoursWorked.add(5,tO-tI);
+               
             }
+
+            if(cmboSatTimeIn.getValue() != null && cmboSatTimeOut.getValue() != null)
+            {
+               tempPay.arrTimeIn.add(6,cmboSatTimeIn.getSelectionModel().getSelectedIndex());
+               tempPay.arrTimeOut.add(6,cmboSatTimeOut.getSelectionModel().getSelectedIndex());
+               tI = hoursIn.get(cmboSatTimeIn.getSelectionModel().getSelectedIndex());
+               tO = hoursOut.get(cmboSatTimeOut.getSelectionModel().getSelectedIndex());
+               tempPay.hoursWorked.add(6,tO-tI);               
+            }
+            alert.setTitle("Success!");
+            alert.setHeaderText("The timesheet has been submitted!");
+            alert.showAndWait();
+            tempPay = null;
+            eC = null;
+            
+            thirdStage.close();
+
         });
+        
         
         
         menuAdmin.getMenus().get(3).getItems().get(0).setOnAction(e -> {
