@@ -2229,13 +2229,14 @@ public class GUI extends Application
             Double totalAmount = Double.parseDouble(txtTtlAmount.getText());
             String date = expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
 
-            obsExpense.add(new Expense(category, description, amountPaid, totalAmount, date));
+            
             System.out.println(obsExpense.size());
             //expList.add(new Expense(category, description, amountPaid, totalAmount, date));
-            expList.add(new Expense((String) expCategory.get(cmboExpCategory.getSelectionModel().getSelectedIndex()),
+            Expense exp1 = new Expense((String) expCategory.get(cmboExpCategory.getSelectionModel().getSelectedIndex()),
                     txtExpDesc.getText(), Double.parseDouble(txtAmount.getText()), Double.parseDouble(txtTtlAmount.getText()),
-                    expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"))));
-            
+                    expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")));
+            expList.add(exp1);
+            obsExpense.add(exp1);
             alert.setTitle("Success!");
             alert.setHeaderText("The expense has been added!");
             alert.showAndWait();
