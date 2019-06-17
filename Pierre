@@ -22,7 +22,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
+import javafx.scene.image.*;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
@@ -44,7 +44,6 @@ public class GUI extends Application
     Label lblUserName = new Label("Username");
     Label lblPassword = new Label("Password");
     Button btnSignIn = new Button("Sign In");
-    Button btnForgot = new Button("Forgot Password");
     TextField txtUser = new TextField();
     PasswordField txtPass = new PasswordField(); 
     Label storeLoc = new Label("Store Location"); 
@@ -52,7 +51,6 @@ public class GUI extends Application
     boolean isAuthorized = false;
     boolean found = false;
     static Employee currentUser;
-    //TextField txtPass = new TextField();
     
     //Array Lists
     static ArrayList<Employee> savedEmp;
@@ -75,6 +73,7 @@ public class GUI extends Application
     ComboBox cmboEmp = new ComboBox(Employee.obsEmp); 
     ObservableList obsProd = FXCollections.observableArrayList();
     ComboBox cmboProd = new ComboBox(Product.obsProd); 
+    ComboBox cmboProd2 = new ComboBox(Product.obsProd);
     ObservableList<Customer> obsCust = FXCollections.observableArrayList();
     ComboBox cmboCust = new ComboBox(obsCust); 
     static ObservableList obsStore = FXCollections.observableArrayList();
@@ -98,7 +97,9 @@ public class GUI extends Application
     public static ObservableList<String> empPayroll  = FXCollections.observableArrayList();
     
     int expVar = 0;
-    
+    int unpaidExpVar = 0;
+    String payExpVar = "";
+    int expCatVar = 0;
     // Main Menu Buttons
     Button btnRingSale = new Button("Ring Sale");
     
@@ -109,7 +110,9 @@ public class GUI extends Application
     ObservableList<Product> prodData = FXCollections.observableArrayList(prodList);
     TableView<Expense> expTable = new TableView<>();
     ObservableList<Expense> expData = FXCollections.observableArrayList(expList);
-    
+    TableView<Store> storeTable = new TableView<>();
+    ObservableList<Store> storeData = FXCollections.observableArrayList(storeList);
+
     
     
     //Create Supplier Form 
@@ -180,7 +183,7 @@ public class GUI extends Application
     Label lblProdStore = new Label("Store"); 
     Button btnCalcProdSubTotal = new Button("Calculate Subtotal");
     
-     Button createSupp = new Button("Add a Supplier"); 
+    Button createSupp = new Button("Add a Supplier"); 
 
     //Discontinue a Product 
     Label lblDisProd = new Label("Discontinue a Product"); 
@@ -194,7 +197,8 @@ public class GUI extends Application
     Button btnCompleteOrder = new Button("Complete Product Order"); 
     TextArea prodOrderOutput = new TextArea(); 
     Button btnDisplayPO = new Button("Display Product Order Information"); 
-    
+    Button btnViewAllPO = new Button("View All"); 
+
     
     int imageChosen;
     
@@ -236,7 +240,10 @@ public class GUI extends Application
     Employee eC = null;
     Product pC = null; 
     Supplier sC = null; 
+    Store stC = null;
     ProductOrder poC = null;    
+    Expense exC = null;
+    
     Label lblEmail = new Label("Email");
     TextField txtEmail = new TextField();
     Label lblPhone = new Label("Phone#");
@@ -265,7 +272,9 @@ public class GUI extends Application
     Button btnAddExp = new Button("Add Expense");
     Button btnPayExp = new Button("Pay Expense");
     Button btnEditExp = new Button("Edit Expense");
-    
+    Button btnAddExpType = new Button("Add Expense Category");
+    Button btnRemExp = new Button("Remove Expense");
+    Button btnRemExpType = new Button("Remove Expense Category");
     
     
     // Add Expense
@@ -282,6 +291,8 @@ public class GUI extends Application
     ComboBox cmboStatus = new ComboBox(obsStatus);
     Label lblAmount = new Label("Amount");
     TextField txtAmount = new TextField();
+    Label lblTtlAmount = new Label("Total Amount");
+    TextField txtTtlAmount = new TextField();
     Button addExp = new Button("Add Expense");
     TextField txtUnitCost = new TextField(); 
     Label lblUnitCost = new Label("Unit Cost"); 
@@ -291,9 +302,52 @@ public class GUI extends Application
     Label lblDelDate = new Label("Delivery Date"); 
     DatePicker calendar = new DatePicker();
     
-    Label lblChooseExp = new Label("Choose and expense to edit:");
+    Label lblExpStore = new Label("Please select an associated store:");
+
+    Label lblChooseExp = new Label("Choose an expense to edit:");
     
     Button editExp = new Button("Edit Expense");
+    static ObservableList<Expense> obsUnpaidExp = FXCollections.observableArrayList();
+    ComboBox cmboUnpaidExp = new ComboBox(obsUnpaidExp);
+    Button btnConfirmPayExp = new Button("Pay Expense");
+    Button btnSelectExpense = new Button("Select This Expense");
+
+    Label lblPayExpenseHeader = new Label("Pay Expense");
+    Label lblExpCurrentAmount = new Label("Current Balance for this Expense:");
+    TextField txtExpCurrentAmount = new TextField();
+    Label lblChoosePayment = new Label("Select an Amount to Pay");
+    TextField txtChoosePayment = new TextField();
+    Label lblDisplayExpAmount = new Label("New Expense Balance");
+    TextField txtDisplayExpAmount = new TextField();
+
+    Label lblNewExpenseTypeHeader = new Label("Add New Expense Type");
+    Label lblAddNewExpenseType = new Label("Enter an expense type to add");
+    TextField txtAddNewExpenseType = new TextField();
+    Button btnConfirmNewExp = new Button("Add New Expense Type");
+
+    Label lblRemoveExpTypeHeader = new Label("Remove Expense Type");
+    Label lblChooseExpType = new Label("Choose Expense Type to Remove");
+    Button btnConfirmRemExpType = new Button("Remove Expense Type");
+
+    Label lblStoreMan = new Label("Store Management");
+    Button btnAddStore = new Button("Add Store");
+    Button btnEditStore = new Button("Edit Store");
+    Button btnRemoveStore = new Button("Remove Store");
+
+    Label lblStoreName = new Label("Enter Store Name");
+    TextField txtStoreName = new TextField();
+    Label lblStoreAddress = new Label("Enter Store Address");
+    TextField txtStoreAddress = new TextField();
+
+    Button btnConfirmAddStore = new Button("Add Store");
+
+    Button btnConfirmEditStore = new Button("Edit Store");
+
+    Label lblRemoveStore = new Label("Select a Store to Remove");
+    Button btnConfirmRemoveStore = new Button("Remove Store");
+
+    //Label lblChooseExp = new Label("Choose and expense to edit:");
+    //Button editExp = new Button("Edit Expense");
     /*
     //POS - Ring Sale/Generate Receipt
     Label lblSaleStore = new Label("Store:");
@@ -329,7 +383,7 @@ public class GUI extends Application
     // Both
     Button btnEnterTime = new Button("Enter Time");
     TextArea txtPayroll = new TextArea();
-    Payroll tempPay;
+     Payroll tempPay;
     double hourStart = 7.0;
     double hourEnd = 7.5;
     double cutOff = 22.0;
@@ -349,6 +403,8 @@ public class GUI extends Application
     Label lblFri = new Label("Friday");
     Label lblSat = new Label("Saturday");
     Button addTimeSheet = new Button("Create New TimeSheet");
+    
+    Label lblEnterTimes = new Label("Enter Times");
     Label lblTimeIn = new Label("Time In");
     Label lblTimeOut = new Label("Time Out");
     ComboBox<String> cmboPeriod = new ComboBox<String>();
@@ -506,7 +562,7 @@ public class GUI extends Application
             obsCategory.add("BAKED GOODS");
             obsCategory.add("FROZEN FOODS");
             obsCategory.add("OTHER");
-        //Populate ArrayLists to calculate hoursWorked for payroll
+            //Populate ArrayLists to calculate hoursWorked for payroll
         for(int i = 0; i <31; i++)
         {
            hoursIn.add(hourStart);
@@ -525,9 +581,8 @@ public class GUI extends Application
         primaryPane.add(txtUser, 0, 5);
         primaryPane.add(lblPassword, 0, 6);
         primaryPane.add(txtPass, 0, 7);
-        //primaryPane.add(cmboLoginType, 0, 8);
         primaryPane.add(btnSignIn, 0, 9);
-        //primaryPane.add(btnForgot, 0, 10);
+
         
         GridPane sixthPane = new GridPane(); 
         sixthPane.setAlignment(Pos.TOP_CENTER); 
@@ -557,6 +612,24 @@ public class GUI extends Application
        Stage eighthStage = new Stage();
        eighthStage.setScene(eighthScene);
         
+       GridPane ninthPane = new GridPane();
+        ninthPane.setAlignment(Pos.TOP_CENTER);
+        ninthPane.setVgap(10);
+        ninthPane.setHgap(10);
+
+        Scene ninthScene = new Scene(ninthPane, 500, 500);
+        Stage ninthStage = new Stage();
+        ninthStage.setScene(ninthScene);
+
+        GridPane tenthPane = new GridPane();
+        tenthPane.setAlignment(Pos.TOP_CENTER);
+        tenthPane.setVgap(10);
+        tenthPane.setHgap(10);
+
+        Scene tenthScene = new Scene(tenthPane, 500, 500);
+        Stage tenthStage = new Stage();
+        tenthStage.setScene(tenthScene);
+       
         lblThrifty.setStyle("-fx-font: bold 36pt \"Comic Sans ms\"; -fx-text-fill: red;");
         lblStore.setStyle("-fx-font: bold 36pt \"Comic Sans ms\"; -fx-text-fill: blue;");
         lblSignIn.setStyle("-fx-font: bold 16pt \"bookman\";");
@@ -564,6 +637,32 @@ public class GUI extends Application
         btnSignIn.setStyle("-fx-font:10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         
         //BUTTONS secondPane ones (12pt font)
+        btnAddEmp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnEditEmp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnAddExp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnAddOrder.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnAddProd.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnEditExp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnEmpDisplay.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnHandleImage.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnMonthDisplay.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnPEEmp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnPOSDisplay.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnPayExp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnPvEDisplay.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnRemoveProd.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnViewOrder.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        createSupp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnAddStore.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnEditStore.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnRemoveStore.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnDisProd.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        createSupp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnEditSupp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnEditPO.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnviewSupp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnConfirmSuppChanges.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        editProd.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnAddEmp.setStyle("-fx-font: 11pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnEditEmp.setStyle("-fx-font: 11pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnAddExp.setStyle("-fx-font: 11pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
@@ -582,7 +681,9 @@ public class GUI extends Application
         btnViewOrder.setStyle("-fx-font: 11pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         createSupp.setStyle("-fx-font: 11pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         
+        
         btnRingSale.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnEnterTime.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         
         //BUTTONS third + pane (10pt font)
         addEmp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
@@ -599,9 +700,11 @@ public class GUI extends Application
         editExp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         removeProd.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnEnterTimes.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnViewAllPO.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        viewSupp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnViewAllSupp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnSelect.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         showHours.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        
         
         //small form labels and combobox
         empCat.setStyle("-fx-font: 9pt \"bookman\";");
@@ -627,8 +730,8 @@ public class GUI extends Application
         cmboTuesTimeOut.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         cmboWedTimeIn.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         cmboWedTimeOut.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
+        cmboSupp.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         cmboPeriod.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
-        
         
         cmboType.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         cmboYear.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
@@ -636,12 +739,16 @@ public class GUI extends Application
         cmboEmp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill: white;");
         cmboStore.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill: white;");
         cmboExpense.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill: white;");
+        cmboSupp2.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill: white;");
+        cmboProd.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill: white;");
+        cmboProd2.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill: white;");
+        cmboProdOrder2.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill: white;");
         
         lblInvMan.setStyle("-fx-font: bold 20pt \"bookman\";");
         lblInv.setStyle("-fx-font: bold 20pt \"bookman\";");
         lblEmpMan.setStyle("-fx-font: bold 20pt \"bookman\";");
         lblEmp.setStyle("-fx-font: bold 20pt \"bookman\";");
-
+        
         lblExpMan.setStyle("-fx-font: bold 20pt \"bookman\";");
         lblExp.setStyle("-fx-font: bold 20pt \"bookman\";");
         lblPOS.setStyle("-fx-font: bold 20pt \"bookman\";");
@@ -650,12 +757,13 @@ public class GUI extends Application
         lblEmpRep.setStyle("-fx-font: bold 20pt \"bookman\";");
         lblMonthRep.setStyle("-fx-font: bold 20pt \"bookman\";");
         lblPvE.setStyle("-fx-font: bold 20pt \"bookman\";");
+        lblStoreMan.setStyle("-fx-font: bold 20pt \"bookman\";");
         lblAddProd.setStyle("-fx-font: bold 14pt \"bookman\";");
         lblAddEmp.setStyle("-fx-font: bold 14pt \"bookman\";");
         lblAddExp.setStyle("-fx-font: bold 14pt \"bookman\";");
         lblRemoveProd.setStyle("-fx-font: bold 14pt \"bookman\";");
         lblAddSupp.setStyle("-fx-font: bold 14pt \"bookman\";"); 
-        //lblEnterTimes.setStyle("-fx-font: bold 14pt \"bookman\";");
+        lblEnterTimes.setStyle("-fx-font: bold 14pt \"bookman\";");
         
         GridPane secondPane = new GridPane();
         
@@ -666,10 +774,6 @@ public class GUI extends Application
         lblMain.setStyle("-fx-font: bold 16pt \"bookman\";");
         Label lblSelect = new Label("Select an option from the Menu Bar above.");
         lblSelect.setStyle("-fx-font: 12pt \"bookman\";");
-//        Scene secondScene = new Scene(secondPane, 900, 500);
-       
-        //Stage secondStage = new Stage();
-        //secondStage.setScene(secondScene);
         
         
         GridPane thirdPane = new GridPane();
@@ -696,6 +800,7 @@ public class GUI extends Application
         menuManage.getItems().add(new MenuItem("Employee Management"));
         menuManage.getItems().add(new MenuItem("Inventory Management"));
         menuManage.getItems().add(new MenuItem("Expense Management"));
+        menuManage.getItems().add(new MenuItem("Store Management"));
         menuPayroll.getItems().add(new MenuItem("Payroll"));
         menuReports.getItems().add(new MenuItem("POS Report"));
         menuReports.getItems().add(new MenuItem("Employee Report"));
@@ -794,6 +899,17 @@ public class GUI extends Application
         tbExpDate.setCellValueFactory(new PropertyValueFactory<Expense, String>("date"));
         tbExpStatus.setCellValueFactory(new PropertyValueFactory<Expense, String>("status"));
         
+        //Store Table
+        TableColumn tbStoreID = new TableColumn("ID");
+        TableColumn tbStoreName = new TableColumn("Name");
+        TableColumn tbStoreAddress = new TableColumn("Address");
+
+        //ValueFactory for Store Table
+        tbStoreID.setCellValueFactory(new PropertyValueFactory<Store, Integer>("storeID"));
+        tbStoreName.setCellValueFactory(new PropertyValueFactory<Store, String>("storeName"));
+        tbStoreAddress.setCellValueFactory(new PropertyValueFactory<Store, String>("storeAddress"));
+
+        
         
         //main menu bottom
         Label lblMenu1 = new Label("123 Lane   Harrisonburg, VA 22801");
@@ -851,6 +967,7 @@ public class GUI extends Application
         mainPane.setVgap(10);
         mainPane.setHgap(15);
         
+        
         mainPane.setAlignment(Pos.TOP_CENTER);
         secondPane.setAlignment(Pos.TOP_CENTER);
         
@@ -860,6 +977,7 @@ public class GUI extends Application
             secondPane.add(lblMain, 3, 4);
             secondPane.add(lblSelect, 3, 5);
             secondPane.add(btnRingSale, 3, 6);
+            secondPane.add(btnEnterTime, 3, 7);
             mainPane.add(lblMenu1, 0, 0);
             mainPane.add(lblMenu2, 1, 0);
             mainPane.add(lblMenu3, 0, 1);
@@ -881,12 +999,13 @@ public class GUI extends Application
         border.setRight(rightPane);
         rightPane.setStyle("-fx-background-color: lightskyblue;");
         leftPane.setStyle("-fx-background-color: lightskyblue;");
-        Scene secondScene = new Scene(border, 1050, 500);
+        Scene secondScene = new Scene(border, 1050, 650);
         Stage secondStage = new Stage();
         secondStage.setScene(secondScene);
         menuAdmin.setMinWidth(secondScene.getWidth());
         
         border.setStyle("-fx-background-color: white;");
+        
         //Import data from files
         try
         {
@@ -903,7 +1022,7 @@ public class GUI extends Application
         }
         catch(Exception ex)
         {
-         System.out.println("Given:" + ex + "Employees were not imported");
+ System.out.println("Given:" + ex + "Employees were not imported");
         }
         try
         {
@@ -928,7 +1047,67 @@ public class GUI extends Application
                Product.obsProd.add(prod.getProductID() +": "+ prod.getProductName());
                prodData.add(prod);
            }
-        
+
+           instanceObjectInput.close();
+        }
+        catch(Exception ex)
+        {
+             System.out.println("Given:" + ex + "Employees were not imported");
+        }
+        try
+        {
+          ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("suppliers.dat"));
+
+           suppList = (ArrayList<Supplier>)(instanceObjectInput.readObject());
+           for(Supplier supp : suppList){
+               Supplier.obsSupp.add(supp.getName());
+           }
+           instanceObjectInput.close();
+        }
+        catch(Exception ex)
+        {
+           System.out.println("Given:" + ex + "Suppliers were not imported");
+        }
+        try
+        {
+          ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("products.dat"));
+
+           prodList.addAll((ArrayList<Product>)(instanceObjectInput.readObject()));
+           for(Product prod : prodList){
+               Product.obsProd.add(prod.getProductID() +": "+ prod.getProductName());
+               prodData.add(prod);
+           }
+
+           instanceObjectInput.close();
+        }
+        catch(Exception ex)
+        {
+           System.out.println("Given:" + ex + "Employees were not imported");
+        }
+        try
+        {
+          ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("suppliers.dat"));
+
+           suppList = (ArrayList<Supplier>)(instanceObjectInput.readObject());
+           for(Supplier supp : suppList){
+               Supplier.obsSupp.add(supp.getName());
+           }
+           instanceObjectInput.close();
+        }
+        catch(Exception ex)
+        {
+           System.out.println("Given:" + ex + "Suppliers were not imported");
+        }
+        try
+        {
+          ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("products.dat"));
+
+           prodList.addAll((ArrayList<Product>)(instanceObjectInput.readObject()));
+           for(Product prod : prodList){
+               Product.obsProd.add(prod.getProductID() +": "+ prod.getProductName());
+               prodData.add(prod);
+           }
+
            instanceObjectInput.close();
         }
         catch(Exception ex)
@@ -973,15 +1152,11 @@ public class GUI extends Application
             
            
             
-            //Set Ring Sale Button Formatting
-//            btnRingSale.setPrefSize(120, 150);
-//            btnRingSale.setFont(Font.font("Times New Roman", 20));
-//            
-             
             if(isAuthorized == false)
             {
             menuAdmin.getMenus().get(1).getItems().get(0).setDisable(true); //Employee management
             menuAdmin.getMenus().get(1).getItems().get(2).setDisable(true); //Expense Management
+            menuAdmin.getMenus().get(1).getItems().get(3).setDisable(true);
             
             createSupp.setDisable(true); //disable creat supplier button
             btnEditSupp.setDisable(true); //disable edit Supplier
@@ -1060,13 +1235,18 @@ public class GUI extends Application
             btnDisProd.setMaxWidth(Double.MAX_VALUE); 
             btnEditSupp.setMaxWidth(Double.MAX_VALUE); 
             btnEditPO.setMaxWidth(Double.MAX_VALUE); 
+            cmboSupp2.setMaxWidth(Double.MAX_VALUE);
+            btnviewSupp.setMaxWidth(Double.MAX_VALUE);
+            cmboProd.setMaxWidth(Double.MAX_VALUE);
+            cmboProdOrder2.setMaxWidth(Double.MAX_VALUE);
+            
             VBox vbButtons = new VBox();
             vbButtons.setSpacing(10);
             vbButtons.setPadding(new Insets(10, 20, 10 , 20));
             
             vbButtons.getChildren().addAll(lblInv, lblInvMan, createSupp, cmboSupp2,
                     btnEditSupp, btnviewSupp, btnAddProd, cmboProd, btnRemoveProd, 
-                    btnDisProd, btnHandleImage,cmboProdOrder2, btnAddOrder, btnEditPO, btnViewOrder);
+                    btnDisProd, btnHandleImage, cmboProdOrder2, btnAddOrder, btnEditPO, btnViewOrder);
 
 
             //secondPane.add(vbButtons, 3, 3);
@@ -1128,6 +1308,7 @@ public class GUI extends Application
             fifthPane.add(btnSavePO, 0, 10);
             fifthPane.add(btnCancelPO, 1, 10); 
             
+            txtSubTotal.setEditable(false); 
             txtProdName.setText(poC.getProdOName()); 
             Double poUnitCost2 = poC.getUnitCost(); 
             String poUnitCost = Double.toString(poUnitCost2); 
@@ -1172,6 +1353,7 @@ public class GUI extends Application
             
             String date = calendar.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
             String orderDate2 = orderDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
+            poC = prodOrderList.get(cmboProdOrder2.getSelectionModel().getSelectedIndex());
             poC.setProdOName(txtProdName.getText()); 
             poC.setUnitCost((Double.parseDouble(txtUnitCost.getText())));  
             poC.setCategory((String)cmboCategory.getValue());
@@ -1244,27 +1426,41 @@ public class GUI extends Application
         
                 
         btnNewSupp.setOnAction(e -> {
-            suppList.add(new Supplier(txtSuppName.getText(), 
-                    txtSuppPhone.getText(), txtSuppEmail.getText(), txtSuppAdd.getText(), txtSuppContactName.getText(), 
-                    txtSuppContactPhone.getText(), txtSuppContactEmail.getText())); 
-            Supplier.obsSupp.add(txtSuppName.getText());
-            System.out.println(suppList.get(0).toString());
-            alert.setTitle("Success!");
-            alert.setHeaderText("The new supplier has been created!");
-            alert.showAndWait();
-            //insert code to add product to object
+            if (txtSuppName.getText().trim().length() == 0 || txtSuppPhone.getText().trim().length() == 0 ||
+                    txtSuppEmail.getText().trim().length() == 0 || txtSuppAdd.getText().trim().length() == 0 ||
+                    txtSuppContactName.getText().trim().length() == 0 || txtSuppContactPhone.getText().trim().length() == 0 ||
+                    txtSuppContactEmail.getText().trim().length() == 0)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Enter Data!");
+                alert.showAndWait();
+            }
+            else
+            {
+//                String email = "";
+//                if(txtSuppEmail.getText().contains(email))
+                
+                suppList.add(new Supplier(txtSuppName.getText(), 
+                        txtSuppPhone.getText(), txtSuppEmail.getText(), txtSuppAdd.getText(), txtSuppContactName.getText(), 
+                        txtSuppContactPhone.getText(), txtSuppContactEmail.getText())); 
+                Supplier.obsSupp.add(txtSuppName.getText());
+                System.out.println(suppList.get(0).toString());
+                alert.setTitle("Success!");
+                alert.setHeaderText("The new supplier has been created!");
+                alert.showAndWait();
+                //insert code to add product to object
 
-            txtSuppName.clear();
-            txtSuppPhone.clear();
-            txtSuppEmail.clear();
-            txtSuppAdd.clear();
-            txtSuppContactName.clear();
-            txtSuppContactPhone.clear();
-            txtSuppContactEmail.clear(); 
-            
-            eighthStage.close();  
+                txtSuppName.clear();
+                txtSuppPhone.clear();
+                txtSuppEmail.clear();
+                txtSuppAdd.clear();
+                txtSuppContactName.clear();
+                txtSuppContactPhone.clear();
+                txtSuppContactEmail.clear(); 
 
-            
+                eighthStage.close();  
+
+            }
         }); 
         
         btnEditSupp.setOnAction (e -> {
@@ -1330,7 +1526,9 @@ public class GUI extends Application
                     suppList.add(i, sC);
                     cmboSupp.getItems().remove(i); 
                     cmboSupp.getItems().add(i, sC.getName()); 
-                    //this doesnt change the supplier name on the product table when product name is updated 
+//                    cmboSupp2.getItems().remove(i); 
+//                    cmboSupp2.getItems().add(i, sC.getName());
+                    //this doesnt change the supplier name on the product table when product name is updated
                     sC = null;
 
                 }
@@ -1344,7 +1542,11 @@ public class GUI extends Application
             }
             prodData.clear(); //keeping this so if supplier name is updated it shows on the product table? 
             for(Product prod: prodList)
-            {
+            {   
+                if(prod.getSupp().getID() == temp.getID())
+                {
+                    prod.updateSupp(temp);
+                }
                 prodData.add(prod);
             }
             txtSuppName.clear();
@@ -1356,7 +1558,7 @@ public class GUI extends Application
             txtSuppContactEmail.clear(); 
 
         eighthStage.close();
-
+            
         }); 
         
         btnviewSupp.setOnAction(e -> {
@@ -1373,9 +1575,11 @@ public class GUI extends Application
         }); 
 
         viewSupp.setOnAction(e -> {
+            
             Supplier tempSupp = suppList.get(cmboSupp.getSelectionModel().getSelectedIndex());
             //String prodOrderSelect2 = Integer.toString(prodOrderSelect); 
            suppOutput.setText(tempSupp.toString());   
+            
         }); 
         btnViewAllSupp.setOnAction(e -> {
             String suppOutput2 = ""; 
@@ -1476,7 +1680,16 @@ public class GUI extends Application
         }); 
         
         btnCompleteOrder.setOnAction(e -> {
-
+            if(txtProdName.getText().trim().length() == 0 || txtUnitCost.getText().trim().length() == 0 ||
+                    cmboCategory.getValue() == null || orderDate.getValue() == null || calendar.getValue() == null ||
+                    txtProdQuantity.getText().trim().length() == 0 || cmboSupp.getValue() == null || cmboStore.getValue() == null)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Enter Data!");
+                alert.showAndWait();
+            }
+            else
+            {
             String date = calendar.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
             String orderDate2 = orderDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
             prodOrderList.add(new ProductOrder(Integer.parseInt(txtProdQuantity.getText()), txtProdName.getText(), Double.parseDouble(txtUnitCost.getText()),
@@ -1492,6 +1705,7 @@ public class GUI extends Application
             //for (int i = 0; i < prodOrderList.size(); i++) {
                 //System.out.println(prodOrderList.get(i)); 
             //}
+            }
         }); 
         
         btnViewOrder.setOnAction(e -> {
@@ -1503,14 +1717,43 @@ public class GUI extends Application
 
             fifthPane.add(cmboProdOrder, 0, 0); 
             fifthPane.add(btnDisplayPO, 0, 1); 
+            fifthPane.add(btnViewAllPO, 0, 2); 
             fifthPane.add(prodOrderOutput, 1, 2, 12, 15);  
         }); 
         
         
         btnDisplayPO.setOnAction(e -> {
+            if (prodOrderList.size() <= 0) {
+                alert.setTitle("Error!");
+                alert.setHeaderText("There are no product orders to display!");
+                alert.showAndWait();
+            }
+            else if (cmboProdOrder.getValue() == null){	            
+                alert.setTitle("Error!");	           
+                alert.setHeaderText("Please select a product to discontinue!");	          
+                alert.showAndWait();	     
+            }
+            else {
             ProductOrder tempProdOrder = prodOrderList.get(cmboProdOrder.getSelectionModel().getSelectedIndex());
             //String prodOrderSelect2 = Integer.toString(prodOrderSelect); 
             prodOrderOutput.setText(tempProdOrder.toString());   
+            }
+
+        }); 
+    btnViewAllPO.setOnAction(e -> {
+//               if (prodOrderList.size() <= 0) {
+//                alert.setTitle("Error!");
+//                alert.setHeaderText("There are no product orders to display!");
+//                alert.showAndWait();
+//            }
+//            else {
+//            String prodOrderOutput2 = ""; 
+//            for(int i =0; i < prodOrderList.size(); i++) {
+//                prodOrderOutput2 += prodOrderList.get(i).toString(); 
+//            }
+//
+//            prodOrderOutput.setText(prodOrderOutput2); 
+//               }
         }); 
         
         btnAddProd.setOnAction(e -> {
@@ -1540,20 +1783,43 @@ public class GUI extends Application
             
             
             thirdPane.add(addProd, 0, 16);
-           
         });
         
         addProd.setOnAction(e -> {
             //product added clicked
+            if(txtProdName.getText().trim().length() == 0 || txtProdDesc.getText().trim().length() == 0 ||
+                    cmboCategory.getValue() == null || txtUnitPrice.getText().trim().length() == 0 || 
+                    txtProdQuantity.getText().trim().length() == 0 || cmboSupp.getValue() == null ||
+                    cmboStore.getValue() == null)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Enter Data!");
+                alert.showAndWait();
+            }
+            else
+            {
             int storeLocation = cmboStore.getSelectionModel().getSelectedIndex(); 
             String storeLocation2 = Integer.toString(storeLocation); 
             int productCategory = cmboCategory.getSelectionModel().getSelectedIndex();  
+            
+//            int suppLoc = cmboSupp.getSelectionModel().getSelectedIndex();
             
             prodList.add(new Product(txtProdName.getText(), 
                     Integer.valueOf(txtProdQuantity.getText()),
                     Double.valueOf(txtUnitPrice.getText()), 
                     storeList.get(cmboStore.getSelectionModel().getSelectedIndex()), txtProdDesc.getText(), 
                     (String) cmboCategory.getValue(), suppList.get(cmboSupp.getSelectionModel().getSelectedIndex()), tempImage));
+//                    (String) cmboCategory.getValue(), suppList.get(suppLoc), tempImage));
+//            for(int i = 0; i<categoryList.size(); i++){
+//                if((categoryList.get(i).equalsIgnoreCase((String)cmboCategory.getValue())))
+//                {
+//                    break;
+//                }
+//                else if(i == categoryList.size()-1 && categoryList.get(i).equalsIgnoreCase((String)cmboCategory.getValue()) == false)
+//                {
+//                    categoryList.add((String)cmboCategory.getValue());
+//                }
+//            }
             
             alert.setTitle("Success!");
             alert.setHeaderText("The product has been added!");
@@ -1582,7 +1848,7 @@ public class GUI extends Application
             cmboCategory.getSelectionModel().clearSelection();
             cmboStore.getSelectionModel().clearSelection();
             cmboSupp.getSelectionModel().clearSelection();*/
-            
+            }
         });
         
         btnRemoveProd.setOnAction(e -> {
@@ -1596,7 +1862,7 @@ public class GUI extends Application
             pC = prodList.get(cmboProd.getSelectionModel().getSelectedIndex());
             cmboProd.getSelectionModel().clearSelection();
             thirdPane.getChildren().clear();
-            thirdStage.setTitle("Remove a Product");
+            thirdStage.setTitle("Edit/Remove a Product");
             thirdStage.show();
             thirdPane.setAlignment(Pos.TOP_CENTER);
             
@@ -1621,7 +1887,9 @@ public class GUI extends Application
             thirdPane.add(removeProd, 0, 5);
             thirdPane.add(editProd, 0, 12);
             
-            //i CANNOT GET THE RIGHT BOXES TO BE PREFILLED WITH THE RIGHT INFO FROM THE PRODUCT SELECTED SO WHEN YOU 
+//            cmboCategory.setEditable(true); 
+
+           //i CANNOT GET THE RIGHT BOXES TO BE PREFILLED WITH THE RIGHT INFO FROM THE PRODUCT SELECTED SO WHEN YOU 
            //EDIT IT YOU DONT HAVE TO EDIT EACH FIELD OR SO IT DOESNT GO BLANK 
             for(int i = 0; i<obsCategory.size(); i++){
                if(pC.getCategory().equalsIgnoreCase((String)obsCategory.get(i)))
@@ -1654,15 +1922,18 @@ public class GUI extends Application
         
         removeProd.setOnAction(e -> {            
             Product tempProd = pC;            
-            int remove = Integer.parseInt(txtRQuantity.getText());            
+            int remove = Integer.parseInt(txtRQuantity.getText());
+            
             int removeOrig = pC.getQuantity(); 
             if (remove > removeOrig) {
                 alert.setTitle("Error!");
                 alert.setHeaderText("The quantity entered is greater than total product Quantity! Please enter another amount.");
                 alert.showAndWait();
             }
+
             else {
-            tempProd.setQuantity(tempProd.getQuantity()-remove);            
+            tempProd.setQuantity(tempProd.getQuantity()-remove);
+            
             for(int i = 0; i<prodList.size(); i++){
                 if(tempProd.getProductID() == prodList.get(i).getProductID()){
                     prodList.remove(i);
@@ -1882,6 +2153,7 @@ public class GUI extends Application
             thirdPane.add(cmboEType, 1, 8); 
             thirdPane.add(empCat, 0, 9); //manager or associate 
             thirdPane.add(cmboEmpCat, 0, 10);
+            
             //thirdPane.add (cmboEmp, 1, 13); 
             thirdPane.add(storeLoc, 1, 9); 
             thirdPane.add(cmboStore, 1, 10); 
@@ -1893,7 +2165,18 @@ public class GUI extends Application
         
         addEmp.setOnAction(e -> {
             //employee added clicked
-            
+            if(txtFName.getText().trim().length() == 0 || txtLName.getText().trim().length() == 0 ||
+                    txtEmail.getText().trim().length() == 0 || txtPhone.getText().trim().length() == 0 ||
+                    txtAddress.getText().trim().length() == 0 || cmboJob.getValue() == null ||
+                    txtSalary.getText().trim().length() == 0 || cmboEType.getValue() == null ||
+                    cmboEmpCat.getValue() == null || cmboStore.getValue() == null)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Enter Data!");
+                alert.showAndWait();
+            }
+            else
+            {
             empList.add(new Employee(txtFName.getText(), txtLName.getText(), txtEmail.getText(), txtPhone.getText(), 
             txtAddress.getText(), Double.valueOf(txtSalary.getText()),  
                     (String)cmboJob.getValue(), (String)cmboEType.getValue(), (String)cmboEmpCat.getValue(), storeList.get(cmboStore.getSelectionModel().getSelectedIndex()))); 
@@ -1932,7 +2215,7 @@ public class GUI extends Application
             
             
             thirdStage.close();
-            
+            }
         });
         
         btnEditEmp.setOnAction(e -> {
@@ -2031,8 +2314,6 @@ public class GUI extends Application
             eC.setEmployeeCategory((String) cmboEmpCat.getValue());
             eC.setEmployeeType((String)cmboEType.getValue());
 
-            
-                
             for(int i = 0; i<empList.size(); i++)
             {
              if(empList.get(i).getEmployeeID()== eC.getEmployeeID())
@@ -2043,13 +2324,12 @@ public class GUI extends Application
                     cmboEmp.getItems().remove(i);
                     cmboEmp.getItems().add(i, temp.getEmployeeID() + " " + temp.getFirstName() + " " + eC.getLastName());
                     eC = null;
+               
                     break;
                 }
-            }
-                
-                
-            
 
+            }
+            
             for(int i = 0; i<job.size(); i++)
             {
                 if((job.get(i).equalsIgnoreCase((String)cmboJob.getValue())))
@@ -2084,11 +2364,10 @@ public class GUI extends Application
             cmboStore.getSelectionModel().clearSelection();
             cmboEType.getSelectionModel().clearSelection();
             cmboEmpCat.getSelectionModel().clearSelection();
-
+           
 
             thirdStage.close();
         });
-        
         expTable.getColumns().addAll(tbExpID, tbExpCategory, tbExpDesc, tbExpAmount, tbExpDate, tbExpStatus); 
         menuAdmin.getMenus().get(1).getItems().get(2).setOnAction(e -> {
            // Expense Management
@@ -2138,24 +2417,36 @@ public class GUI extends Application
             thirdPane.add(cmboStatus, 1, 4);
             thirdPane.add(lblAmount, 0, 5);
             thirdPane.add(txtAmount, 0, 6);
+            thirdPane.add(lblTtlAmount, 1, 5);
+            thirdPane.add(txtTtlAmount, 1, 6);
             thirdPane.add(addExp, 0, 7);
         });
         
         addExp.setOnAction(e -> {
-            //emplouee added clicked
+            //expense added clicked
+            if(txtExpDesc.getText().trim().length() == 0 || expDate.getValue() == null ||
+                    cmboExpCategory.getValue() == null || cmboStatus.getValue() == null ||
+                    txtAmount.getText().trim().length() == 0 || txtTtlAmount.getText().trim().length() == 0)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Enter Data!");
+                alert.showAndWait();
+            }
+            else
+            {
             String description = txtExpDesc.getText();
             String category = (String)cmboCategory.getValue();
             String status = (String)cmboStatus.getValue();
             Double amountPaid = Double.parseDouble(txtAmount.getText());
+            Double totalAmount = Double.parseDouble(txtTtlAmount.getText());
             String date = expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
 
-            //obsExpense.add(new Expense(category, description, amountPaid, date, status));
+            obsExpense.add(new Expense(category, description, amountPaid, totalAmount, date));
             System.out.println(obsExpense.size());
             //expList.add(new Expense(category, description, amountPaid, date, status));
-            expList.add(new Expense((String)expCategory.get(cmboExpCategory.getSelectionModel().getSelectedIndex()), 
-                    txtExpDesc.getText(), Double.parseDouble(txtAmount.getText()), 
-                    expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")), 
-                    (String)obsStatus.get(cmboStatus.getSelectionModel().getSelectedIndex())));
+            expList.add(new Expense((String) expCategory.get(cmboExpCategory.getSelectionModel().getSelectedIndex()),
+                    txtExpDesc.getText(), Double.parseDouble(txtAmount.getText()), Double.parseDouble(txtTtlAmount.getText()),
+                    expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"))));
             alert.setTitle("Success!");
             alert.setHeaderText("The expense has been added!");
             alert.showAndWait();
@@ -2179,34 +2470,66 @@ public class GUI extends Application
             expDate.getEditor().clear();
             
             thirdStage.close();
+            }
         });
         
         btnEditExp.setOnAction(e -> {
-            if(cmboExpense.getValue() == null){
-                    alert.setTitle("Error!");
+            if (cmboExpense.getValue() == null || obsExpense.size() < 1) {
+                alert.setTitle("Error!");
                 alert.setHeaderText("Please select an expense to edit!");
                 alert.showAndWait();
             }
             else
             {
-                System.out.println(obsExpense.size());
-                seventhPane.add(lblChooseExp, 0, 1); 
-                //seventhPane.add(cmboExpense, 0, 2);
-                //seventhPane.add(lblAddExp, 0, 0);
-                seventhPane.add(lblExpDesc, 0, 3);
-                seventhPane.add(txtExpDesc, 0, 4);
-                seventhPane.add(lblDate, 0, 5);
-                seventhPane.add(expDate, 0, 6);
-                seventhPane.add(lblCategory, 1, 3);
-                seventhPane.add(cmboExpCategory, 1, 4);
-                seventhPane.add(lblStatus, 1, 5);
-                seventhPane.add(cmboStatus, 1, 6);
-                seventhPane.add(lblAmount, 0, 7);
-                seventhPane.add(txtAmount, 0, 8);
-                seventhPane.add(editExp, 0, 9);
+                // Adding an Expense
+                thirdPane.getChildren().clear();
+                thirdStage.setTitle("Add an Expense");
+                thirdStage.show();
+                thirdPane.setAlignment(Pos.TOP_CENTER);
 
-                seventhStage.show();
+                thirdPane.add(lblAddExp, 0, 0);
+                thirdPane.add(lblExpDesc, 0, 1);
+                thirdPane.add(txtExpDesc, 0, 2);
+                thirdPane.add(lblDate, 0, 3);
+                thirdPane.add(expDate, 0, 4);
+                thirdPane.add(lblCategory, 1, 1);
+                thirdPane.add(cmboExpCategory, 1, 2);
+                //thirdPane.add(lblStatus, 1, 3);
+                //thirdPane.add(cmboStatus, 1, 4);
+                thirdPane.add(lblAmount, 0, 5);
+                thirdPane.add(txtAmount, 0, 6);
+                thirdPane.add(lblTtlAmount, 1, 5);
+                thirdPane.add(txtTtlAmount, 1, 6);
+                //thirdPane.add(lblExpStore, 0, 7);
+                //thirdPane.add(cmboStore, 0, 8);
+                thirdPane.add(editExp, 0, 7);
 
+                exC = expList.get(cmboExpense.getSelectionModel().getSelectedIndex());
+                txtExpDesc.setText(exC.getDescription());
+                //expDate.setText(exC.getDate());
+                cmboExpCategory.setPromptText(exC.getCategory());
+                txtAmount.setText(String.valueOf(exC.getAmountPaid()));
+                txtTtlAmount.setText(String.valueOf(exC.getTotalAmount()));
+
+                /*thirdPane.getChildren().clear();
+                thirdStage.setTitle("Add an Expense");
+                thirdStage.show();
+                thirdPane.setAlignment(Pos.TOP_CENTER);
+                thirdPane.add(lblExpDesc, 0, 3);
+                thirdPane.add(txtExpDesc, 0, 4);
+                thirdPane.add(lblDate, 0, 5);
+                thirdPane.add(expDate, 0, 6);
+                thirdPane.add(lblCategory, 1, 3);
+                thirdPane.add(cmboExpCategory, 1, 4);
+                thirdPane.add(lblStatus, 1, 5);
+                thirdPane.add(cmboStatus, 1, 6);
+                thirdPane.add(lblAmount, 0, 7);
+                thirdPane.add(txtAmount, 0, 8);
+                thirdPane.add(editExp, 0, 9);
+
+                thirdStage.show();
+                alert.showAndWait();*/
+            
 
                 expCategoryList.add("Store Mortgage");
                 expCategoryList.add("Utilities");
@@ -2235,6 +2558,304 @@ public class GUI extends Application
                         alert.setHeaderText("This expense has been edited!");
                         alert.showAndWait();
                 }
+        });
+        
+        editExp.setOnAction(e -> {
+
+            exC = expList.get(cmboExpense.getSelectionModel().getSelectedIndex());
+            if (txtExpDesc.getText() != null) {
+                exC.setDescription(txtExpDesc.getText());
+            }
+            if (txtAmount.getText() != null) {
+                exC.setAmountPaid(Double.parseDouble(txtAmount.getText()));
+            }
+            if (txtTtlAmount.getText() != null) {
+                exC.setTotalAmount(Double.parseDouble(txtTtlAmount.getText()));
+            }
+            if (cmboExpCategory.getValue() != null) {
+                exC.setCategory((String) cmboExpCategory.getValue());
+            }
+            System.out.println(exC.toString() + " wahhhhhhhhhhh");
+            if (exC.getAmountPaid() > exC.getTotalAmount()) {
+                exC.setStatus("Ongoing");
+            }
+            if (exC.getAmountPaid() <= exC.getTotalAmount()) {
+                exC.setStatus("Paid");
+            }
+
+            //exC.setDate((expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"))));
+            alert.setTitle("Success!");
+            alert.setHeaderText("Expense has been Edited!");
+            alert.showAndWait();
+            thirdStage.close();
+            expData.clear();
+            for (Expense exp : expList) {
+                expData.add(exp);
+            }
+
+        });
+        btnPayExp.setOnAction(e -> {
+
+            if (Expense.obsExpense.size() > 1) {
+                alert.setTitle("Error!");
+                alert.setHeaderText("No expenses to pay!");
+                alert.showAndWait();
+            } else {
+
+                for (int i = 0; i < expList.size(); i++) {
+                    if (expList.get(i).getStatus().equalsIgnoreCase("ONGOING")) {
+                        obsUnpaidExp.add(expList.get(i));
+                    }
+                }
+            }
+
+            System.out.println(expList.size() + " wap");
+            System.out.println(obsUnpaidExp.size() + " wop");
+            eighthPane.add(lblChooseExp, 0, 1);
+            eighthPane.add(cmboUnpaidExp, 0, 2);
+            eighthPane.add(btnSelectExpense, 0, 3);
+            eighthPane.add(lblPayExpenseHeader, 0, 0);
+            eighthPane.add(lblExpCurrentAmount, 0, 4);
+            eighthPane.add(txtExpCurrentAmount, 0, 5);
+            eighthPane.add(lblChoosePayment, 1, 4);
+            eighthPane.add(txtChoosePayment, 1, 5);
+            eighthPane.add(lblDisplayExpAmount, 0, 6);
+            eighthPane.add(txtDisplayExpAmount, 0, 7);
+            eighthPane.add(btnConfirmPayExp, 0, 8);
+            txtExpCurrentAmount.isEditable();
+            txtDisplayExpAmount.isEditable();
+            eighthStage.show();
+
+            System.out.println(unpaidExpVar + " / " + obsUnpaidExp.size());
+
+            //System.out.println(expList.get(0).payExpense(Double.parseDouble(txtChoosePayment.getText())));
+        });
+
+        btnSelectExpense.setOnAction(e -> {
+
+            unpaidExpVar = cmboUnpaidExp.getSelectionModel().getSelectedIndex();
+            txtExpCurrentAmount.setText(String.valueOf(obsUnpaidExp.get(unpaidExpVar).getAmountPaid()));
+
+        });
+        btnConfirmPayExp.setOnAction(e -> {
+
+            obsUnpaidExp.get(unpaidExpVar).payExpense(Double.valueOf(txtChoosePayment.getText()));
+            txtDisplayExpAmount.setText(String.valueOf(obsUnpaidExp.get(unpaidExpVar).getRemainingBalance()));
+
+            if (obsUnpaidExp.get(unpaidExpVar).getAmountPaid() > obsUnpaidExp.get(unpaidExpVar).getTotalAmount()) {
+                obsUnpaidExp.get(unpaidExpVar).setStatus("Ongoing");
+            }
+            if (obsUnpaidExp.get(unpaidExpVar).getAmountPaid() <= obsUnpaidExp.get(unpaidExpVar).getTotalAmount()) {
+                obsUnpaidExp.get(unpaidExpVar).setStatus("Paid");
+            }
+
+            expData.clear();
+            for (Expense exp : expList) {
+                expData.add(exp);
+            }
+            if (obsUnpaidExp.get(unpaidExpVar).getRemainingBalance() > 0) {
+                alert.setTitle("Success!");
+                alert.setHeaderText("Your payment has been recorded!");
+                alert.showAndWait();
+            }
+            if (obsUnpaidExp.get(unpaidExpVar).getRemainingBalance() == 0) {
+                alert.setTitle("Success!");
+                alert.setHeaderText("You have fully paid this expense!");
+                alert.showAndWait();
+            }
+
+        });
+
+        btnAddExpType.setOnAction(e -> {
+
+            ninthPane.add(lblNewExpenseTypeHeader, 0, 0);
+            ninthPane.add(lblAddNewExpenseType, 0, 1);
+            ninthPane.add(txtAddNewExpenseType, 0, 2);
+            ninthPane.add(btnConfirmNewExp, 0, 3);
+            ninthStage.show();
+
+        });
+        btnConfirmNewExp.setOnAction(e -> {
+
+            expCategory.add(txtAddNewExpenseType.getText());
+
+            alert.setTitle("Success!");
+            alert.setHeaderText("The expense type has been added!");
+            alert.showAndWait();
+            //insert code to add employee to object
+
+            ninthStage.close();
+
+        });
+
+        storeTable.getColumns().addAll(tbStoreID, tbStoreName, tbStoreAddress);
+        menuAdmin.getMenus().get(1).getItems().get(3).setOnAction(e -> {
+            // Store Management
+
+            tenthPane.getChildren().clear();
+            formPane.getChildren().clear();
+            border.getChildren().clear();
+
+            secondPane.setAlignment(Pos.TOP_CENTER);
+            secondStage.setTitle("Store Management");
+
+            btnAddStore.setMaxWidth(Double.MAX_VALUE);
+            btnEditStore.setMaxWidth(Double.MAX_VALUE);
+            btnRemoveStore.setMaxWidth(Double.MAX_VALUE);
+            cmboStore.setMaxWidth(Double.MAX_VALUE);
+
+            storeTable.setItems(storeData);
+            storeTable.setMinWidth(tenthScene.getWidth());
+
+            VBox storeVB = new VBox();
+            storeVB.setSpacing(10);
+            storeVB.setPadding(new Insets(10, 20, 10, 20));
+
+            storeVB.getChildren().addAll(lblStoreMan, cmboStore, btnAddStore, btnEditStore, btnRemoveStore);
+            border.setTop(menuAdmin);
+            border.setLeft(storeVB);
+            border.setCenter(storeTable);
+            //tenthStage.show();
+
+        });
+
+        btnRemExp.setOnAction(e -> {
+
+            expVar = cmboExpense.getSelectionModel().getSelectedIndex();
+            obsExpense.remove(obsExpense.get(expVar));
+            expList.remove(expList.get(expVar));
+
+            alert.setTitle("Success!");
+            alert.setHeaderText("Expense has been Removed!");
+            alert.showAndWait();
+            thirdStage.close();
+            expData.clear();
+            for (Expense exp : expList) {
+                expData.add(exp);
+            }
+
+        });
+
+        btnRemExpType.setOnAction(e -> {
+
+            ninthPane.getChildren().clear();
+            ninthPane.add(lblRemoveExpTypeHeader, 0, 0);
+            ninthPane.add(lblChooseExpType, 0, 1);
+            ninthPane.add(cmboExpCategory, 0, 2);
+            ninthPane.add(btnConfirmRemExpType, 0, 3);
+            ninthStage.show();
+        });
+
+        btnConfirmRemExpType.setOnAction(e -> {
+
+            expCatVar = cmboExpCategory.getSelectionModel().getSelectedIndex();
+            expCategory.remove(expCatVar);
+
+            alert.setTitle("Success!");
+            alert.setHeaderText("The expense type has been removed!");
+            alert.showAndWait();
+            //insert code to add employee to object
+
+            ninthStage.close();
+
+        });
+
+        btnAddStore.setOnAction(e -> {
+            
+            
+            tenthPane.getChildren().clear();
+            tenthPane.add(lblStoreName, 0, 1);
+            tenthPane.add(txtStoreName, 0, 2);
+            tenthPane.add(lblStoreAddress, 1, 1);
+            tenthPane.add(txtStoreAddress, 1, 2);
+            tenthPane.add(btnConfirmAddStore, 0, 3);
+            tenthStage.show();
+
+        });
+
+        btnConfirmAddStore.setOnAction(e -> {
+            if(txtStoreName.getText().trim().length() == 0 || txtStoreAddress.getText().trim().length() == 0)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Enter Data!");
+                alert.showAndWait();
+            }
+            else
+            {
+                obsStore.add(new Store(txtStoreName.getText(), txtStoreAddress.getText()));
+                storeList.add(new Store(txtStoreName.getText(), txtStoreAddress.getText()));
+                storeData.clear();
+                for (Store s : storeList) {
+                    storeData.add(s);
+                }
+
+                alert.setTitle("Success!");
+                alert.setHeaderText("The store has been added!");
+                alert.showAndWait();
+                //insert code to add employee to object
+
+                tenthStage.close();
+            }
+        });
+
+        btnEditStore.setOnAction(e -> {
+            if (cmboStore.getValue() == null || obsStore.size() > 1) 
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Please select a store to edit!");
+                alert.showAndWait();
+            }
+            else
+            {
+            tenthPane.getChildren().clear();
+            tenthPane.add(lblStoreName, 0, 1);
+            tenthPane.add(txtStoreName, 0, 2);
+            tenthPane.add(lblStoreAddress, 1, 1);
+            tenthPane.add(txtStoreAddress, 1, 2);
+            tenthPane.add(btnConfirmEditStore, 0, 3);
+            tenthStage.show();
+                stC = storeList.get(cmboStore.getSelectionModel().getSelectedIndex());
+                txtStoreName.setText(stC.getName());
+                txtStoreAddress.setText(stC.getAddress());
+            }
+
+            
+        });
+
+        btnConfirmEditStore.setOnAction(e -> {
+
+            stC.setName(txtStoreName.getText());
+            stC.setAddress(txtStoreAddress.getText());
+
+
+
+        });
+
+        btnRemoveStore.setOnAction(e -> {
+
+            if (cmboStore.getValue() == null || obsStore.size() > 1) {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Please select a store to remove!");
+                alert.showAndWait();
+            } else {
+                tenthPane.getChildren().clear();
+                tenthPane.add(lblRemoveStore, 0, 1);
+                tenthPane.add(cmboStore, 0, 2);
+                tenthPane.add(btnConfirmRemoveStore, 0, 3);
+                tenthStage.show();
+            }
+        });
+
+        btnConfirmRemoveStore.setOnAction(e -> {
+
+            obsStore.remove(obsStore.get(0));
+            alert.setTitle("Success!");
+            alert.setHeaderText("The store has been removed!");
+            alert.showAndWait();
+            //insert code to add employee to object
+
+            tenthStage.close();
+
         });
         
          menuAdmin.getMenus().get(4).getItems().get(0).setOnAction(e -> {
@@ -2286,28 +2907,17 @@ public class GUI extends Application
             showHours.setMaxWidth(Double.MAX_VALUE);
             addTimeSheet.setMaxWidth(Double.MAX_VALUE);
             
+                 vPay.getChildren().addAll(lblPayroll, lblPEEmp, cmboEmp, btnPEEmp, btnEnterTime);
             
-            
-            if(isAuthorized == true)
-            {
-                // What managers will see
-                vPay.getChildren().addAll(lblPayroll, lblPEEmp, cmboEmp, btnPEEmp, btnEnterTime);
-            }
-            
-            else
-            {
-                // What associates will see
-                vPay.getChildren().addAll(lblPayroll, btnEnterTime);
-            }
             border.setCenter(txtPayroll);
             border.setTop(menuAdmin);
             border.setLeft(vPay);
             
         });
         
-btnEnterTime.setOnAction(e -> {
-            
-           
+        btnEnterTime.setOnAction(e -> {
+
+
             tempPay = null;
             cmboPeriod.getItems().clear();
             if(currentUser.payRoll.isEmpty())
@@ -2333,7 +2943,7 @@ btnEnterTime.setOnAction(e -> {
             lblThur.setText(tempPay.schedule.get(4)+ ": " + tempPay.scheduleDay.get(4));
             lblFri.setText(tempPay.schedule.get(5)+ ": " + tempPay.scheduleDay.get(5));
             lblSat.setText(tempPay.schedule.get(6)+ ": " + tempPay.scheduleDay.get(6));
-            
+
             if(!tempPay.arrTimeIn.isEmpty())
             {
                 try
@@ -2348,7 +2958,7 @@ btnEnterTime.setOnAction(e -> {
                 }
                 catch(Exception ex)
                 {
-                
+
                 }
             }
             if(!tempPay.arrTimeOut.isEmpty())
@@ -2365,14 +2975,14 @@ btnEnterTime.setOnAction(e -> {
                 }
                 catch(Exception ex)
                 {
-                
+
                 }
             }
             thirdPane.getChildren().clear();
             thirdStage.setTitle("Enter Time");
             thirdStage.show();
             thirdPane.setAlignment(Pos.TOP_CENTER);
-            
+
             thirdPane.add(cmboPeriod,0,0);
             thirdPane.add(btnSelect, 1,0);
             thirdPane.add(addTimeSheet, 2, 0,2,1);
@@ -2408,10 +3018,11 @@ btnEnterTime.setOnAction(e -> {
             thirdPane.add(day5,3,6);
             thirdPane.add(day6,3,7);
             thirdPane.add(day7,3,8);
-            
-            
+
+
         });
-        btnSelect.setOnAction(e-> {
+            
+            btnSelect.setOnAction(e-> {
             String select = (String)cmboPeriod.getValue();
             int checkEmptyIn = 0;
             int checkEmptyOut = 0;
@@ -2422,7 +3033,7 @@ btnEnterTime.setOnAction(e -> {
                    break;
                }
             }
-            
+
             //Changing labels to match the week of payroll
             lblSun.setText(tempPay.schedule.get(0) + ": " + tempPay.scheduleDay.get(0));
             lblMon.setText(tempPay.schedule.get(1)+ ": " + tempPay.scheduleDay.get(1));
@@ -2431,7 +3042,7 @@ btnEnterTime.setOnAction(e -> {
             lblThur.setText(tempPay.schedule.get(4)+ ": " + tempPay.scheduleDay.get(4));
             lblFri.setText(tempPay.schedule.get(5)+ ": " + tempPay.scheduleDay.get(5));
             lblSat.setText(tempPay.schedule.get(6)+ ": " + tempPay.scheduleDay.get(6));
-            
+
             if(!tempPay.arrTimeIn.isEmpty())
             {
                 try
@@ -2446,7 +3057,7 @@ btnEnterTime.setOnAction(e -> {
                 }
                 catch(Exception ex)
                 {
-                
+
                 }
             }
             if(!tempPay.arrTimeOut.isEmpty())
@@ -2463,18 +3074,16 @@ btnEnterTime.setOnAction(e -> {
                 }
                 catch(Exception ex)
                 {
-                
+
                 }
             }
-            
+
             thirdPane.getChildren().clear();
             thirdStage.setTitle("Enter Time");
             thirdStage.show();
             thirdPane.setAlignment(Pos.TOP_CENTER);
             
-            thirdPane.add(cmboPeriod,0,0);
-            thirdPane.add(btnSelect, 1,0);
-            thirdPane.add(addTimeSheet, 2, 0,2,1);
+            thirdPane.add(lblEnterTimes, 1, 0);
             thirdPane.add(lblTimeIn, 1, 1);
             thirdPane.add(lblTimeOut, 2, 1);
             thirdPane.add(lblSun, 0, 2);
@@ -2507,10 +3116,11 @@ btnEnterTime.setOnAction(e -> {
             thirdPane.add(day5,3,6);
             thirdPane.add(day6,3,7);
             thirdPane.add(day7,3,8);
-            
-            
+
+
         });
-        addTimeSheet.setOnAction(e -> {
+           
+            addTimeSheet.setOnAction(e -> {
             Payroll addPayroll = new Payroll(currentUser);
             if(tempPay.payrollPeriod.equalsIgnoreCase(addPayroll.payrollPeriod)){
                 alert.setTitle("Error!");
@@ -2521,7 +3131,7 @@ btnEnterTime.setOnAction(e -> {
             {
                 currentUser.payRoll.add(new Payroll(currentUser));
             }
-            
+
         });
         showHours.setOnAction(e -> {
             try
@@ -2541,12 +3151,12 @@ btnEnterTime.setOnAction(e -> {
              alert.showAndWait();   
             }
         });
-        
+
         btnEnterTimes.setOnAction(e ->{
-            
+
             double tI = 0;
             double tO = 0;
-            
+
             if(cmboSunTimeIn.getValue() != null && cmboSunTimeOut.getValue() != null)
             {
                tempPay.arrTimeIn.add(0,cmboSunTimeIn.getSelectionModel().getSelectedIndex());
@@ -2554,7 +3164,7 @@ btnEnterTime.setOnAction(e -> {
                tI = hoursIn.get(cmboSunTimeIn.getSelectionModel().getSelectedIndex());
                tO = hoursOut.get(cmboSunTimeOut.getSelectionModel().getSelectedIndex());
                tempPay.hoursWorked.add(0,tO-tI);
-               
+
             }
             if(cmboMonTimeIn.getValue() != null && cmboMonTimeOut.getValue() != null)
             {
@@ -2563,9 +3173,9 @@ btnEnterTime.setOnAction(e -> {
                tI = hoursIn.get(cmboMonTimeIn.getSelectionModel().getSelectedIndex());
                tO = hoursOut.get(cmboMonTimeOut.getSelectionModel().getSelectedIndex());
                tempPay.hoursWorked.add(1,tO-tI);
-               
+
             }
-    
+
             if(cmboTuesTimeIn.getValue() != null && cmboTuesTimeOut.getValue() != null)
             {
                tempPay.arrTimeIn.add(2,cmboTuesTimeIn.getSelectionModel().getSelectedIndex());
@@ -2573,7 +3183,7 @@ btnEnterTime.setOnAction(e -> {
                tI = hoursIn.get(cmboTuesTimeIn.getSelectionModel().getSelectedIndex());
                tO = hoursOut.get(cmboTuesTimeOut.getSelectionModel().getSelectedIndex());
                tempPay.hoursWorked.add(2,tO-tI);
-               
+
             }
 
             if(cmboWedTimeIn.getValue() != null && cmboWedTimeOut.getValue() != null)
@@ -2583,7 +3193,7 @@ btnEnterTime.setOnAction(e -> {
                tI = hoursIn.get(cmboWedTimeIn.getSelectionModel().getSelectedIndex());
                tO = hoursOut.get(cmboWedTimeOut.getSelectionModel().getSelectedIndex());
                tempPay.hoursWorked.add(3,tO-tI);
-               
+
             }
 
             if(cmboThurTimeIn.getValue() != null && cmboThurTimeOut.getValue() != null)
@@ -2593,7 +3203,7 @@ btnEnterTime.setOnAction(e -> {
                tI = hoursIn.get(cmboThurTimeIn.getSelectionModel().getSelectedIndex());
                tO = hoursOut.get(cmboThurTimeOut.getSelectionModel().getSelectedIndex());
                tempPay.hoursWorked.add(4,tO-tI);
-               
+
             }
 
             if(cmboFriTimeIn.getValue() != null && cmboFriTimeOut.getValue() != null)
@@ -2603,7 +3213,7 @@ btnEnterTime.setOnAction(e -> {
                tI = hoursIn.get(cmboFriTimeIn.getSelectionModel().getSelectedIndex());
                tO = hoursOut.get(cmboFriTimeOut.getSelectionModel().getSelectedIndex());
                tempPay.hoursWorked.add(5,tO-tI);
-               
+
             }
 
             if(cmboSatTimeIn.getValue() != null && cmboSatTimeOut.getValue() != null)
@@ -2620,10 +3230,9 @@ btnEnterTime.setOnAction(e -> {
             alert.showAndWait();
             System.out.println(currentUser.getFirstName() + " has worked " + currentUser.getTimeWorked() + "hours during " + tempPay.getPayrollPeriod());
             tempPay = null;
-            
+
             thirdStage.close();
         });
-        
         
         
         menuAdmin.getMenus().get(3).getItems().get(0).setOnAction(e -> {
@@ -2666,6 +3275,14 @@ btnEnterTime.setOnAction(e -> {
         });
         
         btnPOSDisplay.setOnAction(e -> {
+            if(cmboType.getValue() == null || cmboStore.getValue() == null)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Enter Data!");
+                alert.showAndWait();
+            }
+            else
+            {
             String output = "";
            
             output += "Point of Sales Report:";
@@ -2704,6 +3321,7 @@ btnEnterTime.setOnAction(e -> {
             
             cmboType.getSelectionModel().clearSelection();
             cmboStore.getSelectionModel().clearSelection();
+            }
         });
         
         menuAdmin.getMenus().get(3).getItems().get(1).setOnAction(e -> {
@@ -2739,34 +3357,45 @@ btnEnterTime.setOnAction(e -> {
         });
         
         btnEmpDisplay.setOnAction(e -> {
-            String output = "";
-            DecimalFormat decimal = new DecimalFormat("0.00");
-            output += "Employee Report:";
-            output += "\n========================================================\n";
-            output += "Store: " + cmboStore.getValue().toString(); //use store var
-            output += "\n------------------------------------------------------\n";
-            for(int i = 0; i<empList.size(); i++)
-            { //get the for loop to loop through only certain stores
-                if(cmboStore.getValue().toString() == empList.get(i).getStoreLoc())
-                {
-                    output += "Employee ID#: " + empList.get(i).getEmployeeID();
-                    output += ", Name: " + empList.get(i).getFirstName() + " " + empList.get(i).getLastName();
-                    output += ", Job Title: " + empList.get(i).getJobTitle();
-                    output += ", Salary: $" + decimal.format(empList.get(i).getSalary());
-                    output += ", Hours Worked: " + empList.get(i).getTimeWorked();
-                    
-                    output += "\n";
-                }
-            //NEED HOURS WORKED (per week)
-            // WAGES EARNED
-            // for those on POS, how many sales rang up
-            
-            //create loop or whatever to print out Employee based on store
+            if(cmboStore.getValue() == null)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Enter Data!");
+                alert.showAndWait();
             }
-            txtEmp.setText(output);
-            
-            
-            cmboStore.getSelectionModel().clearSelection();
+            else
+            {
+                String output = "";
+                DecimalFormat decimal = new DecimalFormat("0.00");
+                output += "Employee Report:";
+                output += "\n========================================================\n";
+                output += "Store: " + cmboStore.getValue().toString(); //use store var
+                output += "\n------------------------------------------------------\n";
+                for(int i = 0; i<empList.size(); i++)
+                { //get the for loop to loop through only certain stores
+                    if(cmboStore.getValue().toString() == empList.get(i).getStoreLoc())
+                    {
+                        output += "Employee ID#: " + empList.get(i).getEmployeeID();
+                        output += ", Name: " + empList.get(i).getFirstName() + " " + empList.get(i).getLastName();
+                        output += ", Job Title: " + empList.get(i).getJobTitle();
+                        output += ", Salary: $" + decimal.format(empList.get(i).getSalary());
+                        output += ", Hours Worked: " + empList.get(i).getTimeWorked();
+                        //wages earned instead of salary
+                        // how many sales rang up if on POS
+
+                        output += "\n";
+                    }
+                //NEED HOURS WORKED (per week)
+                // WAGES EARNED
+                // for those on POS, how many sales rang up
+
+                //create loop or whatever to print out Employee based on store
+                }
+                txtEmp.setText(output);
+
+
+                cmboStore.getSelectionModel().clearSelection();
+            }
         });
         
         menuAdmin.getMenus().get(3).getItems().get(2).setOnAction(e -> {
@@ -2801,24 +3430,39 @@ btnEnterTime.setOnAction(e -> {
         });
         
         btnMonthDisplay.setOnAction(e -> {
-            String output = "";
-           
-           output += "Monthly Expense Report:";
-           output += "\n========================================================\n";
-           output += "Month: " + cmboMonth.getValue().toString();
-           output += "\nYear: " + cmboYear.getValue().toString();
-           output += "\n------------------------------------------------------\n";
-           //create loop or whatever to print out Montly Expense based on store
-           txtMonth.setText(output);
-            
-            
-           cmboMonth.getSelectionModel().clearSelection();
-           cmboYear.getSelectionModel().clearSelection();
+            if(cmboMonth.getValue() == null || cmboYear.getValue() == null)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Enter Data!");
+                alert.showAndWait();
+            }
+            else
+            {
+                String output = "";
+
+                output += "Monthly Expense Report:";
+                output += "\n========================================================\n";
+                output += "Month: " + cmboMonth.getValue().toString();
+                output += "\nYear: " + cmboYear.getValue().toString();
+                output += "\n------------------------------------------------------\n";
+                //create loop or whatever to print out Montly Expense based on store
+                for(int i = 0; i < expList.size(); i++)
+                {
+                    //DO SOMETHING WITH COMPARING MONTHS
+                    
+                }
+                txtMonth.setText(output);
+
+
+                cmboMonth.getSelectionModel().clearSelection();
+                cmboYear.getSelectionModel().clearSelection();
+            }
         });
            
         
             tbPvE.getTabs().add(tabPText);
             tbPvE.getTabs().add(tabPBar);
+            
         menuAdmin.getMenus().get(3).getItems().get(3).setOnAction(e -> {
            // Profit v. Expense Report
            secondPane.getChildren().clear();
@@ -2856,20 +3500,31 @@ btnEnterTime.setOnAction(e -> {
         });
         
         btnPvEDisplay.setOnAction(e -> {
-            String output = "";
-           
-           output += "Profit v. Expense Report:";
-           output += "\n========================================================\n";
-           output += "Year: " + cmboYear.getValue().toString();
-           output += "\n------------------------------------------------------\n";
-           
-           //create loop or whatever to print out PvE based on store and year
-           txtPvE.setText(output);
-           
-           tabPText.setContent(txtPvE);
-           
-           cmboStore.getSelectionModel().clearSelection();
-           cmboYear.getSelectionModel().clearSelection();
+            if(cmboYear.getValue() == null)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Enter Data!");
+                alert.showAndWait();
+            }
+            else
+            {
+                String output = "";
+
+                output += "Profit v. Expense Report:";
+                output += "\n========================================================\n";
+                output += "Year: " + cmboYear.getValue().toString();
+                output += "\n------------------------------------------------------\n";
+
+                //create loop or whatever to print out PvE based on store and year
+
+
+                txtPvE.setText(output);
+
+                tabPText.setContent(txtPvE);
+
+                cmboStore.getSelectionModel().clearSelection();
+                cmboYear.getSelectionModel().clearSelection();
+            }
         });
     }
     
