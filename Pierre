@@ -75,6 +75,7 @@ public class GUI extends Application
     ComboBox cmboEmp = new ComboBox(Employee.obsEmp); 
     ObservableList obsProd = FXCollections.observableArrayList();
     ComboBox cmboProd = new ComboBox(Product.obsProd); 
+    ComboBox cmboProd2 = new ComboBox(Product.obsProd);
     ObservableList<Customer> obsCust = FXCollections.observableArrayList();
     ComboBox cmboCust = new ComboBox(obsCust); 
     static ObservableList obsStore = FXCollections.observableArrayList();
@@ -183,7 +184,7 @@ public class GUI extends Application
     Label lblProdStore = new Label("Store"); 
     Button btnCalcProdSubTotal = new Button("Calculate Subtotal");
     
-     Button createSupp = new Button("Add a Supplier"); 
+    Button createSupp = new Button("Add a Supplier"); 
 
     //Discontinue a Product 
     Label lblDisProd = new Label("Discontinue a Product"); 
@@ -635,7 +636,8 @@ public class GUI extends Application
         btnEditSupp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnEditPO.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnviewSupp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        
+        btnConfirmSuppChanges.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        editProd.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         
         btnRingSale.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         
@@ -654,6 +656,9 @@ public class GUI extends Application
         editExp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         removeProd.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnEnterTimes.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnViewAllPO.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        viewSupp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnViewAllSupp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         
         
         //small form labels and combobox
@@ -680,6 +685,7 @@ public class GUI extends Application
         cmboTuesTimeOut.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         cmboWedTimeIn.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         cmboWedTimeOut.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
+        cmboSupp.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         
         cmboType.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         cmboYear.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
@@ -689,12 +695,14 @@ public class GUI extends Application
         cmboExpense.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill: white;");
         cmboSupp2.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill: white;");
         cmboProd.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill: white;");
+        cmboProd2.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill: white;");
+        cmboProdOrder2.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill: white;");
         
         lblInvMan.setStyle("-fx-font: bold 20pt \"bookman\";");
         lblInv.setStyle("-fx-font: bold 20pt \"bookman\";");
         lblEmpMan.setStyle("-fx-font: bold 20pt \"bookman\";");
         lblEmp.setStyle("-fx-font: bold 20pt \"bookman\";");
-
+        
         lblExpMan.setStyle("-fx-font: bold 20pt \"bookman\";");
         lblExp.setStyle("-fx-font: bold 20pt \"bookman\";");
         lblPOS.setStyle("-fx-font: bold 20pt \"bookman\";");
@@ -1098,6 +1106,7 @@ public class GUI extends Application
             cmboSupp2.setMaxWidth(Double.MAX_VALUE);
             btnviewSupp.setMaxWidth(Double.MAX_VALUE);
             cmboProd.setMaxWidth(Double.MAX_VALUE);
+            cmboProdOrder2.setMaxWidth(Double.MAX_VALUE);
             
             VBox vbButtons = new VBox();
             vbButtons.setSpacing(10);
@@ -1696,7 +1705,7 @@ public class GUI extends Application
             pC = prodList.get(cmboProd.getSelectionModel().getSelectedIndex());
             cmboProd.getSelectionModel().clearSelection();
             thirdPane.getChildren().clear();
-            thirdStage.setTitle("Remove a Product");
+            thirdStage.setTitle("Edit/Remove a Product");
             thirdStage.show();
             thirdPane.setAlignment(Pos.TOP_CENTER);
             
@@ -1878,11 +1887,11 @@ public class GUI extends Application
             
             
             fourthPane.add(lblSelectProd, 0, 0);
-            fourthPane.add(cmboProd, 1, 0);
+            fourthPane.add(cmboProd2, 1, 0);
             fourthPane.add(btnViewImage, 0, 2);
             fourthPane.add(btnChangeImage, 1, 2);
             
-            imageChosen = cmboProd.getSelectionModel().getSelectedIndex();
+            imageChosen = cmboProd2.getSelectionModel().getSelectedIndex();
             
             
             
@@ -2998,6 +3007,10 @@ public class GUI extends Application
            output += "\nYear: " + cmboYear.getValue().toString();
            output += "\n------------------------------------------------------\n";
            //create loop or whatever to print out Montly Expense based on store
+           for(int i = 0; i < expList.size(); i++)
+           {
+               //DO SOMETHING WITH COMPARING MONTHS
+           }
            txtMonth.setText(output);
             
             
@@ -3053,6 +3066,8 @@ public class GUI extends Application
            output += "\n------------------------------------------------------\n";
            
            //create loop or whatever to print out PvE based on store and year
+           
+           
            txtPvE.setText(output);
            
            tabPText.setContent(txtPvE);
