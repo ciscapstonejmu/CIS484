@@ -1302,30 +1302,33 @@ public class GUI extends Application
                     txtSuppContactEmail.getText().trim().length() == 0)
             {
                 alert.setTitle("Error!");
-                alert.setHeaderText("Error! Please Eneter Data!");
+                alert.setHeaderText("Error! Please Enter Data!");
                 alert.showAndWait();
             }
             else
             {
-            suppList.add(new Supplier(txtSuppName.getText(), 
-                    txtSuppPhone.getText(), txtSuppEmail.getText(), txtSuppAdd.getText(), txtSuppContactName.getText(), 
-                    txtSuppContactPhone.getText(), txtSuppContactEmail.getText())); 
-            Supplier.obsSupp.add(txtSuppName.getText());
-            System.out.println(suppList.get(0).toString());
-            alert.setTitle("Success!");
-            alert.setHeaderText("The new supplier has been created!");
-            alert.showAndWait();
-            //insert code to add product to object
+//                String email = "";
+//                if(txtSuppEmail.getText().contains(email))
+                
+                suppList.add(new Supplier(txtSuppName.getText(), 
+                        txtSuppPhone.getText(), txtSuppEmail.getText(), txtSuppAdd.getText(), txtSuppContactName.getText(), 
+                        txtSuppContactPhone.getText(), txtSuppContactEmail.getText())); 
+                Supplier.obsSupp.add(txtSuppName.getText());
+                System.out.println(suppList.get(0).toString());
+                alert.setTitle("Success!");
+                alert.setHeaderText("The new supplier has been created!");
+                alert.showAndWait();
+                //insert code to add product to object
 
-            txtSuppName.clear();
-            txtSuppPhone.clear();
-            txtSuppEmail.clear();
-            txtSuppAdd.clear();
-            txtSuppContactName.clear();
-            txtSuppContactPhone.clear();
-            txtSuppContactEmail.clear(); 
-            
-            eighthStage.close();  
+                txtSuppName.clear();
+                txtSuppPhone.clear();
+                txtSuppEmail.clear();
+                txtSuppAdd.clear();
+                txtSuppContactName.clear();
+                txtSuppContactPhone.clear();
+                txtSuppContactEmail.clear(); 
+
+                eighthStage.close();  
 
             }
         }); 
