@@ -2119,6 +2119,7 @@ public class GUI extends Application
                     cmboEmp.getItems().remove(i);
                     cmboEmp.getItems().add(i, eC.getEmployeeID() + " " + eC.getFirstName() + " " + eC.getLastName());
                     eC = null;
+                    break;
                 }
             }
 
@@ -2506,6 +2507,11 @@ public class GUI extends Application
             VBox storeVB = new VBox();
             storeVB.setSpacing(10);
             storeVB.setPadding(new Insets(10, 20, 10, 20));
+            
+            storeData.clear();
+            for (Store s : storeList) {
+                storeData.add(s);
+            }
 
             storeVB.getChildren().addAll(lblStoreMan, cmboStore, btnAddStore, btnEditStore, btnRemoveStore, btnViewStore, btnViewAllStore);
             border.setTop(menuAdmin);
@@ -2575,15 +2581,9 @@ public class GUI extends Application
         });
 
         btnConfirmAddStore.setOnAction(e -> {
-            if (txtStoreName.getText().isEmpty() || txtStoreAddress.getText().isEmpty())
-            {
-                alert.setTitle("Error");
-                alert.setHeaderText("All Fields Must Be Filled!");
-                alert.showAndWait();
-            }
-            else{
-            obsStore.add(new Store(txtStoreName.getText(), txtStoreAddress.getText()));
-            storeList.add(new Store(txtStoreName.getText(), txtStoreAddress.getText()));
+            Store store6 = new Store(txtStoreName.getText(), txtStoreAddress.getText());
+            obsStore.add(store6);
+            storeList.add(store6);
             storeData.clear();
             for (Store s : storeList) {
                 storeData.add(s);
@@ -2595,7 +2595,19 @@ public class GUI extends Application
             //insert code to add employee to object
 
             tenthStage.close();
+            for (int i = 0; i < storeList.size(); i++)
+            {
+                System.out.println(storeList.get(i).toString() + " storeList");
             }
+            for (int i = 0; i < storeData.size(); i++)
+            {
+                System.out.println(storeData.get(i).toString() + " storeData");
+            }
+            /*for (int i = 0; i < obsStore.size(); i++)
+            {
+            System.out.println(obsStore.get(i).toString());
+            }
+            */
         });
 
         btnEditStore.setOnAction(e -> {
@@ -2625,16 +2637,22 @@ public class GUI extends Application
         });
 
         btnConfirmEditStore.setOnAction(e -> {
-            if (txtStoreName.getText().isEmpty() || txtStoreAddress.getText().isEmpty())
-            {
-                alert.setTitle("Error");
-                alert.setHeaderText("All Fields Must Be Filled!");
-                alert.showAndWait();
-            }
-            else
-            {
+            
             stC.setName(txtStoreName.getText());
             stC.setAddress(txtStoreAddress.getText());
+            
+            for (int i = 0; i < storeList.size(); i++)
+            {
+                if (stC.getID() == storeList.get(i).getID())  
+            {
+                    storeList.remove(i);
+                    storeList.add(i, stC);
+                    cmboStore.getItems().remove(i);
+                    cmboStore.getItems().add(i, stC.getName());
+                    stC = null;
+                    break;
+            }
+            }
             
             alert.setTitle("Success!");
             alert.setHeaderText("The store has been edited!");
@@ -2642,36 +2660,30 @@ public class GUI extends Application
             //insert code to add product to object
 
             tenthStage.close();
-            }
+
 
 
         });
 
         btnRemoveStore.setOnAction(e -> {
 
-            if (cmboStore.getValue() == null || obsStore.size() > 1) {
+            if (cmboStore.getValue() == null) {
                 alert.setTitle("Error!");
                 alert.setHeaderText("Please select a store to remove!");
                 alert.showAndWait();
-            } else {
-                tenthPane.getChildren().clear();
-                tenthPane.add(lblRemoveStore, 0, 1);
-                tenthPane.add(cmboStore, 0, 2);
-                tenthPane.add(btnConfirmRemoveStore, 0, 3);
-                tenthStage.show();
             }
-        });
-
-        btnConfirmRemoveStore.setOnAction(e -> {
-
-            obsStore.remove(obsStore.get(0));
+            else
+            {
+            obsStore.remove(obsStore.get(cmboStore.getSelectionModel().getSelectedIndex()));
             alert.setTitle("Success!");
             alert.setHeaderText("The store has been removed!");
             alert.showAndWait();
             //insert code to add employee to object
+            }
 
-            tenthStage.close();
         });
+
+
         
         
         btnViewAllStore.setOnAction(e -> {
