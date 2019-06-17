@@ -51,7 +51,7 @@ public class GUI extends Application
     TextField txtStoreLoc = new TextField();
     boolean isAuthorized = false;
     boolean found = false;
-    static String currentUser;
+    static Employee currentUser;
     //TextField txtPass = new TextField();
     
     //Array Lists
@@ -352,7 +352,15 @@ public class GUI extends Application
     Label lblTimeIn = new Label("Time In");
     Label lblTimeOut = new Label("Time Out");
     ComboBox<String> cmboPeriod = new ComboBox<String>();
-    Button btnPeriodSelect = new Button("Select");
+    Button btnSelect = new Button("Select");
+    Button showHours = new Button("Show Hours");
+    Label day1 = new Label();
+    Label day2 = new Label();
+    Label day3 = new Label();
+    Label day4 = new Label();
+    Label day5 = new Label();
+    Label day6 = new Label();
+    Label day7 = new Label();
     static ComboBox cmboSunTimeIn = new ComboBox(timeI);
     static ComboBox cmboSunTimeOut = new ComboBox(timeO);
     static ComboBox cmboMonTimeIn = new ComboBox(timeI);
@@ -591,6 +599,8 @@ public class GUI extends Application
         editExp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         removeProd.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnEnterTimes.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnSelect.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        showHours.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         
         
         //small form labels and combobox
@@ -617,6 +627,8 @@ public class GUI extends Application
         cmboTuesTimeOut.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         cmboWedTimeIn.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         cmboWedTimeOut.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
+        cmboPeriod.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
+        
         
         cmboType.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         cmboYear.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
@@ -934,6 +946,7 @@ public class GUI extends Application
                Employee temp = empList.get(i);
                if(temp.getUsername().equalsIgnoreCase(txtUser.getText()) && temp.getPassword().equals(txtPass.getText()))
                {
+                   currentUser = temp;
                    found = true;
                    if(temp.getEmployeeCategory().equalsIgnoreCase("Manager"))
                    {
@@ -2269,6 +2282,8 @@ public class GUI extends Application
             cmboEmp.setMaxWidth(Double.MAX_VALUE);
             btnPEEmp.setMaxWidth(Double.MAX_VALUE);
             btnEnterTime.setMaxWidth(Double.MAX_VALUE);
+            btnSelect.setMaxWidth(Double.MAX_VALUE);
+            showHours.setMaxWidth(Double.MAX_VALUE);
             addTimeSheet.setMaxWidth(Double.MAX_VALUE);
             
             
@@ -2290,34 +2305,26 @@ public class GUI extends Application
             
         });
         
-        btnEnterTime.setOnAction(e -> {
-            if(cmboEmp.getValue() == null){
-                alert.setTitle("Error!");
-                alert.setHeaderText("Please select an employee to edit!");
-                alert.showAndWait();
-            }
-
-            else{
-            eC = null;
+btnEnterTime.setOnAction(e -> {
+            
+           
             tempPay = null;
-            eC = empList.get(cmboEmp.getSelectionModel().getSelectedIndex());
-            cmboEmp.getSelectionModel().clearSelection();
             cmboPeriod.getItems().clear();
-            if(eC.payRoll.isEmpty())
+            if(currentUser.payRoll.isEmpty())
             {
-                eC.payRoll.add(new Payroll(eC));
-                tempPay = eC.payRoll.get(0);
+                currentUser.payRoll.add(new Payroll(currentUser));
+                tempPay = currentUser.payRoll.get(0);
                 cmboPeriod.getItems().add(tempPay.getPayrollPeriod());
                 cmboPeriod.getSelectionModel().select(0);
             }
             else
             {
-                for(int i = 0; i<eC.payRoll.size(); i++)
+                for(int i = 0; i<currentUser.payRoll.size(); i++)
                 {
-                    cmboPeriod.getItems().add(i,eC.payRoll.get(i).getPayrollPeriod());
+                    cmboPeriod.getItems().add(i,currentUser.payRoll.get(i).getPayrollPeriod());
                 }
-                cmboPeriod.getSelectionModel().select(eC.payRoll.size()-1);
-                tempPay = eC.payRoll.get(eC.payRoll.size()-1);
+                cmboPeriod.getSelectionModel().select(currentUser.payRoll.size()-1);
+                tempPay = currentUser.payRoll.get(currentUser.payRoll.size()-1);
             }
             lblSun.setText(tempPay.schedule.get(0) + ": " + tempPay.scheduleDay.get(0));
             lblMon.setText(tempPay.schedule.get(1)+ ": " + tempPay.scheduleDay.get(1));
@@ -2331,13 +2338,13 @@ public class GUI extends Application
             {
                 try
                 {
-                    cmboSunTimeIn.getSelectionModel().select(tempPay.arrTimeIn.get(0));
-                    cmboMonTimeIn.getSelectionModel().select(tempPay.arrTimeIn.get(1));
-                    cmboTuesTimeIn.getSelectionModel().select(tempPay.arrTimeIn.get(2));
-                    cmboWedTimeIn.getSelectionModel().select(tempPay.arrTimeIn.get(3));
-                    cmboThurTimeIn.getSelectionModel().select(tempPay.arrTimeIn.get(4));
-                    cmboFriTimeIn.getSelectionModel().select(tempPay.arrTimeIn.get(5));
-                    cmboSatTimeIn.getSelectionModel().select(tempPay.arrTimeIn.get(6));
+                    cmboSunTimeIn.getSelectionModel().select(timeI.get(tempPay.arrTimeIn.get(0)));
+                    cmboMonTimeIn.getSelectionModel().select(timeI.get(tempPay.arrTimeIn.get(1)));
+                    cmboTuesTimeIn.getSelectionModel().select(timeI.get(tempPay.arrTimeIn.get(2)));
+                    cmboWedTimeIn.getSelectionModel().select(timeI.get(tempPay.arrTimeIn.get(3)));
+                    cmboThurTimeIn.getSelectionModel().select(timeI.get(tempPay.arrTimeIn.get(4)));
+                    cmboFriTimeIn.getSelectionModel().select(timeI.get(tempPay.arrTimeIn.get(5)));
+                    cmboSatTimeIn.getSelectionModel().select(timeI.get(tempPay.arrTimeIn.get(6)));
                 }
                 catch(Exception ex)
                 {
@@ -2348,13 +2355,13 @@ public class GUI extends Application
             {
                 try
                 {
-                    cmboSunTimeOut.getSelectionModel().select(tempPay.arrTimeOut.get(0));
-                    cmboMonTimeOut.getSelectionModel().select(tempPay.arrTimeOut.get(1));
-                    cmboTuesTimeOut.getSelectionModel().select(tempPay.arrTimeOut.get(2));
-                    cmboWedTimeOut.getSelectionModel().select(tempPay.arrTimeOut.get(3));
-                    cmboThurTimeOut.getSelectionModel().select(tempPay.arrTimeOut.get(4));
-                    cmboFriTimeOut.getSelectionModel().select(tempPay.arrTimeOut.get(5));
-                    cmboSatTimeOut.getSelectionModel().select(tempPay.arrTimeOut.get(6));
+                    cmboSunTimeOut.getSelectionModel().select(timeO.get(tempPay.arrTimeOut.get(0)));
+                    cmboMonTimeOut.getSelectionModel().select(timeO.get(tempPay.arrTimeOut.get(1)));
+                    cmboTuesTimeOut.getSelectionModel().select(timeO.get(tempPay.arrTimeOut.get(2)));
+                    cmboWedTimeOut.getSelectionModel().select(timeO.get(tempPay.arrTimeOut.get(3)));
+                    cmboThurTimeOut.getSelectionModel().select(timeO.get(tempPay.arrTimeOut.get(4)));
+                    cmboFriTimeOut.getSelectionModel().select(timeO.get(tempPay.arrTimeOut.get(5)));
+                    cmboSatTimeOut.getSelectionModel().select(timeO.get(tempPay.arrTimeOut.get(6)));
                 }
                 catch(Exception ex)
                 {
@@ -2367,8 +2374,8 @@ public class GUI extends Application
             thirdPane.setAlignment(Pos.TOP_CENTER);
             
             thirdPane.add(cmboPeriod,0,0);
-            thirdPane.add(btnPeriodSelect, 0,1);
-            thirdPane.add(addTimeSheet, 1, 0,2,1);
+            thirdPane.add(btnSelect, 1,0);
+            thirdPane.add(addTimeSheet, 2, 0,2,1);
             thirdPane.add(lblTimeIn, 1, 1);
             thirdPane.add(lblTimeOut, 2, 1);
             thirdPane.add(lblSun, 0, 2);
@@ -2393,17 +2400,27 @@ public class GUI extends Application
             thirdPane.add(cmboSatTimeIn, 1, 8);
             thirdPane.add(cmboSatTimeOut, 2, 8);
             thirdPane.add(btnEnterTimes, 1, 9);
+            thirdPane.add(showHours,2,9);
+            thirdPane.add(day1,3,2);
+            thirdPane.add(day2,3,3);
+            thirdPane.add(day3,3,4);
+            thirdPane.add(day4,3,5);
+            thirdPane.add(day5,3,6);
+            thirdPane.add(day6,3,7);
+            thirdPane.add(day7,3,8);
             
-            }
+            
         });
-        btnPeriodSelect.setOnAction(e-> {
+        btnSelect.setOnAction(e-> {
             String select = (String)cmboPeriod.getValue();
             int checkEmptyIn = 0;
             int checkEmptyOut = 0;
-            for(int i = 0; i<eC.payRoll.size(); i++)
+            for(int i = 0; i<currentUser.payRoll.size(); i++)
             {
-               if(eC.payRoll.get(i).getPayrollPeriod().equalsIgnoreCase(select))
-                   tempPay = eC.payRoll.get(i);
+               if(currentUser.payRoll.get(i).getPayrollPeriod().equalsIgnoreCase(select)){
+                   tempPay = currentUser.payRoll.get(i);
+                   break;
+               }
             }
             
             //Changing labels to match the week of payroll
@@ -2419,13 +2436,13 @@ public class GUI extends Application
             {
                 try
                 {
-                    cmboSunTimeIn.getSelectionModel().select(tempPay.arrTimeIn.get(0));
-                    cmboMonTimeIn.getSelectionModel().select(tempPay.arrTimeIn.get(1));
-                    cmboTuesTimeIn.getSelectionModel().select(tempPay.arrTimeIn.get(2));
-                    cmboWedTimeIn.getSelectionModel().select(tempPay.arrTimeIn.get(3));
-                    cmboThurTimeIn.getSelectionModel().select(tempPay.arrTimeIn.get(4));
-                    cmboFriTimeIn.getSelectionModel().select(tempPay.arrTimeIn.get(5));
-                    cmboSatTimeIn.getSelectionModel().select(tempPay.arrTimeIn.get(6));
+                    cmboSunTimeIn.getSelectionModel().select(timeI.get(tempPay.arrTimeIn.get(0)));
+                    cmboMonTimeIn.getSelectionModel().select(timeI.get(tempPay.arrTimeIn.get(1)));
+                    cmboTuesTimeIn.getSelectionModel().select(timeI.get(tempPay.arrTimeIn.get(2)));
+                    cmboWedTimeIn.getSelectionModel().select(timeI.get(tempPay.arrTimeIn.get(3)));
+                    cmboThurTimeIn.getSelectionModel().select(timeI.get(tempPay.arrTimeIn.get(4)));
+                    cmboFriTimeIn.getSelectionModel().select(timeI.get(tempPay.arrTimeIn.get(5)));
+                    cmboSatTimeIn.getSelectionModel().select(timeI.get(tempPay.arrTimeIn.get(6)));
                 }
                 catch(Exception ex)
                 {
@@ -2436,13 +2453,13 @@ public class GUI extends Application
             {
                 try
                 {
-                    cmboSunTimeOut.getSelectionModel().select(tempPay.arrTimeOut.get(0));
-                    cmboMonTimeOut.getSelectionModel().select(tempPay.arrTimeOut.get(1));
-                    cmboTuesTimeOut.getSelectionModel().select(tempPay.arrTimeOut.get(2));
-                    cmboWedTimeOut.getSelectionModel().select(tempPay.arrTimeOut.get(3));
-                    cmboThurTimeOut.getSelectionModel().select(tempPay.arrTimeOut.get(4));
-                    cmboFriTimeOut.getSelectionModel().select(tempPay.arrTimeOut.get(5));
-                    cmboSatTimeOut.getSelectionModel().select(tempPay.arrTimeOut.get(6));
+                    cmboSunTimeOut.getSelectionModel().select(timeO.get(tempPay.arrTimeOut.get(0)));
+                    cmboMonTimeOut.getSelectionModel().select(timeO.get(tempPay.arrTimeOut.get(1)));
+                    cmboTuesTimeOut.getSelectionModel().select(timeO.get(tempPay.arrTimeOut.get(2)));
+                    cmboWedTimeOut.getSelectionModel().select(timeO.get(tempPay.arrTimeOut.get(3)));
+                    cmboThurTimeOut.getSelectionModel().select(timeO.get(tempPay.arrTimeOut.get(4)));
+                    cmboFriTimeOut.getSelectionModel().select(timeO.get(tempPay.arrTimeOut.get(5)));
+                    cmboSatTimeOut.getSelectionModel().select(timeO.get(tempPay.arrTimeOut.get(6)));
                 }
                 catch(Exception ex)
                 {
@@ -2456,8 +2473,8 @@ public class GUI extends Application
             thirdPane.setAlignment(Pos.TOP_CENTER);
             
             thirdPane.add(cmboPeriod,0,0);
-            thirdPane.add(btnPeriodSelect, 0,1);
-            thirdPane.add(addTimeSheet, 1, 0,2,1);
+            thirdPane.add(btnSelect, 1,0);
+            thirdPane.add(addTimeSheet, 2, 0,2,1);
             thirdPane.add(lblTimeIn, 1, 1);
             thirdPane.add(lblTimeOut, 2, 1);
             thirdPane.add(lblSun, 0, 2);
@@ -2482,11 +2499,19 @@ public class GUI extends Application
             thirdPane.add(cmboSatTimeIn, 1, 8);
             thirdPane.add(cmboSatTimeOut, 2, 8);
             thirdPane.add(btnEnterTimes, 1, 9);
+            thirdPane.add(showHours,2,9);
+            thirdPane.add(day1,3,2);
+            thirdPane.add(day2,3,3);
+            thirdPane.add(day3,3,4);
+            thirdPane.add(day4,3,5);
+            thirdPane.add(day5,3,6);
+            thirdPane.add(day6,3,7);
+            thirdPane.add(day7,3,8);
             
             
         });
         addTimeSheet.setOnAction(e -> {
-            Payroll addPayroll = new Payroll(eC);
+            Payroll addPayroll = new Payroll(currentUser);
             if(tempPay.payrollPeriod.equalsIgnoreCase(addPayroll.payrollPeriod)){
                 alert.setTitle("Error!");
                 alert.setHeaderText("A Timesheet for this period already exists!");
@@ -2494,10 +2519,29 @@ public class GUI extends Application
                 }
             else
             {
-                eC.payRoll.add(new Payroll(eC));
+                currentUser.payRoll.add(new Payroll(currentUser));
             }
             
         });
+        showHours.setOnAction(e -> {
+            try
+            {
+            day1.setText(Double.toString(tempPay.hoursWorked.get(0)));
+            day2.setText(Double.toString(tempPay.hoursWorked.get(1)));
+            day3.setText(Double.toString(tempPay.hoursWorked.get(2)));
+            day4.setText(Double.toString(tempPay.hoursWorked.get(3)));
+            day5.setText(Double.toString(tempPay.hoursWorked.get(4)));
+            day6.setText(Double.toString(tempPay.hoursWorked.get(5)));
+            day7.setText(Double.toString(tempPay.hoursWorked.get(6)));
+            }
+            catch(Exception ex)
+            {
+             alert.setTitle("Error!");
+             alert.setHeaderText("Submit timesheet first!");
+             alert.showAndWait();   
+            }
+        });
+        
         btnEnterTimes.setOnAction(e ->{
             
             double tI = 0;
@@ -2570,14 +2614,14 @@ public class GUI extends Application
                tO = hoursOut.get(cmboSatTimeOut.getSelectionModel().getSelectedIndex());
                tempPay.hoursWorked.add(6,tO-tI);               
             }
+            tempPay.updateWork();
             alert.setTitle("Success!");
             alert.setHeaderText("The timesheet has been submitted!");
             alert.showAndWait();
+            System.out.println(currentUser.getFirstName() + " has worked " + currentUser.getTimeWorked() + "hours during " + tempPay.getPayrollPeriod());
             tempPay = null;
-            eC = null;
             
             thirdStage.close();
-
         });
         
         
