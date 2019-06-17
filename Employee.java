@@ -17,8 +17,8 @@ public class Employee implements Serializable{
     private double hourly;
     private String jobTitle; 
     private double timeWorked;
-    public static int nextID = 0;
     public static ObservableList obsEmp = FXCollections.observableArrayList();
+    public static int nextID = 0;    
     public static ArrayList<Employee> empAcc = new ArrayList<>();
     public static ArrayList<Employee> admins = new ArrayList<>();
     private String employeeType; 
@@ -27,7 +27,8 @@ public class Employee implements Serializable{
     private Store store;
     private String username;
     private String password;
-    public ArrayList<Payroll> empPayroll;
+    //public ObservableList empPayroll = FXCollections.observableArrayList();
+    public ArrayList<Payroll> payRoll = new ArrayList<>();
     
     
     
