@@ -293,23 +293,24 @@ public class CustSaleForm {
                 + "----------------------------------------\n");
             int saleStore = cmboSaleStore.getSelectionModel().getSelectedIndex();
             int saleEmp = cmboSaleEmp.getSelectionModel().getSelectedIndex();
-            int isMem = cmboIsMem.getSelectionModel().getSelectedIndex();
+            int saleMem = GUI.cmboMem.getSelectionModel().getSelectedIndex();
             
             String dateOfSale = saleDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             
             
             
             GUI.saleList.add(new CustSale(dateOfSale, GUI.storeList.get(saleStore),
-                    GUI.empList.get(saleEmp), cmboIsMem.getValue().toString(),
+                    GUI.empList.get(saleEmp), GUI.memList.get(saleMem),
                     this.saleProducts));
             
             CustSale thisSale = GUI.saleList.get(saleCount-1);
             receiptOutput.appendText(recItems);
             receiptOutput.appendText("\n" + thisSale.toString());
             //need to include the customer 
-            receiptOutput.appendText("--------------------------"
+            receiptOutput.appendText("\n--------------------------"
                 + "----------------------------------------\n");
-            receiptOutput.appendText("\n" + "Thank You " + "CUSTOMER**"  + "!");
+            receiptOutput.appendText("\n" + "Thank You " + 
+                    GUI.memList.get(saleMem).getFName()  + "!");
             alert.setTitle("Success!");
             alert.setHeaderText("Sale Completed!");
             alert.showAndWait();
