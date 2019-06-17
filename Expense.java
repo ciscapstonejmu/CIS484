@@ -14,6 +14,7 @@ public class Expense {
     private double remainingBalance;
     private Store payableStore;
     public static ObservableList obsExpense = FXCollections.observableArrayList();
+    public static int ongoingCounter = 0;
     
     public static int nextID = 0;
     
@@ -43,16 +44,20 @@ public class Expense {
         //this.payableStore = payableStore;
        
         
-        expenseID = nextID++;
+        this.expenseID = nextID++;
         
         if (amountPaid < amount)
         {
             this.status = "Ongoing";
+            ongoingCounter++;
         }
         if (amountPaid >= amount)
         {
             this.status = "Paid";
         }
+        
+        Expense.obsExpense.add(expenseID + " : " + this.date + " , " + this.description);
+        
     }
     
     public int getExpenseID()
