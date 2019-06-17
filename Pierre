@@ -1222,7 +1222,7 @@ public class GUI extends Application
             
             String date = calendar.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
             String orderDate2 = orderDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
-            poC = prodOrderList.get(cmboProdOrder.getSelectionModel().getSelectedIndex());
+            poC = prodOrderList.get(cmboProdOrder2.getSelectionModel().getSelectedIndex());
             poC.setProdOName(txtProdName.getText()); 
             poC.setUnitCost((Double.parseDouble(txtUnitPrice.getText())));  
             poC.setCategory((String)cmboCategory.getValue());
@@ -1295,6 +1295,17 @@ public class GUI extends Application
         
                 
         btnNewSupp.setOnAction(e -> {
+            if (txtSuppName.getText().trim().length() == 0 || txtSuppPhone.getText().trim().length() == 0 ||
+                    txtSuppEmail.getText().trim().length() == 0 || txtSuppAdd.getText().trim().length() == 0 ||
+                    txtSuppContactName.getText().trim().length() == 0 || txtSuppContactPhone.getText().trim().length() == 0 ||
+                    txtSuppContactEmail.getText().trim().length() == 0)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Eneter Data!");
+                alert.showAndWait();
+            }
+            else
+            {
             suppList.add(new Supplier(txtSuppName.getText(), 
                     txtSuppPhone.getText(), txtSuppEmail.getText(), txtSuppAdd.getText(), txtSuppContactName.getText(), 
                     txtSuppContactPhone.getText(), txtSuppContactEmail.getText())); 
@@ -1315,7 +1326,7 @@ public class GUI extends Application
             
             eighthStage.close();  
 
-            
+            }
         }); 
         
         btnEditSupp.setOnAction (e -> {
@@ -1545,7 +1556,16 @@ public class GUI extends Application
         }); 
         
         btnCompleteOrder.setOnAction(e -> {
-
+            if(txtProdName.getText().trim().length() == 0 || txtUnitCost.getText().trim().length() == 0 ||
+                    cmboCategory.getValue() == null || orderDate.getValue() == null || calendar.getValue() == null ||
+                    txtProdQuantity.getText().trim().length() == 0 || cmboSupp.getValue() == null || cmboStore.getValue() == null)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Enter Data!");
+                alert.showAndWait();
+            }
+            else
+            {
             String date = calendar.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
             String orderDate2 = orderDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
             prodOrderList.add(new ProductOrder(Integer.parseInt(txtProdQuantity.getText()), txtProdName.getText(), Double.parseDouble(txtUnitCost.getText()),
@@ -1561,6 +1581,7 @@ public class GUI extends Application
             //for (int i = 0; i < prodOrderList.size(); i++) {
                 //System.out.println(prodOrderList.get(i)); 
             //}
+            }
         }); 
         
         btnViewOrder.setOnAction(e -> {
@@ -1643,6 +1664,17 @@ public class GUI extends Application
         
         addProd.setOnAction(e -> {
             //product added clicked
+            if(txtProdName.getText().trim().length() == 0 || txtProdDesc.getText().trim().length() == 0 ||
+                    cmboCategory.getValue() == null || txtUnitPrice.getText().trim().length() == 0 || 
+                    txtProdQuantity.getText().trim().length() == 0 || cmboSupp.getValue() == null ||
+                    cmboStore.getValue() == null)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Enter Data!");
+                alert.showAndWait();
+            }
+            else
+            {
             int storeLocation = cmboStore.getSelectionModel().getSelectedIndex(); 
             String storeLocation2 = Integer.toString(storeLocation); 
             int productCategory = cmboCategory.getSelectionModel().getSelectedIndex();  
@@ -1692,7 +1724,7 @@ public class GUI extends Application
             cmboCategory.getSelectionModel().clearSelection();
             cmboStore.getSelectionModel().clearSelection();
             cmboSupp.getSelectionModel().clearSelection();*/
-            
+            }
         });
         
         btnRemoveProd.setOnAction(e -> {
@@ -2013,7 +2045,18 @@ public class GUI extends Application
         
         addEmp.setOnAction(e -> {
             //employee added clicked
-            
+            if(txtFName.getText().trim().length() == 0 || txtLName.getText().trim().length() == 0 ||
+                    txtEmail.getText().trim().length() == 0 || txtPhone.getText().trim().length() == 0 ||
+                    txtAddress.getText().trim().length() == 0 || cmboJob.getValue() == null ||
+                    txtSalary.getText().trim().length() == 0 || cmboEType.getValue() == null ||
+                    cmboEmpCat.getValue() == null || cmboStore.getValue() == null)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Enter Data!");
+                alert.showAndWait();
+            }
+            else
+            {
             empList.add(new Employee(txtFName.getText(), txtLName.getText(), txtEmail.getText(), txtPhone.getText(), 
             txtAddress.getText(), Double.valueOf(txtSalary.getText()),  
                     (String)cmboJob.getValue(), (String)cmboEType.getValue(), (String)cmboEmpCat.getValue(), storeList.get(cmboStore.getSelectionModel().getSelectedIndex()))); 
@@ -2052,7 +2095,7 @@ public class GUI extends Application
             
             
             thirdStage.close();
-            
+            }
         });
         
         btnEditEmp.setOnAction(e -> {
@@ -2310,7 +2353,17 @@ public class GUI extends Application
         });
         
         addExp.setOnAction(e -> {
-            //emplouee added clicked
+            //expense added clicked
+            if(txtExpDesc.getText().trim().length() == 0 || expDate.getValue() == null ||
+                    cmboExpCategory.getValue() == null || cmboStatus.getValue() == null ||
+                    txtAmount.getText().trim().length() == 0 || txtTtlAmount.getText().trim().length() == 0)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Enter Data!");
+                alert.showAndWait();
+            }
+            else
+            {
             String description = txtExpDesc.getText();
             String category = (String)cmboCategory.getValue();
             String status = (String)cmboStatus.getValue();
@@ -2347,6 +2400,7 @@ public class GUI extends Application
             expDate.getEditor().clear();
             
             thirdStage.close();
+            }
         });
         
         btnEditExp.setOnAction(e -> {
@@ -2978,6 +3032,8 @@ public class GUI extends Application
                         output += ", Job Title: " + empList.get(i).getJobTitle();
                         output += ", Salary: $" + decimal.format(empList.get(i).getSalary());
                         output += ", Hours Worked: " + empList.get(i).getTimeWorked();
+                        //wages earned instead of salary
+                        // how many sales rang up if on POS
 
                         output += "\n";
                     }
@@ -3045,6 +3101,7 @@ public class GUI extends Application
                 for(int i = 0; i < expList.size(); i++)
                 {
                     //DO SOMETHING WITH COMPARING MONTHS
+                    
                 }
                 txtMonth.setText(output);
 
