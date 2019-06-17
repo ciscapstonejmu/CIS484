@@ -1095,7 +1095,8 @@ public class GUI extends Application
             {
             menuAdmin.getMenus().get(1).getItems().get(0).setDisable(true); //Employee management
             menuAdmin.getMenus().get(1).getItems().get(2).setDisable(true); //Expense Management
-            menuAdmin.getMenus().get(1).getItems().get(3).setDisable(true);
+            menuAdmin.getMenus().get(1).getItems().get(3).setDisable(true); //Store Management
+            menuAdmin.getMenus().get(2).getItems().get(0).setDisable(true); //Payroll
             
             createSupp.setDisable(true); //disable creat supplier button
             btnEditSupp.setDisable(true); //disable edit Supplier
