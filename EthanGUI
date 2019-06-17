@@ -94,7 +94,7 @@ public class GUI extends Application
     public static ComboBox<Member> cmboMem = new ComboBox(Member.obsMem);
 //    ObservableList 
     static ObservableList<Expense> obsExpense = FXCollections.observableArrayList();
-    ComboBox cmboExpense = new ComboBox(obsExpense);
+    ComboBox cmboExpense = new ComboBox(Expense.obsExpense);
     
     int expVar = 0;
     int unpaidExpVar = 0;
@@ -2350,9 +2350,7 @@ public class GUI extends Application
                 obsExpense.get(expVar).setCategory(expCategoryList.get(cmboExpCategory.getSelectionModel().getSelectedIndex()));
                 obsExpense.get(expVar).setAmountPaid(Double.parseDouble(txtAmount.getText()));
                 obsExpense.get(expVar).setDate(expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")));
-                        alert.setTitle("Success");
-                        alert.setHeaderText("This expense has been edited!");
-                        alert.showAndWait();
+
                 }
         });
         
@@ -2372,13 +2370,14 @@ public class GUI extends Application
                 exC.setCategory((String) cmboExpCategory.getValue());
             }
             System.out.println(exC.toString() + " wahhhhhhhhhhh");
-            if (exC.getAmountPaid() > exC.getTotalAmount()) {
+            if (exC.getAmountPaid() < exC.getTotalAmount()) {
                 exC.setStatus("Ongoing");
+                        
             }
-            if (exC.getAmountPaid() <= exC.getTotalAmount()) {
-                exC.setStatus("Paid");
+            if (exC.getAmountPaid() >= exC.getTotalAmount()) {
+                exC.setStatus("Paid"); 
             }
-
+            System.out.println(exC.toString());
             //exC.setDate((expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"))));
             alert.setTitle("Success!");
             alert.setHeaderText("Expense has been Edited!");
@@ -2388,6 +2387,7 @@ public class GUI extends Application
             for (Expense exp : expList) {
                 expData.add(exp);
             }
+
 
         });
         btnPayExp.setOnAction(e -> {
@@ -2404,9 +2404,8 @@ public class GUI extends Application
                     }
                 }
             }
-
-            System.out.println(expList.size() + " wap");
-            System.out.println(obsUnpaidExp.size() + " wop");
+            //System.out.println(expList.size() + " wap");
+            //System.out.println(obsUnpaidExp.size() + " wop");
             eighthPane.add(lblChooseExp, 0, 1);
             eighthPane.add(cmboUnpaidExp, 0, 2);
             eighthPane.add(btnSelectExpense, 0, 3);
