@@ -318,7 +318,14 @@ public class CustSaleForm {
             GUI.memList.add(new Member(txtMemFName.getText(), 
                     txtMemLName.getText(), txtMemPhone.getText(), 
                     txtMemEmail.getText()));
-            
+            if (txtMemFName.getText().isEmpty() || txtMemLName.getText().isEmpty() || 
+                    txtMemPhone.getText().isEmpty() || txtMemEmail.getText().isEmpty())
+            {
+                alertError.setTitle("Error");
+                alertError.setHeaderText("Please Enter All Requested Information!");
+                alertError.showAndWait();
+            }
+            else{
             alert.setTitle("Success!");
             alert.setHeaderText("New Member Added!");
             alert.showAndWait();
@@ -327,7 +334,7 @@ public class CustSaleForm {
             
             Member.obsMem.add(txtMemLName.getText() + ", " + txtMemFName.getText());
             //GUI.cmboMem.setSelectionModel(memCount);
-            
+            }
         });
         
         btnSearchMem.setOnAction(e -> {
