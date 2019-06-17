@@ -31,10 +31,11 @@ import java.util.ArrayList;
 import static pkg484groupproj.GUI.expList;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
-//import oracle.jdbc.pool.*;
+import oracle.jdbc.pool.*;
 import java.sql.*;
 import java.text.DecimalFormat;
-
+import java.sql.*;
+import java.util.*;
 public class GUI extends Application 
 {
     // Sign In Menu
@@ -483,30 +484,30 @@ public class GUI extends Application
     // Our Database Connection method needs these 
     // objects. We declare them here and point them
     // to instance objects below.
-    //Connection dbConn;
-    //Statement commStmt;
-    //ResultSet dbResults;
-    //String sqlQuery;
+    Connection dbConn;
+    Statement commStmt;
+    ResultSet dbResults;
+    String sqlQuery;
     
     @Override
     public void start(Stage primaryStage) 
     {
-        /*
+        
         //Database example from class (Unsure how to imlement yet)
         String jdbcConnectionURL = "jdbc:oracle:thin:@localhost:1521:XE";
         String userID = "javauser";
         String userPass = "javapass";
-
+        /*
         try
         {
-           // dbConn = getDBConnection(jdbcConnectionURL, userID, userPass);
-            stmt = dbConn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            dbConn = getDBConnection(jdbcConnectionURL, userID, userPass);
+            commStmt = dbConn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             sqlQuery = "Select * from TestTable";
             //sqlQueery = "INSERT INTO TESTTABLE (ID, TESTNAME) VALUES (78, 'HELLO THERE')";
-            rset = stmt.executeQuery(sqlQuery);
+            dbResults = commStmt.executeQuery(sqlQuery);
 
-            while (rset.next()){
-                System.out.println(rset.getString(1) + " " + rset.getString(2));
+            while (dbResults.next()){
+                System.out.println(dbResults.getString(1) + " " + dbResults.getString(2));
             }
 
         }
@@ -514,8 +515,9 @@ public class GUI extends Application
         {
             System.out.println(e.toString());
         }
+        */
 
-        */   
+       
         
         GridPane primaryPane = new GridPane();
         primaryPane.setAlignment(Pos.CENTER);
@@ -3086,4 +3088,194 @@ public class GUI extends Application
         launch(args);
     }
     
-}
+public ResultSet DBCommand(String sqlQuery)
+    {
+        String URL = "jdbc:oracle:thin:@localhost:1521:XE";
+        String userID = "javauser";
+        String userPASS = "javapass";
+        OracleDataSource ds;
+    
+    
+    try
+    {
+        ds = new OracleDataSource();
+        ds.setURL(URL);
+        Connection dbConn = ds.getConnection(userID,userPASS);
+        Statement commStmt = dbConn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        dbResults = commStmt.executeQuery(sqlQuery);
+        
+    }
+    catch (SQLException e) {
+            {
+                System.out.println(e.toString());
+            }
+    }
+    return dbResults; 
+    }
+   
+
+    public void loadCustSaleFromDB() {
+    String query = "SELECT * FROM JAVAUSER.CUSTSALE"; 
+    ResultSet resultset = DBCommand(query); 
+        
+        try{
+            while(resultset.next()){
+                obsSale.add(new CustSale ( resultset.getString ( "SALEDATE"), resultset.getObject"DESCRIPTION"), resultset.getDouble("AMOUNTPAID"), resultset.getDouble("TOTALAMOUNT"), resultset.getString("DATE")));
+            }
+            
+        }
+        catch(SQLException e) {
+            System.out.println(e.toString()); 
+        }
+       
+    }
+    
+    public void loadCustSaleFromDB() {
+    String query = "SELECT * FROM JAVAUSER.CUSTSALE"; 
+    ResultSet resultset = DBCommand(query); 
+        
+        try{
+            while(resultset.next()){
+                obsSale.add(new CustSale ( resultset.getString ( "SALEDATE"), resultset.getObject"DESCRIPTION"), resultset.getDouble("AMOUNTPAID"), resultset.getDouble("TOTALAMOUNT"), resultset.getString("DATE")));
+            }
+            
+        }
+        catch(SQLException e) {
+            System.out.println(e.toString()); 
+        }
+       
+    }
+    
+    public void loadExpensesFromDB() {
+        String query = "SELECT * FROM JAVAUSER.EXPENSE"; 
+        ResultSet resultset = DBCommand(query); 
+        
+        try{
+            while(resultset.next()){
+                obsExpense.add(new Expense ( resultset.getString ( "CATEGORY"), resultset.getString("DESCRIPTION"), resultset.getDouble("AMOUNTPAID"), resultset.getDouble("TOTALAMOUNT"), resultset.getString("DATE")));
+            }
+            
+        }
+        catch(SQLException e) {
+            System.out.println(e.toString()); 
+        }
+    }
+        public void loadEmployeesfromDB()
+        {
+        String query = "SELECT * FROM JAVAUSER.EMPLOYEE"; 
+        ResultSet resultset = DBCommand(query); 
+        
+        try{
+            while(resultset.next()){
+                obsEmp.add(new Employee ( resultset.getString ( "FIRSTNAME"), resultset.getString("LASTNAME"), resultset.getString("EMAIL"), resultset.getString("PHONENUMBER"), resultset.getString("ADDRESS"), resultset.getDouble("SALARY"), resultset.getString("JOBTITLE"), resultset.getString("EMPLOYEETYPE"), resultset.getString("EMPLOYEETYPE"), resultset.getObject("STORE")));
+            }
+            
+        }
+        catch(SQLException e) {
+            System.out.println(e.toString()); 
+        }
+        }
+        public void loadMembersfromDB()
+        {
+        String query = "SELECT * FROM JAVAUSER.MEMBER"; 
+        ResultSet resultset = DBCommand(query); 
+        
+        try{
+            while(resultset.next()){
+                obsMem.add(new Member ( resultset.getString ( "FNAME"), resultset.getString("LNAME"), resultset.getString("PHONENUMBER"), resultset.getString("EMAIL")));
+            }
+            
+        }
+        catch(SQLException e) {
+            System.out.println(e.toString()); 
+        }
+        }
+        
+       /* public void loadPayrollfromDB()
+        {
+        String query = "SELECT * FROM JAVAUSER.PAYROLL"; 
+        ResultSet resultset = DBCommand(query); 
+        
+        try{
+            while(resultset.next()){
+                obsEmp.add(new Payroll (resultset.getObject("EMPLOYEE")));
+            }
+            
+        }
+        catch(SQLException e) {
+            System.out.println(e.toString()); 
+        }
+        }
+*/
+        
+        public void loadProductsfromDB()
+        {
+        String query = "SELECT * FROM JAVAUSER.PRODUCT"; 
+        ResultSet resultset = DBCommand(query); 
+        
+        try{
+            while(resultset.next()){
+                obsProd.add(new Product ( resultset.getString("NAME"), resultset.getInt("QUANTITY"), resultset.getDouble("PRICE"), resultset.getObject("STORE"), resultset.getString("DESCRIPTION"), resultset.getString("CATEGORY"), resultset.getObject("SUPPLIER"), resultset.getObject("IMAGE")));
+            }
+            
+        }
+        catch(SQLException e) {
+            System.out.println(e.toString()); 
+        }
+        }
+        
+        public void loadProductOrdersfromDB()
+        {
+        String query = "SELECT * FROM JAVAUSER.PRODUCTORDER"; 
+        ResultSet resultset = DBCommand(query); 
+        
+        try{
+            while(resultset.next()){
+                obsProdOrder.add(new ProductOrder ( resultset.getString("ORDERDATE"), resultset.getInt("QUANTITY"), resultset.getDouble("UNITCOST"), resultset.getDouble("SUBTOTAL"), resultset.getString("DELIVERYDATE")));
+            }
+            
+        }
+        catch(SQLException e) {
+            System.out.println(e.toString()); 
+        }
+        }
+        
+        public void loadStoresfromDB()
+        {
+        String query = "SELECT * FROM JAVAUSER.STORE"; 
+        ResultSet resultset = DBCommand(query); 
+        
+        try{
+            while(resultset.next()){
+                obsStore.add(new Store ( resultset.getString("NAME"), resultset.getString("ADDRESS")));
+            
+        }
+        }
+        catch(SQLException e) {
+            System.out.println(e.toString()); 
+        }
+        }
+        
+        public void loadSuppliersfromDB()
+        {
+        String query = "SELECT * FROM JAVAUSER.SUPPLIER"; 
+        ResultSet resultset = DBCommand(query); 
+        
+        try{
+            while(resultset.next()){
+                obsSupp.add(new Supplier ( resultset.getString("SUPPLIERNAME"), resultset.getString("SUPPLIERPHONE"), resultset.getString("SUPPLIEREMAIL"), resultset.getString("SUPPLIERADDRESS"), resultset.getString("SALESCONTACTNAME"), resultset.getString("SALESCONTACTNUMBER"), resultset.getString("SALESCONTACTEMAIL")));
+            }
+            
+        }
+        catch(SQLException e) {
+            System.out.println(e.toString()); 
+        }
+        }
+        
+        
+        
+        
+    
+       
+    }
+
