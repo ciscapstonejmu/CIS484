@@ -554,9 +554,8 @@ public class GUI extends Application
         primaryPane.add(txtUser, 0, 5);
         primaryPane.add(lblPassword, 0, 6);
         primaryPane.add(txtPass, 0, 7);
-        //primaryPane.add(cmboLoginType, 0, 8);
         primaryPane.add(btnSignIn, 0, 9);
-        //primaryPane.add(btnForgot, 0, 10);
+
         
         GridPane sixthPane = new GridPane(); 
         sixthPane.setAlignment(Pos.TOP_CENTER); 
@@ -618,7 +617,6 @@ public class GUI extends Application
         btnAddProd.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnEditExp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnEmpDisplay.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        btnEnterTime.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnHandleImage.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnMonthDisplay.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnPEEmp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
@@ -640,6 +638,7 @@ public class GUI extends Application
         editProd.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         
         btnRingSale.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnEnterTime.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         
         //BUTTONS third + pane (10pt font)
         addEmp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
@@ -935,6 +934,7 @@ public class GUI extends Application
             secondPane.add(lblMain, 3, 4);
             secondPane.add(lblSelect, 3, 5);
             secondPane.add(btnRingSale, 3, 6);
+            secondPane.add(btnEnterTime, 3, 7);
             mainPane.add(lblMenu1, 0, 0);
             mainPane.add(lblMenu2, 1, 0);
             mainPane.add(lblMenu3, 0, 1);
@@ -992,7 +992,7 @@ public class GUI extends Application
                if(temp.getUsername().equalsIgnoreCase(txtUser.getText()) && temp.getPassword().equals(txtPass.getText()))
                {
                    found = true;
-                   if(temp.getEmployeeType().equalsIgnoreCase("Manager"))
+                   if(temp.getEmployeeCategory().equalsIgnoreCase("Manager"))
                    {
                        isAuthorized = true;
                    }
@@ -2836,21 +2836,9 @@ public class GUI extends Application
             
             cmboEmp.setMaxWidth(Double.MAX_VALUE);
             btnPEEmp.setMaxWidth(Double.MAX_VALUE);
-            btnEnterTime.setMaxWidth(Double.MAX_VALUE);
             
+                vPay.getChildren().addAll(lblPayroll, lblPEEmp, cmboEmp, btnPEEmp);
             
-            
-            if(isAuthorized == true)
-            {
-                // What managers will see
-                vPay.getChildren().addAll(lblPayroll, lblPEEmp, cmboEmp, btnPEEmp, btnEnterTime);
-            }
-            
-            else
-            {
-                // What associates will see
-                vPay.getChildren().addAll(lblPayroll, btnEnterTime);
-            }
             border.setCenter(txtPayroll);
             border.setTop(menuAdmin);
             border.setLeft(vPay);
