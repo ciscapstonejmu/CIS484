@@ -212,10 +212,20 @@ public class CustSaleForm {
             //Find products in sale      
 
             int saleProd = cmboSaleProd.getSelectionModel().getSelectedIndex();
-
-            this.saleProducts.add(GUI.prodList.get(saleProd));
             
-            if(saleProducts.size() > GUI.prodList.size())
+            if(cmboSaleStore.getSelectionModel().isEmpty())
+            {
+                alertError.setTitle("Error");
+                alertError.setHeaderText("Please Select Store!");
+                alertError.showAndWait();
+            }
+            if(cmboSaleProd.getSelectionModel().isEmpty())
+            {
+                alertError.setTitle("Error");
+                alertError.setHeaderText("Please Select Product!");
+                alertError.showAndWait();
+            }           
+                        if(saleProducts.size() > GUI.prodList.size())
             {
                 saleProducts.remove(saleProd);
                 alertError.setTitle("Error");
@@ -223,6 +233,7 @@ public class CustSaleForm {
                 alertError.showAndWait();
             }
             else{
+            this.saleProducts.add(GUI.prodList.get(saleProd));                    
             String saleOut = "";
             saleOut += GUI.prodList.get(saleProd).toStringSale();
             saleOut += "\n";
@@ -233,14 +244,21 @@ public class CustSaleForm {
             alert.setHeaderText("Sale Has Been Added!");
             alert.showAndWait();
             txtSaleOutput.setEditable(false);
-            
             }
+            
             });
         
         btnRepeatBuy.setOnAction(e -> {
             //Repeat the purchase of the same item repeatedly
             int saleProd = cmboSaleProd.getSelectionModel().getSelectedIndex();
             this.saleProducts.add(GUI.prodList.get(saleProd));
+            if(saleProducts.size() > GUI.prodList.size())
+            {
+                saleProducts.remove(saleProd);
+                alertError.setTitle("Error");
+                alertError.setHeaderText("Sale Quantity exceeds Inventory!");
+                alertError.showAndWait();
+            }
              String saleOut = "";
             saleOut += GUI.prodList.get(saleProd).toStringSale();
             saleOut += "\n";
@@ -284,7 +302,7 @@ public class CustSaleForm {
             addMemStage.close();
             
             Member.obsMem.add(txtMemLName.getText() + ", " + txtMemFName.getText());
-            GUI.cmboMem.getSelectionModel().select(Member.memCount - 1);
+            //GUI.cmboMem.setSelectionModel(memCount);
             
         });
         
