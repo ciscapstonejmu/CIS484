@@ -1022,13 +1022,13 @@ public class GUI extends Application
         }
         catch(Exception ex)
         {
- System.out.println("Given:" + ex + "Employees were not imported");
+        System.out.println("Given:" + ex + "Employees were not imported");
         }
         try
         {
           ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("suppliers.dat"));
 
-           suppList = (ArrayList<Supplier>)(instanceObjectInput.readObject());
+           suppList.addAll((ArrayList<Supplier>)(instanceObjectInput.readObject()));
            for(Supplier supp : suppList){
                Supplier.obsSupp.add(supp.getName());
            }
@@ -1052,69 +1052,8 @@ public class GUI extends Application
         }
         catch(Exception ex)
         {
-             System.out.println("Given:" + ex + "Employees were not imported");
+             System.out.println("Given:" + ex + "Products were not imported");
         }
-        try
-        {
-          ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("suppliers.dat"));
-
-           suppList = (ArrayList<Supplier>)(instanceObjectInput.readObject());
-           for(Supplier supp : suppList){
-               Supplier.obsSupp.add(supp.getName());
-           }
-           instanceObjectInput.close();
-        }
-        catch(Exception ex)
-        {
-           System.out.println("Given:" + ex + "Suppliers were not imported");
-        }
-        try
-        {
-          ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("products.dat"));
-
-           prodList.addAll((ArrayList<Product>)(instanceObjectInput.readObject()));
-           for(Product prod : prodList){
-               Product.obsProd.add(prod.getProductID() +": "+ prod.getProductName());
-               prodData.add(prod);
-           }
-
-           instanceObjectInput.close();
-        }
-        catch(Exception ex)
-        {
-           System.out.println("Given:" + ex + "Employees were not imported");
-        }
-        try
-        {
-          ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("suppliers.dat"));
-
-           suppList = (ArrayList<Supplier>)(instanceObjectInput.readObject());
-           for(Supplier supp : suppList){
-               Supplier.obsSupp.add(supp.getName());
-           }
-           instanceObjectInput.close();
-        }
-        catch(Exception ex)
-        {
-           System.out.println("Given:" + ex + "Suppliers were not imported");
-        }
-        try
-        {
-          ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("products.dat"));
-
-           prodList.addAll((ArrayList<Product>)(instanceObjectInput.readObject()));
-           for(Product prod : prodList){
-               Product.obsProd.add(prod.getProductID() +": "+ prod.getProductName());
-               prodData.add(prod);
-           }
-
-           instanceObjectInput.close();
-        }
-        catch(Exception ex)
-        {
-            System.out.println("Given:" + ex + "Products were not imported");
-        }
-        
         btnSignIn.setOnAction(e -> {
             // code to validate log in, has to have two handlers for admin and worker
             // error handling
