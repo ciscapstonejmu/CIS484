@@ -697,6 +697,7 @@ public class GUI extends Application
         createSupp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnSelectExpense.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnConfirmPayExp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnSetDiscount.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         
         btnRingSale.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnEnterTime.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
@@ -786,6 +787,7 @@ public class GUI extends Application
         lblAddSupp.setStyle("-fx-font: bold 14pt \"bookman\";"); 
         lblEnterTimes.setStyle("-fx-font: bold 14pt \"bookman\";");
         lblPayExpenseHeader.setStyle("-fx-font: bold 14pt \"bookman\";");
+        lblMngDiscount.setStyle("-fx-font: bold 14pt \"bookman\";");
         
         GridPane secondPane = new GridPane();
         
@@ -2972,12 +2974,12 @@ public class GUI extends Application
         
         menuAdmin.getMenus().get(1).getItems().get(4).setOnAction(e -> {
             // Discount Management
-
+            discountPane.getChildren().clear();
             discountStage.setTitle("Set Member Discount");
             discountStage.show();
             discountPane.setAlignment(Pos.TOP_CENTER);
 
-            discountPane.add(lblMngDiscount, 0, 0);
+            discountPane.add(lblMngDiscount, 0, 0, 3, 1);
             discountPane.add(lblCDiscount, 0, 1);
             discountPane.add(txtCDiscount, 0, 2);
             discountPane.add(lblSetDiscount, 1, 1);
