@@ -256,7 +256,7 @@ public class CustSaleForm{
                 alertError.setHeaderText("Fields Filled Incorrectly, Try again!");
                 alertError.showAndWait();
             }      
-            if(saleProducts.size() > GUI.prodList.size())
+            else if(saleProducts.size() > GUI.prodList.size())
             {
                 saleProducts.remove(saleProd);
                 txtSaleOutput.clear();
