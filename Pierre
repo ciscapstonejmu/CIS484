@@ -447,8 +447,9 @@ public class GUI extends Application
     Button btnSetDiscount = new Button("Set Discount");
     
     //POS Report
-    Label lblPOS = new Label("Point of Sales");
+   Label lblPOS = new Label("Point of Sales");
     Label lblViewType = new Label("View Type");
+    ArrayList<CustSale> reportSales = new ArrayList<>();
     ObservableList<String> type = FXCollections.observableArrayList("Week - daily",
             "Month - weekly", "Year - monthly", "Total sales today");
     ComboBox cmboType = new ComboBox(type);
@@ -460,6 +461,12 @@ public class GUI extends Application
     Tab tabPOSChart = new Tab("Chart");
     GridPane formPane = new GridPane();
     TextArea txtPOS = new TextArea();
+    LocalDate currentDate;
+    SimpleDateFormat posF = new SimpleDateFormat("yyyy-MM-dd");
+    String cDate;
+    String yDate;
+    String mDate;
+    String dDate;
     //create text area
     
     // Employee Report
@@ -545,6 +552,11 @@ public class GUI extends Application
 
         */   
         
+        currentDate = LocalDate.now();        
+        cDate = currentDate.format(DateTimeFormatter.ISO_DATE);
+        yDate = cDate.substring(0, 5);
+        mDate = cDate.substring(6, 8);
+        dDate = cDate.substring(9, cDate.length());
         GridPane primaryPane = new GridPane();
         primaryPane.setAlignment(Pos.CENTER);
         
