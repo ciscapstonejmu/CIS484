@@ -120,5 +120,12 @@ public class CustSale {
                 + "\nTax: $" + formatter.format(this.tax)
                 + "\nTotal: $" + formatter.format(this.totalCost); 
     }
+    
+    public String toStringNoMem() {
+        return "Sale Number: " + this.saleID + "\nDate: " + this.saleDate.toString()
+                + "\nSubtotal: $" + formatter.format(this.subtotal) 
+                + "\nTax: $" + formatter.format(this.tax)
+                + "\nTotal: $" + formatter.format(this.totalCost); 
+    }
 
 }
