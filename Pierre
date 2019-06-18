@@ -2984,14 +2984,14 @@ public class GUI extends Application
             discountPane.add(txtSetDiscount, 1, 2);
             discountPane.add(btnSetDiscount, 1, 3);
 
-            //txtCDiscount.setText(String.valueOf(CustSale.getDiscPct()));
+            txtCDiscount.setText(String.valueOf(CustSale.getDiscPct()));
             txtCDiscount.setEditable(false);
 
         });
         
         btnSetDiscount.setOnAction(e -> {
 
-            //CustSale.setDiscPct(Double.valueOf(txtSetDiscount.getText()));
+            CustSale.setDiscPct(Double.valueOf(txtSetDiscount.getText()));
 
             alert.setTitle("Success!");
             alert.setHeaderText("Discount Updated!");
