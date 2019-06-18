@@ -2456,6 +2456,7 @@ public class GUI extends Application
             secondPane.getChildren().clear();
             formPane.getChildren().clear();
             border.getChildren().clear();
+            cmboStore.getSelectionModel().clearSelection();
            
             secondPane.setAlignment(Pos.TOP_CENTER);
             secondStage.setTitle("Expense Management");
@@ -2486,6 +2487,7 @@ public class GUI extends Application
             thirdPane.getChildren().clear();
             txtExpDesc.clear();
             txtAmount.clear();
+            txtTtlAmount.clear();
             cmboExpCategory.getSelectionModel().clearSelection();
             cmboStatus.getSelectionModel().clearSelection();
             expDate.getEditor().clear();
@@ -2529,12 +2531,13 @@ public class GUI extends Application
                 Double totalAmount = Double.parseDouble(txtTtlAmount.getText());
                 String date = expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
 
-                obsExpense.add(new Expense(category, description, amountPaid, totalAmount, date));
                 System.out.println(obsExpense.size());
-                //expList.add(new Expense(category, description, amountPaid, date, status));
-                expList.add(new Expense((String) expCategory.get(cmboExpCategory.getSelectionModel().getSelectedIndex()),
+                //expList.add(new Expense(category, description, amountPaid, totalAmount, date));
+                Expense exp1 = new Expense((String) expCategory.get(cmboExpCategory.getSelectionModel().getSelectedIndex()),
                         txtExpDesc.getText(), Double.parseDouble(txtAmount.getText()), Double.parseDouble(txtTtlAmount.getText()),
-                        expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"))));
+                        expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")));
+                expList.add(exp1);
+                obsExpense.add(exp1);
                 alert.setTitle("Success!");
                 alert.setHeaderText("The expense has been added!");
                 alert.showAndWait();
@@ -2553,6 +2556,7 @@ public class GUI extends Application
 
                 txtExpDesc.clear();
                 txtAmount.clear();
+                txtTtlAmount.clear();
                 cmboExpCategory.getSelectionModel().clearSelection();
                 cmboStatus.getSelectionModel().clearSelection();
                 expDate.getEditor().clear();
