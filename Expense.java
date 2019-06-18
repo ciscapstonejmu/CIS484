@@ -85,9 +85,9 @@ public class Expense {
         return this.description;
     }
     
-    public void setTotalAmount(double amount)
+    public void setTotalAmount(double totalAmount)
     {
-        this.totalAmount = amount;
+        this.totalAmount = totalAmount;
     }
     
     public double getTotalAmount()
