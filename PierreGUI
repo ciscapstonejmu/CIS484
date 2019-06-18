@@ -829,6 +829,7 @@ public class GUI extends Application
         TableColumn tbExpCategory = new TableColumn("Category");
         TableColumn tbExpDesc = new TableColumn("Description");
         TableColumn tbExpAmount = new TableColumn("Amount Paid");
+        TableColumn tbExpRemainBalance = new TableColumn("Amount Remaining");
         TableColumn tbExpDate = new TableColumn("Date Paid");
         TableColumn tbExpStatus = new TableColumn("Status");
 
@@ -837,6 +838,7 @@ public class GUI extends Application
         tbExpCategory.setCellValueFactory(new PropertyValueFactory<Expense, String>("category"));
         tbExpDesc.setCellValueFactory(new PropertyValueFactory<Expense, String>("description"));
         tbExpAmount.setCellValueFactory(new PropertyValueFactory<Expense, Double>("amountPaid"));
+        tbExpRemainBalance.setCellValueFactory(new PropertyValueFactory<Expense, Double>("remainingBalance"));
         tbExpDate.setCellValueFactory(new PropertyValueFactory<Expense, String>("date"));
         tbExpStatus.setCellValueFactory(new PropertyValueFactory<Expense, String>("status"));
         
@@ -2200,7 +2202,7 @@ public class GUI extends Application
             thirdStage.close();
         });
         
-        expTable.getColumns().addAll(tbExpID, tbExpCategory, tbExpDesc, tbExpAmount, tbExpDate, tbExpStatus); 
+        expTable.getColumns().addAll(tbExpID, tbExpCategory, tbExpDesc, tbExpAmount, tbExpRemainBalance, tbExpDate, tbExpStatus); 
         menuAdmin.getMenus().get(1).getItems().get(2).setOnAction(e -> {
            // Expense Management
            
@@ -2233,6 +2235,15 @@ public class GUI extends Application
         
         btnAddExp.setOnAction(e -> {
             // Adding an Expense
+            if (txtExpDesc.getText() == null || cmboExpCategory.getValue() == null || txtAmount.getText().trim().isEmpty() || txtTtlAmount.getText().trim().isEmpty() || expDate.getValue() == null){
+            alert.setTitle("Error!");
+            alert.setHeaderText("Please input or select something in each field!");
+            alert.showAndWait();  
+            
+            
+            }
+            else
+            {
             thirdPane.getChildren().clear();
             thirdStage.setTitle("Add an Expense");
             thirdStage.show();
@@ -2253,6 +2264,7 @@ public class GUI extends Application
             thirdPane.add(txtTtlAmount, 1, 6);
             thirdPane.add(addExp, 0, 7);
             expDate.setValue(LocalDate.now());
+            }
         });
         
         addExp.setOnAction(e -> {
@@ -2266,6 +2278,7 @@ public class GUI extends Application
 
             obsExpense.add(new Expense(category, description, amountPaid, totalAmount, date));
             System.out.println(obsExpense.size());
+            
             //expList.add(new Expense(category, description, amountPaid, date, status));
             expList.add(new Expense((String) expCategory.get(cmboExpCategory.getSelectionModel().getSelectedIndex()),
                     txtExpDesc.getText(), Double.parseDouble(txtAmount.getText()), Double.parseDouble(txtTtlAmount.getText()),
@@ -2404,7 +2417,7 @@ public class GUI extends Application
             if (exC.getAmountPaid() <= exC.getTotalAmount()) {
                 exC.setStatus("Paid");
             }
-
+            exC.setRemainingBalance(exC.getTotalAmount() - exC.getAmountPaid());
             //exC.setDate((expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"))));
             alert.setTitle("Success!");
             alert.setHeaderText("Expense has been Edited!");
@@ -2418,7 +2431,7 @@ public class GUI extends Application
         });
         btnPayExp.setOnAction(e -> {
 
-            if (Expense.obsExpense.size() > 1) {
+            if (Expense.obsExpense.size() < 1) {
                 alert.setTitle("Error!");
                 alert.setHeaderText("No expenses to pay!");
                 alert.showAndWait();
@@ -2431,8 +2444,7 @@ public class GUI extends Application
                 }
             }
 
-            System.out.println(expList.size() + " wap");
-            System.out.println(obsUnpaidExp.size() + " wop");
+
             eighthPane.add(lblChooseExp, 0, 1);
             eighthPane.add(cmboUnpaidExp, 0, 2);
             eighthPane.add(btnSelectExpense, 0, 3);
@@ -2454,9 +2466,17 @@ public class GUI extends Application
         });
 
         btnSelectExpense.setOnAction(e -> {
-
+            if (cmboUnpaidExp.getValue() == null)
+            {
+            alert.setTitle("Error!");
+            alert.setHeaderText("Please Select an Expense!");
+            alert.showAndWait();
+            }
+            else
+            {
             unpaidExpVar = cmboUnpaidExp.getSelectionModel().getSelectedIndex();
             txtExpCurrentAmount.setText(String.valueOf(obsUnpaidExp.get(unpaidExpVar).getAmountPaid()));
+            }
 
         });
         btnConfirmPayExp.setOnAction(e -> {
