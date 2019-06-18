@@ -85,9 +85,9 @@ public class Expense {
         return this.description;
     }
     
-    public void setTotalAmount(double totalAmount)
+    public void setTotalAmount(double amount)
     {
-        this.totalAmount = totalAmount;
+        this.totalAmount = amount;
     }
     
     public double getTotalAmount()
@@ -133,6 +133,11 @@ public class Expense {
     public Store getStore()
     {
         return this.payableStore;
+    }
+    
+    public void setRemainingBalance(double rb)
+    {
+        this.remainingBalance = rb;
     }
     
     public double getRemainingBalance()
