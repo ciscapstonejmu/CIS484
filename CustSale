@@ -22,7 +22,7 @@ public class CustSale {
     private double tax;
     private double totalCost;
     private double discount;
-    private double discPct = 0.05;
+    public static double discPct = .05;
     
     //Fromatter for money figures
     DecimalFormat formatter = new DecimalFormat("#0.00");
@@ -102,21 +102,21 @@ public class CustSale {
         return this.subtotal; 
     }
     
-    public void setDiscPct(double discPct)
+    public static void setDiscPct(double newdiscPct)
     {
-        this.discPct = discPct;
+        discPct = newdiscPct;
     }
     
-    public double getDiscPct()
+    public static double getDiscPct()
     {
-        return this.discPct;
+        return discPct;
     }
     
     @Override
     public String toString() {
         return "Sale Number: " + this.saleID + "\nDate: " + this.saleDate.toString()
                 + "\nSubtotal: $" + formatter.format(this.subtotal) 
-                + "\nMember Discount (%5): $" + formatter.format(this.discount)
+                + "\nMember Discount (%" + formatter.format(discPct) + "): $" + formatter.format(this.discount)
                 + "\nTax: $" + formatter.format(this.tax)
                 + "\nTotal: $" + formatter.format(this.totalCost); 
     }
