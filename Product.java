@@ -4,14 +4,13 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.ImageView;
 import javax.imageio.ImageIO;
 import java.text.DecimalFormat;
 
-public class Product implements Serializable{
+public class Product {
     private int productID;
     private String productName;
     private int quantity;
@@ -38,7 +37,7 @@ public class Product implements Serializable{
         this.productName = productName;
         this.quantity = quantity;
         this.price = price;
-        this.location = store.getName();
+        this.location = store.getStoreName();
         this.foodDescription = foodDescription;
         this.category = category;
         this.store = store;
@@ -99,7 +98,7 @@ public class Product implements Serializable{
         this.productName = productName;
         this.quantity = quantity;
         this.price = price;
-        this.location = store.getName();
+        this.location = store.getStoreName();
         this.foodDescription = foodDescription;
         this.category = category;
         this.supp = supp; 
