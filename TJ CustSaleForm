@@ -264,6 +264,12 @@ public class CustSaleForm{
                 alertError.setHeaderText("Sale Quantity exceeds Inventory!");
                 alertError.showAndWait();
             }
+            if(saleProducts.size() == GUI.prodList.size())
+            {
+                alertError.setTitle("Inventory Order Required!");
+                alertError.setHeaderText("Inventory at 0, Please Order More!");
+                alertError.showAndWait();
+            }
             else
             {
             alert.setTitle("Success!");
@@ -459,7 +465,7 @@ public class CustSaleForm{
             {
                 System.out.println("Given: " + ex + "Exception in Completing Sale");
             }
-                
+            
             });
         
         
