@@ -740,6 +740,8 @@ public class GUI extends Application
         btnSavePay.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnConfirmRemoveStore.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnConfirmEditStore.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnSavePO.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnCancelPO.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         
         //small form labels and combobox
         empCat.setStyle("-fx-font: 9pt \"bookman\";");
@@ -802,6 +804,8 @@ public class GUI extends Application
         lblEnterTimes.setStyle("-fx-font: bold 14pt \"bookman\";");
         lblPayExpenseHeader.setStyle("-fx-font: bold 14pt \"bookman\";");
         lblMngDiscount.setStyle("-fx-font: bold 14pt \"bookman\";");
+        lblPO.setStyle("-fx-font: bold 14pt \"bookman\";");
+        lblEPO.setStyle("-fx-font: bold 14pt \"bookman\";");
         
         GridPane secondPane = new GridPane();
         
@@ -1235,7 +1239,7 @@ public class GUI extends Application
             
             vbButtons.getChildren().addAll(lblInv, lblInvMan, createSupp, cmboSupp2,
                     btnEditSupp, btnviewSupp, btnAddProd, cmboProd, btnRemoveProd, 
-                    btnDisProd, btnHandleImage, cmboProdOrder2, btnAddOrder, btnEditPO, btnViewOrder);
+                    btnDisProd, btnHandleImage, btnAddOrder, cmboProdOrder2, btnEditPO, btnViewOrder);
 
 
             //secondPane.add(vbButtons, 3, 3);
@@ -1630,7 +1634,7 @@ public class GUI extends Application
             fifthStage.show();
             fifthPane.setAlignment(Pos.TOP_CENTER);
 
-            fifthPane.add(lblPO, 0, 0); 
+            fifthPane.add(lblPO, 0, 0, 3, 1); 
             fifthPane.add(lblProdName, 0, 1);
             fifthPane.add(txtProdName, 0, 2);
             fifthPane.add(lblUnitCost, 1,5); 
@@ -1658,7 +1662,7 @@ public class GUI extends Application
             //thirdPane.add(btnImage, 0, 10);
             fifthPane.add(lblProdStore, 2,3);
             fifthPane.add(cmboStore, 2, 4); //when picking which store the product is for, should be selected from already existing stores created 
-
+            txtSubTotal.setEditable(false);
 
             fifthPane.add(btnCompleteOrder, 0, 10);
         }); 
@@ -1712,7 +1716,7 @@ public class GUI extends Application
             fifthPane.add(cmboProdOrder, 0, 0); 
             fifthPane.add(btnDisplayPO, 0, 1); 
             fifthPane.add(btnViewAllPO, 0, 2); 
-            fifthPane.add(prodOrderOutput, 1, 2, 12, 15);  
+            fifthPane.add(prodOrderOutput, 0, 3, 12, 15);  
         }); 
         
         
