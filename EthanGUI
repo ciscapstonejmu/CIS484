@@ -471,6 +471,10 @@ public class GUI extends Application
     GridPane textPane = new GridPane();
     TextArea txtPvE = new TextArea();
     
+    String pveOutput = "";
+    
+            
+    
     // Menu Bar for Admin
     MenuBar menuAdmin = new MenuBar();
     Menu menuHome = new Menu("Main Menu");
@@ -846,6 +850,7 @@ public class GUI extends Application
         TableColumn tbExpDesc = new TableColumn("Description");
         TableColumn tbExpAmount = new TableColumn("Amount Paid");
         TableColumn tbExpTtlAmount = new TableColumn("Total Amount");
+        TableColumn tbExpRemainBalance = new TableColumn("Amount Remaining");
         TableColumn tbExpDate = new TableColumn("Date Paid");
         TableColumn tbExpStatus = new TableColumn("Status");
 
@@ -855,6 +860,7 @@ public class GUI extends Application
         tbExpDesc.setCellValueFactory(new PropertyValueFactory<Expense, String>("description"));
         tbExpAmount.setCellValueFactory(new PropertyValueFactory<Expense, Double>("amountPaid"));
         tbExpTtlAmount.setCellValueFactory(new PropertyValueFactory<Expense, Double>("totalAmount"));
+        tbExpRemainBalance.setCellValueFactory(new PropertyValueFactory<Expense, Double>("remainingBalance"));
         tbExpDate.setCellValueFactory(new PropertyValueFactory<Expense, String>("date"));
         tbExpStatus.setCellValueFactory(new PropertyValueFactory<Expense, String>("status"));
         
@@ -2164,7 +2170,7 @@ public class GUI extends Application
             thirdStage.close();
         });
         
-        expTable.getColumns().addAll(tbExpID, tbExpCategory, tbExpDesc, tbExpAmount, tbExpTtlAmount, tbExpDate, tbExpStatus); 
+        expTable.getColumns().addAll(tbExpID, tbExpCategory, tbExpDesc, tbExpAmount, tbExpTtlAmount, tbExpRemainBalance, tbExpDate, tbExpStatus); 
         menuAdmin.getMenus().get(1).getItems().get(2).setOnAction(e -> {
            // Expense Management
            
@@ -2224,6 +2230,15 @@ public class GUI extends Application
         
         addExp.setOnAction(e -> {
             //emplouee added clicked
+            if (txtExpDesc.getText() == null || cmboExpCategory.getValue() == null || txtAmount.getText().trim().isEmpty() || txtTtlAmount.getText().trim().isEmpty() || expDate.getValue() == null){
+            alert.setTitle("Error!");
+            alert.setHeaderText("Please input or select something in each field!");
+            alert.showAndWait();  
+            
+            
+            }
+            else
+            {
             String description = txtExpDesc.getText();
             String category = (String)cmboExpCategory.getValue();
             System.out.println(category);
@@ -2271,6 +2286,7 @@ public class GUI extends Application
             expDate.getEditor().clear();
             
             thirdStage.close();
+                    }
         });
         
         btnEditExp.setOnAction(e -> {
@@ -2380,6 +2396,7 @@ public class GUI extends Application
             if (exC.getAmountPaid() >= exC.getTotalAmount()) {
                 exC.setStatus("Paid"); 
             }
+            exC.setRemainingBalance(exC.getTotalAmount() - exC.getAmountPaid());
             System.out.println(exC.toString());
             //exC.setDate((expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"))));
             alert.setTitle("Success!");
@@ -2395,18 +2412,19 @@ public class GUI extends Application
         });
         btnPayExp.setOnAction(e -> {
 
-            if (Expense.obsExpense.size() > 1) {
+            if (Expense.obsExpense.size() < 1) {
                 alert.setTitle("Error!");
                 alert.setHeaderText("No expenses to pay!");
                 alert.showAndWait();
-            } else {
+            }
+             else {
 
                 for (int i = 0; i < expList.size(); i++) {
                     if (expList.get(i).getStatus().equalsIgnoreCase("ONGOING")) {
                         obsUnpaidExp.add(expList.get(i));
                     }
                 }
-            }
+            
             //System.out.println(expList.size() + " wap");
             //System.out.println(obsUnpaidExp.size() + " wop");
             eighthPane.add(lblChooseExp, 0, 1);
@@ -2427,13 +2445,22 @@ public class GUI extends Application
             System.out.println(unpaidExpVar + " / " + obsUnpaidExp.size());
 
             //System.out.println(expList.get(0).payExpense(Double.parseDouble(txtChoosePayment.getText())));
+            }
         });
 
         btnSelectExpense.setOnAction(e -> {
 
+            if (cmboUnpaidExp.getValue() == null)
+            {
+            alert.setTitle("Error!");
+            alert.setHeaderText("Please Select an Expense!");
+            alert.showAndWait();
+            }
+            else
+            {
             unpaidExpVar = cmboUnpaidExp.getSelectionModel().getSelectedIndex();
             txtExpCurrentAmount.setText(String.valueOf(obsUnpaidExp.get(unpaidExpVar).getAmountPaid()));
-
+            }
         });
         btnConfirmPayExp.setOnAction(e -> {
 
@@ -2547,7 +2574,7 @@ public class GUI extends Application
         });
 
         btnRemExpType.setOnAction(e -> {
-
+            
             ninthPane.getChildren().clear();
             ninthPane.add(lblRemoveExpTypeHeader, 0, 0);
             ninthPane.add(lblChooseExpType, 0, 1);
@@ -2557,7 +2584,15 @@ public class GUI extends Application
         });
 
         btnConfirmRemExpType.setOnAction(e -> {
-
+            if (cmboExpCategory.getValue() == null)
+            {
+            alert.setTitle("Error!");
+            alert.setHeaderText("No category selected!");
+            alert.showAndWait();
+        }
+            else
+            {
+                
             expCatVar = cmboExpCategory.getSelectionModel().getSelectedIndex();
             expCategory.remove(expCatVar);
 
@@ -2567,6 +2602,7 @@ public class GUI extends Application
             //insert code to add employee to object
 
             ninthStage.close();
+            }
 
         });
 
@@ -3059,9 +3095,20 @@ public class GUI extends Application
            border.setCenter(tbPvE);
            
            String output = "";
-           
+           double expTotal = 0.0;
            output += "Profit v. Expense Report:";
            output += "\n========================================================\n";
+           for (int i = 0; i < expCategory.size(); i++)
+           {
+               output += expCategory.get(i) + " : \n";
+               for (int j = 0; j < obsExpense.size(); j++)
+               {
+                   if (obsExpense.get(j).getCategory().equalsIgnoreCase(expCategory.get(i)))
+                   {
+                       expTotal += obsExpense.get(j).getTotalAmount();
+                   }
+               }
+           }
            
            txtPvE.setText(output);
            
@@ -3070,11 +3117,24 @@ public class GUI extends Application
         
         btnPvEDisplay.setOnAction(e -> {
             String output = "";
-           
-           output += "Profit v. Expense Report:";
-           output += "\n========================================================\n";
-           output += "Year: " + cmboYear.getValue().toString();
-           output += "\n------------------------------------------------------\n";
+            double expTotal = 0.0;
+            output += "Profit v. Expense Report:";
+            output += "\n========================================================\n";
+            output += "Year: " + cmboYear.getValue().toString();
+            output += "\n------------------------------------------------------\n";
+            for (int i = 0; i < expCategory.size(); i++)
+           {
+               output += "\n" + expCategory.get(i) + " : ";
+               for (int j = 0; j < obsExpense.size(); j++)
+               {
+                   if (obsExpense.get(j).getCategory().equalsIgnoreCase(expCategory.get(i)))
+                   {
+                       expTotal += obsExpense.get(j).getTotalAmount();
+                       output += expTotal + "\n";
+                       expTotal = 0.0;
+                   }
+               }
+           }
            
            //create loop or whatever to print out PvE based on store and year
            txtPvE.setText(output);
@@ -3096,7 +3156,8 @@ public class GUI extends Application
         return ds.getConnection(user, pass);
     }
 */
-     @Override
+/*     
+//@Override
     public void stop(){
         
         
@@ -3127,7 +3188,7 @@ public class GUI extends Application
             Customer cst = (Customer) obsCust.get(i);
             cstData = " ('" + cst.getID() + "' , '" + cst.getName() + "' , '" + cst.getEmail() + "' , '" + cst.getPhoneNumber() + "' , '" +
                     cst.getAddress() + "' , '" + cst.getPaymentMethod() + "')";
-            cstQuery = "INSERT INTO CUSTOMER (CUSTOMERID, NAME, EMAIL, PHONENUMBER, ADDRESS, PAYMENTMETHOD) VALUES" + cstData;
+            cstQuery = "INSERT INTO CUSTOMER (CUSTOMERID, CUSTNAME, CUSTEMAIL, CUSTPHONE, CUSTADDRESS, CUSTPAYMETHOD) VALUES" + cstData;
             
         }
         
@@ -3137,10 +3198,10 @@ public class GUI extends Application
             Store str = (Store) em.getStore();
             emData = "('" + em.getEmployeeID() + "' , '" + em.getFirstName() + 
                     "' , '" + em.getLastName() + "' , '" + em.getEmail() + "' , '" + 
-                    em.getPhoneNumber() + "' , '" + em.getAddress() + "' , '" + em.getSalary() +
+                    em.getPhoneNumber() + "' , '" + em.getAddress() + "' , '" + em.getHourly() +
                     "' , '" + em.getJobTitle() + "' , '" + em.getEmployeeType() + "' , '" + em.getEmployeeCategory() +
                     "' , '" + em.getStore() +  "' )";
-            emQuery = "INSERT INTO EMPLOYEE (EMPLOYEEID, FIRSTNAME, LASTNAME, EMAIL, PHONENUMBER, ADDRESS, SALARY, JOBTITLE, EMPLOYEETYPE, EMPLOYEECATEGORY, STORE) VALUES" + emData;
+            emQuery = "INSERT INTO EMPLOYEE (EMPLOYEEID, EMPLOYEFNAME, EMPLOYLNAME, EMPLOYEMAIL, EMPLOYPHONENUMBER, EMPLOYADDRESS, EMPLOYHOURLY, EMPLOYJOBTITLE, EMPLOYTIMEWORKED, EMPLOYTYPE, EMPLOYUSERNAME, EMPLOYEECATEGORY, EMPLOYPASSWORD, STORE) VALUES" + emData;
             strData = "('" + str.getID() + "' , '" + str.getName() + "' , '" + str.getAddress() + "' )";
             strQuery = "INSERT INTO STORE (STOREID, STORENAME, STOREADDRESS) VALUES" + strData;
         }
@@ -3171,7 +3232,7 @@ public class GUI extends Application
                         "' , '" + pay.schedule + "' , '" + pay.scheduleDay + "' , '" + pay.arrTimeIn + "' , '" + pay.arrTimeOut + "' , '" + pay.totalWork +
                         "' , '" + pay.getAmountPaid() + "' )";
                 payQuery = "INSERT INTO PAYROLL (PAYROLLID, PAYROLLPERIOD, START, END, HOURSWORKED, SCHEDULE, SCHEDULEDAY, ARRTIMEIN, ARRTIMEOUT, TOTALWORK, AMOUNTPAID) VALUES" + payData;
-            */
+            
                 payData = " ('" + pay.getID() + "' , '" + pay.getEmp() + "' )";
                 payQuery = "INSERT INTO PAYROLL (PAYROLLID, EMPLOYEE) VALUES" + payData;
                 }
@@ -3226,13 +3287,13 @@ public class GUI extends Application
         
         
     }
-    
+    */
     public static void main(String[] args) {
         launch(args);
     }
     
 
-    
+    /*
 public ResultSet DBCommand(String sqlQuery)
     {
         String URL = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -3362,7 +3423,7 @@ public ResultSet DBCommand(String sqlQuery)
             System.out.println(e.toString()); 
         }
         }
-*/
+
         
         public void loadProductsfromDB()
         {
@@ -3428,7 +3489,7 @@ public ResultSet DBCommand(String sqlQuery)
         }
         }
         
-        
+        */
         
         
     
