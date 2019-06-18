@@ -25,7 +25,7 @@ public class Store {
         obsStore.add(this.storeName);
     }
     
-    public int getStoreID()
+    public int getID()
     {
         return this.storeID;
     }
@@ -35,7 +35,7 @@ public class Store {
         this.storeName = storeName;
     }
     
-    public String getStoreName()
+    public String getName()
     {
         return this.storeName;
     }
@@ -45,9 +45,14 @@ public class Store {
         this.storeAddress = storeAddress;
     }
     
-    public String getStoreAddress()
+    public String getAddress()
     {
         return this.storeAddress;
+    }
+    
+    public void addExpense(Expense exp)
+    {
+        this.associatedExpenses.add(exp);
     }
             
     public String toString()
