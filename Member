@@ -18,7 +18,7 @@ public class Member {
     private String memLName;
     private String memPhone;
     private String memEmail;
-    private static int memCount = 0;
+    public static int memCount = 0;
     public static ObservableList obsMem = FXCollections.observableArrayList();
     
     //Constructor
