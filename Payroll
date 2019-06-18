@@ -23,6 +23,7 @@ public class Payroll implements Serializable{
     public double totalWork;
     private Employee emp;
     private double amountPaid;
+    public boolean submitted = false;
     public static int nextID = 0;
     private SimpleDateFormat sDF = new SimpleDateFormat("E");
     public static ObservableList<String> payPeriods = FXCollections.observableArrayList();
@@ -147,6 +148,7 @@ public class Payroll implements Serializable{
         return this.payrollPeriod;
     }
     public void updateWork(){
+        this.totalWork = 0.0;
         for(Double dub : this.hoursWorked)
         {
             this.totalWork+= dub;
