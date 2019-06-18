@@ -441,9 +441,11 @@ public class GUI extends Application
     Button btnSavePay = new Button("Save");
     
     //POS Report
-    Label lblPOS = new Label("Point of Sales");
+     Label lblPOS = new Label("Point of Sales");
     Label lblViewType = new Label("View Type");
-    ArrayList<CustSale> reportSales = new ArrayList<>();
+    public static ArrayList<CustSale> reportSales = new ArrayList<>();
+    public static ArrayList<Integer> catSales = new ArrayList<>();
+    public static ArrayList<Double> catMoney = new ArrayList<>();
     ObservableList<String> type = FXCollections.observableArrayList("Week - daily",
             "Month - weekly", "Year - monthly", "Total sales today");
     ComboBox cmboType = new ComboBox(type);
@@ -457,35 +459,23 @@ public class GUI extends Application
     TextArea txtPOS = new TextArea();
     LocalDate currentDate;
     LocalDate firstDay;
-    LocalDate tempDate1;
-    LocalDate tempDate2;
-    LocalDate tempDate3;
-    LocalDate tempDate4;
-    LocalDate tempDate5;
-    LocalDate tempDate6;
-    LocalDate tempDate7;
-    LocalDate tempDate8;
-    
     LocalDate firstMonth;
     LocalDate firstYear;
-    SimpleDateFormat posF = new SimpleDateFormat("yyyy-MM-dd");
-    String[] saleWeek = new String[7];
-    ArrayList<Integer> saleDays = new ArrayList<>();
-    ArrayList<Integer> saleWeeks = new ArrayList<>();
-    ArrayList<Integer> saleMonths = new ArrayList<>();
-    ArrayList<String> days = new ArrayList<>();
-    ArrayList<String> weeks = new ArrayList<>();
-    ArrayList<String> daysOfWeek = new ArrayList<>();
-    ArrayList<String> daysOfMonth = new ArrayList<>();
+    LocalDate endDate;
+    LocalDate productDate;
     ArrayList<String> monthNames = new ArrayList<>();
-    ArrayList<String> monthDates = new ArrayList<>();
-    
     String cDate;
     String yDate;
     String mDate;
     String dDate;
     String moDate;
     String yrDate;
+    String endDay;
+    String endWeek;
+    String endMonth;
+    int endD;
+    int endW;
+    int endM;
     
     //create text area
     
@@ -1358,12 +1348,12 @@ public class GUI extends Application
 
             for(int i = 0; i<storeList.size(); i++)
             {
-                if((storeList.get(i).getName().equalsIgnoreCase((String)cmboStore.getValue())))
+                if((storeList.get(i).getStoreName().equalsIgnoreCase((String)cmboStore.getValue())))
                 {
                     break;
                 }
 
-                 else if(i == storeList.size()-1 && storeList.get(i).getName().equalsIgnoreCase((String)cmboStore.getValue()) == false)
+                 else if(i == storeList.size()-1 && storeList.get(i).getStoreName().equalsIgnoreCase((String)cmboStore.getValue()) == false)
                 {
                     storeList.add((Store)cmboStore.getValue());
                 }
@@ -1876,7 +1866,7 @@ public class GUI extends Application
                }
             }
             for(int i = 0; i<storeList.size(); i++){
-               if(pC.getLocation().equalsIgnoreCase(storeList.get(i).getName()))
+               if(pC.getLocation().equalsIgnoreCase(storeList.get(i).getStoreName()))
                {
                    cmboStore.getSelectionModel().select(i);
                    break;
@@ -1960,12 +1950,12 @@ public class GUI extends Application
             }
             for(int i = 0; i<storeList.size(); i++)
             {
-                if((storeList.get(i).getName().equalsIgnoreCase((String)cmboStore.getValue())))
+                if((storeList.get(i).getStoreName().equalsIgnoreCase((String)cmboStore.getValue())))
                 {
                     break;
                 }
 
-                 else if(i == storeList.size()-1 && storeList.get(i).getName().equalsIgnoreCase((String)cmboStore.getValue()) == false)
+                 else if(i == storeList.size()-1 && storeList.get(i).getStoreName().equalsIgnoreCase((String)cmboStore.getValue()) == false)
                 {
                     storeList.add((Store)cmboStore.getValue());
                 }
@@ -2248,7 +2238,7 @@ public class GUI extends Application
                }
             }
             for(int i = 0; i<storeList.size(); i++){
-               if(eC.getStoreLoc().equalsIgnoreCase(storeList.get(i).getName()))
+               if(eC.getStoreLoc().equalsIgnoreCase(storeList.get(i).getStoreName()))
                {
                    cmboStore.getSelectionModel().select(i); 
                }
@@ -2794,8 +2784,8 @@ public class GUI extends Application
             tenthPane.add(btnConfirmEditStore, 0, 3);
             tenthStage.show();
                 stC = storeList.get(cmboStore.getSelectionModel().getSelectedIndex());
-                txtStoreName.setText(stC.getName());
-                txtStoreAddress.setText(stC.getAddress());
+                txtStoreName.setText(stC.getStoreName());
+                txtStoreAddress.setText(stC.getStoreAddress());
             }
 
             
@@ -3353,15 +3343,13 @@ public class GUI extends Application
 
         });
         
-        btnPOSDisplay.setOnAction(e -> {
+       btnPOSDisplay.setOnAction(e -> {
+           
             currentDate = LocalDate.now();
             firstDay = currentDate.with(WeekFields.of(Locale.US).dayOfWeek(),1);
             firstMonth = currentDate.with(TemporalAdjusters.firstDayOfMonth());
             firstYear = currentDate.with(TemporalAdjusters.firstDayOfYear());
-            tempDate1 = firstDay;
-            tempDate3 = firstMonth;
-            tempDate5 = firstMonth;
-            tempDate7 = firstYear;
+            
             moDate = firstMonth.format(DateTimeFormatter.ISO_DATE);
             yrDate = firstYear.format(DateTimeFormatter.ISO_DATE);
             int fDate;
@@ -3383,46 +3371,12 @@ public class GUI extends Application
             monthNames.add("October");
             monthNames.add("November");
             monthNames.add("December");
+            
+            reportSales.clear();
+            catSales.clear();
+            catMoney.clear();
             //Create Array for Week-Daily
-            days.add(firstDay.format(DateTimeFormatter.ISO_DATE));
-            
-                for(int i = 0; i<6; i++)
-                {
-                  tempDate2 = tempDate1.plusDays(1);
-                  String yeet = tempDate2.format(DateTimeFormatter.ISO_DATE);
-                  days.add(yeet);
-                  tempDate1 = tempDate2;
-                }
-            //Create Arrays for Month - Weekly
-            weeks.add(moDate);
-            
-            while(mo.equalsIgnoreCase(mDate))
-            {
-             weeks.add(tempDate3.format(DateTimeFormatter.ISO_DATE));
-             moDate = tempDate3.format(DateTimeFormatter.ISO_DATE);
-             mo = moDate.substring(5, 7);
-             tempDate4 = tempDate3.plusWeeks(1);
-             tempDate3 = tempDate4;            
-                      
-            }
-            
-            for(int i = 0; i<(weeks.size()*7); i++)
-            {
-              daysOfMonth.add(tempDate5.format(DateTimeFormatter.ISO_DATE));
-              tempDate6 = tempDate5.plusDays(1);
-              tempDate5 = tempDate6;
-                
-            }
-            //Create Arrays for Year-Monthly Report
-            monthDates.add(yrDate);
-            tempDate7 = firstYear;
-            while(yr.equalsIgnoreCase(yDate))
-            {
-              tempDate8 = tempDate7.plusMonths(1);
-              monthDates.add(tempDate8.format(DateTimeFormatter.ISO_DATE));
-              yrDate = tempDate8.format(DateTimeFormatter.ISO_DATE);
-              yr = yrDate.substring(0, 4);
-            }
+           
             if(cmboType.getValue() == null || cmboStore.getValue() == null)
             {
                 alert.setTitle("Error!");
@@ -3431,6 +3385,7 @@ public class GUI extends Application
             }
             else
             {
+            
             String output = "";
            
             output += "Point of Sales Report:";
@@ -3438,42 +3393,43 @@ public class GUI extends Application
             int type = 0;
             type = cmboType.getSelectionModel().getSelectedIndex();
             int storeloc = 0;
+            String saleStore = "";
+            String storeName = "";
             storeloc = cmboStore.getSelectionModel().getSelectedIndex();
+            storeName = storeList.get(storeloc).getStoreName();
             int totalSales = 0;
             double totalMoney = 0.0;
             
-            ArrayList<Integer> catSales = new ArrayList<>();
-            ArrayList<Double> catMoney = new ArrayList<>();
+            System.out.println(saleList.get(0).getStoreName() + " vs " + storeName);
             
             if(type == 0)
             {
                 output += "Week Daily Total Sales\n";
                 output += "Store: " + cmboStore.getValue().toString();
-                output += "\n------------------------------------------------------\n";
-            reportSales.clear();
-            catSales.clear();
-            catMoney.clear();
+                output += "\n------------------------------------------------------\n";             
             for(int i =0; i<categoryList.size(); i++)
             {
                 catSales.add(0);
             }  
-            for(int b = 0; b<days.size(); b++)
+            for(int b = 0; b<7; b++)
             {
+                endDate = firstDay.plusDays(1);
                 totalSales = 0;
                 totalMoney = 0;
                 for(int i = 0; i<saleList.size(); i++)
                 {
-                    String sDate = saleList.get(i).getSaleDate();
-                    String yeet = days.get(b);
-                    String sYear = saleList.get(i).getSaleDate().substring(0,4);
-                    if( sDate.equals(yeet)&& saleList.get(i).getStoreName().equalsIgnoreCase(storeList.get(storeloc).getName()))
+                    productDate = LocalDate.parse(saleList.get(i).getSaleDate());
+                    saleStore = saleList.get(i).getStoreName();
+                    
+                    if( productDate.isBefore(endDate)&& productDate.isAfter(firstDay)&& saleStore.equals(storeName))
                     {   //yyyy-mm-dd
                          reportSales.add(saleList.get(i));
                          totalSales++;
                          totalMoney += saleList.get(i).getSubtotal();
                     }  
                 }
-                output += "Total Number of Sales on" +mDate +"-" + days.get(b) + ": " + totalSales + " for a total revenue of $" + totalMoney + "\n";
+                output +=( "Total Number of Sales on" + firstDay.format(DateTimeFormatter.ISO_DATE) + ": " + totalSales + " for a total revenue of $" + totalMoney + "\n");
+                firstDay = endDate;
             }
                 for(int i = 0; i < categoryList.size(); i++)
                 {
@@ -3506,129 +3462,126 @@ public class GUI extends Application
                 output += "Month Weekly Total Sales\n";
                 output += "Store: " + cmboStore.getValue().toString();
                 output += "\n------------------------------------------------------\n";
-                reportSales.clear();
-                catSales.clear();
-                catMoney.clear();
                 for(int i =0; i<categoryList.size(); i++)
-                    {
-                        catSales.add(0);
-                    } 
-                for(int b = 0; b<weeks.size(); b++)
                 {
-                    totalSales = 0;
-                    totalMoney = 0;
-                    int numWeek = 0;
-                    int numWeek1 = 7;
-                    for(int k = numWeek; k<numWeek1; k++)
-                    {
-                        for(int i = 0; i<saleList.size(); i++)
-                        {                        
-                            String sDate = saleList.get(i).getSaleDate();                        
-                            if(sDate.equals(daysOfMonth.get(k)) && saleList.get(i).getStoreName().equalsIgnoreCase(storeList.get(storeloc).getName()))
-                            {   //yyyy-mm-dd
-                                 reportSales.add(saleList.get(i));
-                                 totalSales++;
-                                 totalMoney += saleList.get(i).getSubtotal();
-                            } 
-                        }
-                    }
-                    numWeek += 7;
-                    numWeek1 += 7;
-                    output += "Total Number of Sales the week of:" + weeks.get(b) + ": " + totalSales + " for a total revenue of $" + totalMoney + "\n";
-                }
-                    for(int i = 0; i < categoryList.size(); i++)
-                    {
-                        totalMoney = 0;
-                        for(int k = 0; k<reportSales.size(); k++)
-                        {
-                           for(int m = 0; m<reportSales.get(k).saleProducts.size(); m++)
-                           {
-                              String currentCat = reportSales.get(k).saleProducts.get(m).getCategory();
-                              if(currentCat.equalsIgnoreCase(categoryList.get(i)))
-                              {
-                               totalMoney += reportSales.get(k).saleProducts.get(m).getPrice();
-                               int temp = catSales.get(i);
-                               temp++;
-                               catSales.remove(i);
-                               catSales.add(i, temp);
-                              }
-
-                           }                       
-                        }
-                        catMoney.add(totalMoney);
-                    }
-                    for(int i = 0; i< categoryList.size(); i++)
-                    {
-                        output += categoryList.get(i) + ": " + catSales.get(i) + ", Sales: " + catMoney.get(i) + "\n";
-                    }
-                
-            }
-            else if (type == 2)
-            {
-                output += "Year Monthly Total Sales\n";
-                output += "Store: " + cmboStore.getValue().toString();
-                output += "\n------------------------------------------------------\n";
-                
-                reportSales.clear();
-                catSales.clear();
-                catMoney.clear();
-                for(int i =0; i<categoryList.size(); i++)
-                    {
-                        catSales.add(0);
-                    } 
-                for(int b = 0; b<monthNames.size(); b++)
+                    catSales.add(0);
+                }  
+                for(int b = 0; b<5; b++)
                 {
+                    endDate = firstMonth.plusWeeks(1);
                     totalSales = 0;
                     totalMoney = 0;
                     for(int i = 0; i<saleList.size(); i++)
                     {
-                        String yeet = monthDates.get(b).substring(5,7);
-                        String dab = monthDates.get(b).substring(0,4);
-                        String sMonth = saleList.get(i).getSaleDate().substring(5,7);
-                        String sYear = saleList.get(i).getSaleDate().substring(0,4);
-                        if(sMonth.equals(yeet) && sYear.equals(dab) && saleList.get(i).getStoreName().equalsIgnoreCase(storeList.get(storeloc).getName()))
+                        productDate = LocalDate.parse(saleList.get(i).getSaleDate());
+                        saleStore = saleList.get(i).getStoreName();
+
+                        if( productDate.isBefore(endDate)&& productDate.isAfter(firstMonth)&& saleStore.equals(storeName))
                         {   //yyyy-mm-dd
                              reportSales.add(saleList.get(i));
                              totalSales++;
                              totalMoney += saleList.get(i).getSubtotal();
                         }  
                     }
-                    output += "Total Number of Sales the Month of " + monthNames.get(b) + ": " + totalSales + " for a total revenue of: $" + totalMoney + "\n";
+                    output +=( "Total Number of Sales on" + firstMonth.format(DateTimeFormatter.ISO_DATE) + ": " + totalSales + " for a total revenue of $" + totalMoney + "\n");
+                    firstMonth = endDate;
+                    if(firstMonth.getMonthValue()!= currentDate.getMonthValue())
+                    {
+                        break;
+                    }
                 }
-                    for(int i = 0; i < categoryList.size(); i++)
+                for(int i = 0; i < categoryList.size(); i++)
+                {
+                    totalMoney = 0;
+                    for(int k = 0; k<reportSales.size(); k++)
                     {
-                        totalMoney = 0;
-                        for(int k = 0; k<reportSales.size(); k++)
-                        {
-                           for(int m = 0; m<reportSales.get(k).saleProducts.size(); m++)
-                           {
-                              String currentCat = reportSales.get(k).saleProducts.get(m).getCategory();
-                              if(currentCat.equalsIgnoreCase(categoryList.get(i)))
-                              {
-                               totalMoney += reportSales.get(k).saleProducts.get(m).getPrice();
-                               int temp = catSales.get(i);
-                               temp++;
-                               catSales.remove(i);
-                               catSales.add(i, temp);
-                              }
+                       for(int m = 0; m<reportSales.get(k).saleProducts.size(); m++)
+                       {
+                          String currentCat = reportSales.get(k).saleProducts.get(m).getCategory();
+                          if(currentCat.equalsIgnoreCase(categoryList.get(i)))
+                          {
+                           totalMoney += reportSales.get(k).saleProducts.get(m).getPrice();
+                           int temp = catSales.get(i);
+                           temp++;
+                           catSales.remove(i);
+                           catSales.add(i, temp);
+                          }
 
-                           }                       
-                        }
-                        catMoney.add(totalMoney);
+                       }                       
                     }
-                    for(int i = 0; i< categoryList.size(); i++)
+                    catMoney.add(totalMoney);
+                }
+                for(int i = 0; i< categoryList.size(); i++)
+                {
+                    output += categoryList.get(i) + ": " + catSales.get(i) + ", Sales: " + catMoney.get(i) + "\n";
+                }
+            }  
+            else if (type == 2)
+            {
+                output += "Year Monthly Total Sales\n";
+                output += "Store: " + cmboStore.getValue().toString();
+                output += "\n------------------------------------------------------\n";                
+                for(int i =0; i<categoryList.size(); i++)
+                {
+                    catSales.add(0);
+                }  
+                for(int b = 0; b<12; b++)
+                {
+                    endDate = firstYear.plusMonths(1);
+                    totalSales = 0;
+                    totalMoney = 0;
+                    for(int i = 0; i<saleList.size(); i++)
                     {
-                        output += categoryList.get(i) + ": " + catSales.get(i) + ", Sales: " + catMoney.get(i) + "\n";
+                        productDate = LocalDate.parse(saleList.get(i).getSaleDate());
+                        saleStore = saleList.get(i).getStoreName();
+
+                        if( productDate.isBefore(endDate)&& productDate.isAfter(firstYear)&& saleStore.equals(storeName))
+                        {   //yyyy-mm-dd
+                             reportSales.add(saleList.get(i));
+                             totalSales++;
+                             totalMoney += saleList.get(i).getSubtotal();
+                        }  
                     }
+                    output += ("Total Number of Sales for the month of:" + firstYear.format(DateTimeFormatter.ISO_DATE) + ": " + totalSales + " for a total revenue of $" + totalMoney + "\n");
+                    firstYear = endDate;
+                    if(firstYear.getYear()!= currentDate.getYear())
+                    {
+                        break;
+                    }
+                }
+                for(int i = 0; i < categoryList.size(); i++)
+                {
+                    totalMoney = 0;
+                    for(int k = 0; k<reportSales.size(); k++)
+                    {
+                       for(int m = 0; m<reportSales.get(k).saleProducts.size(); m++)
+                       {
+                          String currentCat = reportSales.get(k).saleProducts.get(m).getCategory();
+                          if(currentCat.equalsIgnoreCase(categoryList.get(i)))
+                          {
+                           totalMoney += reportSales.get(k).saleProducts.get(m).getPrice();
+                           int temp = catSales.get(i);
+                           temp++;
+                           catSales.remove(i);
+                           catSales.add(i, temp);
+                          }
+
+                       }                       
+                    }
+                    catMoney.add(totalMoney);
+                }
+                for(int i = 0; i< categoryList.size(); i++)
+                {
+                    output += categoryList.get(i) + ": " + catSales.get(i) + ", Sales: " + catMoney.get(i) + "\n";
+                }
             }
             else if (type == 3)
             {
+                System.out.println(LocalDate.parse(saleList.get(0).getSaleDate()));
+                System.out.println(currentDate);
                 output += "Total Sales Today\n";
                 output += "Store: " + cmboStore.getValue().toString();
-                output += "\n------------------------------------------------------\n";
-                reportSales.clear();
-                catSales.clear();
-                catMoney.clear();
+                output += "\n------------------------------------------------------\n";                
                 for(int i =0; i<categoryList.size(); i++)
                 {
                     catSales.add(0);
@@ -3636,13 +3589,18 @@ public class GUI extends Application
                 
                 for(int i = 0; i<saleList.size(); i++)
                 {
-                    if(saleList.get(i).getSaleDate().substring(8).equalsIgnoreCase(dDate) && saleList.get(i).getStoreName().equalsIgnoreCase(storeList.get(storeloc).getName()))
+                     productDate = LocalDate.parse(saleList.get(i).getSaleDate());
+                     endDay = saleList.get(i).getSaleDate().substring(8);
+                     endD = Integer.parseInt(endDay);
+                     saleStore = saleList.get(i).getStoreName();
+                    if(endD == Integer.parseInt(dDate) && saleStore.equalsIgnoreCase(storeName))
                     {   //yyyy-mm-dd
                          reportSales.add(saleList.get(i));
                          totalSales++;
                          totalMoney += saleList.get(i).getSubtotal();
                     }  
                 }
+               // System.out.println(reportSales.get(0).toStringNoMem());
                 output += "Total Number of Sales Today: " + totalSales + " for a total revenue of $" + totalMoney + "\n";
                 for(int i = 0; i < categoryList.size(); i++)
                     {
