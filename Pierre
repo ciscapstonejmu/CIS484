@@ -555,13 +555,13 @@ public class GUI extends Application
         
         currentDate = LocalDate.now();        
         cDate = currentDate.format(DateTimeFormatter.ISO_DATE);
-        yDate = cDate.substring(0, 5);
-        mDate = cDate.substring(6, 8);
-        dDate = cDate.substring(9, cDate.length());
+         yDate = cDate.substring(0, 4);
+        mDate = cDate.substring(5, 7);
+        dDate = cDate.substring(8, cDate.length());
         GridPane primaryPane = new GridPane();
         primaryPane.setAlignment(Pos.CENTER);
         
-        
+        // "yyyy-mm-dd"
         
         primaryPane.setHgap(10);
         primaryPane.setVgap(10);
@@ -925,7 +925,8 @@ public class GUI extends Application
         TableColumn tbExpID = new TableColumn("ID");
         TableColumn tbExpCategory = new TableColumn("Category");
         TableColumn tbExpDesc = new TableColumn("Description");
-        TableColumn tbExpAmount = new TableColumn("Amount Paid");
+        TableColumn tbExpAmountPaid = new TableColumn("Amount Paid");
+        TableColumn tbExpAmountTotal = new TableColumn("Total Amount");
         TableColumn tbExpDate = new TableColumn("Date Paid");
         TableColumn tbExpStatus = new TableColumn("Status");
 
@@ -933,7 +934,8 @@ public class GUI extends Application
         tbExpID.setCellValueFactory(new PropertyValueFactory<Expense, Integer>("expenseID"));
         tbExpCategory.setCellValueFactory(new PropertyValueFactory<Expense, String>("category"));
         tbExpDesc.setCellValueFactory(new PropertyValueFactory<Expense, String>("description"));
-        tbExpAmount.setCellValueFactory(new PropertyValueFactory<Expense, Double>("amountPaid"));
+        tbExpAmountPaid.setCellValueFactory(new PropertyValueFactory<Expense, Double>("amountPaid"));
+        tbExpAmountTotal.setCellValueFactory(new PropertyValueFactory<Expense, Double>("totalAmount"));
         tbExpDate.setCellValueFactory(new PropertyValueFactory<Expense, String>("date"));
         tbExpStatus.setCellValueFactory(new PropertyValueFactory<Expense, String>("status"));
         
@@ -2382,7 +2384,7 @@ public class GUI extends Application
 
             thirdStage.close();
         });
-        expTable.getColumns().addAll(tbExpID, tbExpCategory, tbExpDesc, tbExpAmount, tbExpDate, tbExpStatus); 
+        expTable.getColumns().addAll(tbExpID, tbExpCategory, tbExpDesc, tbExpAmountPaid, tbExpAmountTotal, tbExpDate, tbExpStatus);  
         menuAdmin.getMenus().get(1).getItems().get(2).setOnAction(e -> {
            // Expense Management
            
@@ -3657,6 +3659,7 @@ public class GUI extends Application
         });
         
         btnMonthDisplay.setOnAction(e -> {
+            txtMonth.clear();
             if(cmboMonth.getValue() == null || cmboYear.getValue() == null)
             {
                 alert.setTitle("Error!");
@@ -3667,6 +3670,7 @@ public class GUI extends Application
             {
                 String output = "";
 
+                ArrayList <Expense> expppp = new ArrayList<>();
                 output += "Monthly Expense Report:";
                 output += "\n========================================================\n";
                 output += "Month: " + cmboMonth.getValue().toString();
@@ -3677,8 +3681,32 @@ public class GUI extends Application
                 {
                     //DO SOMETHING WITH COMPARING MONTHS
                     
+                    // "MM-dd-yyyy"
+                    String currentMonth = expList.get(i).getDate().substring(0,2);
+                    String currentYear = expList.get(i).getDate().substring(6,expList.get(i).getDate().length());
+                    if(currentMonth.equalsIgnoreCase(mDate) && (currentYear.equalsIgnoreCase(yDate)))
+                    {
+                        output += "Category: " + expList.get(i).getCategory();
+                        output += ", Description: " + expList.get(i).getDescription();
+                        if (expList.get(i).getStatus().equalsIgnoreCase("Paid"))
+                        {
+                        output += ", Status: " + expList.get(i).getStatus();
+                        output += ", Total Paid: " + expList.get(i).getTotalAmount();
+                        }
+                        else if (expList.get(i).getStatus().equalsIgnoreCase("Ongoing"))
+                        {
+                        output += ", Status: " + expList.get(i).getStatus();
+                        output += ", Amount Paid: " + expList.get(i).getAmountPaid();
+                        output += ", Amount Total: " + expList.get(i).getTotalAmount();
+                        }
+
+                        output += "\n";
+                    }
                 }
                 txtMonth.setText(output);
+                alert.setTitle("Success!");
+                alert.setHeaderText("Data Displayed!");
+                alert.showAndWait();
 
 
                 cmboMonth.getSelectionModel().clearSelection();
