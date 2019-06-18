@@ -2693,7 +2693,20 @@ public class GUI extends Application
             }
             else
             {
-            obsStore.remove(obsStore.get(cmboStore.getSelectionModel().getSelectedIndex()));
+            stC = storeList.get(cmboStore.getSelectionModel().getSelectedIndex());
+            for (int i = 0; i < storeList.size(); i++)
+            {
+                if (stC.getID() == storeList.get(i).getID())  
+            {
+                    storeList.remove(i);
+                    cmboStore.getItems().remove(i);
+                    stC = null;
+                    break;
+            }
+            }    
+                
+                
+            //obsStore.remove(obsStore.get(cmboStore.getSelectionModel().getSelectedIndex()));
             alert.setTitle("Success!");
             alert.setHeaderText("The store has been removed!");
             alert.showAndWait();
@@ -3083,10 +3096,35 @@ public class GUI extends Application
         return ds.getConnection(user, pass);
     }
 */
-    
+     @Override
+    public void stop(){
+        
+        
+        String exData;
+        String emData;
+        String strData;
+        String exQuery;
+        String emQuery;
+        String strQuery;
+        
+        for (int i = 0; i < expData.size(); i++)
+        {
+            Expense ex = (Expense) expData.get(i);
+            Employee em = (Employee) empData.get(i);
+            Store str = (Store) em.getStore();
+            emData = "('" + em.getEmployeeID() + "' , '" + em.getFirstName() + 
+                    "' , '" + em.getLastName() + "' , '" + em.getEmail() + "' , '" + 
+                    em.getPhoneNumber() + "' , '" + em.getAddress() + "' , '" + em.getSalary() +
+                    "' , '" + em.getJobTitle() + "' , '" + em.getEmployeeType() + "' , '" + em.getEmployeeCategory() +
+                    "' , '" + em.getStore() +  "' )";
+            emQuery = "INSERT INTO EMPLOYEE (EMPLOYEEID, FIRSTNAME, LASTNAME, EMAIL, PHONENUMBER, ADDRESS, SALARY, JOBTITLE, EMPLOYEETYPE, EMPLOYEECATEGORY, STORE) VALUES" + emData;
+        }
+    }
     public static void main(String[] args) {
         launch(args);
     }
+    
+
     
 public ResultSet DBCommand(String sqlQuery)
     {
@@ -3120,7 +3158,7 @@ public ResultSet DBCommand(String sqlQuery)
         
         try{
             while(resultset.next()){
-                obsSale.add(new CustSale ( resultset.getString ( "SALEDATE"), resultset.getObject"DESCRIPTION"), resultset.getDouble("AMOUNTPAID"), resultset.getDouble("TOTALAMOUNT"), resultset.getString("DATE")));
+                //obsSale.add(new CustSale ( resultset.getString ( "SALEDATE"), resultset.getObject("STORE"), resultset.getObject("EMPLOYEE"), resultset.get
             }
             
         }
@@ -3130,21 +3168,7 @@ public ResultSet DBCommand(String sqlQuery)
        
     }
     
-    public void loadCustSaleFromDB() {
-    String query = "SELECT * FROM JAVAUSER.CUSTSALE"; 
-    ResultSet resultset = DBCommand(query); 
-        
-        try{
-            while(resultset.next()){
-                obsSale.add(new CustSale ( resultset.getString ( "SALEDATE"), resultset.getObject"DESCRIPTION"), resultset.getDouble("AMOUNTPAID"), resultset.getDouble("TOTALAMOUNT"), resultset.getString("DATE")));
-            }
-            
-        }
-        catch(SQLException e) {
-            System.out.println(e.toString()); 
-        }
-       
-    }
+   
     
     public void loadExpensesFromDB() {
         String query = "SELECT * FROM JAVAUSER.EXPENSE"; 
@@ -3175,6 +3199,31 @@ public ResultSet DBCommand(String sqlQuery)
             System.out.println(e.toString()); 
         }
         }
+        
+              public void loadEmployeesFromDB(){
+            
+            String sdQuery;
+            ResultSet employeeResults;
+            
+            try{
+                sdQuery = "SELECT * FROM SYSTEM.STUDENT;";
+                employeeResults = sendDBCommand(sdQuery);
+                
+                
+                while(employeeResults.next()){
+                    empData.add(new Employee(Integer.parseInt(employeeResults.getString(1)),
+                            employeeResults.getString(2), employeeResults.getString(3),
+                            employeeResults.getString(4), employeeResults.getString(5),
+                            Double.parseDouble(employeeResults.getString(6)), employeeResults.getString(7), employeeResults.getString(8), employeeResults.getString(9))
+                            );
+                    
+                }
+            }
+            catch(SQLException e){
+                System.out.println(e.toString());
+                
+            }
+            }
         public void loadMembersfromDB()
         {
         String query = "SELECT * FROM JAVAUSER.MEMBER"; 
@@ -3276,6 +3325,5 @@ public ResultSet DBCommand(String sqlQuery)
         
         
     
-       
     }
 
