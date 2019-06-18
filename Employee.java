@@ -101,7 +101,7 @@ public class Employee implements Serializable{
         if(this.employeeCategory.equalsIgnoreCase("Part Time"))
             this.hourly = salary;
         this.store = store;
-        this.storeLoc = store.getName();
+        this.storeLoc = store.getStoreName();
         this.username = this.firstName;
         if(empAcc.size() > 0)
         {
@@ -261,7 +261,7 @@ public class Employee implements Serializable{
     }
     public void setStore(Store store){
         this.store = store;
-        this.storeLoc = store.getName();
+        this.storeLoc = store.getStoreName();
     }
     public String getStoreLoc(){
         return this.storeLoc;
