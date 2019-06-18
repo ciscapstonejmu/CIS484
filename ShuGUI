@@ -463,6 +463,8 @@ public class GUI extends Application
     LocalDate tempDate4;
     LocalDate tempDate5;
     LocalDate tempDate6;
+    LocalDate tempDate7;
+    LocalDate tempDate8;
     
     LocalDate firstMonth;
     LocalDate firstYear;
@@ -3356,6 +3358,10 @@ public class GUI extends Application
             firstDay = currentDate.with(WeekFields.of(Locale.US).dayOfWeek(),1);
             firstMonth = currentDate.with(TemporalAdjusters.firstDayOfMonth());
             firstYear = currentDate.with(TemporalAdjusters.firstDayOfYear());
+            tempDate1 = firstDay;
+            tempDate3 = firstMonth;
+            tempDate5 = firstMonth;
+            tempDate7 = firstYear;
             moDate = firstMonth.format(DateTimeFormatter.ISO_DATE);
             yrDate = firstYear.format(DateTimeFormatter.ISO_DATE);
             int fDate;
@@ -3379,7 +3385,7 @@ public class GUI extends Application
             monthNames.add("December");
             //Create Array for Week-Daily
             days.add(firstDay.format(DateTimeFormatter.ISO_DATE));
-            tempDate1 = firstDay;
+            
                 for(int i = 0; i<6; i++)
                 {
                   tempDate2 = tempDate1.plusDays(1);
@@ -3389,7 +3395,7 @@ public class GUI extends Application
                 }
             //Create Arrays for Month - Weekly
             weeks.add(moDate);
-            tempDate3 = firstMonth;
+            
             while(mo.equalsIgnoreCase(mDate))
             {
              weeks.add(tempDate3.format(DateTimeFormatter.ISO_DATE));
@@ -3399,22 +3405,22 @@ public class GUI extends Application
              tempDate3 = tempDate4;            
                       
             }
-            tempDate1 = firstMonth;
+            
             for(int i = 0; i<(weeks.size()*7); i++)
             {
-              daysOfMonth.add(tempDate1.format(DateTimeFormatter.ISO_DATE));
-              tempDate2 = tempDate1.plusDays(1);
-              tempDate1 = tempDate2;
+              daysOfMonth.add(tempDate5.format(DateTimeFormatter.ISO_DATE));
+              tempDate6 = tempDate5.plusDays(1);
+              tempDate5 = tempDate6;
                 
             }
             //Create Arrays for Year-Monthly Report
             monthDates.add(yrDate);
-            tempDate1 = firstYear;
+            tempDate7 = firstYear;
             while(yr.equalsIgnoreCase(yDate))
             {
-              tempDate2 = tempDate1.plusMonths(1);
-              monthDates.add(tempDate2.format(DateTimeFormatter.ISO_DATE));
-              yrDate = tempDate2.format(DateTimeFormatter.ISO_DATE);
+              tempDate8 = tempDate7.plusMonths(1);
+              monthDates.add(tempDate8.format(DateTimeFormatter.ISO_DATE));
+              yrDate = tempDate8.format(DateTimeFormatter.ISO_DATE);
               yr = yrDate.substring(0, 4);
             }
             if(cmboType.getValue() == null || cmboStore.getValue() == null)
@@ -3425,8 +3431,6 @@ public class GUI extends Application
             }
             else
             {
-    try{
-            
             String output = "";
            
             output += "Point of Sales Report:";
@@ -3673,11 +3677,7 @@ public class GUI extends Application
             cmboType.getSelectionModel().clearSelection();
             cmboStore.getSelectionModel().clearSelection();
             }
-    catch(Exception ex)
-        {
-        
-        }
-            }
+    
         });
         
         menuAdmin.getMenus().get(3).getItems().get(1).setOnAction(e -> {
