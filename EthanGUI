@@ -3122,19 +3122,23 @@ public class GUI extends Application
             output += "\n========================================================\n";
             output += "Year: " + cmboYear.getValue().toString();
             output += "\n------------------------------------------------------\n";
-            for (int i = 0; i < expCategory.size(); i++)
+            for (int i = 0; i < obsStore.size(); i++)
+            {
+                output += "\n" + storeList.get(i).getName() + " : "; 
+            for (int j = 0; j < expCategory.size(); j++)
            {
-               output +=  "\n" + expCategory.get(i) + " : ";
-               for (int j = 0; j < obsExpense.size(); j++)
+               output +=  "\n" + expCategory.get(j) + " : ";
+               for (int k = 0; k < obsExpense.size(); k++)
                {
-                   if (obsExpense.get(j).getCategory().equalsIgnoreCase(expCategory.get(i)))
+                   if (obsExpense.get(k).getCategory().equalsIgnoreCase(expCategory.get(j)))
                    {
-                       expTotal += obsExpense.get(j).getTotalAmount();
+                       expTotal += obsExpense.get(k).getTotalAmount();
                        output += expTotal;
                        expTotal = 0.0;
                    }
 
                }
+               output += "\n";
            }
            
            //create loop or whatever to print out PvE based on store and year
