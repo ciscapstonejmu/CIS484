@@ -434,6 +434,15 @@ public class GUI extends Application
     Button btnEnterTimes = new Button("Submit");
     Button btnSavePay = new Button("Save");
     
+    //Edit Member Discount
+    Label lblCDiscount = new Label("Current Discount:");
+    Label lblSetDiscount = new Label("Set Discount:");
+    
+    TextField txtCDiscount = new TextField();
+    TextField txtSetDiscount = new TextField();
+    
+    Button btnSetDiscount = new Button("Set Discount");
+    
     //POS Report
     Label lblPOS = new Label("Point of Sales");
     Label lblViewType = new Label("View Type");
