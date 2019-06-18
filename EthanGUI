@@ -3100,19 +3100,21 @@ public class GUI extends Application
     public void stop(){
         
         
-        String cstData;
-        String emData;
-        String exData;
-        String memData;
-        String prData;
-        String poData;
-        String strData;
-        String spData;
+        String cstData; //Customer
+        String emData; //Employee
+        String exData; //Expense
+        String memData; //Member
+        String payData; //Payroll
+        String prData; //Product
+        String poData; //ProductOrder
+        String strData; //Store
+        String spData; //Supplier
         
         String cstQuery;
         String emQuery;
         String exQuery;
         String memQuery;
+        String payQuery;
         String prQuery;
         String poQuery;
         String strQuery;
@@ -3158,6 +3160,23 @@ public class GUI extends Application
                     mem.getEmail() + "' )";
             memQuery = "INSERT INTO MEMBER (MEMBERID, FNAME, LNAME, PHONENUMBER, EMAIL) VALUES" + memData;
         }
+        
+        for (int i = 0; i < empData.size(); i++)
+        {
+            for (int j = 0; j < empData.get(i).payRoll.size(); j++)
+            {
+                Payroll pay = (Payroll) empData.get(i).payRoll.get(j);
+                Employee em = (Employee) empData.get(i).payRoll.get(j).getEmp();
+                /*payData = " ('" + pay.getID() + "' , '" + pay.getPayrollPeriod() + "' , '" + pay.getStart() + "' , '" + pay.end + "' , '" + pay.hoursWorked + 
+                        "' , '" + pay.schedule + "' , '" + pay.scheduleDay + "' , '" + pay.arrTimeIn + "' , '" + pay.arrTimeOut + "' , '" + pay.totalWork +
+                        "' , '" + pay.getAmountPaid() + "' )";
+                payQuery = "INSERT INTO PAYROLL (PAYROLLID, PAYROLLPERIOD, START, END, HOURSWORKED, SCHEDULE, SCHEDULEDAY, ARRTIMEIN, ARRTIMEOUT, TOTALWORK, AMOUNTPAID) VALUES" + payData;
+            */
+                payData = " ('" + pay.getID() + "' , '" + pay.getEmp() + "' )";
+                payQuery = "INSERT INTO PAYROLL (PAYROLLID, EMPLOYEE) VALUES" + payData;
+                }
+        }
+        
         
         for (int i = 0; i < prodData.size(); i++)
         {
