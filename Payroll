@@ -59,7 +59,7 @@ public class Payroll implements Serializable{
         scheduleDay.add(Eday);
         
         this.payrollPeriod = nowDate + "-" + endDate;
-        
+        this.submitted = false;
         this.emp = emp;
         if(hoursWorked.size() > 0)
         {
@@ -164,9 +164,5 @@ public class Payroll implements Serializable{
                 print += "\n" + this.schedule.get(i) + ": 0";
         }
         return print;
-    }
-    
-    
-    
-    
+    }    
 }
