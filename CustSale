@@ -22,6 +22,7 @@ public class CustSale {
     private double tax;
     private double totalCost;
     private double discount;
+    private double discPct = 0.05;
     
     //Fromatter for money figures
     DecimalFormat formatter = new DecimalFormat("#0.00");
@@ -64,8 +65,8 @@ public class CustSale {
         for(int i=0; i<this.saleProducts.size();i++)
         {
             //Give Thrifty Members 5% discount
-            this.subtotal += ((this.saleProducts.get(i).getPrice()) *.95);
-            this.discount += ((this.saleProducts.get(i).getPrice()) *.05);
+            this.subtotal += ((this.saleProducts.get(i).getPrice()) * (1 - discPct));
+            this.discount += ((this.saleProducts.get(i).getPrice()) * discPct);
         }
         
         this.tax = (this.subtotal * .053);
@@ -99,6 +100,16 @@ public class CustSale {
     }
     public double getSubtotal() {
         return this.subtotal; 
+    }
+    
+    public void setDiscPct(double discPct)
+    {
+        this.discPct = discPct;
+    }
+    
+    public double getDiscPct()
+    {
+        return this.discPct;
     }
     
     @Override
