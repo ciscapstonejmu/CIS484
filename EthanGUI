@@ -3100,16 +3100,37 @@ public class GUI extends Application
     public void stop(){
         
         
-        String exData;
+        String cstData;
         String emData;
+        String exData;
+        String memData;
+        String prData;
+        String poData;
         String strData;
-        String exQuery;
-        String emQuery;
-        String strQuery;
+        String spData;
         
-        for (int i = 0; i < expData.size(); i++)
+        String cstQuery;
+        String emQuery;
+        String exQuery;
+        String memQuery;
+        String prQuery;
+        String poQuery;
+        String strQuery;
+        String spQuery;
+        
+        
+        
+        for (int i = 0; i < obsCust.size(); i++)
         {
-            Expense ex = (Expense) expData.get(i);
+            Customer cst = (Customer) obsCust.get(i);
+            cstData = " ('" + cst.getID() + "' , '" + cst.getName() + "' , '" + cst.getEmail() + "' , '" + cst.getPhoneNumber() + "' , '" +
+                    cst.getAddress() + "' , '" + cst.getPaymentMethod() + "')";
+            cstQuery = "INSERT INTO CUSTOMER (CUSTOMERID, NAME, EMAIL, PHONENUMBER, ADDRESS, PAYMENTMETHOD) VALUES" + cstData;
+            
+        }
+        
+        for (int i = 0; i < empData.size(); i++)
+        {
             Employee em = (Employee) empData.get(i);
             Store str = (Store) em.getStore();
             emData = "('" + em.getEmployeeID() + "' , '" + em.getFirstName() + 
@@ -3118,8 +3139,59 @@ public class GUI extends Application
                     "' , '" + em.getJobTitle() + "' , '" + em.getEmployeeType() + "' , '" + em.getEmployeeCategory() +
                     "' , '" + em.getStore() +  "' )";
             emQuery = "INSERT INTO EMPLOYEE (EMPLOYEEID, FIRSTNAME, LASTNAME, EMAIL, PHONENUMBER, ADDRESS, SALARY, JOBTITLE, EMPLOYEETYPE, EMPLOYEECATEGORY, STORE) VALUES" + emData;
+            strData = "('" + str.getID() + "' , '" + str.getName() + "' , '" + str.getAddress() + "' )";
+            strQuery = "INSERT INTO STORE (STOREID, STORENAME, STOREADDRESS) VALUES" + strData;
         }
+        
+        for (int i = 0; i < expData.size(); i++)
+        {
+            Expense ex = (Expense) expData.get(i);
+            exData = " ('" + ex.getExpenseID() + "' , '" + ex.getCategory() + "' , '" + ex.getDescription() + 
+                    "' , '" + ex.getAmountPaid() + "' , '" + ex.getTotalAmount() + "' , '" + ex.getDate() + "' )";
+            exQuery = "INSERT INTO EXPENSE (EXPENSEID, CATEGORY, DESCRIPTION, AMOUNTPAID, TOTALAMOUNT, DATE) VALUES" + exData;
+        }
+        
+        for (int i = 0; i < obsMem.size(); i++)
+        {
+            Member mem = (Member) obsMem.get(i);
+            memData = " ('" + mem.getID() + "' , '" + mem.getFName() + "' , '" + mem.getLName() + "' , '" + mem.getPhone() + "' , '" +
+                    mem.getEmail() + "' )";
+            memQuery = "INSERT INTO MEMBER (MEMBERID, FNAME, LNAME, PHONENUMBER, EMAIL) VALUES" + memData;
+        }
+        
+        for (int i = 0; i < prodData.size(); i++)
+        {
+            Product pr = (Product) prodData.get(i);
+            prData = " ('" + pr.getProductID() + "' , '" + pr.getProductName() + "' , '" + pr.getQuantity() + "' , '" + pr.getPrice() +
+                    "' , '" + pr.getStore() + "' , '" + pr.getFoodDescription() + "' , '" + pr.getCategory() + "' , '" + pr.getSupplier() +
+                    "' , '" + pr.getImage() + "' )";
+            prQuery = "INSERT INTO PRODUCT (PRODUCTID, NAME, QUANTITY, PRICE, STORE, DESCRIPTION, CATEGORY, SUPPLIER) VALUES" + prData;
+        }
+        
+        for (int i = 0; i < obsProdOrder.size(); i++)
+        {
+            ProductOrder po = (ProductOrder) obsProdOrder.get(i);
+            poData = " ('" + po.getID() + "' , '" + po.getQuantity() + "' , '" + po.getProdOName() + "' , '" + po.getUnitCost() + "' , '" + po.getSubtotal() +
+                    "' , '" + po.getDeliveryDate() + "' , '" + po.getDate() + "' , '" + po.getSupplier() + "' , '" + po.getStore() + "' , '" + po.getCategory() + "' )";
+            poQuery = "INSERT INTO PRODUCTORDER (PRODUCTORDERID, QUANTITY, NAME, UNITCOST, SUBTOTAL, DELIVERYDATE, DATE, SUPPLIER, STORE, CATEGORY) VALUES" + poData;
+        }
+        
+        for (int i = 0; i < storeData.size(); i++)
+        {
+            Store str = (Store) obsStore.get(i);
+            strData = "('" + str.getID() + "' , '" + str.getName() + "' , '" + str.getAddress() + "' )";
+            strQuery = "INSERT INTO STORE (STOREID, STORENAME, STOREADDRESS) VALUES" + strData;
+        }
+        
+        for (int i = 0; i < obsSupp.size(); i++)
+        {
+            Supplier sp = (Supplier) obsSupplier.get(i);
+            spData = " "
+        }
+        
+        
     }
+    
     public static void main(String[] args) {
         launch(args);
     }
