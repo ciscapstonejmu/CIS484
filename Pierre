@@ -1010,50 +1010,50 @@ public class GUI extends Application
         //Import data from files
         try
         {
-          ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("employees.dat"));
+            ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("employees.dat"));
 
-           empList.addAll((ArrayList<Employee>)(instanceObjectInput.readObject()));
-           instanceObjectInput.close();
-           for(Employee emp : empList){
-               emp.setStore(store1);
-               Employee.obsEmp.add(emp.getEmployeeID()+ " " + emp.getFirstName() + " " + emp.getLastName());
-               empData.add(emp);
+            empList.addAll((ArrayList<Employee>)(instanceObjectInput.readObject()));
+            instanceObjectInput.close();
+            for(Employee emp : empList){
+                emp.setStore(store1);
+                Employee.obsEmp.add(emp.getEmployeeID()+ " " + emp.getFirstName() + " " + emp.getLastName());
+                empData.add(emp);
            }
            
         }
         catch(Exception ex)
         {
-        System.out.println("Given:" + ex + "Employees were not imported");
+            System.out.println("Given:" + ex + "Employees were not imported");
         }
         try
         {
-          ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("suppliers.dat"));
+            ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("suppliers.dat"));
 
-           suppList.addAll((ArrayList<Supplier>)(instanceObjectInput.readObject()));
-           for(Supplier supp : suppList){
+            suppList.addAll((ArrayList<Supplier>)(instanceObjectInput.readObject()));
+            for(Supplier supp : suppList){
                Supplier.obsSupp.add(supp.getName());
            }
            instanceObjectInput.close();
         }
         catch(Exception ex)
         {
-           System.out.println("Given:" + ex + "Suppliers were not imported");
+            System.out.println("Given:" + ex + "Suppliers were not imported");
         }
         try
         {
-          ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("products.dat"));
+            ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("products.dat"));
 
-           prodList.addAll((ArrayList<Product>)(instanceObjectInput.readObject()));
-           for(Product prod : prodList){
-               Product.obsProd.add(prod.getProductID() +": "+ prod.getProductName());
-               prodData.add(prod);
+            prodList.addAll((ArrayList<Product>)(instanceObjectInput.readObject()));
+            for(Product prod : prodList){
+                Product.obsProd.add(prod.getProductID() +": "+ prod.getProductName());
+                prodData.add(prod);
            }
 
            instanceObjectInput.close();
         }
         catch(Exception ex)
         {
-             System.out.println("Given:" + ex + "Products were not imported");
+            System.out.println("Given:" + ex + "Products were not imported");
         }
         btnSignIn.setOnAction(e -> {
             // code to validate log in, has to have two handlers for admin and worker
@@ -1062,12 +1062,12 @@ public class GUI extends Application
    //RUN LoadData.java BEFORE TRYING TO LOG IN.
            for(int i = 0; i< empList.size();i++)
            {
-               Employee temp = empList.get(i);
-               if(temp.getUsername().equalsIgnoreCase(txtUser.getText()) && temp.getPassword().equals(txtPass.getText()))
-               {
-                   currentUser = temp;
-                   found = true;
-                   if(temp.getEmployeeCategory().equalsIgnoreCase("Manager"))
+                Employee temp = empList.get(i);
+                if(temp.getUsername().equalsIgnoreCase(txtUser.getText()) && temp.getPassword().equals(txtPass.getText()))
+                {
+                    currentUser = temp;
+                    found = true;
+                    if(temp.getEmployeeCategory().equalsIgnoreCase("Manager"))
                    {
                        isAuthorized = true;
                    }
@@ -1084,53 +1084,53 @@ public class GUI extends Application
             else
             {
              
-            secondPane.setAlignment(Pos.TOP_CENTER);
-            secondStage.setTitle("Main Menu");
-            secondStage.show();
-            primaryStage.close();
+                secondPane.setAlignment(Pos.TOP_CENTER);
+                secondStage.setTitle("Main Menu");
+                secondStage.show();
+                primaryStage.close();
             
             
            
             
             if(isAuthorized == false)
             {
-            menuAdmin.getMenus().get(1).getItems().get(0).setDisable(true); //Employee management
-            menuAdmin.getMenus().get(1).getItems().get(2).setDisable(true); //Expense Management
-            menuAdmin.getMenus().get(1).getItems().get(3).setDisable(true); //Store Management
-            menuAdmin.getMenus().get(2).getItems().get(0).setDisable(true); //Payroll
-            
-            createSupp.setDisable(true); //disable creat supplier button
-            btnEditSupp.setDisable(true); //disable edit Supplier
-            btnAddOrder.setDisable(true); //disable create product order
-            btnViewOrder.setDisable(true); //disable view product order
+                menuAdmin.getMenus().get(1).getItems().get(0).setDisable(true); //Employee management
+                menuAdmin.getMenus().get(1).getItems().get(2).setDisable(true); //Expense Management
+                menuAdmin.getMenus().get(1).getItems().get(3).setDisable(true); //Store Management
+                menuAdmin.getMenus().get(2).getItems().get(0).setDisable(true); //Payroll
 
-            if(createSupp.isPressed())
-            {
-                alert.setTitle("Not Authorized");
-                alert.setHeaderText("Access Only For Management");
-                alert.showAndWait();
-            }
-            if(btnAddOrder.isPressed())
-            {
-                alert.setTitle("Not Authorized");
-                alert.setHeaderText("Access Only For Management");
-                alert.showAndWait();
-            }
-            if(btnViewOrder.isPressed())
-            {
-                alert.setTitle("Not Authorized");
-                alert.setHeaderText("Access Only For Management");
-                alert.showAndWait();
-            }
+                createSupp.setDisable(true); //disable creat supplier button
+                btnEditSupp.setDisable(true); //disable edit Supplier
+                btnAddOrder.setDisable(true); //disable create product order
+                btnViewOrder.setDisable(true); //disable view product order
 
-            if(btnEditSupp.isPressed())
-            {
-                alert.setTitle("Not Authorized");
-                alert.setHeaderText("Access Only For Management");
-                alert.showAndWait();
-            }
-            
-            }
+                if(createSupp.isPressed())
+                {
+                    alert.setTitle("Not Authorized");
+                    alert.setHeaderText("Access Only For Management");
+                    alert.showAndWait();
+                }
+                if(btnAddOrder.isPressed())
+                {
+                    alert.setTitle("Not Authorized");
+                    alert.setHeaderText("Access Only For Management");
+                    alert.showAndWait();
+                }
+                if(btnViewOrder.isPressed())
+                {
+                    alert.setTitle("Not Authorized");
+                    alert.setHeaderText("Access Only For Management");
+                    alert.showAndWait();
+                }
+
+                if(btnEditSupp.isPressed())
+                {
+                    alert.setTitle("Not Authorized");
+                    alert.setHeaderText("Access Only For Management");
+                    alert.showAndWait();
+                }
+
+                }
             }
         });
                 
@@ -1209,65 +1209,65 @@ public class GUI extends Application
             }
             else 
             {
-            poC = prodOrderList.get(cmboProdOrder2.getSelectionModel().getSelectedIndex());
-            cmboProdOrder2.getSelectionModel().clearSelection();
-            
-            fifthPane.getChildren().clear();
-            fifthStage.setTitle("Edit or Cancel a Product Order");
-            fifthStage.show();
-            fifthPane.setAlignment(Pos.TOP_CENTER);
-            
-            fifthPane.add(lblEPO, 0, 0);
-            fifthPane.add(lblProdName, 0, 1);
-            fifthPane.add(txtProdName, 0, 2);
-            fifthPane.add(lblUnitCost, 1,5); 
-            fifthPane.add(txtUnitCost, 1, 6); 
-            fifthPane.add(lblCategory, 0, 3);
-            fifthPane.add(cmboCategory, 0, 4);
-            fifthPane.add(lblSubTotal, 1, 7); 
-            fifthPane.add(btnCalcProdSubTotal, 0, 9);
-            fifthPane.add(txtSubTotal, 1, 8); 
-            fifthPane.add(lblOrderDate, 0, 7); 
-            fifthPane.add(orderDate, 0, 8);
-            //need to add order date into the pane and use the constructor with it 
-            
-     
-            fifthPane.add(lblDelDate, 0, 5);  
-          
-            fifthPane.add(calendar, 0, 6);
-            fifthPane.add(lblQuantity, 1, 1);
-            fifthPane.add(txtProdQuantity, 1, 2);
-//            thirdPane.add(lblVendor, 0, 7);
-//            thirdPane.add(txtVendor, 0, 8);
-            fifthPane.add(lblSupplier, 1, 3); 
-            fifthPane.add(cmboSupp, 1, 4);
-            //thirdPane.add(lblImage, 0, 9);
-            //thirdPane.add(btnImage, 0, 10);
-            fifthPane.add(lblProdStore, 2,3);
-            fifthPane.add(cmboStore, 2, 4); //when picking which store the product is for, should be selected from already existing stores created 
+                poC = prodOrderList.get(cmboProdOrder2.getSelectionModel().getSelectedIndex());
+                cmboProdOrder2.getSelectionModel().clearSelection();
 
-            
-            fifthPane.add(btnSavePO, 0, 10);
-            fifthPane.add(btnCancelPO, 1, 10); 
-            
-            txtSubTotal.setEditable(false); 
-            txtProdName.setText(poC.getProdOName()); 
-            Double poUnitCost2 = poC.getUnitCost(); 
-            String poUnitCost = Double.toString(poUnitCost2); 
-            txtUnitCost.setText(poUnitCost);
-            cmboStore.setPromptText(poC.getStore());
-            cmboCategory.setPromptText(poC.getCategory());
-            cmboSupp.setPromptText(poC.getSupplier());
-            Double poSubTotal = poC.getSubtotal(); 
-            String poSubTotal2 = Double.toString(poSubTotal); 
-            txtSubTotal.setText(poSubTotal2);
-            int poQ = poC.getQuantity(); 
-            String poQ2 = Integer.toString(poQ); 
-            txtProdQuantity.setText(poQ2);
-            String date = calendar.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
-            String orderDate2 = orderDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
-            orderDate2 = poC.getDate(); 
-            date = poC.getDeliveryDate(); 
+                fifthPane.getChildren().clear();
+                fifthStage.setTitle("Edit or Cancel a Product Order");
+                fifthStage.show();
+                fifthPane.setAlignment(Pos.TOP_CENTER);
+
+                fifthPane.add(lblEPO, 0, 0);
+                fifthPane.add(lblProdName, 0, 1);
+                fifthPane.add(txtProdName, 0, 2);
+                fifthPane.add(lblUnitCost, 1,5); 
+                fifthPane.add(txtUnitCost, 1, 6); 
+                fifthPane.add(lblCategory, 0, 3);
+                fifthPane.add(cmboCategory, 0, 4);
+                fifthPane.add(lblSubTotal, 1, 7); 
+                fifthPane.add(btnCalcProdSubTotal, 0, 9);
+                fifthPane.add(txtSubTotal, 1, 8); 
+                fifthPane.add(lblOrderDate, 0, 7); 
+                fifthPane.add(orderDate, 0, 8);
+                //need to add order date into the pane and use the constructor with it 
+
+
+                fifthPane.add(lblDelDate, 0, 5);  
+
+                fifthPane.add(calendar, 0, 6);
+                fifthPane.add(lblQuantity, 1, 1);
+                fifthPane.add(txtProdQuantity, 1, 2);
+    //            thirdPane.add(lblVendor, 0, 7);
+    //            thirdPane.add(txtVendor, 0, 8);
+                fifthPane.add(lblSupplier, 1, 3); 
+                fifthPane.add(cmboSupp, 1, 4);
+                //thirdPane.add(lblImage, 0, 9);
+                //thirdPane.add(btnImage, 0, 10);
+                fifthPane.add(lblProdStore, 2,3);
+                fifthPane.add(cmboStore, 2, 4); //when picking which store the product is for, should be selected from already existing stores created 
+
+
+                fifthPane.add(btnSavePO, 0, 10);
+                fifthPane.add(btnCancelPO, 1, 10); 
+
+                txtSubTotal.setEditable(false); 
+                txtProdName.setText(poC.getProdOName()); 
+                Double poUnitCost2 = poC.getUnitCost(); 
+                String poUnitCost = Double.toString(poUnitCost2); 
+                txtUnitCost.setText(poUnitCost);
+                cmboStore.setPromptText(poC.getStore());
+                cmboCategory.setPromptText(poC.getCategory());
+                cmboSupp.setPromptText(poC.getSupplier());
+                Double poSubTotal = poC.getSubtotal(); 
+                String poSubTotal2 = Double.toString(poSubTotal); 
+                txtSubTotal.setText(poSubTotal2);
+                int poQ = poC.getQuantity(); 
+                String poQ2 = Integer.toString(poQ); 
+                txtProdQuantity.setText(poQ2);
+                String date = calendar.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
+                String orderDate2 = orderDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
+                orderDate2 = poC.getDate(); 
+                date = poC.getDeliveryDate(); 
             }
             
         }); 
@@ -1413,39 +1413,39 @@ public class GUI extends Application
             }
             else 
             {
-            sC = suppList.get(cmboSupp2.getSelectionModel().getSelectedIndex());
-            cmboSupp2.getSelectionModel().clearSelection();
-            eighthPane.getChildren().clear();
-            eighthStage.setTitle("Edit a Supplier");
-            eighthStage.show();
-            eighthPane.setAlignment(Pos.TOP_CENTER);   
-            eighthPane.add(lblESupplier, 0, 0); 
-            //eighthPane.add(lblESupp, 0, 1); 
-            //eighthPane.add(cmboSupp, 1, 1);
-            eighthPane.add(lblSuppName, 0,2); 
-            eighthPane.add(txtSuppName, 0, 3); 
-            eighthPane.add(lblSuppPhone, 1,2); 
-            eighthPane.add(txtSuppPhone, 1,3); 
-            eighthPane.add(lblSuppEmail, 0, 4);
-            eighthPane.add(txtSuppEmail, 0, 5);
-            eighthPane.add(lblSuppAdd, 0, 6);
-            eighthPane.add(txtSuppAdd, 0, 7);
-            eighthPane.add(lblSuppContactName, 1, 4);
-            eighthPane.add(txtSuppContactName, 1, 5);
-            eighthPane.add(lblSuppContactPhone, 1, 6);
-            eighthPane.add(txtSuppContactPhone, 1, 7);
-            eighthPane.add(lblSuppContactEmail, 1, 8);
-            eighthPane.add(txtSuppContactEmail, 1, 9); 
+                sC = suppList.get(cmboSupp2.getSelectionModel().getSelectedIndex());
+                cmboSupp2.getSelectionModel().clearSelection();
+                eighthPane.getChildren().clear();
+                eighthStage.setTitle("Edit a Supplier");
+                eighthStage.show();
+                eighthPane.setAlignment(Pos.TOP_CENTER);   
+                eighthPane.add(lblESupplier, 0, 0); 
+                //eighthPane.add(lblESupp, 0, 1); 
+                //eighthPane.add(cmboSupp, 1, 1);
+                eighthPane.add(lblSuppName, 0,2); 
+                eighthPane.add(txtSuppName, 0, 3); 
+                eighthPane.add(lblSuppPhone, 1,2); 
+                eighthPane.add(txtSuppPhone, 1,3); 
+                eighthPane.add(lblSuppEmail, 0, 4);
+                eighthPane.add(txtSuppEmail, 0, 5);
+                eighthPane.add(lblSuppAdd, 0, 6);
+                eighthPane.add(txtSuppAdd, 0, 7);
+                eighthPane.add(lblSuppContactName, 1, 4);
+                eighthPane.add(txtSuppContactName, 1, 5);
+                eighthPane.add(lblSuppContactPhone, 1, 6);
+                eighthPane.add(txtSuppContactPhone, 1, 7);
+                eighthPane.add(lblSuppContactEmail, 1, 8);
+                eighthPane.add(txtSuppContactEmail, 1, 9); 
 
-            eighthPane.add(btnConfirmSuppChanges, 0, 9); 
+                eighthPane.add(btnConfirmSuppChanges, 0, 9); 
 
-            txtSuppName.setText(sC.getName());
-            txtSuppPhone.setText(sC.getSupplierPhone());
-            txtSuppEmail.setText(sC.getSupplierEmail());
-            txtSuppAdd.setText(sC.getSupplierAddress());
-            txtSuppContactName.setText(sC.getContactName());
-            txtSuppContactPhone.setText(sC.getContactPhone()); 
-            txtSuppContactEmail.setText(sC.getContactEmail()); 
+                txtSuppName.setText(sC.getName());
+                txtSuppPhone.setText(sC.getSupplierPhone());
+                txtSuppEmail.setText(sC.getSupplierEmail());
+                txtSuppAdd.setText(sC.getSupplierAddress());
+                txtSuppContactName.setText(sC.getContactName());
+                txtSuppContactPhone.setText(sC.getContactPhone()); 
+                txtSuppContactEmail.setText(sC.getContactEmail()); 
             }
 
         }); 
@@ -1520,7 +1520,7 @@ public class GUI extends Application
             
             Supplier tempSupp = suppList.get(cmboSupp.getSelectionModel().getSelectedIndex());
             //String prodOrderSelect2 = Integer.toString(prodOrderSelect); 
-           suppOutput.setText(tempSupp.toString());   
+            suppOutput.setText(tempSupp.toString());   
             
         }); 
         btnViewAllSupp.setOnAction(e -> {
