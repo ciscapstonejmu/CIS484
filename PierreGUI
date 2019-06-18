@@ -3036,5 +3036,343 @@ public class GUI extends Application
     public static void main(String[] args) {
         launch(args);
     }
+     @Override
+    public void stop(){
+        
+        
+        String cstData; //Customer
+        String emData; //Employee
+        String exData; //Expense
+        String memData; //Member
+        String payData; //Payroll
+        String prData; //Product
+        String poData; //ProductOrder
+        String strData; //Store
+        String spData; //Supplier
+        
+        String cstQuery;
+        String emQuery;
+        String exQuery;
+        String memQuery;
+        String payQuery;
+        String prQuery;
+        String poQuery;
+        String strQuery;
+        String spQuery;
+        
+        
+        
+        for (int i = 0; i < obsCust.size(); i++)
+        {
+            Customer cst = (Customer) obsCust.get(i);
+            cstData = " ('" + cst.getID() + "' , '" + cst.getName() + "' , '" + cst.getEmail() + "' , '" + cst.getPhoneNumber() + "' , '" +
+                    cst.getAddress() + "' , '" + cst.getPaymentMethod() + "')";
+            cstQuery = "INSERT INTO CUSTOMER (CUSTOMERID, NAME, EMAIL, PHONENUMBER, ADDRESS, PAYMENTMETHOD) VALUES" + cstData;
+            
+        }
+        
+        for (int i = 0; i < empData.size(); i++)
+        {
+            Employee em = (Employee) empData.get(i);
+            Store str = (Store) em.getStore();
+            emData = "('" + em.getEmployeeID() + "' , '" + em.getFirstName() + 
+                    "' , '" + em.getLastName() + "' , '" + em.getEmail() + "' , '" + 
+                    em.getPhoneNumber() + "' , '" + em.getAddress() + "' , '" + em.getSalary() +
+                    "' , '" + em.getJobTitle() + "' , '" + em.getEmployeeType() + "' , '" + em.getEmployeeCategory() +
+                    "' , '" + em.getStore() +  "' )";
+            emQuery = "INSERT INTO EMPLOYEE (EMPLOYEEID, FIRSTNAME, LASTNAME, EMAIL, PHONENUMBER, ADDRESS, SALARY, JOBTITLE, EMPLOYEETYPE, EMPLOYEECATEGORY, STORE) VALUES" + emData;
+            strData = "('" + str.getID() + "' , '" + str.getName() + "' , '" + str.getAddress() + "' )";
+            strQuery = "INSERT INTO STORE (STOREID, STORENAME, STOREADDRESS) VALUES" + strData;
+        }
+        
+        for (int i = 0; i < expData.size(); i++)
+        {
+            Expense ex = (Expense) expData.get(i);
+            exData = " ('" + ex.getExpenseID() + "' , '" + ex.getCategory() + "' , '" + ex.getDescription() + 
+                    "' , '" + ex.getAmountPaid() + "' , '" + ex.getTotalAmount() + "' , '" + ex.getDate() + "' )";
+            exQuery = "INSERT INTO EXPENSE (EXPENSEID, CATEGORY, DESCRIPTION, AMOUNTPAID, TOTALAMOUNT, DATE) VALUES" + exData;
+        }
+        
+        for (int i = 0; i < obsMem.size(); i++)
+        {
+            Member mem = (Member) obsMem.get(i);
+            memData = " ('" + mem.getID() + "' , '" + mem.getFName() + "' , '" + mem.getLName() + "' , '" + mem.getPhone() + "' , '" +
+                    mem.getEmail() + "' )";
+            memQuery = "INSERT INTO MEMBER (MEMBERID, FNAME, LNAME, PHONENUMBER, EMAIL) VALUES" + memData;
+        }
+        
+        for (int i = 0; i < empData.size(); i++)
+        {
+            for (int j = 0; j < empData.get(i).payRoll.size(); j++)
+            {
+                Payroll pay = (Payroll) empData.get(i).payRoll.get(j);
+                Employee em = (Employee) empData.get(i).payRoll.get(j).getEmp();
+                /*payData = " ('" + pay.getID() + "' , '" + pay.getPayrollPeriod() + "' , '" + pay.getStart() + "' , '" + pay.end + "' , '" + pay.hoursWorked + 
+                        "' , '" + pay.schedule + "' , '" + pay.scheduleDay + "' , '" + pay.arrTimeIn + "' , '" + pay.arrTimeOut + "' , '" + pay.totalWork +
+                        "' , '" + pay.getAmountPaid() + "' )";
+                payQuery = "INSERT INTO PAYROLL (PAYROLLID, PAYROLLPERIOD, START, END, HOURSWORKED, SCHEDULE, SCHEDULEDAY, ARRTIMEIN, ARRTIMEOUT, TOTALWORK, AMOUNTPAID) VALUES" + payData;
+            */
+                payData = " ('" + pay.getID() + "' , '" + pay.getEmp() + "' )";
+                payQuery = "INSERT INTO PAYROLL (PAYROLLID, EMPLOYEE) VALUES" + payData;
+                }
+        }
+        
+        
+        for (int i = 0; i < prodData.size(); i++)
+        {
+            Product pr = (Product) prodData.get(i);
+            Supplier sp = (Supplier) pr.getSupp();
+            prData = " ('" + pr.getProductID() + "' , '" + pr.getProductName() + "' , '" + pr.getQuantity() + "' , '" + pr.getPrice() +
+                    "' , '" + pr.getStore() + "' , '" + pr.getFoodDescription() + "' , '" + pr.getCategory() + "' , '" + pr.getSupplier() +
+                    "' , '" + pr.getImage() + "' )";
+            prQuery = "INSERT INTO PRODUCT (PRODUCTID, NAME, QUANTITY, PRICE, STORE, DESCRIPTION, CATEGORY, SUPPLIER) VALUES" + prData;
+            spData = " ('" + sp.getID() + "' , '" + sp.getName() + "' , '" + sp.getSupplierPhone() + "' , '" + sp.getSupplierPhone() + "' , '" +
+                    sp.getSupplierEmail() + "' , '" + sp.getSupplierAddress() + "' , '" + sp.getContactName() + "' , '" + sp.getContactPhone() + "' , '" +
+                    sp.getContactEmail() + " ' )";
+            spQuery = "INSERT INTO SUPPLIER (SUPPLIERID, SUPPLIERNAME, SUPPLIERPHONE, SUPPLIEREMAIL, SUPPLIERADDRESS, CONTACTNAME, CONTACTPHONE, CONTACTEMAIL) VALUES" + spData;
+        }
+        
+        for (int i = 0; i < obsProdOrder.size(); i++)
+        {
+            ProductOrder po = (ProductOrder) obsProdOrder.get(i);
+            Supplier sp = (Supplier) po.getAssociatedSupplier();
+            Store str = (Store) po.getStoreLoc();
+            poData = " ('" + po.getID() + "' , '" + po.getQuantity() + "' , '" + po.getProdOName() + "' , '" + po.getUnitCost() + "' , '" + po.getSubtotal() +
+                    "' , '" + po.getDeliveryDate() + "' , '" + po.getDate() + "' , '" + po.getSupplier() + "' , '" + po.getStore() + "' , '" + po.getCategory() + "' )";
+            poQuery = "INSERT INTO PRODUCTORDER (PRODUCTORDERID, QUANTITY, NAME, UNITCOST, SUBTOTAL, DELIVERYDATE, DATE, SUPPLIER, STORE, CATEGORY) VALUES" + poData;
+            spData = " ('" + sp.getID() + "' , '" + sp.getName() + "' , '" + sp.getSupplierPhone() + "' , '" + sp.getSupplierPhone() + "' , '" +
+                    sp.getSupplierEmail() + "' , '" + sp.getSupplierAddress() + "' , '" + sp.getContactName() + "' , '" + sp.getContactPhone() + "' , '" +
+                    sp.getContactEmail() + " ' )";
+            spQuery = "INSERT INTO SUPPLIER (SUPPLIERID, SUPPLIERNAME, SUPPLIERPHONE, SUPPLIEREMAIL, SUPPLIERADDRESS, CONTACTNAME, CONTACTPHONE, CONTACTEMAIL) VALUES" + spData;
+            strData = "('" + str.getID() + "' , '" + str.getName() + "' , '" + str.getAddress() + "' )";
+            strQuery = "INSERT INTO STORE (STOREID, STORENAME, STOREADDRESS) VALUES" + strData;
+        }
+        
+        for (int i = 0; i < storeData.size(); i++)
+        {
+            Store str = (Store) obsStore.get(i);
+            strData = "('" + str.getID() + "' , '" + str.getName() + "' , '" + str.getAddress() + "' )";
+            strQuery = "INSERT INTO STORE (STOREID, STORENAME, STOREADDRESS) VALUES" + strData;
+        }
+        
+        for (int i = 0; i < obsSupp.size(); i++)
+        {
+            Supplier sp = (Supplier) obsSupp.get(i);
+            spData = " ('" + sp.getID() + "' , '" + sp.getName() + "' , '" + sp.getSupplierPhone() + "' , '" + sp.getSupplierPhone() + "' , '" +
+                    sp.getSupplierEmail() + "' , '" + sp.getSupplierAddress() + "' , '" + sp.getContactName() + "' , '" + sp.getContactPhone() + "' , '" +
+                    sp.getContactEmail() + " ' )";
+            spQuery = "INSERT INTO SUPPLIER (SUPPLIERID, SUPPLIERNAME, SUPPLIERPHONE, SUPPLIEREMAIL, SUPPLIERADDRESS, CONTACTNAME, CONTACTPHONE, CONTACTEMAIL) VALUES" + spData;
+        }
+        
+        
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+    
+
+    
+public ResultSet DBCommand(String sqlQuery)
+    {
+        String URL = "jdbc:oracle:thin:@localhost:1521:XE";
+        String userID = "javauser";
+        String userPASS = "javapass";
+        OracleDataSource ds;
+    
+    
+    try
+    {
+        ds = new OracleDataSource();
+        ds.setURL(URL);
+        Connection dbConn = ds.getConnection(userID,userPASS);
+        Statement commStmt = dbConn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        dbResults = commStmt.executeQuery(sqlQuery);
+        
+    }
+    catch (SQLException e) {
+            {
+                System.out.println(e.toString());
+            }
+    }
+    return dbResults; 
+    }
+   
+
+    public void loadCustSaleFromDB() {
+    String query = "SELECT * FROM JAVAUSER.CUSTSALE"; 
+    ResultSet resultset = DBCommand(query); 
+        
+        try{
+            while(resultset.next()){
+                //obsSale.add(new CustSale ( resultset.getString ( "SALEDATE"), resultset.getObject("STORE"), resultset.getObject("EMPLOYEE"), resultset.get
+            }
+            
+        }
+        catch(SQLException e) {
+            System.out.println(e.toString()); 
+        }
+       
+    }
+    
+   
+    
+    public void loadExpensesFromDB() {
+        String query = "SELECT * FROM JAVAUSER.EXPENSE"; 
+        ResultSet resultset = DBCommand(query); 
+        
+        try{
+            while(resultset.next()){
+                obsExpense.add(new Expense ( resultset.getString ( "CATEGORY"), resultset.getString("DESCRIPTION"), resultset.getDouble("AMOUNTPAID"), resultset.getDouble("TOTALAMOUNT"), resultset.getString("DATE")));
+            }
+            
+        }
+        catch(SQLException e) {
+            System.out.println(e.toString()); 
+        }
+    }
+        public void loadEmployeesfromDB()
+        {
+        String query = "SELECT * FROM JAVAUSER.EMPLOYEE"; 
+        ResultSet resultset = DBCommand(query); 
+        
+        try{
+            while(resultset.next()){
+                obsEmp.add(new Employee ( resultset.getString ( "FIRSTNAME"), resultset.getString("LASTNAME"), resultset.getString("EMAIL"), resultset.getString("PHONENUMBER"), resultset.getString("ADDRESS"), resultset.getDouble("SALARY"), resultset.getString("JOBTITLE"), resultset.getString("EMPLOYEETYPE"), resultset.getString("EMPLOYEETYPE"), resultset.getObject("STORE")));
+            }
+            
+        }
+        catch(SQLException e) {
+            System.out.println(e.toString()); 
+        }
+        }
+        
+              public void loadEmployeesFromDB(){
+            
+            String sdQuery;
+            ResultSet employeeResults;
+            
+            try{
+                sdQuery = "SELECT * FROM SYSTEM.STUDENT;";
+                employeeResults = sendDBCommand(sdQuery);
+                
+                
+                while(employeeResults.next()){
+                    empData.add(new Employee(Integer.parseInt(employeeResults.getString(1)),
+                            employeeResults.getString(2), employeeResults.getString(3),
+                            employeeResults.getString(4), employeeResults.getString(5),
+                            Double.parseDouble(employeeResults.getString(6)), employeeResults.getString(7), employeeResults.getString(8), employeeResults.getString(9))
+                            );
+                    
+                }
+            }
+            catch(SQLException e){
+                System.out.println(e.toString());
+                
+            }
+            }
+        public void loadMembersfromDB()
+        {
+        String query = "SELECT * FROM JAVAUSER.MEMBER"; 
+        ResultSet resultset = DBCommand(query); 
+        
+        try{
+            while(resultset.next()){
+                obsMem.add(new Member ( resultset.getString ( "FNAME"), resultset.getString("LNAME"), resultset.getString("PHONENUMBER"), resultset.getString("EMAIL")));
+            }
+            
+        }
+        catch(SQLException e) {
+            System.out.println(e.toString()); 
+        }
+        }
+        
+       /* public void loadPayrollfromDB()
+        {
+        String query = "SELECT * FROM JAVAUSER.PAYROLL"; 
+        ResultSet resultset = DBCommand(query); 
+        
+        try{
+            while(resultset.next()){
+                obsEmp.add(new Payroll (resultset.getObject("EMPLOYEE")));
+            }
+            
+        }
+        catch(SQLException e) {
+            System.out.println(e.toString()); 
+        }
+        }
+*/
+        
+        public void loadProductsfromDB()
+        {
+        String query = "SELECT * FROM JAVAUSER.PRODUCT"; 
+        ResultSet resultset = DBCommand(query); 
+        
+        try{
+            while(resultset.next()){
+                obsProd.add(new Product ( resultset.getString("NAME"), resultset.getInt("QUANTITY"), resultset.getDouble("PRICE"), resultset.getObject("STORE"), resultset.getString("DESCRIPTION"), resultset.getString("CATEGORY"), resultset.getObject("SUPPLIER"), resultset.getObject("IMAGE")));
+            }
+            
+        }
+        catch(SQLException e) {
+            System.out.println(e.toString()); 
+        }
+        }
+        
+        public void loadProductOrdersfromDB()
+        {
+        String query = "SELECT * FROM JAVAUSER.PRODUCTORDER"; 
+        ResultSet resultset = DBCommand(query); 
+        
+        try{
+            while(resultset.next()){
+                obsProdOrder.add(new ProductOrder ( resultset.getString("ORDERDATE"), resultset.getInt("QUANTITY"), resultset.getDouble("UNITCOST"), resultset.getDouble("SUBTOTAL"), resultset.getString("DELIVERYDATE")));
+            }
+            
+        }
+        catch(SQLException e) {
+            System.out.println(e.toString()); 
+        }
+        }
+        
+        public void loadStoresfromDB()
+        {
+        String query = "SELECT * FROM JAVAUSER.STORE"; 
+        ResultSet resultset = DBCommand(query); 
+        
+        try{
+            while(resultset.next()){
+                obsStore.add(new Store ( resultset.getString("NAME"), resultset.getString("ADDRESS")));
+            
+        }
+        }
+        catch(SQLException e) {
+            System.out.println(e.toString()); 
+        }
+        }
+        
+        public void loadSuppliersfromDB()
+        {
+        String query = "SELECT * FROM JAVAUSER.SUPPLIER"; 
+        ResultSet resultset = DBCommand(query); 
+        
+        try{
+            while(resultset.next()){
+                obsSupp.add(new Supplier ( resultset.getString("SUPPLIERNAME"), resultset.getString("SUPPLIERPHONE"), resultset.getString("SUPPLIEREMAIL"), resultset.getString("SUPPLIERADDRESS"), resultset.getString("SALESCONTACTNAME"), resultset.getString("SALESCONTACTNUMBER"), resultset.getString("SALESCONTACTEMAIL")));
+            }
+            
+        }
+        catch(SQLException e) {
+            System.out.println(e.toString()); 
+        }
+        }
+        
+        
+        
+        
+    
+    
+
     
 }
