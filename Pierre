@@ -684,6 +684,7 @@ public class GUI extends Application
         btnRemoveStore.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnViewStore.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnViewAllStore.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnConfirmAddStore.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnDisProd.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         createSupp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnEditSupp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
@@ -2187,44 +2188,44 @@ public class GUI extends Application
             }
             else
             {
-            empList.add(new Employee(txtFName.getText(), txtLName.getText(), txtEmail.getText(), txtPhone.getText(), 
-            txtAddress.getText(), Double.valueOf(txtSalary.getText()),  
-                    (String)cmboJob.getValue(), (String)cmboEType.getValue(), (String)cmboEmpCat.getValue(), storeList.get(cmboStore.getSelectionModel().getSelectedIndex()))); 
-            //changed parse to valueof
-            for(int i = 0; i<job.size(); i++){
-                if((job.get(i).equalsIgnoreCase((String)cmboJob.getValue())))
-                {
-                    break;
+                empList.add(new Employee(txtFName.getText(), txtLName.getText(), txtEmail.getText(), txtPhone.getText(), 
+                txtAddress.getText(), Double.valueOf(txtSalary.getText()),  
+                        (String)cmboJob.getValue(), (String)cmboEType.getValue(), (String)cmboEmpCat.getValue(), storeList.get(cmboStore.getSelectionModel().getSelectedIndex()))); 
+                //changed parse to valueof
+                for(int i = 0; i<job.size(); i++){
+                    if((job.get(i).equalsIgnoreCase((String)cmboJob.getValue())))
+                    {
+                        break;
+                    }
+                    else if(i == job.size()-1 && job.get(i).equalsIgnoreCase((String)cmboJob.getValue()) == false)
+                    {
+                        job.add((String)cmboJob.getValue());
+                    }
+
                 }
-                else if(i == job.size()-1 && job.get(i).equalsIgnoreCase((String)cmboJob.getValue()) == false)
+                alert.setTitle("Success!");
+                alert.setHeaderText("The employee has been added!");
+                alert.showAndWait();
+
+                empData.clear();
+                for(Employee emp: empList)
                 {
-                    job.add((String)cmboJob.getValue());
+                    empData.add(emp);
                 }
-                
-            }
-            alert.setTitle("Success!");
-            alert.setHeaderText("The employee has been added!");
-            alert.showAndWait();
-            
-            empData.clear();
-            for(Employee emp: empList)
-            {
-                empData.add(emp);
-            }
-            
-            txtFName.clear();
-            txtLName.clear();
-            txtEmail.clear();
-            txtPhone.clear();
-            txtAddress.clear();
-            txtSalary.clear();
-            cmboJob.getSelectionModel().clearSelection();
-            cmboStore.getSelectionModel().clearSelection();
-            cmboEType.getSelectionModel().clearSelection();
-            cmboEmpCat.getSelectionModel().clearSelection();
-            
-            
-            thirdStage.close();
+
+                txtFName.clear();
+                txtLName.clear();
+                txtEmail.clear();
+                txtPhone.clear();
+                txtAddress.clear();
+                txtSalary.clear();
+                cmboJob.getSelectionModel().clearSelection();
+                cmboStore.getSelectionModel().clearSelection();
+                cmboEType.getSelectionModel().clearSelection();
+                cmboEmpCat.getSelectionModel().clearSelection();
+
+
+                thirdStage.close();
             }
         });
         
@@ -2332,7 +2333,7 @@ public class GUI extends Application
 
             for(int i = 0; i<empList.size(); i++)
             {
-             if(empList.get(i).getEmployeeID()== eC.getEmployeeID())
+                if(empList.get(i).getEmployeeID()== eC.getEmployeeID())
                {
                     Employee temp = eC;
                     empList.remove(i);
@@ -2409,6 +2410,7 @@ public class GUI extends Application
            
             
             expVB.getChildren().addAll(lblExp, lblExpMan, cmboExpense, btnAddExp, btnPayExp, btnEditExp);
+            // remove expense is currently not in here
             border.setTop(menuAdmin);
             border.setLeft(expVB);
             border.setCenter(expTable);
@@ -2619,7 +2621,7 @@ public class GUI extends Application
         });
         btnPayExp.setOnAction(e -> {
             eighthPane.getChildren().clear();
-            if (Expense.obsExpense.size() > 1) 
+            if (Expense.obsExpense.size() < 1) 
             {
                 alert.setTitle("Error!");
                 alert.setHeaderText("No expenses to pay!");
@@ -2650,8 +2652,8 @@ public class GUI extends Application
             eighthPane.add(lblDisplayExpAmount, 0, 6);
             eighthPane.add(txtDisplayExpAmount, 0, 7);
             eighthPane.add(btnConfirmPayExp, 0, 8);
-            txtExpCurrentAmount.isEditable();
-            txtDisplayExpAmount.isEditable();
+            txtExpCurrentAmount.setEditable(false);
+            txtDisplayExpAmount.setEditable(false);
             eighthStage.show();
 
             System.out.println(unpaidExpVar + " / " + obsUnpaidExp.size());
@@ -2722,39 +2724,6 @@ public class GUI extends Application
 
         });
 
-        storeTable.getColumns().addAll(tbStoreName, tbStoreAddress);
-        menuAdmin.getMenus().get(1).getItems().get(3).setOnAction(e -> {
-            // Store Management
-
-            tenthPane.getChildren().clear();
-            formPane.getChildren().clear();
-            border.getChildren().clear();
-
-            secondPane.setAlignment(Pos.TOP_CENTER);
-            secondStage.setTitle("Store Management");
-
-            btnAddStore.setMaxWidth(Double.MAX_VALUE);
-            btnEditStore.setMaxWidth(Double.MAX_VALUE);
-            btnViewStore.setMaxWidth(Double.MAX_VALUE);
-            btnRemoveStore.setMaxWidth(Double.MAX_VALUE);
-            cmboStore.setMaxWidth(Double.MAX_VALUE);
-            btnViewAllStore.setMaxWidth(Double.MAX_VALUE);
-
-            storeTable.setItems(storeData);
-            storeTable.setMinWidth(tenthScene.getWidth());
-
-            VBox storeVB = new VBox();
-            storeVB.setSpacing(10);
-            storeVB.setPadding(new Insets(10, 20, 10, 20));
-
-            storeVB.getChildren().addAll(lblStoreMan, cmboStore, btnAddStore, btnEditStore, btnRemoveStore, btnViewStore, btnViewAllStore);
-            border.setTop(menuAdmin);
-            border.setLeft(storeVB);
-            border.setCenter(storeTable);
-            //tenthStage.show();
-
-        });
-
         btnRemExp.setOnAction(e -> {
 
             expVar = cmboExpense.getSelectionModel().getSelectedIndex();
@@ -2794,8 +2763,43 @@ public class GUI extends Application
             //insert code to add employee to object
 
             ninthStage.close();
+        
+        });
+        
+        storeTable.getColumns().addAll(tbStoreName, tbStoreAddress);
+        menuAdmin.getMenus().get(1).getItems().get(3).setOnAction(e -> {
+            // Store Management
+
+            tenthPane.getChildren().clear();
+            formPane.getChildren().clear();
+            border.getChildren().clear();
+
+            secondPane.setAlignment(Pos.TOP_CENTER);
+            secondStage.setTitle("Store Management");
+
+            btnAddStore.setMaxWidth(Double.MAX_VALUE);
+            btnEditStore.setMaxWidth(Double.MAX_VALUE);
+            btnViewStore.setMaxWidth(Double.MAX_VALUE);
+            btnRemoveStore.setMaxWidth(Double.MAX_VALUE);
+            cmboStore.setMaxWidth(Double.MAX_VALUE);
+            btnViewAllStore.setMaxWidth(Double.MAX_VALUE);
+
+            storeTable.setItems(storeData);
+            storeTable.setMinWidth(tenthScene.getWidth());
+
+            VBox storeVB = new VBox();
+            storeVB.setSpacing(10);
+            storeVB.setPadding(new Insets(10, 20, 10, 20));
+
+            storeVB.getChildren().addAll(lblStoreMan, cmboStore, btnAddStore, btnEditStore, btnRemoveStore, btnViewStore, btnViewAllStore);
+            border.setTop(menuAdmin);
+            border.setLeft(storeVB);
+            border.setCenter(storeTable);
+            //tenthStage.show();
 
         });
+
+        
 
         btnAddStore.setOnAction(e -> {
             tenthPane.getChildren().clear();
@@ -2940,15 +2944,15 @@ public class GUI extends Application
 
         btnViewAllStore.setOnAction(e -> {
 
-        for (int i = 0; i < storeList.size(); i++)
-        {
-            System.out.println(storeList.get(i).toString());
-        }
-        storeData.clear();
-        for (Store s: storeList)
-        {
-            storeData.add(s);
-        }
+            for (int i = 0; i < storeList.size(); i++)
+            {
+                System.out.println(storeList.get(i).toString());
+            }
+            storeData.clear();
+            for (Store s: storeList)
+            {
+                storeData.add(s);
+            }
 
         });
         
@@ -3155,11 +3159,11 @@ public class GUI extends Application
             int checkEmptyOut = 0;
             for(int i = 0; i<currentUser.payRoll.size(); i++)
             {
-               if(currentUser.payRoll.get(i).getPayrollPeriod().equalsIgnoreCase(select))
-               {
-                   tempPay = currentUser.payRoll.get(i);
-                   break;
-               }
+                if(currentUser.payRoll.get(i).getPayrollPeriod().equalsIgnoreCase(select))
+                {
+                    tempPay = currentUser.payRoll.get(i);
+                    break;
+                }
             }
 
             //Changing labels to match the week of payroll
