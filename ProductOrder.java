@@ -19,6 +19,7 @@ public class ProductOrder {
     private String supplier; 
     private String store; 
     private Store storeLoc; 
+    private Supplier associatedSupplier;
     private String category; 
     
     public static ObservableList obsProdOrder = FXCollections.observableArrayList(); 
@@ -47,6 +48,8 @@ public class ProductOrder {
         this.category = category; 
         this.orderDate = orderDate; 
     }
+    
+    
     public int getID()
     {
         return this.productOrderID;
@@ -131,7 +134,25 @@ public class ProductOrder {
     public void setOrderDate(String orderDate) {
         this.orderDate = orderDate; 
     }
-  
+   
+    public  void setStoreLoc(Store storeLoc) {
+        this.storeLoc = storeLoc;
+    }
+    
+    public Store getStoreLoc() {
+        return this.storeLoc;
+    }
+    
+    public void setAssociatedSupplier (Supplier supp)
+    {
+        this.associatedSupplier = supp;
+    }
+    
+    public Supplier getAssociatedSupplier()
+    {
+        return this.associatedSupplier;
+    }
+    
     public String toString()
     {
         String str = "";
