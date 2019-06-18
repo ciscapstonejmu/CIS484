@@ -3815,7 +3815,7 @@ public class GUI extends Application
                     "' , '" + em.getJobTitle() + "' , '" + em.getEmployeeType() + "' , '" + em.getEmployeeCategory() +
                     "' , '" + em.getStore() +  "' )";
             emQuery = "INSERT INTO EMPLOYEE (EMPLOYEEID, FIRSTNAME, LASTNAME, EMAIL, PHONENUMBER, ADDRESS, SALARY, JOBTITLE, EMPLOYEETYPE, EMPLOYEECATEGORY, STORE) VALUES" + emData;
-            strData = "('" + str.getID() + "' , '" + str.getName() + "' , '" + str.getAddress() + "' )";
+            strData = "('" + str.getStoreID() + "' , '" + str.getStoreName() + "' , '" + str.getStoreAddress() + "' )";
             strQuery = "INSERT INTO STORE (STOREID, STORENAME, STOREADDRESS) VALUES" + strData;
         }
 
@@ -3878,14 +3878,14 @@ public class GUI extends Application
                     sp.getSupplierEmail() + "' , '" + sp.getSupplierAddress() + "' , '" + sp.getContactName() + "' , '" + sp.getContactPhone() + "' , '" +
                     sp.getContactEmail() + " ' )";
             spQuery = "INSERT INTO SUPPLIER (SUPPLIERID, SUPPLIERNAME, SUPPLIERPHONE, SUPPLIEREMAIL, SUPPLIERADDRESS, CONTACTNAME, CONTACTPHONE, CONTACTEMAIL) VALUES" + spData;
-            strData = "('" + str.getID() + "' , '" + str.getName() + "' , '" + str.getAddress() + "' )";
+            strData = "('" + str.getStoreID() + "' , '" + str.getStoreName() + "' , '" + str.getStoreAddress() + "' )";
             strQuery = "INSERT INTO STORE (STOREID, STORENAME, STOREADDRESS) VALUES" + strData;
         }
 
         for (int i = 0; i < storeData.size(); i++)
         {
             Store str = (Store) obsStore.get(i);
-            strData = "('" + str.getID() + "' , '" + str.getName() + "' , '" + str.getAddress() + "' )";
+            strData = "('" + str.getStoreID() + "' , '" + str.getStoreName() + "' , '" + str.getStoreAddress() + "' )";
             strQuery = "INSERT INTO STORE (STOREID, STORENAME, STOREADDRESS) VALUES" + strData;
         }
 
