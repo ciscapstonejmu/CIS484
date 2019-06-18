@@ -236,46 +236,51 @@ public class CustSaleForm{
            
         btnAddToSale.setOnAction(e -> {
             //Find products in sale      
-
-            int saleProd = cmboSaleProd.getSelectionModel().getSelectedIndex();
-            
-            if(cmboSaleStore.getSelectionModel().isEmpty())
-            {
-                alertError.setTitle("Error");
-                alertError.setHeaderText("Please Select Store!");
-                alertError.showAndWait();
-            }
-            if(cmboSaleProd.getSelectionModel().isEmpty())
-            {
-                alertError.setTitle("Error");
-                alertError.setHeaderText("Please Select Product!");
-                alertError.showAndWait();
-            }           
-                        if(saleProducts.size() > GUI.prodList.size())
-            {
-                saleProducts.remove(saleProd);
-                alertError.setTitle("Error");
-                alertError.setHeaderText("Sale Quantity exceeds Inventory!");
-                alertError.showAndWait();
-            }
-            else{
+            try{
+                int saleProd = cmboSaleProd.getSelectionModel().getSelectedIndex();   
+ 
             this.saleProducts.add(GUI.prodList.get(saleProd));                    
             String saleOut = "";
             saleOut += GUI.prodList.get(saleProd).toStringSale();
             saleOut += "\n";
             txtSaleOutput.appendText(saleOut);            
             recItems += saleOut;
+            txtSaleOutput.setEditable(false);
             
+            if (cmboSaleEmp.getSelectionModel().isEmpty() || cmboSaleStore.getSelectionModel().isEmpty() || 
+                    cmboSaleProd.getSelectionModel().isEmpty())
+            {
+                txtSaleOutput.clear();
+                this.saleProducts.remove(GUI.prodList.get(saleProd));
+                alertError.setTitle("Error");
+                alertError.setHeaderText("Fields Filled Incorrectly, Try again!");
+                alertError.showAndWait();
+            }      
+            if(saleProducts.size() > GUI.prodList.size())
+            {
+                saleProducts.remove(saleProd);
+                txtSaleOutput.clear();
+                alertError.setTitle("Error");
+                alertError.setHeaderText("Sale Quantity exceeds Inventory!");
+                alertError.showAndWait();
+            }
+            else
+            {
             alert.setTitle("Success!");
             alert.setHeaderText("Sale Has Been Added!");
             alert.showAndWait();
-            txtSaleOutput.setEditable(false);
+            }
+            }
+            catch (Exception ex)
+            {
+                System.out.println("Given: " + ex + "Exception in Adding Sale");
             }
             
             });
         
         btnRepeatBuy.setOnAction(e -> {
             //Repeat the purchase of the same item repeatedly
+            try{
             int saleProd = cmboSaleProd.getSelectionModel().getSelectedIndex();
             this.saleProducts.add(GUI.prodList.get(saleProd));
             if(saleProducts.size() > GUI.prodList.size())
@@ -285,6 +290,7 @@ public class CustSaleForm{
                 alertError.setHeaderText("Sale Quantity exceeds Inventory!");
                 alertError.showAndWait();
             }
+            else{
              String saleOut = "";
             saleOut += GUI.prodList.get(saleProd).toStringSale();
             saleOut += "\n";
@@ -294,6 +300,12 @@ public class CustSaleForm{
             alert.setHeaderText("Same Product Purchased!");
             alert.showAndWait();
             txtSaleOutput.setEditable(false);
+            }
+            }
+            catch (Exception ex)
+            {
+                System.out.println("Given: " + ex + "Exception in Repeating Sale");
+            }
         });
         
         btnAddMember.setOnAction(e -> {
@@ -316,18 +328,18 @@ public class CustSaleForm{
         });
         
         btnCreateMem.setOnAction(e -> {
-            
-            GUI.memList.add(new Member(txtMemFName.getText(), 
-                    txtMemLName.getText(), txtMemPhone.getText(), 
-                    txtMemEmail.getText()));
+            try{
             if (txtMemFName.getText().isEmpty() || txtMemLName.getText().isEmpty() || 
-                    txtMemPhone.getText().isEmpty() || txtMemEmail.getText().isEmpty())
+                txtMemPhone.getText().isEmpty() || txtMemEmail.getText().isEmpty())
             {
                 alertError.setTitle("Error");
                 alertError.setHeaderText("Please Enter All Requested Information!");
                 alertError.showAndWait();
             }
             else{
+            GUI.memList.add(new Member(txtMemFName.getText(), 
+                    txtMemLName.getText(), txtMemPhone.getText(), 
+                    txtMemEmail.getText()));
             alert.setTitle("Success!");
             alert.setHeaderText("New Member Added!");
             alert.showAndWait();
@@ -336,6 +348,11 @@ public class CustSaleForm{
             
             Member.obsMem.add(txtMemLName.getText() + ", " + txtMemFName.getText());
             GUI.cmboMem.getSelectionModel().select(Member.memCount-1);
+            }
+            }
+            catch(Exception ex)
+            {
+                System.out.println("Given: " + ex + "Exception in Creating Member");
             }
         });
         
@@ -352,7 +369,7 @@ public class CustSaleForm{
         });
         
         btnFindMem.setOnAction(e -> {
-            
+            try{
             for(int i=0; i<GUI.memList.size(); i++)
             {
                 if(GUI.memList.get(i).getPhone() != null 
@@ -374,10 +391,16 @@ public class CustSaleForm{
                     alertError.showAndWait();
                 }
             }
+            }
+            catch(Exception ex)
+            {
+                System.out.println("Given: " + ex + "Exception in Finding Member");
+            }
         });
         
         //Complete the sale
         btnCompleteSale.setOnAction(e -> {
+            try{
             receiptOutput.clear();
             primaryPane.add(receiptOutput, 5, 6);
             receiptOutput.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
@@ -399,10 +422,11 @@ public class CustSaleForm{
             
                 CustSale thisSale = GUI.saleList.get(saleCount-1);
                 receiptOutput.appendText(recItems);
-                receiptOutput.appendText("\n" + thisSale.toString());
+                receiptOutput.appendText("\n" + thisSale.toStringNoMem());
                 receiptOutput.appendText("\n--------------------------"
                     + "----------------------------------------\n");
-                receiptOutput.appendText("\n" + "Thank You!");
+                receiptOutput.appendText("\n" + "Thank You!"
+                        + "\nJoin Our Rewards Program For More Savings!");
                 alert.setTitle("Success!");
                 alert.setHeaderText("Sale Completed!");
                 alert.showAndWait();
@@ -429,7 +453,14 @@ public class CustSaleForm{
                 receiptOutput.setEditable(false);
                 cmboSaleProd.getSelectionModel().clearSelection();
                 GUI.cmboMem.getSelectionModel().clearSelection();
-            }});
+            }
+            }
+            catch (Exception ex)
+            {
+                System.out.println("Given: " + ex + "Exception in Completing Sale");
+            }
+                
+            });
         
         
     }
