@@ -833,7 +833,7 @@ public class GUI extends Application
         fifthPane.setVgap(10); 
         fifthPane.setHgap(10); 
         
-        Scene fifthScene = new Scene(fifthPane, 500, 500); 
+        Scene fifthScene = new Scene(fifthPane, 750, 500); 
         Stage fifthStage = new Stage(); 
         fifthStage.setScene(fifthScene); 
         
@@ -1253,6 +1253,7 @@ public class GUI extends Application
             
         });
         btnEditPO.setOnAction(e -> {
+            //Edit Product Order
             if(cmboProdOrder2.getValue() == null)
             {
                 alert.setTitle("Error!");
@@ -1318,6 +1319,15 @@ public class GUI extends Application
                 String orderDate2 = orderDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
                 orderDate2 = poC.getDate(); 
                 date = poC.getDeliveryDate(); 
+                
+                txtProdName.clear();
+                txtUnitCost.clear();
+                cmboCategory.getSelectionModel().clearSelection();
+                orderDate.getEditor().clear();
+                calendar.getEditor().clear();
+                txtProdQuantity.clear();
+                cmboSupp.getSelectionModel().clearSelection();
+                cmboStore.getSelectionModel().clearSelection();
             }
             
         }); 
@@ -1395,7 +1405,16 @@ public class GUI extends Application
         }); 
         
         createSupp.setOnAction(e -> {
+            // Create Supplier
             eighthPane.getChildren().clear();
+            txtSuppName.clear();
+            txtSuppPhone.clear();
+            txtSuppEmail.clear();
+            txtSuppAdd.clear();
+            txtSuppContactName.clear();
+            txtSuppContactPhone.clear();
+            txtSuppContactEmail.clear(); 
+            
             eighthStage.setTitle("Add a Supplier");
             eighthStage.show();
             eighthPane.setAlignment(Pos.TOP_CENTER);       
@@ -1559,6 +1578,7 @@ public class GUI extends Application
         }); 
         
         btnviewSupp.setOnAction(e -> {
+            // View Suppliers
             fifthPane.getChildren().clear();
             fifthStage.setTitle("View Suppliers");
             fifthStage.show();
@@ -1568,7 +1588,7 @@ public class GUI extends Application
             fifthPane.add(cmboSupp, 0, 2); 
             fifthPane.add(viewSupp, 0, 3); 
             fifthPane.add(btnViewAllSupp, 0, 4); 
-            fifthPane.add(suppOutput, 2, 2, 12, 15);  
+            fifthPane.add(suppOutput, 2, 2, 20, 15);  
         }); 
 
         viewSupp.setOnAction(e -> {
@@ -1576,12 +1596,14 @@ public class GUI extends Application
             Supplier tempSupp = suppList.get(cmboSupp.getSelectionModel().getSelectedIndex());
             //String prodOrderSelect2 = Integer.toString(prodOrderSelect); 
             suppOutput.setText(tempSupp.toString());   
+            cmboSupp.getSelectionModel().clearSelection();
             
         }); 
         btnViewAllSupp.setOnAction(e -> {
             String suppOutput2 = ""; 
             for(int i =0; i < suppList.size(); i++) {
                 suppOutput2 += suppList.get(i).toString(); 
+                suppOutput2 += "\n";
             }
             suppOutput.setText(suppOutput2); 
         });
@@ -1629,7 +1651,17 @@ public class GUI extends Application
         });
         
         btnAddOrder.setOnAction(e -> {
+            // Create a Product Order
             fifthPane.getChildren().clear();
+            txtProdName.clear();
+            txtUnitCost.clear();
+            cmboCategory.getSelectionModel().clearSelection();
+            orderDate.getEditor().clear();
+            calendar.getEditor().clear();
+            txtProdQuantity.clear();
+            cmboSupp.getSelectionModel().clearSelection();
+            cmboStore.getSelectionModel().clearSelection();
+            
             fifthStage.setTitle("Create a Product Order");
             fifthStage.show();
             fifthPane.setAlignment(Pos.TOP_CENTER);
@@ -1703,6 +1735,15 @@ public class GUI extends Application
             //for (int i = 0; i < prodOrderList.size(); i++) {
                 //System.out.println(prodOrderList.get(i)); 
             //}
+            txtProdName.clear();
+            txtUnitCost.clear();
+            cmboCategory.getSelectionModel().clearSelection();
+            orderDate.getEditor().clear();
+            calendar.getEditor().clear();
+            txtProdQuantity.clear();
+            cmboSupp.getSelectionModel().clearSelection();
+            cmboStore.getSelectionModel().clearSelection();
+            
             }
         }); 
         
@@ -1716,7 +1757,7 @@ public class GUI extends Application
             fifthPane.add(cmboProdOrder, 0, 0); 
             fifthPane.add(btnDisplayPO, 0, 1); 
             fifthPane.add(btnViewAllPO, 0, 2); 
-            fifthPane.add(prodOrderOutput, 0, 3, 12, 15);  
+            fifthPane.add(prodOrderOutput, 0, 3, 20, 15);  
         }); 
         
         
@@ -1760,6 +1801,14 @@ public class GUI extends Application
         btnAddProd.setOnAction(e -> {
             // Add a Product
             thirdPane.getChildren().clear();
+            txtProdName.clear();	
+            txtProdQuantity.clear();	
+            txtUnitPrice.clear();	
+            cmboStore.getSelectionModel().clearSelection();	
+            txtProdDesc.clear();	
+            cmboCategory.getSelectionModel().clearSelection();	
+            cmboSupp.getSelectionModel().clearSelection();
+            
             thirdStage.setTitle("Add a Product");
             thirdStage.show();
             thirdPane.setAlignment(Pos.TOP_CENTER);
@@ -2142,6 +2191,17 @@ public class GUI extends Application
         
         btnAddEmp.setOnAction(e -> {
             thirdPane.getChildren().clear();
+            txtFName.clear();
+            txtLName.clear();
+            txtEmail.clear();
+            txtPhone.clear();
+            txtAddress.clear();
+            txtSalary.clear();
+            cmboJob.getSelectionModel().clearSelection();
+            cmboStore.getSelectionModel().clearSelection();
+            cmboEType.getSelectionModel().clearSelection();
+            cmboEmpCat.getSelectionModel().clearSelection();
+            
             thirdStage.setTitle("Add an Employee");
             thirdStage.show();
             thirdPane.setAlignment(Pos.TOP_CENTER);
@@ -2424,6 +2484,12 @@ public class GUI extends Application
         btnAddExp.setOnAction(e -> {
             // Adding an Expense
             thirdPane.getChildren().clear();
+            txtExpDesc.clear();
+            txtAmount.clear();
+            cmboExpCategory.getSelectionModel().clearSelection();
+            cmboStatus.getSelectionModel().clearSelection();
+            expDate.getEditor().clear();
+            
             thirdStage.setTitle("Add an Expense");
             thirdStage.show();
             thirdPane.setAlignment(Pos.TOP_CENTER);
@@ -2621,8 +2687,13 @@ public class GUI extends Application
             {
                 expData.add(exp);
             }
-
+            txtExpDesc.clear();
+            txtAmount.clear();
+            cmboExpCategory.getSelectionModel().clearSelection();
+            cmboStatus.getSelectionModel().clearSelection();
+            expDate.getEditor().clear();
         });
+        
         btnPayExp.setOnAction(e -> {
             eighthPane.getChildren().clear();
             if (Expense.obsExpense.size() < 1) 
@@ -2641,8 +2712,6 @@ public class GUI extends Application
                         obsUnpaidExp.add(expList.get(i));
                     }
                 }
-            
-
             System.out.println(expList.size() + " wap");
             System.out.println(obsUnpaidExp.size() + " wop");
             eighthPane.add(lblChooseExp, 0, 1);
@@ -2695,12 +2764,24 @@ public class GUI extends Application
                 alert.setTitle("Success!");
                 alert.setHeaderText("Your payment has been recorded!");
                 alert.showAndWait();
+                txtExpDesc.clear();
+                txtAmount.clear();
+                cmboExpCategory.getSelectionModel().clearSelection();
+                cmboStatus.getSelectionModel().clearSelection();
+                expDate.getEditor().clear();
+                eighthStage.close();
             }
             if (obsUnpaidExp.get(unpaidExpVar).getRemainingBalance() == 0) 
             {
                 alert.setTitle("Success!");
                 alert.setHeaderText("You have fully paid this expense!");
                 alert.showAndWait();
+                txtExpDesc.clear();
+                txtAmount.clear();
+                cmboExpCategory.getSelectionModel().clearSelection();
+                cmboStatus.getSelectionModel().clearSelection();
+                expDate.getEditor().clear();
+                eighthStage.close();
             }
 
         });
@@ -2807,6 +2888,9 @@ public class GUI extends Application
 
         btnAddStore.setOnAction(e -> {
             tenthPane.getChildren().clear();
+            txtStoreName.clear();
+            txtStoreAddress.clear();
+            
             tenthPane.add(lblStoreName, 0, 1);
             tenthPane.add(txtStoreName, 0, 2);
             tenthPane.add(lblStoreAddress, 1, 1);
@@ -2854,6 +2938,8 @@ public class GUI extends Application
                 System.out.println(obsStore.get(i).toString());
                 }
                 */
+                txtStoreName.clear();
+                txtStoreAddress.clear();
             }
         });
 
@@ -2911,6 +2997,8 @@ public class GUI extends Application
                 alert.setTitle("Success!");
                 alert.setHeaderText("The store has been edited!");
                 alert.showAndWait();
+                txtStoreName.clear();
+                txtStoreAddress.clear();
                 //insert code to add product to object
 
                 tenthStage.close();
@@ -3019,7 +3107,8 @@ public class GUI extends Application
             alert.setTitle("Success!");
             alert.setHeaderText("Discount Updated!");
             alert.showAndWait();
-
+            
+            txtSetDiscount.clear();
             discountStage.close();
 
         });
