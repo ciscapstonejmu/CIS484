@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class Store{
+public class Store implements Serializable{
     
     
     private int storeID;
     private String storeName;
     private String storeAddress;
+    private double revenue;
+    private double cost;
+    public ArrayList<CustSale> associatedRevenue = new ArrayList<>();
     public ArrayList<Expense> associatedExpenses = new ArrayList<>(); 
     public static int nextID = 0;
     public static ObservableList obsStore = FXCollections.observableArrayList();
@@ -75,6 +78,11 @@ public class Store{
             str += associatedExpenses.get(i).toString();
         }
         return str;
+    }
+    public double calculateProfit()
+    {
+     
+    return revenue-cost; 
     }
             
     public String toString()
