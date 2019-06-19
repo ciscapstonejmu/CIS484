@@ -96,7 +96,13 @@ public class Store implements Serializable{
         }
         
     }
-     
+    for(int i = 0; i<this.associatedRevenue.size(); i++)
+    {    
+     if(this.associatedRevenue.get(i).getSaleDate().substring(0, 2).equalsIgnoreCase(DateRn))
+        {
+          this.revenue += this.associatedRevenue.get(i).getSubtotal();
+        }        
+    }
     return revenue-cost; 
     }
             
