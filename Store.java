@@ -1,11 +1,11 @@
 package pkg484groupproj;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-
-public class Store {
+public class Store{
     
     
     private int storeID;
@@ -26,12 +26,12 @@ public class Store {
         obsStore.add(this.storeName);
     }
     
-    public int getID()
+    public int getStoreID()
     {
         return this.storeID;
     }
     
-    public void setStoreName (String storeName)
+    public void setName (String storeName)
     {
         this.storeName = storeName;
     }
@@ -41,7 +41,7 @@ public class Store {
         return this.storeName;
     }
     
-    public void setStoreAddress (String storeAddress)
+    public void setAddress (String storeAddress)
     {
         this.storeAddress = storeAddress;
     }
@@ -56,7 +56,7 @@ public class Store {
         this.associatedExpenses.add(exp);
     }
     
-    public void removeExpense (Expense exp)
+        public void removeExpense (Expense exp)
     {
         this.associatedExpenses.remove(exp);
     }
