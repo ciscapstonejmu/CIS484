@@ -327,7 +327,7 @@ public class GUI extends Application
     TextField txtExpCurrentAmount = new TextField();
     Label lblChoosePayment = new Label("Select an Amount to Pay");
     TextField txtChoosePayment = new TextField();
-    Label lblDisplayExpAmount = new Label("New Expense Balance");
+    Label lblDisplayExpAmount = new Label("Remaining Payment");
     TextField txtDisplayExpAmount = new TextField();
 
     Label lblNewExpenseTypeHeader = new Label("Add New Expense Type");
@@ -1746,21 +1746,21 @@ public class GUI extends Application
             fifthPane.add(txtSubTotal, 1, 10); 
             fifthPane.add(lblUnitPrice, 1, 7); //how much thrify sells the product for 
             fifthPane.add(txtUnitPrice, 1, 8); 
-            fifthPane.add(lblOrderDate, 0, 9); 
-            fifthPane.add(orderDate, 0, 10); 
-            fifthPane.add(lblDelDate, 0, 7); 
-            fifthPane.add(calendar, 0, 8);
+            fifthPane.add(lblOrderDate, 0, 7); 
+            fifthPane.add(orderDate, 0, 8); 
+            fifthPane.add(lblDelDate, 0, 9); 
+            fifthPane.add(calendar, 0, 10);
             fifthPane.add(lblQuantity, 1, 1);
             fifthPane.add(txtProdQuantity, 1, 2);
             //need to add order date into the pane and use the constructor with it 
-
+            
             fifthPane.add(lblSupplier, 1, 3); 
             fifthPane.add(cmboSupp, 1, 4);
             
             fifthPane.add(lblProdStore, 2,3);
             fifthPane.add(cmboStore, 2, 4); //when picking which store the product is for, should be selected from already existing stores created 
             txtSubTotal.setEditable(false);
-
+            orderDate.setValue(LocalDate.now());
             fifthPane.add(btnCompleteOrder, 0, 11);
         }); 
         
@@ -2266,18 +2266,17 @@ public class GUI extends Application
                           pC.setQuantity(totalQuantity);
                           prodList.remove(j);
                           prodList.add(j,pC);
-                          prodOrderList.remove(prodORemove); 
-                          cmboProdOrder.getItems().remove(prodORemove);
                           break;
                       }
                       else if(j == prodList.size()-1 && poC.getProdOName().equalsIgnoreCase(prodList.get(j).getProductName())== false) 
                       {
                         prodList.add(new Product(poC.getProdOName(), poC.getUnitCost(), poC.getUnitPrice(), poC.getQuantity(), poC.getStoreLoc(), poC.getPODesc(), poC.getCategory(),
                         poC.getAssociatedSupplier())); 
-                        prodOrderList.remove(prodORemove);
-                        cmboProdOrder.getItems().remove(prodORemove);
+                        break;
                       }
                 }
+                prodOrderList.remove(prodORemove);
+                cmboProdOrder.getItems().remove(prodORemove);
                 prodData.clear();
                 for(Product prod: prodList)
                 {
@@ -2877,8 +2876,14 @@ public class GUI extends Application
             eighthPane.add(lblDisplayExpAmount, 0, 6);
             eighthPane.add(txtDisplayExpAmount, 0, 7);
             eighthPane.add(btnConfirmPayExp, 0, 8);
-            txtExpCurrentAmount.setEditable(true);
+            txtExpCurrentAmount.setEditable(false);
             txtDisplayExpAmount.setEditable(false);
+            txtExpCurrentAmount.clear();
+            txtChoosePayment.clear();
+            txtDisplayExpAmount.clear();
+            cmboUnpaidExp.getSelectionModel().clearSelection();
+            cmboStatus.getSelectionModel().clearSelection();
+            expDate.getEditor().clear();
             eighthStage.show();
 
             System.out.println(unpaidExpVar + " / " + obsUnpaidExp.size());
@@ -2906,11 +2911,11 @@ public class GUI extends Application
             obsUnpaidExp.get(unpaidExpVar).setDateLP(currentDate);
             txtDisplayExpAmount.setText(String.valueOf(obsUnpaidExp.get(unpaidExpVar).getRemainingBalance()));
 
-            if (obsUnpaidExp.get(unpaidExpVar).getAmountPaid() > obsUnpaidExp.get(unpaidExpVar).getTotalAmount()) 
+            if (obsUnpaidExp.get(unpaidExpVar).getAmountPaid() < obsUnpaidExp.get(unpaidExpVar).getTotalAmount()) 
             {
                 obsUnpaidExp.get(unpaidExpVar).setStatus("Ongoing");
             }
-            if (obsUnpaidExp.get(unpaidExpVar).getAmountPaid() <= obsUnpaidExp.get(unpaidExpVar).getTotalAmount()) 
+            if (obsUnpaidExp.get(unpaidExpVar).getAmountPaid() == obsUnpaidExp.get(unpaidExpVar).getTotalAmount()) 
             {
                 obsUnpaidExp.get(unpaidExpVar).setStatus("Paid");
             }
@@ -2932,11 +2937,7 @@ public class GUI extends Application
                 alert.setHeaderText("You have fully paid this expense!");
                 alert.showAndWait();
             }
-            txtExpDesc.clear();
-            txtAmount.clear();
-            cmboExpCategory.getSelectionModel().clearSelection();
-            cmboStatus.getSelectionModel().clearSelection();
-            expDate.getEditor().clear();
+           
             eighthStage.close();
 
         });
