@@ -600,6 +600,17 @@ public class GUI extends Application
             obsExpStore.add(store5);
             storeList.addAll(obsStore);
             
+            
+            categoryList.add("PRODUCE");
+            categoryList.add("DAIRY");
+            categoryList.add("BEVERAGES");
+            categoryList.add("CANDY");
+            categoryList.add("CANNED FOODS");
+            categoryList.add("PASTA");
+            categoryList.add("SNACK FOODS");
+            categoryList.add("BAKED GOODS");
+            categoryList.add("FROZEN FOODS");
+            categoryList.add("OTHER");
             obsCategory.add("PRODUCE");
             obsCategory.add("DAIRY");
             obsCategory.add("BEVERAGES");
@@ -1097,6 +1108,7 @@ public class GUI extends Application
             suppList.addAll((ArrayList<Supplier>)(instanceObjectInput.readObject()));
             for(Supplier supp : suppList)
             {
+               Supplier.nextID++;
                Supplier.obsSupp.add(supp.getName());
             }
             instanceObjectInput.close();
@@ -1111,6 +1123,7 @@ public class GUI extends Application
 
             prodList.addAll((ArrayList<Product>)(instanceObjectInput.readObject()));
             for(Product prod : prodList){
+                Product.nextID++;
                 Product.obsProd.add(prod.getProductID() +": "+ prod.getProductName());
                 prodData.add(prod);
            }
@@ -1904,12 +1917,16 @@ public class GUI extends Application
             {
                 
                 if(txtProdName.getText().equalsIgnoreCase(prodList.get(i).getProductName()) && 
-                        storeList.get(storeLocation).equals(prodList.get(i).getStore()) && 
-                        categoryList.get(productCategory).equalsIgnoreCase(prodList.get(i).getCategory()) &&
-                        suppList.get(cmboSupp.getSelectionModel().getSelectedIndex()).equals(prodList.get(i).getSupp()) &&
+                        storeList.get(cmboStore.getSelectionModel().getSelectedIndex()).getStoreName().equalsIgnoreCase(prodList.get(i).getLocation()) && 
+                        categoryList.get(cmboCategory.getSelectionModel().getSelectedIndex()).equalsIgnoreCase(prodList.get(i).getCategory()) &&
+                        suppList.get(cmboSupp.getSelectionModel().getSelectedIndex()).getName().equalsIgnoreCase(prodList.get(i).getSupp().getName()) &&
                         txtProdDesc.getText().equalsIgnoreCase(prodList.get(i).getFoodDescription()))
                 {
-                    prodList.get(i).addQuantity(Integer.parseInt(txtProdQuantity.getText()));
+                    Product temp = prodList.get(i);
+                    temp.addQuantity(Integer.parseInt(txtProdQuantity.getText()));
+                    prodList.remove(i);
+                    prodList.add(i,temp);
+                    break;
                 }
                 else if(i == prodList.size() - 1 && !(txtProdName.getText().equalsIgnoreCase(prodList.get(i).getProductName()) && 
                         storeList.get(storeLocation).equals(prodList.get(i).getStore()) && 
@@ -1922,6 +1939,7 @@ public class GUI extends Application
                     Double.valueOf(txtUnitPrice.getText()), Double.valueOf(txtUnitCost.getText()),
                     storeList.get(cmboStore.getSelectionModel().getSelectedIndex()), txtProdDesc.getText(), 
                     (String) cmboCategory.getValue(), suppList.get(cmboSupp.getSelectionModel().getSelectedIndex()), tempImage));
+                    cmboProd.getItems().add(prodList.get(prodList.size()-1).getProductID() + ": " + prodList.get(prodList.size()-1).getProductName() );
                     for(int k = 0; k<categoryList.size(); k++)
                     {
                         if((categoryList.get(k).equalsIgnoreCase((String)cmboCategory.getValue())))
@@ -1937,6 +1955,11 @@ public class GUI extends Application
                 }
             
             }
+                prodData.clear();
+                for(Product prod: prodList)
+                {
+                    prodData.add(prod);
+                }
                 alert.setTitle("Success!");
                 alert.setHeaderText("The product has been added!");
                 alert.showAndWait();              
@@ -1950,11 +1973,7 @@ public class GUI extends Application
                 cmboCategory.getSelectionModel().clearSelection();	
                 cmboSupp.getSelectionModel().clearSelection();
 
-                prodData.clear();
-                for(Product prod: prodList)
-                {
-                    prodData.add(prod);
-                }
+                
             }
         });
         
