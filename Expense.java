@@ -14,15 +14,16 @@ public class Expense {
     private double remainingBalance;
     private Store payableStore;
     public static ObservableList obsExpense = FXCollections.observableArrayList();
-    public static int ongoingCounter = 0;
+
     
     public static int nextID = 0;
     
-    /*public Expense(String category, String description, double amountPaid, String date, String status)
+        public Expense(String category, String description, double amountPaid, double totalAmount, String date)
     {
         this.category = category;
         this.description = description;
         this.amountPaid = amountPaid;
+        this.totalAmount = totalAmount;
         this.date = date;
         this.status = status;
         
@@ -30,9 +31,9 @@ public class Expense {
         obsExpense.add(this.date + ": " + this.category);
         
        
-    }*/
+    }
     
-    public Expense(String category, String description, double amountPaid, double amount, String date)
+    public Expense(String category, String description, double amountPaid, double amount, String date, Store store)
     {
         this.category = category;
         this.description = description;
@@ -41,6 +42,7 @@ public class Expense {
         this.date = date;
         this.status = status;
         this.remainingBalance = totalAmount - amountPaid;
+        this.payableStore = store;
         //this.payableStore = payableStore;
        
         
@@ -49,7 +51,7 @@ public class Expense {
         if (amountPaid < amount)
         {
             this.status = "Ongoing";
-            ongoingCounter++;
+ 
         }
         if (amountPaid >= amount)
         {
@@ -150,6 +152,8 @@ public class Expense {
         this.amountPaid += payment;
         this.remainingBalance = totalAmount - amountPaid;
     }
+    
+    
     
     
     public String toString()
