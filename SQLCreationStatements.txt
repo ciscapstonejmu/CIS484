@@ -31,7 +31,7 @@ Status VarChar(25),
 AmountPaid VarChar(25),
 TotalAmount VarChar(25),
 RemainingBalance VarChar(25),
-Date VarChar(25));
+EXDate VarChar(25));
 
 Create Table Member
 (memberID Integer Primary Key,
