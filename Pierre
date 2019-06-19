@@ -1905,10 +1905,11 @@ public class GUI extends Application
             for(int i = 0; i<prodList.size(); i++)
             {
                 
-//                if(txtProdName.getText().equalsIgnoreCase(prodList.get(i).getProductName()) && storeList.get())
-//                {
-//                    
-//                }
+                if(txtProdName.getText().equalsIgnoreCase(prodList.get(i).getProductName()) && 
+                        storeList.get(storeLocation).equals(prodList.get(i).getStore())                        )
+                {
+                    
+                }
             
             }
 
@@ -2640,7 +2641,7 @@ public class GUI extends Application
         addExp.setOnAction(e -> {
             //expense added clicked
             if(txtExpDesc.getText().trim().length() == 0 ||
-                    cmboExpCategory.getValue() == null || cmboStatus.getValue() == null ||
+                    cmboExpCategory.getValue() == null || cmboExpStore.getValue() == null ||
                     txtAmount.getText().trim().isEmpty() || txtTtlAmount.getText().trim().isEmpty() || expDate.getValue() == null)
             {
                 alert.setTitle("Error!");
