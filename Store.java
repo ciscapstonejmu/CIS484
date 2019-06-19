@@ -45,7 +45,7 @@ public class Store implements Serializable{
         this.storeAddress = storeAddress;
     }
     
-    public String getAddress()
+    public String getStoreAddress()
     {
         return this.storeAddress;
     }
