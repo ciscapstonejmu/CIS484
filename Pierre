@@ -484,7 +484,6 @@ public class GUI extends Application
     LocalDate endDate;
     LocalDate productDate;
     ArrayList<String> monthNames = new ArrayList<>();
-    //create text area
     
     // Employee Report
     Label lblEmpRep = new Label("Employee Report");
@@ -1902,7 +1901,16 @@ public class GUI extends Application
                 String storeLocation2 = Integer.toString(storeLocation); 
                 int productCategory = cmboCategory.getSelectionModel().getSelectedIndex();  
 
-    //            int suppLoc = cmboSupp.getSelectionModel().getSelectedIndex();
+    //           int suppLoc = cmboSupp.getSelectionModel().getSelectedIndex();
+            for(int i = 0; i<prodList.size(); i++)
+            {
+                
+//                if(txtProdName.getText().equalsIgnoreCase(prodList.get(i).getProductName()) && storeList.get())
+//                {
+//                    
+//                }
+            
+            }
 
                 prodList.add(new Product(txtProdName.getText(), 
                     Integer.valueOf(txtProdQuantity.getText()),
@@ -2202,17 +2210,8 @@ public class GUI extends Application
                 alert.showAndWait();
             }
              else {
-                
-                
-           // tempProd.setQuantity(pC.getQuantity()-remove);
-            
-            
                 for (int j = 0; j < prodList.size(); j++) 
                 {
-                    
-                    
-                     
-                 //if(poC.getProdOName().equalsIgnoreCase(prodOrderList.get(prodORemove).getProdOName())){
                       if(poC.getProdOName().equalsIgnoreCase(prodList.get(j).getProductName()) && poC.getSupplier().equalsIgnoreCase(prodList.get(j).getSupplier())
                               && poC.getStore().equals(prodList.get(j).getLocation()) && poC.getCategory().equalsIgnoreCase(prodList.get(j).getCategory()) 
                               && poC.getPODesc().equalsIgnoreCase(prodList.get(j).getFoodDescription()))
@@ -2596,7 +2595,8 @@ public class GUI extends Application
             expVB.setPadding(new Insets(10, 20, 10 , 20));
            
             
-            expVB.getChildren().addAll(lblExp, lblExpMan, cmboExpense, btnAddExp, btnPayExp, btnEditExp, btnEditExp, btnRemExp, btnAddExpType, btnRemExpType);
+            expVB.getChildren().addAll(lblExp, lblExpMan, cmboExpense, btnAddExp, btnPayExp, btnEditExp
+                    , btnRemExp, btnAddExpType, btnRemExpType);
             // remove expense is currently not in here
             border.setTop(menuAdmin);
             border.setLeft(expVB);
