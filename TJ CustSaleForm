@@ -258,7 +258,8 @@ public class CustSaleForm{
                 saleProducts.remove(saleProd);
                 txtSaleOutput.clear();
                 alertError.setTitle("Error");
-                alertError.setHeaderText("Sale Quantity exceeds Inventory!");
+                alertError.setHeaderText("Sale Quantity exceeds Inventory!"
+                        + "\nPlease Order More!");
                 alertError.showAndWait();
             }
             else
