@@ -3,7 +3,7 @@ package pkg484groupproj;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
+ 
 public class Customer {
     
     private int customerID;
