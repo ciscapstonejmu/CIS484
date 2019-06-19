@@ -1878,7 +1878,7 @@ public class GUI extends Application
             thirdPane.add(lblProdStore, 1,7 );
             thirdPane.add(cmboStore, 1, 8 );  //when picking which store the product is for, should be selected from already existing stores created 
             
-            
+            cmboCategory.setEditable(true);
             thirdPane.add(addProd, 0, 16);
         });
         
@@ -1903,31 +1903,40 @@ public class GUI extends Application
             for(int i = 0; i<prodList.size(); i++)
             {
                 
-//                if(txtProdName.getText().equalsIgnoreCase(prodList.get(i).getProductName()) && 
-//                        storeList.get(storeLocation).equals(prodList.get(i).getStore()) && categoryList.get(productCategory).equals() )
-//                {
-//                    
-//                }
-            
-            }
-
-                prodList.add(new Product(txtProdName.getText(), 
+                if(txtProdName.getText().equalsIgnoreCase(prodList.get(i).getProductName()) && 
+                        storeList.get(storeLocation).equals(prodList.get(i).getStore()) && 
+                        categoryList.get(productCategory).equalsIgnoreCase(prodList.get(i).getCategory()) &&
+                        suppList.get(cmboSupp.getSelectionModel().getSelectedIndex()).equals(prodList.get(i).getSupp()) &&
+                        txtProdDesc.getText().equalsIgnoreCase(prodList.get(i).getFoodDescription()))
+                {
+                    prodList.get(i).addQuantity(Integer.parseInt(txtProdQuantity.getText()));
+                }
+                else if(i == prodList.size() - 1 && !(txtProdName.getText().equalsIgnoreCase(prodList.get(i).getProductName()) && 
+                        storeList.get(storeLocation).equals(prodList.get(i).getStore()) && 
+                        categoryList.get(productCategory).equalsIgnoreCase(prodList.get(i).getCategory()) &&
+                        suppList.get(cmboSupp.getSelectionModel().getSelectedIndex()).equals(prodList.get(i).getSupp()) &&
+                        txtProdDesc.getText().equalsIgnoreCase(prodList.get(i).getFoodDescription())))
+                {
+                    prodList.add(new Product(txtProdName.getText(), 
                     Integer.valueOf(txtProdQuantity.getText()),
                     Double.valueOf(txtUnitPrice.getText()), Double.valueOf(txtUnitCost.getText()),
                     storeList.get(cmboStore.getSelectionModel().getSelectedIndex()), txtProdDesc.getText(), 
                     (String) cmboCategory.getValue(), suppList.get(cmboSupp.getSelectionModel().getSelectedIndex()), tempImage));
-    //                    (String) cmboCategory.getValue(), suppList.get(suppLoc), tempImage));
-    //            for(int i = 0; i<categoryList.size(); i++){
-    //                if((categoryList.get(i).equalsIgnoreCase((String)cmboCategory.getValue())))
-    //                {
-    //                    break;
-    //                }
-    //                else if(i == categoryList.size()-1 && categoryList.get(i).equalsIgnoreCase((String)cmboCategory.getValue()) == false)
-    //                {
-    //                    categoryList.add((String)cmboCategory.getValue());
-    //                }
-    //            }
-
+                    for(int k = 0; k<categoryList.size(); k++)
+                    {
+                        if((categoryList.get(k).equalsIgnoreCase((String)cmboCategory.getValue())))
+                        {
+                            break;
+                        }
+                        else if(k == categoryList.size()-1 && categoryList.get(k).equalsIgnoreCase((String)cmboCategory.getValue()) == false)
+                        {
+                            categoryList.add((String)cmboCategory.getValue());
+                            obsCategory.add((String)cmboCategory.getValue());
+                        }
+                    }
+                }
+            
+            }
                 alert.setTitle("Success!");
                 alert.setHeaderText("The product has been added!");
                 alert.showAndWait();              
@@ -2566,7 +2575,7 @@ public class GUI extends Application
 
             thirdStage.close();
         });
-        expTable.getColumns().addAll(tbExpID, tbExpCategory, tbExpDesc, tbExpAmountPaid, tbExpAmountTotal, tbExpDate, tbExpStatus);  
+        expTable.getColumns().addAll(tbExpID, tbExpCategory, tbExpDesc, tbExpAmountPaid, tbExpAmountTotal, tbExpDate, tbExpStatus, tbExpStore);  
         menuAdmin.getMenus().get(1).getItems().get(2).setOnAction(e -> {
            // Expense Management
            
@@ -2751,9 +2760,7 @@ public class GUI extends Application
                 obsExpense.get(expVar).setCategory(expCategoryList.get(cmboExpCategory.getSelectionModel().getSelectedIndex()));
                 obsExpense.get(expVar).setAmountPaid(Double.parseDouble(txtAmount.getText()));                
                 obsExpense.get(expVar).setDate(expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")));
-                        alert.setTitle("Success");
-                        alert.setHeaderText("This expense has been edited!");
-                        alert.showAndWait();
+                        
                 }
         });
         
