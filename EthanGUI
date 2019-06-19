@@ -503,12 +503,12 @@ public class GUI extends Application
         String jdbcConnectionURL = "jdbc:oracle:thin:@localhost:1521:XE";
         String userID = "javauser";
         String userPass = "javapass";
-        /*
+        
         try
         {
             dbConn = getDBConnection(jdbcConnectionURL, userID, userPass);
             commStmt = dbConn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            sqlQuery = "Select * from TestTable";
+            //sqlQuery = "Select * from TestTable";
             //sqlQueery = "INSERT INTO TESTTABLE (ID, TESTNAME) VALUES (78, 'HELLO THERE')";
             dbResults = commStmt.executeQuery(sqlQuery);
 
@@ -521,7 +521,7 @@ public class GUI extends Application
         {
             System.out.println(e.toString());
         }
-        */
+        
 
        
         
@@ -2267,27 +2267,23 @@ public class GUI extends Application
             
             //System.out.println(obsExpense.size());
             //expList.add(new Expense(category, description, amountPaid, totalAmount, date));
-            Expense exp1 = new Expense((String) expCategory.get(cmboExpCategory.getSelectionModel().getSelectedIndex()),
+            obsExpense.add (new Expense((String) expCategory.get(cmboExpCategory.getSelectionModel().getSelectedIndex()),
                     txtExpDesc.getText(), Double.parseDouble(txtAmount.getText()), Double.parseDouble(txtTtlAmount.getText()),
-                    expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")), (Store) obsExpStore.get(cmboExpStore.getSelectionModel().getSelectedIndex()));
-            expList.add(exp1);
-            obsExpense.add(exp1);
+                    expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")), (Store) obsExpStore.get(cmboExpStore.getSelectionModel().getSelectedIndex())));
+            expList.add(obsExpense.get(obsExpense.size() - 1));
+   
             expStoreVar = cmboExpStore.getSelectionModel().getSelectedIndex();
             obsStore.get(0);
             //System.out.println(expStoreVar + " higgins");
             //System.out.println(cmboStore.getValue());
-            storeList.get(expStoreVar).addExpense(exp1);
+            storeList.get(expStoreVar).addExpense(obsExpense.get(obsExpense.size() - 1));
             //System.out.println(expStoreVar);
-            for (int i = 0; i < obsExpStore.size(); i++)
+            for (int i = 0; i < storeList.size(); i++)
             {
-                obsExpStore.get(i).DisplayExpenses();
-                System.out.println(obsExpStore.get(i).getStoreName());
+                System.out.println(storeList.get(i).DisplayExpenses());
+                //System.out.println(storeList.get(i).getStoreName());
 
             }
-            for (int i = 0; i < obsExpStore.size(); i++)
-            {
-                System.out.println(obsExpStore.get(i).getExpensesLength());
-                System.out.println(obsExpStore.get(i).getStoreName());            }
             
             //System.out.println(obsStore.get(expStoreVar).toString());
             //obsExpStore.get(expStoreVar).addExpense(exp1);
@@ -3251,8 +3247,8 @@ public class GUI extends Application
                     "' , '" + em.getLastName() + "' , '" + em.getEmail() + "' , '" + 
                     em.getPhoneNumber() + "' , '" + em.getAddress() + "' , '" + em.getHourly() +
                     "' , '" + em.getJobTitle() + "' , '" + em.getEmployeeType() + "' , '" + em.getEmployeeCategory() +
-                    "' , '" + em.getStore() +  "' )";
-            emQuery = "INSERT INTO EMPLOYEE (EMPLOYEEID, EMPLOYEFNAME, EMPLOYLNAME, EMPLOYEMAIL, EMPLOYPHONENUMBER, EMPLOYADDRESS, EMPLOYHOURLY, EMPLOYJOBTITLE, EMPLOYTIMEWORKED, EMPLOYTYPE, EMPLOYUSERNAME, EMPLOYEECATEGORY, EMPLOYPASSWORD, STORE) VALUES" + emData;
+                    "' , '" + "' , '" + em.getUsername() + "' , '" + em.getPassword() + "' , '" + em.getStore() +  "' )";
+            emQuery = "INSERT INTO EMPLOYEE (EMPLOYEEID, EMPLOYEFNAME, EMPLOYLNAME, EMPLOYEMAIL, EMPLOYPHONENUMBER, EMPLOYADDRESS, EMPLOYHOURLY, EMPLOYJOBTITLE, EMPLOYTIMEWORKED, EMPLOYTYPE, EMPLOYCATEGORY, EMPLOYUSERNAME, EMPLOYPASSWORD, STORE) VALUES" + emData;
             strData = "('" + str.getID() + "' , '" + str.getStoreName() + "' , '" + str.getStoreAddress() + "' )";
             strQuery = "INSERT INTO STORE (STOREID, STORENAME, STOREADDRESS) VALUES" + strData;
         }
@@ -3261,8 +3257,8 @@ public class GUI extends Application
         {
             Expense ex = (Expense) expData.get(i);
             exData = " ('" + ex.getExpenseID() + "' , '" + ex.getCategory() + "' , '" + ex.getDescription() + 
-                    "' , '" + ex.getAmountPaid() + "' , '" + ex.getTotalAmount() + "' , '" + ex.getDate() + "' )";
-            exQuery = "INSERT INTO EXPENSE (EXPENSEID, CATEGORY, DESCRIPTION, AMOUNTPAID, TOTALAMOUNT, DATE) VALUES" + exData;
+                    "' , '" + ex.getStatus() + "' , '" + ex.getAmountPaid() + "' , '" + ex.getTotalAmount() + "' , '" + ex.getRemainingBalance() + "' , '" + ex.getDate() + "' )";
+            exQuery = "INSERT INTO EXPENSE (EXPENSEID, CATEGORY, DESCRIPTION, STATUS, AMOUNTPAID, TOTALAMOUNT, REMAININGBALANCE, DATE) VALUES" + exData;
         }
         
         for (int i = 0; i < obsMem.size(); i++)
