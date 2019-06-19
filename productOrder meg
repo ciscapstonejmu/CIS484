@@ -1,0 +1,171 @@
+package pkg484groupproj;
+//Authors: Meghana Krishna, TJ Guilfoil, Shuvam Mishra, Ethan Johnson, Christian Yun, Pierre Giaon
+//CIS 484 DR. EZELL
+//MIDPOINT SUBMISSION
+//Description: This system is a grocery store POS, employee, and inventory management system for the employees to use 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+public class ProductOrder {
+    
+    private int productOrderID;
+    private String orderDate;
+    private int quantity;
+    private double unitCost;
+    private double subtotal;
+    private String deliveryDate;
+    public static int nextID;
+    private String prodName; 
+    private String supplier; 
+    private Supplier supp; 
+    private String store; 
+    private Store storeLoc; 
+    private String category; 
+    private String PODesc; 
+    
+    public static ObservableList obsProdOrder = FXCollections.observableArrayList(); 
+    
+    public ProductOrder (String orderDate, int quantity, double unitCost, double subtotal, String deliveryDate)
+    {
+        this.orderDate = orderDate;
+        this.quantity = quantity;
+        this.unitCost = unitCost;
+        this.subtotal = subtotal;
+        this.deliveryDate = deliveryDate;
+        productOrderID = nextID++;
+    }
+    public ProductOrder (int quantity, String prodName, double unitCost, double subtotal, String deliveryDate, String orderDate,
+            Supplier supp, Store storeLoc, String category, String PODesc)
+    {
+        this.orderDate = orderDate;
+        this.quantity = quantity;
+        this.unitCost = unitCost;
+        this.subtotal = subtotal;
+        this.deliveryDate = deliveryDate;
+        productOrderID = nextID++;
+        this.prodName = prodName;
+        this.supplier = supplier; 
+        this.storeLoc = storeLoc; 
+        this.store = storeLoc.getName(); 
+        this.supp = supp; 
+        this.supplier = supp.getName(); 
+        this.category = category; 
+        this.orderDate = orderDate; 
+        this.PODesc = PODesc; 
+    }
+    public int getID()
+    {
+        return this.productOrderID;
+    }
+    public void setID() {
+        this.productOrderID = productOrderID; 
+    }
+    public String getProdOName() {
+        return this.prodName; 
+    }
+    public void setProdOName(String prodName) {
+        this.prodName = prodName; 
+    }
+    public void setDate(String orderDate)
+    {
+        this.orderDate = orderDate;
+    }
+    
+    public String getDate()
+    {
+        return this.orderDate;
+    }
+    
+    
+    public void setQuantity(int quantity)
+    {
+        this.quantity = quantity;
+    }
+    
+    public int getQuantity()
+    {
+        return this.quantity;
+    }
+    
+    public void setUnitCost(double unitCost)
+    {
+        this.unitCost = unitCost;
+    }
+    
+    public double getUnitCost()
+    {
+        return this.unitCost;
+    }
+    
+    public void setSubtotal(double subtotal)
+    {
+        this.subtotal = subtotal;
+    }
+    
+    public double getSubtotal()
+    {
+        return this.subtotal;
+    }
+    
+    public void setDeliveryDate(String deliveryDate)
+    {
+        this.deliveryDate = deliveryDate;
+    }
+    
+    public String getDeliveryDate()
+    {
+        return this.deliveryDate;
+    }
+    public void setCategory(String category) {
+        this.category = category; 
+    }
+    public String getCategory() {
+        return this.category; 
+    }
+    public void setStoreLoc(Store store) {
+        this.storeLoc = storeLoc; 
+        //this.store = storeLoc.getName(); 
+    }
+    public Store getStoreLoc() {
+        return this.storeLoc; 
+    }
+    public void setStore(String store) {
+        this.store = storeLoc.getName(); 
+    }
+    public String getStore() {
+        return this.storeLoc.getName(); 
+    }
+    public void setSupp(Supplier supp) {
+        this.supp = supp; 
+        //this.supplier = supp.getName(); 
+    }
+    public Supplier getSupp() {
+        return this.supp; 
+    }
+    public String getSupplier() {
+        return this.supp.getName(); 
+    }
+    public void setSupplier(String supplier) {
+        this.supplier = supp.getName(); 
+    }
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate; 
+    }
+    public String getPODesc(){
+       return this.PODesc; 
+    }
+ 
+    public String toString()
+    {
+        String str = "";
+        str += "ID: " + this.productOrderID + " , Order Date: " + this.orderDate + " , Quantity: " +
+                this.quantity + " , Unit Cost: $" + this.unitCost + " , Subtotal: $" + this.subtotal + " , Delivery Date: " + this.deliveryDate + 
+                ", Category: " + this.category + " , Supplier: " + this.supplier
+                + " , Store: " + this.store + " , Description: " + this.PODesc; 
+        //str += "ID: " + this.productOrderID + " , Order Date: " + this.orderDate + " , Quantity: " + this.quantity; 
+        //str+= 
+        return str;
+    }
+    
+    
+}
