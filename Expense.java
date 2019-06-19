@@ -11,10 +11,8 @@ public class Expense {
     private String category;
     private String description;
     private String date;
-    private String dateLastPayment;
     private String status;
     private double amountPaid;
-    private double lastPayment;
     private double totalAmount;
     private double remainingBalance;
     private Store payableStore;
@@ -115,22 +113,7 @@ public class Expense {
     {
         return this.amountPaid;
     }
-    public double getLP()
-    {
-        return this.lastPayment;
-    }
-    public void setLP(double pay)
-    {
-        this.lastPayment = pay;
-    }
-    public String getDateLP()
-    {
-        return this.dateLastPayment;
-    }
-    public void setDateLP(LocalDate date)
-    {
-        this.dateLastPayment = date.format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
-    }
+    
     public void setDate(String d)
     {
         this.date = d;
