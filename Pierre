@@ -83,7 +83,7 @@ public class GUI extends Application
     ComboBox cmboProd2 = new ComboBox(Product.obsProd);
     ObservableList<Customer> obsCust = FXCollections.observableArrayList();
     ComboBox cmboCust = new ComboBox(obsCust); 
-    static ObservableList obsStore = FXCollections.observableArrayList();
+    static ObservableList<Store> obsStore = FXCollections.observableArrayList();
     static ComboBox cmboStore = new ComboBox(Store.obsStore);
     ObservableList<WritableImage> imageList = FXCollections.observableArrayList();
     static ObservableList obsProdOrder = FXCollections.observableArrayList();
@@ -1836,7 +1836,7 @@ public class GUI extends Application
             else if (cmboProdOrder.getValue() == null)
             {	            
                 alert.setTitle("Error!");	           
-                alert.setHeaderText("Please select a product to discontinue!");	          
+                alert.setHeaderText("Please select a product order to display!");	          
                 alert.showAndWait();	     
             }
             else 
@@ -2706,13 +2706,19 @@ public class GUI extends Application
 
                 //System.out.println(obsExpense.size());
                 //expList.add(new Expense(category, description, amountPaid, totalAmount, date));
-                expList.add(new Expense((String) expCategory.get(cmboExpCategory.getSelectionModel().getSelectedIndex()),
+                Expense temp = new Expense((String) expCategory.get(cmboExpCategory.getSelectionModel().getSelectedIndex()),
                     txtExpDesc.getText(), Double.parseDouble(txtAmount.getText()), Double.parseDouble(txtTtlAmount.getText()),
-                    expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")), (Store) obsExpStore.get(cmboExpStore.getSelectionModel().getSelectedIndex())));
-                obsExpense.add(expList.get(expList.size()-1));
+                    expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")), (Store) obsExpStore.get(cmboExpStore.getSelectionModel().getSelectedIndex()));
+                if(amountPaid > 0.0){
+                    temp.datesPaid.add(date);
+                    temp.pmtsMade.add(amountPaid);
+                }
+                expList.add(temp);
+                obsExpense.add(temp);
                 
                 expStoreVar = cmboExpStore.getSelectionModel().getSelectedIndex();
                 
+                storeList.get(expStoreVar).addExpense(temp);
                 
                 alert.setTitle("Success!");
                 alert.setHeaderText("The expense has been added!");
@@ -2908,14 +2914,15 @@ public class GUI extends Application
         btnConfirmPayExp.setOnAction(e -> {
 
             obsUnpaidExp.get(unpaidExpVar).payExpense(Double.valueOf(txtChoosePayment.getText()));
-            obsUnpaidExp.get(unpaidExpVar).setDateLP(currentDate);
+            obsUnpaidExp.get(unpaidExpVar).datesPaid.add(LocalDate.now().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")));
+            obsUnpaidExp.get(unpaidExpVar).pmtsMade.add(Double.valueOf(txtChoosePayment.getText()));
             txtDisplayExpAmount.setText(String.valueOf(obsUnpaidExp.get(unpaidExpVar).getRemainingBalance()));
 
             if (obsUnpaidExp.get(unpaidExpVar).getAmountPaid() < obsUnpaidExp.get(unpaidExpVar).getTotalAmount()) 
             {
                 obsUnpaidExp.get(unpaidExpVar).setStatus("Ongoing");
             }
-            if (obsUnpaidExp.get(unpaidExpVar).getAmountPaid() == obsUnpaidExp.get(unpaidExpVar).getTotalAmount()) 
+            if (obsUnpaidExp.get(unpaidExpVar).getAmountPaid() >= obsUnpaidExp.get(unpaidExpVar).getTotalAmount()) 
             {
                 obsUnpaidExp.get(unpaidExpVar).setStatus("Paid");
             }
@@ -3162,11 +3169,7 @@ public class GUI extends Application
             alert.setTitle("Success!");
             alert.setHeaderText("The store has been edited!");
             alert.showAndWait();
-            //insert code to add product to object
-
             tenthStage.close();
-
-
             }
         });
 
