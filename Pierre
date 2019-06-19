@@ -544,6 +544,7 @@ public class GUI extends Application
     @Override
     public void start(Stage primaryStage) 
     {
+    loadSuppliersfromDB();
         /*
         //Database example from class (Unsure how to imlement yet)
         String jdbcConnectionURL = "jdbc:oracle:thin:@localhost:1521:XE";
