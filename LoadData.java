@@ -1,4 +1,3 @@
-
 package pkg484groupproj;
 
 import java.io.*;
@@ -35,9 +34,9 @@ public class LoadData {
         
         savedStore.add(new Store("Harrisonburg", "123 lane"));
         
-        savedProd.add(new Product("Cheetos", 15.00,100,savedStore.get(0), "Cheesy Goodness", "SNACK FOODS", savedSupp.get(2)));
-        savedProd.add(new Product("Steak", 50.00, 30, savedStore.get(0), "Makes you want Mooo-re", "FROZEN FOODS", savedSupp.get(0)));
-        savedProd.add(new Product("MtnDew: GameFuel", 50.00, 30, savedStore.get(0), "Become a 12 year old dissing everyones moms", "BEVERAGES", savedSupp.get(1)));
+        savedProd.add(new Product("Cheetos", 15.00,5.00,100,savedStore.get(0), "Cheesy Goodness", "SNACK FOODS", savedSupp.get(2)));
+        savedProd.add(new Product("Steak", 50.00,10.00, 30, savedStore.get(0), "Makes you want Mooo-re", "FROZEN FOODS", savedSupp.get(0)));
+        savedProd.add(new Product("MtnDew: GameFuel", 5.00, 2.00, 30, savedStore.get(0), "Become a 12 year old dissing everyones moms", "BEVERAGES", savedSupp.get(1)));
 //        for(Employee emp : savedEmpList)
 //           {
 //               System.out.println(emp.toString());
