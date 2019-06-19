@@ -12,6 +12,8 @@ public class ProductOrder {
     private String orderDate;
     private int quantity;
     private double unitCost;
+    private double unitPrice;
+    private String PODesc;
     private double subtotal;
     private String deliveryDate;
     public static int nextID;
@@ -48,7 +50,26 @@ public class ProductOrder {
         this.category = category; 
         this.orderDate = orderDate; 
     }
-    
+    public ProductOrder (int quantity, String prodName, double unitCost, double unitPrice, double subtotal, String deliveryDate, String orderDate,
+            Supplier supp, Store storeLoc, String category, String PODesc)
+    {
+        this.orderDate = orderDate;
+        this.quantity = quantity;
+        this.unitCost = unitCost;
+        this.unitPrice = unitPrice; 
+        this.subtotal = subtotal;
+        this.deliveryDate = deliveryDate;
+        productOrderID = nextID++;
+        this.prodName = prodName;
+        this.supplier = supplier; 
+        this.storeLoc = storeLoc; 
+        this.store = storeLoc.getStoreName(); 
+        this.associatedSupplier = supp; 
+        this.supplier = supp.getName(); 
+        this.category = category; 
+        this.orderDate = orderDate; 
+        this.PODesc = PODesc; 
+    }
     
     public int getID()
     {
@@ -152,7 +173,9 @@ public class ProductOrder {
     {
         return this.associatedSupplier;
     }
-    
+    public String getPODesc(){
+       return this.PODesc; 
+    }
     public String toString()
     {
         String str = "";
