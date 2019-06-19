@@ -1,0 +1,115 @@
+Create Table Customer
+(customerID Integer Primary Key,
+CustName VarChar(25),
+CustEmail VarChar(25),
+CustPhone VarChar(25),
+CustAddress VarChar(25),
+CustPayMethod VarChar(25));
+
+
+Create Table Employee
+(employeeID Integer Primary Key,
+EmployFName VarChar(25),
+EmployLName VarChar(25),
+EmployEmail VarChar(25),
+EmployPhoneNumber VarChar(25),
+EmployAddress VarChar(25),
+EmployHourly VarChar(25),
+EmployJobTitle VarChar(25), 
+EmployTimeWorked VarChar(25),
+EmployType VarChar(25),
+EmployCategory VarChar(25),
+EmployUserName VarChar(25),
+EmployPassword VarChar(25),
+Store VarChar(25),
+Foreign Key (storeID) REFERENCES Store);
+
+Create Table Expense
+(expenseID Integer Primary Key,
+Category VarChar(25),
+Description VarChar(25),
+Status VarChar(25),
+AmountPaid VarChar(25),
+TotalAmount VarChar(25),
+RemainingBalance VarChar(25),
+expDate VarChar(25),
+storeID Integer,
+Foreign Key (storeID) REFERENCES Store);
+
+
+Create Table Member
+(memberID Integer Primary Key,
+FName VarChar(25),
+LName VarChar(25),
+PhoneNumber VarChar(25),
+Email VarChar(25));
+
+Create Table Payroll
+(payrollID Integer Primary Key,
+PayrollPeriod VarChar(25),
+Start VarChar(25),
+End VarChar(25),
+HoursWorked VarChar(25),
+Schedule VarChar(25),
+ScheduleDay VarChar(25),
+ArrTimeIn VarChar(25),
+ArrTimeOut VarChar(25),
+TotalWork VarChar(25),
+AmountPaid VarChar(25),
+employeeID Integer,
+Foreign Key (employeeID) REFERENCES Employee);
+
+Create Table Product
+(productID Integer Primary Key,
+Name VarChar(25),
+Quantity VarChar(25),
+Price VarChar(25),
+Store VarChar(25),
+Description VarChar(25),
+Category VarChar(25),
+storeID Integer,
+supplierID Integer,
+Foreign Key (storeID) REFERENCES Store,
+Foreign Key (supplierID) REFERENCES Supplier);
+
+Create Table ProductOrder
+(productOrderID Integer Primary Key,
+Quantity VarChar(25),
+Name VarChar(25),
+UnitCost VarChar(25),
+Subtotal VarChar(25),
+DeliveryDate VarChar(25),
+poDate VarChar(25),
+Category VarChar(25),
+storeID Integer,
+supplierID Integer,
+Foreign Key (storeID) REFERENCES Store,
+Foreign Key (supplierID) REFERENCES Supplier);
+
+Create Table Store
+(storeID Integer Primary Key,
+StoreName VarChar(25),
+StoreAddress VarChar(25));
+
+Create Table Supplier
+(supplierID Integer Primary Key,
+SupplierName VarChar(25),
+SupplierPhone VarChar(25),
+SupplierEmail VarChar(25),
+SupplierAddress VarChar(25),
+ContactName VarChar(25),
+ContactPhone VarChar(25),
+ContactEmail VarChar(25));
+
+
+
+
+
+
+
+
+
+
+
+
+
