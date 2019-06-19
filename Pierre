@@ -1305,8 +1305,6 @@ public class GUI extends Application
                 fifthPane.add(txtProdQuantity, 1, 2);
                 fifthPane.add(lblSupplier, 1, 3); 
                 fifthPane.add(cmboSupp, 1, 4);
-                //thirdPane.add(lblImage, 0, 9);
-                //thirdPane.add(btnImage, 0, 10);
                 fifthPane.add(lblProdStore, 2,3);
                 fifthPane.add(cmboStore, 2, 4); //when picking which store the product is for, should be selected from already existing stores created 
 
@@ -1905,11 +1903,11 @@ public class GUI extends Application
             for(int i = 0; i<prodList.size(); i++)
             {
                 
-                if(txtProdName.getText().equalsIgnoreCase(prodList.get(i).getProductName()) && 
-                        storeList.get(storeLocation).equals(prodList.get(i).getStore())                        )
-                {
-                    
-                }
+//                if(txtProdName.getText().equalsIgnoreCase(prodList.get(i).getProductName()) && 
+//                        storeList.get(storeLocation).equals(prodList.get(i).getStore()) && categoryList.get(productCategory).equals() )
+//                {
+//                    
+//                }
             
             }
 
@@ -2746,8 +2744,7 @@ public class GUI extends Application
                 txtExpDesc.setText(obsExpense.get(expVar).getDescription());
                 //LocalDate localExpDate = LocalDate.parse(obsExpense.get(expVar).getDate());
                 //expDate.setValue(localExpDate);
-                cmboExpCategory.setValue(obsExpense.get(expVar).getCategory());
-                cmboStatus.setValue(expStatusList.get(cmboStatus.getSelectionModel().getSelectedIndex()));
+                cmboExpCategory.setValue(obsExpense.get(expVar).getCategory());                
                 txtAmount.setText((String.valueOf(obsExpense.get(expVar).getAmountPaid())));
 
                 obsExpense.get(expVar).setDescription(txtExpDesc.getText());
