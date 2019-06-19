@@ -35,7 +35,7 @@ public class Store implements Serializable{
         this.storeName = storeName;
     }
     
-    public String getName()
+    public String getStoreName()
     {
         return this.storeName;
     }
