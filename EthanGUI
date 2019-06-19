@@ -78,13 +78,13 @@ public class GUI extends Application
     ComboBox cmboProd = new ComboBox(Product.obsProd); 
     ObservableList<Customer> obsCust = FXCollections.observableArrayList();
     ComboBox cmboCust = new ComboBox(obsCust); 
-    static ObservableList obsStore = FXCollections.observableArrayList();
+    public static ObservableList<Store> obsStore = FXCollections.observableArrayList();
     static ComboBox cmboStore = new ComboBox(Store.obsStore);
     ObservableList<WritableImage> imageList = FXCollections.observableArrayList();
     static ObservableList obsProdOrder = FXCollections.observableArrayList();
     static ComboBox cmboProdOrder = new ComboBox(ProductOrder.obsProdOrder);
     static ComboBox cmboProdOrder2 = new ComboBox(ProductOrder.obsProdOrder); 
-    //ObservableList<Store> obsStore = FXCollections.observableArrayList();
+    ObservableList<Store> obsExpStore = FXCollections.observableArrayList();
     //ComboBox cmboStore = new ComboBox(obsStore);
     public static ObservableList<CustSale> obsSale = FXCollections.observableArrayList();
     public static ComboBox cmboSale = new ComboBox(obsSale);
@@ -96,11 +96,13 @@ public class GUI extends Application
 //    ObservableList 
     static ObservableList<Expense> obsExpense = FXCollections.observableArrayList();
     ComboBox cmboExpense = new ComboBox(Expense.obsExpense);
-    
+    //static ObservableList obsExpStore = FXCollections.observableArrayList();
+    ComboBox cmboExpStore = new ComboBox(obsExpStore);
     int expVar = 0;
     int unpaidExpVar = 0;
     String payExpVar = "";
     int expCatVar = 0;
+    int expStoreVar = 0;
     // Main Menu Buttons
     Button btnRingSale = new Button("Ring Sale");
     
@@ -541,6 +543,11 @@ public class GUI extends Application
             obsStore.add(store3);
             obsStore.add(store4);
             obsStore.add(store5);
+            obsExpStore.add(store1);
+            obsExpStore.add(store2);
+            obsExpStore.add(store3);
+            obsExpStore.add(store4);
+            obsExpStore.add(store5);
             storeList.addAll(obsStore);
             
             obsCategory.add("PRODUCE");
@@ -853,6 +860,7 @@ public class GUI extends Application
         TableColumn tbExpRemainBalance = new TableColumn("Amount Remaining");
         TableColumn tbExpDate = new TableColumn("Date Paid");
         TableColumn tbExpStatus = new TableColumn("Status");
+        TableColumn tbExpStore = new TableColumn("Store");
 
         //ValueFactory for Expense Table
         tbExpID.setCellValueFactory(new PropertyValueFactory<Expense, Integer>("expenseID"));
@@ -863,6 +871,7 @@ public class GUI extends Application
         tbExpRemainBalance.setCellValueFactory(new PropertyValueFactory<Expense, Double>("remainingBalance"));
         tbExpDate.setCellValueFactory(new PropertyValueFactory<Expense, String>("date"));
         tbExpStatus.setCellValueFactory(new PropertyValueFactory<Expense, String>("status"));
+        tbExpStore.setCellValueFactory(new PropertyValueFactory<Expense, String>("payableStore"));
         
         //Store Table
         TableColumn tbStoreID = new TableColumn("ID");
@@ -1281,12 +1290,12 @@ public class GUI extends Application
 
             for(int i = 0; i<storeList.size(); i++)
             {
-                if((storeList.get(i).getName().equalsIgnoreCase((String)cmboStore.getValue())))
+                if((storeList.get(i).getStoreName().equalsIgnoreCase((String)cmboStore.getValue())))
                 {
                     break;
                 }
 
-                 else if(i == storeList.size()-1 && storeList.get(i).getName().equalsIgnoreCase((String)cmboStore.getValue()) == false)
+                 else if(i == storeList.size()-1 && storeList.get(i).getStoreName().equalsIgnoreCase((String)cmboStore.getValue()) == false)
                 {
                     storeList.add((Store)cmboStore.getValue());
                 }
@@ -1565,6 +1574,8 @@ public class GUI extends Application
             prodOrderList.add(new ProductOrder(Integer.parseInt(txtProdQuantity.getText()), txtProdName.getText(), Double.parseDouble(txtUnitCost.getText()),
                     Double.parseDouble(txtSubTotal.getText()), date, orderDate2, (String)cmboSupp.getValue(), (String)cmboStore.getValue(), (String)cmboCategory.getValue())); 
             ProductOrder.obsProdOrder.add(txtProdName.getText());
+            
+            
 
             alert.setTitle("Success!");
             alert.setHeaderText("The product order has been created!");
@@ -1637,7 +1648,11 @@ public class GUI extends Application
                     Double.valueOf(txtUnitPrice.getText()), 
                     storeList.get(cmboStore.getSelectionModel().getSelectedIndex()), txtProdDesc.getText(), 
                     (String) cmboCategory.getValue(), suppList.get(cmboSupp.getSelectionModel().getSelectedIndex()), tempImage));
-            
+            //ystem.out.println(cmboStore.getValue());
+            for (int i = 0; i < obsStore.size(); i++)
+            {
+                //System.out.println()
+            }
             alert.setTitle("Success!");
             alert.setHeaderText("The product has been added!");
             alert.showAndWait();
@@ -1801,12 +1816,12 @@ public class GUI extends Application
             }
             for(int i = 0; i<storeList.size(); i++)
             {
-                if((storeList.get(i).getName().equalsIgnoreCase((String)cmboStore.getValue())))
+                if((storeList.get(i).getStoreName().equalsIgnoreCase((String)cmboStore.getValue())))
                 {
                     break;
                 }
 
-                 else if(i == storeList.size()-1 && storeList.get(i).getName().equalsIgnoreCase((String)cmboStore.getValue()) == false)
+                 else if(i == storeList.size()-1 && storeList.get(i).getStoreName().equalsIgnoreCase((String)cmboStore.getValue()) == false)
                 {
                     storeList.add((Store)cmboStore.getValue());
                 }
@@ -2075,7 +2090,7 @@ public class GUI extends Application
                }
             }
             for(int i = 0; i<storeList.size(); i++){
-               if(eC.getStoreLoc().equalsIgnoreCase(storeList.get(i).getName()))
+               if(eC.getStoreLoc().equalsIgnoreCase(storeList.get(i).getStoreName()))
                {
                    cmboStore.getSelectionModel().select(i); 
                }
@@ -2170,7 +2185,7 @@ public class GUI extends Application
             thirdStage.close();
         });
         
-        expTable.getColumns().addAll(tbExpID, tbExpCategory, tbExpDesc, tbExpAmount, tbExpTtlAmount, tbExpRemainBalance, tbExpDate, tbExpStatus); 
+        expTable.getColumns().addAll(tbExpID, tbExpCategory, tbExpDesc, tbExpAmount, tbExpTtlAmount, tbExpRemainBalance, tbExpDate, tbExpStatus, tbExpStore); 
         menuAdmin.getMenus().get(1).getItems().get(2).setOnAction(e -> {
            // Expense Management
            
@@ -2222,6 +2237,8 @@ public class GUI extends Application
             //thirdPane.add(cmboStatus, 1, 4);
             thirdPane.add(lblAmount, 0, 5);
             thirdPane.add(txtAmount, 0, 6);
+            thirdPane.add(lblExpStore, 1, 3);
+            thirdPane.add(cmboExpStore, 1, 4);
             thirdPane.add(lblTtlAmount, 1, 5);
             thirdPane.add(txtTtlAmount, 1, 6);
             thirdPane.add(addExp, 0, 7);
@@ -2248,13 +2265,35 @@ public class GUI extends Application
             String date = expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
 
             
-            System.out.println(obsExpense.size());
+            //System.out.println(obsExpense.size());
             //expList.add(new Expense(category, description, amountPaid, totalAmount, date));
             Expense exp1 = new Expense((String) expCategory.get(cmboExpCategory.getSelectionModel().getSelectedIndex()),
                     txtExpDesc.getText(), Double.parseDouble(txtAmount.getText()), Double.parseDouble(txtTtlAmount.getText()),
-                    expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")));
+                    expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")), (Store) obsExpStore.get(cmboExpStore.getSelectionModel().getSelectedIndex()));
             expList.add(exp1);
             obsExpense.add(exp1);
+            expStoreVar = cmboExpStore.getSelectionModel().getSelectedIndex();
+            obsStore.get(0);
+            //System.out.println(expStoreVar + " higgins");
+            //System.out.println(cmboStore.getValue());
+            storeList.get(expStoreVar).addExpense(exp1);
+            //System.out.println(expStoreVar);
+            for (int i = 0; i < obsExpStore.size(); i++)
+            {
+                obsExpStore.get(i).DisplayExpenses();
+                System.out.println(obsExpStore.get(i).getStoreName());
+
+            }
+            for (int i = 0; i < obsExpStore.size(); i++)
+            {
+                System.out.println(obsExpStore.get(i).getExpensesLength());
+                System.out.println(obsExpStore.get(i).getStoreName());            }
+            
+            //System.out.println(obsStore.get(expStoreVar).toString());
+            //obsExpStore.get(expStoreVar).addExpense(exp1);
+            //System.out.println(obsExpStore.get(expStoreVar) + " wah");
+            //System.out.println(exp1 + " pah");
+            
             alert.setTitle("Success!");
             alert.setHeaderText("The expense has been added!");
             alert.showAndWait();
@@ -2271,11 +2310,11 @@ public class GUI extends Application
             
             for (int i = 0; i < expList.size(); i++)
             {
-                System.out.println(expList.get(i).toString());
+                //System.out.println(expList.get(i).toString());
             }
             for (int i = 0; i < obsExpense.size();i++)
             {
-                System.out.println(obsExpense.get(i).toString());
+                //System.out.println(obsExpense.get(i).getTotalAmount());  //toString());
             }
             
             txtExpDesc.clear();
@@ -2310,8 +2349,8 @@ public class GUI extends Application
                 thirdPane.add(expDate, 0, 4);
                 thirdPane.add(lblCategory, 1, 1);
                 thirdPane.add(cmboExpCategory, 1, 2);
-                //thirdPane.add(lblStatus, 1, 3);
-                //thirdPane.add(cmboStatus, 1, 4);
+                thirdPane.add(lblExpStore, 1, 3);
+                thirdPane.add(cmboExpStore, 1, 4);
                 thirdPane.add(lblAmount, 0, 5);
                 thirdPane.add(txtAmount, 0, 6);
                 thirdPane.add(lblTtlAmount, 1, 5);
@@ -2388,7 +2427,7 @@ public class GUI extends Application
             if (cmboExpCategory.getValue() != null) {
                 exC.setCategory((String) cmboExpCategory.getValue());
             }
-            System.out.println(exC.toString() + " wahhhhhhhhhhh");
+            //System.out.println(exC.toString() + " wahhhhhhhhhhh");
             if (exC.getAmountPaid() < exC.getTotalAmount()) {
                 exC.setStatus("Ongoing");
                         
@@ -2397,11 +2436,12 @@ public class GUI extends Application
                 exC.setStatus("Paid"); 
             }
             exC.setRemainingBalance(exC.getTotalAmount() - exC.getAmountPaid());
-            System.out.println(exC.toString());
+            //System.out.println(exC.toString());
             //exC.setDate((expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"))));
             alert.setTitle("Success!");
             alert.setHeaderText("Expense has been Edited!");
             alert.showAndWait();
+
             thirdStage.close();
             expData.clear();
             for (Expense exp : expList) {
@@ -2674,8 +2714,8 @@ public class GUI extends Application
             tenthPane.add(btnConfirmEditStore, 0, 3);
             tenthStage.show();
                 stC = storeList.get(cmboStore.getSelectionModel().getSelectedIndex());
-                txtStoreName.setText(stC.getName());
-                txtStoreAddress.setText(stC.getAddress());
+                txtStoreName.setText(stC.getStoreName());
+                txtStoreAddress.setText(stC.getStoreAddress());
                 
 
             }
@@ -2693,8 +2733,8 @@ public class GUI extends Application
             else
             {
             
-            stC.setName(txtStoreName.getText());
-            stC.setAddress(txtStoreAddress.getText());
+            stC.setStoreName(txtStoreName.getText());
+            stC.setStoreAddress(txtStoreAddress.getText());
             
             for (int i = 0; i < storeList.size(); i++)
             {
@@ -2703,7 +2743,7 @@ public class GUI extends Application
                     storeList.remove(i);
                     storeList.add(i, stC);
                     cmboStore.getItems().remove(i);
-                    cmboStore.getItems().add(i, stC.getName());
+                    cmboStore.getItems().add(i, stC.getStoreName());
                     stC = null;
                     break;
             }
@@ -2713,6 +2753,10 @@ public class GUI extends Application
             alert.setHeaderText("The store has been edited!");
             alert.showAndWait();
             //insert code to add product to object
+            for (int i = 0; i < storeData.size(); i++)
+            {
+                System.out.println(storeData.get(i).toString());
+            }
 
             tenthStage.close();
 
@@ -3124,7 +3168,7 @@ public class GUI extends Application
             output += "\n------------------------------------------------------\n";
             for (int i = 0; i < obsStore.size(); i++)
             {
-                output += "\n" + storeList.get(i).getName() + " : "; 
+                output += "\n" + storeList.get(i).getStoreName() + " : "; 
             for (int j = 0; j < expCategory.size(); j++)
            {
                output +=  "\n" + expCategory.get(j) + " : ";
@@ -3140,6 +3184,7 @@ public class GUI extends Application
                }
                output += "\n";
            }
+            }
            
            //create loop or whatever to print out PvE based on store and year
            txtPvE.setText(output);
@@ -3148,20 +3193,21 @@ public class GUI extends Application
            
            cmboStore.getSelectionModel().clearSelection();
            cmboYear.getSelectionModel().clearSelection();
+            
         });
     }
     
     
         //get database connection method (useable if oracle is on your computer
-    /*
+    
     public static Connection getDBConnection(String url, String user, String pass) throws SQLException
     {
         OracleDataSource ds = new OracleDataSource();
         ds.SETURL(url);
         return ds.getConnection(user, pass);
     }
-*/
-/*     
+
+  
 //@Override
     public void stop(){
         
@@ -3207,7 +3253,7 @@ public class GUI extends Application
                     "' , '" + em.getJobTitle() + "' , '" + em.getEmployeeType() + "' , '" + em.getEmployeeCategory() +
                     "' , '" + em.getStore() +  "' )";
             emQuery = "INSERT INTO EMPLOYEE (EMPLOYEEID, EMPLOYEFNAME, EMPLOYLNAME, EMPLOYEMAIL, EMPLOYPHONENUMBER, EMPLOYADDRESS, EMPLOYHOURLY, EMPLOYJOBTITLE, EMPLOYTIMEWORKED, EMPLOYTYPE, EMPLOYUSERNAME, EMPLOYEECATEGORY, EMPLOYPASSWORD, STORE) VALUES" + emData;
-            strData = "('" + str.getID() + "' , '" + str.getName() + "' , '" + str.getAddress() + "' )";
+            strData = "('" + str.getID() + "' , '" + str.getStoreName() + "' , '" + str.getStoreAddress() + "' )";
             strQuery = "INSERT INTO STORE (STOREID, STORENAME, STOREADDRESS) VALUES" + strData;
         }
         
@@ -3233,7 +3279,7 @@ public class GUI extends Application
             {
                 Payroll pay = (Payroll) empData.get(i).payRoll.get(j);
                 Employee em = (Employee) empData.get(i).payRoll.get(j).getEmp();
-                /*payData = " ('" + pay.getID() + "' , '" + pay.getPayrollPeriod() + "' , '" + pay.getStart() + "' , '" + pay.end + "' , '" + pay.hoursWorked + 
+                payData = " ('" + pay.getID() + "' , '" + pay.getPayrollPeriod() + "' , '" + pay.getStart() + "' , '" + pay.end + "' , '" + pay.hoursWorked + 
                         "' , '" + pay.schedule + "' , '" + pay.scheduleDay + "' , '" + pay.arrTimeIn + "' , '" + pay.arrTimeOut + "' , '" + pay.totalWork +
                         "' , '" + pay.getAmountPaid() + "' )";
                 payQuery = "INSERT INTO PAYROLL (PAYROLLID, PAYROLLPERIOD, START, END, HOURSWORKED, SCHEDULE, SCHEDULEDAY, ARRTIMEIN, ARRTIMEOUT, TOTALWORK, AMOUNTPAID) VALUES" + payData;
@@ -3270,14 +3316,14 @@ public class GUI extends Application
                     sp.getSupplierEmail() + "' , '" + sp.getSupplierAddress() + "' , '" + sp.getContactName() + "' , '" + sp.getContactPhone() + "' , '" +
                     sp.getContactEmail() + " ' )";
             spQuery = "INSERT INTO SUPPLIER (SUPPLIERID, SUPPLIERNAME, SUPPLIERPHONE, SUPPLIEREMAIL, SUPPLIERADDRESS, CONTACTNAME, CONTACTPHONE, CONTACTEMAIL) VALUES" + spData;
-            strData = "('" + str.getID() + "' , '" + str.getName() + "' , '" + str.getAddress() + "' )";
+            strData = "('" + str.getID() + "' , '" + str.getStoreName() + "' , '" + str.getStoreAddress() + "' )";
             strQuery = "INSERT INTO STORE (STOREID, STORENAME, STOREADDRESS) VALUES" + strData;
         }
         
         for (int i = 0; i < storeData.size(); i++)
         {
             Store str = (Store) obsStore.get(i);
-            strData = "('" + str.getID() + "' , '" + str.getName() + "' , '" + str.getAddress() + "' )";
+            strData = "('" + str.getID() + "' , '" + str.getStoreName() + "' , '" + str.getStoreAddress() + "' )";
             strQuery = "INSERT INTO STORE (STOREID, STORENAME, STOREADDRESS) VALUES" + strData;
         }
         
@@ -3292,13 +3338,13 @@ public class GUI extends Application
         
         
     }
-    */
+    
     public static void main(String[] args) {
         launch(args);
     }
     
 
-    /*
+    
 public ResultSet DBCommand(String sqlQuery)
     {
         String URL = "jdbc:oracle:thin:@localhost:1521:XE";
