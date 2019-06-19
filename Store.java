@@ -1,6 +1,8 @@
 package pkg484groupproj;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -79,8 +81,21 @@ public class Store implements Serializable{
         }
         return str;
     }
-    public double calculateProfit()
+    public double calculateProfit(String month)
     {
+    String DateRn = LocalDate.now().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")).substring(0, 2);
+    this.cost = 0.0;
+    this.revenue = 0.0;
+    for(int i = 0; i<this.associatedExpenses.size(); i++){
+        for(int k = 0; k<this.associatedExpenses.get(i).datesPaid.size(); k++)
+        {
+           if(this.associatedExpenses.get(i).datesPaid.get(k).substring(0, 2).equalsIgnoreCase(DateRn))
+           {
+            this.cost += this.associatedExpenses.get(i).pmtsMade.get(k);
+           } 
+        }
+        
+    }
      
     return revenue-cost; 
     }
