@@ -1,5 +1,7 @@
 package pkg484groupproj;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -8,11 +10,14 @@ public class Expense {
     private String category;
     private String description;
     private String date;
+    private String dateLastPayment;
     private String status;
     private double amountPaid;
+    private double lastPayment;
     private double totalAmount;
     private double remainingBalance;
     private Store payableStore;
+    private String store;
     public static ObservableList obsExpense = FXCollections.observableArrayList();
 
     
@@ -43,6 +48,7 @@ public class Expense {
         this.status = status;
         this.remainingBalance = totalAmount - amountPaid;
         this.payableStore = store;
+        this.store = this.payableStore.getStoreName() + ", " + this.payableStore.getStoreAddress();
         //this.payableStore = payableStore;
        
         
@@ -58,7 +64,7 @@ public class Expense {
             this.status = "Paid";
         }
         
-        Expense.obsExpense.add(expenseID + " : " + this.date + " , " + this.description);
+        obsExpense.add(expenseID + " : " + this.date + " , " + this.description);
         
     }
     
@@ -106,7 +112,22 @@ public class Expense {
     {
         return this.amountPaid;
     }
-    
+    public double getLP()
+    {
+        return this.lastPayment;
+    }
+    public void setLP(double pay)
+    {
+        this.lastPayment = pay;
+    }
+    public String getDateLP()
+    {
+        return this.dateLastPayment;
+    }
+    public void setDateLP(LocalDate date)
+    {
+        this.dateLastPayment = date.format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
+    }
     public void setDate(String d)
     {
         this.date = d;
@@ -132,11 +153,14 @@ public class Expense {
         this.payableStore = s;
     }
     
-    public Store getStore()
+    public Store getPayableStore()
     {
         return this.payableStore;
     }
-    
+    public String getStore()
+    {
+        return this.store;
+    }
     public void setRemainingBalance(double rb)
     {
         this.remainingBalance = rb;
@@ -150,7 +174,7 @@ public class Expense {
     public void payExpense(double payment)
     {
         this.amountPaid += payment;
-        this.remainingBalance = totalAmount - amountPaid;
+        this.remainingBalance = this.totalAmount - this.amountPaid;
     }
     
     
