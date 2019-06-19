@@ -1,3 +1,18 @@
+Create Table Store
+(storeID Integer Primary Key,
+StoreName VarChar(25),
+StoreAddress VarChar(25));
+
+Create Table Supplier
+(supplierID Integer Primary Key,
+SupplierName VarChar(25),
+SupplierPhone VarChar(25),
+SupplierEmail VarChar(25),
+SupplierAddress VarChar(25),
+ContactName VarChar(25),
+ContactPhone VarChar(25),
+ContactEmail VarChar(25));
+
 Create Table Customer
 (customerID Integer Primary Key,
 CustName VarChar(25),
@@ -21,7 +36,7 @@ EmployType VarChar(25),
 EmployCategory VarChar(25),
 EmployUserName VarChar(25),
 EmployPassword VarChar(25),
-Store VarChar(25),
+storeID Integer,
 Foreign Key (storeID) REFERENCES Store);
 
 Create Table Expense
@@ -47,8 +62,8 @@ Email VarChar(25));
 Create Table Payroll
 (payrollID Integer Primary Key,
 PayrollPeriod VarChar(25),
-Start VarChar(25),
-End VarChar(25),
+TimeStart VarChar(25),
+TimeEnd VarChar(25),
 HoursWorked VarChar(25),
 Schedule VarChar(25),
 ScheduleDay VarChar(25),
@@ -85,31 +100,4 @@ storeID Integer,
 supplierID Integer,
 Foreign Key (storeID) REFERENCES Store,
 Foreign Key (supplierID) REFERENCES Supplier);
-
-Create Table Store
-(storeID Integer Primary Key,
-StoreName VarChar(25),
-StoreAddress VarChar(25));
-
-Create Table Supplier
-(supplierID Integer Primary Key,
-SupplierName VarChar(25),
-SupplierPhone VarChar(25),
-SupplierEmail VarChar(25),
-SupplierAddress VarChar(25),
-ContactName VarChar(25),
-ContactPhone VarChar(25),
-ContactEmail VarChar(25));
-
-
-
-
-
-
-
-
-
-
-
-
 
