@@ -33,68 +33,7 @@ public class Product implements Serializable{
     
     //Fromatter for money figures
     DecimalFormat formatter = new DecimalFormat("#0.00");
-    
-    
-    public Product(String productName, double price,int quantity, Store store, String foodDescription, String category, Supplier supp)
-    {
-        this.productName = productName;                     
-        this.quantity = quantity;
-        this.price = price;
-        this.location = store.getStoreName();
-        this.foodDescription = foodDescription;
-        this.category = category;
-        this.supp = supp; 
-        this.supplier = supp.getName();
-        this.image = image;
-        this.productID = nextID++;
-        obsProd.add(this.productID + ": " + this.productName);
-        
-        if (category.equalsIgnoreCase("PRODUCE"))
-        {
-            this.aisle = 1;
-        }
-        
-        if (category.equalsIgnoreCase("DAIRY"))
-        {
-            this.aisle = 2;
-        }
-        
-        if (category.equalsIgnoreCase("BEVERAGES"))
-        {
-            this.aisle = 3;
-        }
-        
-        if (category.equalsIgnoreCase("CANDY"))
-        {
-            this.aisle = 4;
-        }
-        
-        
-        if (category.equalsIgnoreCase("CANNED FOODS"))
-        {
-            this.aisle = 5;
-        }
-        
-        if (category.equalsIgnoreCase("PASTA"))
-        {
-            this.aisle = 6;
-        }
-        
-        if (category.equalsIgnoreCase("SNACK FOODS"))
-        {
-            this.aisle = 7;
-        }
-        
-        if (category.equalsIgnoreCase("BAKED GOODS"))
-        {
-            this.aisle = 8;
-        }
-        
-        if (category.equalsIgnoreCase("FROZEN FOODS"))
-        {
-            this.aisle = 9;
-        }
-    }
+
      public Product(String productName, int quantity, double price, double cost, Store store, String foodDescription, String category, Supplier supp, BufferedImage image)
     {
         this.productName = productName;
@@ -172,6 +111,7 @@ public class Product implements Serializable{
         this.store = store; 
         this.cost = cost; 
         obsProd.add(this.productID + ": " + this.productName);
+        
         
         if (category.equalsIgnoreCase("PRODUCE"))
         {
