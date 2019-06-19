@@ -76,6 +76,16 @@ public class CustSale {
         obsSale.add(this.saleID);
     }
     
+    public void setStoreName(Store store)
+    {
+        this.store = store;
+    }
+    
+    public String getStoreName()
+    {
+        return this.store.getStoreName();
+    }
+    
     public static int getSaleIDCount()
     {
         return saleIDCount;
