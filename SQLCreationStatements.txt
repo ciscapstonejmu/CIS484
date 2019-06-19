@@ -1,0 +1,130 @@
+Create Table Customer
+(customerID Integer Primary Key,
+CustName VarChar(25),
+CustEmail VarChar(25),
+CustPhone VarChar(25),
+CustAddress VarChar(25),
+CustPayMethod VarChar(25));
+
+
+Create Table Employee
+(employeeID Integer Primary Key,
+EmployFName VarChar(25),
+EmployLName VarChar(25),
+EmployEmail VarChar(25),
+EmployPhoneNumber VarChar(25),
+EmployAddress VarChar(25),
+EmployHourly VarChar(25),
+EmployJobTitle VarChar(25), 
+EmployTimeWorked VarChar(25),
+EmployType VarChar(25),
+EmployCategory VarChar(25),
+EmployUserName VarChar(25),
+EmployPassword VarChar(25),
+Store VarChar(25));
+
+Create Table Expense
+(expenseID Integer Primary Key,
+Category VarChar(25),
+Description VarChar(25),
+Status VarChar(25),
+AmountPaid VarChar(25),
+TotalAmount VarChar(25),
+RemainingBalance VarChar(25),
+Date VarChar(25));
+
+Create Table Member
+(memberID Integer Primary Key,
+FName VarChar(25),
+LName VarChar(25),
+PhoneNumber VarChar(25),
+Email VarChar(25));
+
+Create Table Payroll
+(payrollID Integer Primary Key,
+PayrollPeriod VarChar(25),
+Start VarChar(25),
+End VarChar(25),
+HoursWorked VarChar(25),
+Schedule VarChar(25),
+ScheduleDay VarChar(25),
+ArrTimeIn VarChar(25),
+ArrTimeOut VarChar(25),
+TotalWork VarChar(25),
+AmountPaid VarChar(25));
+
+Create Table Product
+(productID Integer Primary Key,
+Name VarChar(25),
+Quantity VarChar(25),
+Price VarChar(25),
+Store VarChar(25),
+Description VarChar(25),
+Category VarChar(25));
+
+Create Table ProductOrder
+(productOrderID Integer Primary Key,
+Quantity VarChar(25),
+Name VarChar(25),
+UnitCost VarChar(25),
+Subtotal VarChar(25),
+DeliveryDate VarChar(25),
+poDate VarChar(25),
+Category VarChar(25));
+
+Create Table Store
+(storeID Integer Primary Key,
+StoreName VarChar(25),
+StoreAddress VarChar(25));
+
+
+Create Table Supplier
+(supplierID Integer Primary Key,
+SupplierName VarChar(25),
+SupplierPhone VarChar(25),
+SupplierEmail VarChar(25),
+SupplierAddress VarChar(25),
+ContactName VarChar(25),
+ContactPhone VarChar(25),
+ContactEmail VarChar(25));
+
+
+Create Table Employment
+(employeeID Integer NOT NULL,
+storeID Integer NOT NULL,
+Primary Key (employeeID, storeID));
+
+Create Table PayEmployee
+(payrollID Integer NOT NULL,
+employeeID Integer NOT NULL,
+Primary Key (payrollID, employeeID));
+
+Create Table stockedProduct
+(storeID Integer NOT NULL,
+productID Integer NOT NULL,
+Primary Key (storeID, productID));
+
+Create Table  suppliedProduct
+(productID Integer NOT NULL,
+supplierID Integer NOT NULL,
+Primary Key (productID, supplierID));
+
+Create Table storeOrder
+(storeID Integer NOT NULL,
+productOrderID Integer NOT NULL,
+Primary Key (storeID, productOrderID));
+
+Create Table suppliedOrder
+(productOrderID Integer NOT NULL,
+supplierID Integer NOT NULL,
+Primary Key (productOrderID, supplierID));
+
+
+
+
+
+
+
+
+
+
