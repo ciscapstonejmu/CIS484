@@ -209,7 +209,7 @@ public class GUI extends Application
     Button btnDisplayPO = new Button("Display Product Order Information");
     Button btnRecShip = new Button("Receive Product Order Shipment"); 
     Button btnViewAllPO = new Button("View All"); 
-Button btnRemoveSupp = new Button("Remove Supplier"); 
+    Button btnRemoveSupp = new Button("Remove Supplier"); 
     
     int imageChosen;
     
@@ -748,7 +748,7 @@ Button btnRemoveSupp = new Button("Remove Supplier");
         btnConfirmEditStore.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnSavePO.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnCancelPO.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        
+        btnRemoveSupp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         //small form labels and combobox
         empCat.setStyle("-fx-font: 9pt \"bookman\";");
         empType.setStyle("-fx-font: 9pt \"bookman\";");
@@ -1522,7 +1522,8 @@ Button btnRemoveSupp = new Button("Remove Supplier");
                 eighthPane.add(lblSuppContactEmail, 1, 8);
                 eighthPane.add(txtSuppContactEmail, 1, 9); 
 
-                eighthPane.add(btnConfirmSuppChanges, 0, 9); 
+                eighthPane.add(btnConfirmSuppChanges, 0, 9);
+                eighthPane.add(btnRemoveSupp, 0, 10);
 
                 txtSuppName.setText(sC.getName());
                 txtSuppPhone.setText(sC.getSupplierPhone());
@@ -1566,14 +1567,14 @@ Button btnRemoveSupp = new Button("Remove Supplier");
             alert.setTitle("Success!");
             alert.setHeaderText("The supplier has been edited!");
             alert.showAndWait();
-            for (int i = 0; i < suppList.size(); i++) 
-            {
-                System.out.println(suppList.get(i)); 
-            }
+//            for (int i = 0; i < suppList.size(); i++) 
+//            {
+//                System.out.println(suppList.get(i)); 
+//            }
             prodData.clear(); //keeping this so if supplier name is updated it shows on the product table? 
             for(Product prod: prodList)
             {   
-                if(prod.getSupp().getID() == temp.getID())
+             if(prod.getSupp().getID() == temp.getID())
                 {
                     prod.updateSupp(temp);
                 }
@@ -1589,7 +1590,24 @@ Button btnRemoveSupp = new Button("Remove Supplier");
 
         eighthStage.close();
             
-        }); 
+        });
+        btnRemoveSupp.setOnAction(e -> {
+            Supplier tempSupp = sC; 
+            for(int i = 0; i<suppList.size(); i++)
+            {
+                if(tempSupp.getID() == suppList.get(i).getID())
+                {
+                    suppList.remove(i);
+                    cmboSupp2.getItems().remove(i);
+                    break;                    
+                }           
+            }
+            alert.setTitle("Success!");
+            alert.setHeaderText("The supplier has been removed!");
+            alert.showAndWait();
+            
+            eighthStage.close();
+        });
         
         btnviewSupp.setOnAction(e -> {
             // View Suppliers
@@ -1606,12 +1624,24 @@ Button btnRemoveSupp = new Button("Remove Supplier");
         }); 
 
         viewSupp.setOnAction(e -> {
-            
-            Supplier tempSupp = suppList.get(cmboSupp.getSelectionModel().getSelectedIndex());
-            //String prodOrderSelect2 = Integer.toString(prodOrderSelect); 
+            if(suppList.size() <= 0) 
+            {
+                alert.setTitle("Error!");	           
+                alert.setHeaderText("There are no suppliers in the system!");	          
+                alert.showAndWait();	 
+            }
+            else if(cmboSupp.getValue() == null)
+            {	            
+                alert.setTitle("Error!");	           
+                alert.setHeaderText("Please select a supplier to view!");	          
+                alert.showAndWait();	           
+            }	
+            else 
+            {
+            Supplier tempSupp = suppList.get(cmboSupp.getSelectionModel().getSelectedIndex());            
             suppOutput.setText(tempSupp.toString());   
             cmboSupp.getSelectionModel().clearSelection();
-            
+            }
         }); 
         btnViewAllSupp.setOnAction(e -> {
             String suppOutput2 = ""; 
@@ -1669,6 +1699,7 @@ Button btnRemoveSupp = new Button("Remove Supplier");
             fifthPane.getChildren().clear();
             txtProdName.clear();
             txtUnitCost.clear();
+            txtUnitPrice.clear();
             cmboCategory.getSelectionModel().clearSelection();
             orderDate.getEditor().clear();
             calendar.getEditor().clear();
@@ -1680,32 +1711,31 @@ Button btnRemoveSupp = new Button("Remove Supplier");
             fifthStage.show();
             fifthPane.setAlignment(Pos.TOP_CENTER);
 
-            fifthPane.add(lblPO, 0, 0, 3, 1); 
+            fifthPane.add(lblPO, 0, 0); 
             fifthPane.add(lblProdName, 0, 1);
             fifthPane.add(txtProdName, 0, 2);
-            fifthPane.add(lblUnitCost, 1,5); 
+            fifthPane.add(lblUnitCost, 1,5); //how much the product costs thrifty to purchase
             fifthPane.add(txtUnitCost, 1, 6); 
             fifthPane.add(lblCategory, 0, 3);
             fifthPane.add(cmboCategory, 0, 4);
-            fifthPane.add(lblSubTotal, 1, 7); 
-            fifthPane.add(btnCalcProdSubTotal, 0, 9);
-            fifthPane.add(txtSubTotal, 1, 8); 
-            fifthPane.add(lblOrderDate, 0, 7); 
-            fifthPane.add(orderDate, 0, 8); 
-            //need to add order date into the pane and use the constructor with it 
-
-
-            fifthPane.add(lblDelDate, 0, 5); 
-
-            fifthPane.add(calendar, 0, 6);
+            fifthPane.add(lblProdDesc, 0, 5); 
+            fifthPane.add(txtProdDesc, 0, 6); 
+            fifthPane.add(lblSubTotal, 1, 9); 
+            fifthPane.add(btnCalcProdSubTotal, 0, 11);
+            fifthPane.add(txtSubTotal, 1, 10); 
+            fifthPane.add(lblUnitPrice, 1, 7); //how much thrify sells the product for 
+            fifthPane.add(txtUnitPrice, 1, 8); 
+            fifthPane.add(lblOrderDate, 0, 9); 
+            fifthPane.add(orderDate, 0, 10); 
+            fifthPane.add(lblDelDate, 0, 7); 
+            fifthPane.add(calendar, 0, 8);
             fifthPane.add(lblQuantity, 1, 1);
             fifthPane.add(txtProdQuantity, 1, 2);
-//            thirdPane.add(lblVendor, 0, 7);
-//            thirdPane.add(txtVendor, 0, 8);
+            //need to add order date into the pane and use the constructor with it 
+
             fifthPane.add(lblSupplier, 1, 3); 
             fifthPane.add(cmboSupp, 1, 4);
-            //thirdPane.add(lblImage, 0, 9);
-            //thirdPane.add(btnImage, 0, 10);
+            
             fifthPane.add(lblProdStore, 2,3);
             fifthPane.add(cmboStore, 2, 4); //when picking which store the product is for, should be selected from already existing stores created 
             txtSubTotal.setEditable(false);
@@ -1724,7 +1754,7 @@ Button btnRemoveSupp = new Button("Remove Supplier");
         }); 
         
         btnCompleteOrder.setOnAction(e -> {
-            if(txtProdName.getText().trim().length() == 0 || txtUnitCost.getText().trim().length() == 0 ||
+            if(txtProdName.getText().trim().length() == 0 || txtUnitCost.getText().trim().length() == 0 || txtUnitPrice.getText().trim().length()== 0||
                     cmboCategory.getValue() == null || orderDate.getValue() == null || calendar.getValue() == null ||
                     txtProdQuantity.getText().trim().length() == 0 || cmboSupp.getValue() == null || cmboStore.getValue() == null)
             {
@@ -1736,8 +1766,8 @@ Button btnRemoveSupp = new Button("Remove Supplier");
             {
             String date = calendar.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
             String orderDate2 = orderDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
-            prodOrderList.add(new ProductOrder(Integer.parseInt(txtProdQuantity.getText()), txtProdName.getText(), Double.parseDouble(txtUnitCost.getText()),
-                    Double.parseDouble(txtSubTotal.getText()), date, orderDate2, (String)cmboSupp.getValue(), (String)cmboStore.getValue(), (String)cmboCategory.getValue())); 
+            prodOrderList.add(new ProductOrder(Integer.parseInt(txtProdQuantity.getText()), txtProdName.getText(), Double.parseDouble(txtUnitCost.getText()), Double.parseDouble(txtUnitPrice.getText()),
+                    Double.parseDouble(txtSubTotal.getText()), date, orderDate2, suppList.get(cmboSupp.getSelectionModel().getSelectedIndex()), storeList.get(cmboStore.getSelectionModel().getSelectedIndex()), (String)cmboCategory.getValue(), txtProdDesc.getText())); 
             ProductOrder.obsProdOrder.add(txtProdName.getText());
 
             alert.setTitle("Success!");
@@ -1797,19 +1827,22 @@ Button btnRemoveSupp = new Button("Remove Supplier");
 
         }); 
     btnViewAllPO.setOnAction(e -> {
-//               if (prodOrderList.size() <= 0) {
-//                alert.setTitle("Error!");
-//                alert.setHeaderText("There are no product orders to display!");
-//                alert.showAndWait();
-//            }
-//            else {
-//            String prodOrderOutput2 = ""; 
-//            for(int i =0; i < prodOrderList.size(); i++) {
-//                prodOrderOutput2 += prodOrderList.get(i).toString(); 
-//            }
-//
-//            prodOrderOutput.setText(prodOrderOutput2); 
-//               }
+        if(prodOrderList.size() <= 0) 
+        {
+            alert.setTitle("Error!");	           
+            alert.setHeaderText("There are no product orders in the system!");	          
+            alert.showAndWait();	 
+        }
+        else 
+        {
+            String poOutput2 = ""; 
+            for(int i =0; i < prodOrderList.size(); i++) 
+            {
+                poOutput2 += suppList.get(i).toString(); 
+            }
+            prodOrderOutput.setText(poOutput2); 
+        }
+        
         }); 
         
         btnAddProd.setOnAction(e -> {
@@ -1817,7 +1850,8 @@ Button btnRemoveSupp = new Button("Remove Supplier");
             thirdPane.getChildren().clear();
             txtProdName.clear();	
             txtProdQuantity.clear();	
-            txtUnitPrice.clear();	
+            txtUnitPrice.clear();
+            txtUnitCost.clear();
             cmboStore.getSelectionModel().clearSelection();	
             txtProdDesc.clear();	
             cmboCategory.getSelectionModel().clearSelection();	
@@ -1832,18 +1866,20 @@ Button btnRemoveSupp = new Button("Remove Supplier");
             thirdPane.add(txtProdName, 0, 2);
             thirdPane.add(lblProdDesc, 0, 3);
             thirdPane.add(txtProdDesc, 0, 4);
-            thirdPane.add(lblCategory, 1, 3);
-            thirdPane.add(cmboCategory, 1, 4);
-            thirdPane.add(lblUnitPrice, 0, 5);
+            thirdPane.add(lblCategory, 1, 1);
+            thirdPane.add(cmboCategory, 1, 2);
+            thirdPane.add(lblUnitPrice, 0, 5); //how much thrifty sells item for
             thirdPane.add(txtUnitPrice, 0, 6);
-            thirdPane.add(lblQuantity, 1, 5);
-            thirdPane.add(txtProdQuantity, 1, 6);
+            thirdPane.add(lblUnitCost, 1, 5); //how much thrifty bought item for 
+            thirdPane.add(txtUnitCost, 1, 6); 
+            thirdPane.add(lblQuantity, 1, 3);
+            thirdPane.add(txtProdQuantity, 1, 4);
             thirdPane.add(lblSupplier, 0, 7); 
             thirdPane.add(cmboSupp, 0, 8); 
             thirdPane.add(lblImage, 0, 9);
             thirdPane.add(btnImage, 0, 10);
             thirdPane.add(lblProdStore, 1,7 );
-            thirdPane.add(cmboStore, 1, 8 ); //when picking which store the product is for, should be selected from already existing stores created 
+            thirdPane.add(cmboStore, 1, 8 );  //when picking which store the product is for, should be selected from already existing stores created 
             
             
             thirdPane.add(addProd, 0, 16);
@@ -1852,7 +1888,7 @@ Button btnRemoveSupp = new Button("Remove Supplier");
         addProd.setOnAction(e -> {
             //product added clicked
             if(txtProdName.getText().trim().length() == 0 || txtProdDesc.getText().trim().length() == 0 ||
-                    cmboCategory.getValue() == null || txtUnitPrice.getText().trim().length() == 0 || 
+                    cmboCategory.getValue() == null || txtUnitPrice.getText().trim().length() == 0 || txtUnitCost.getText().trim().length() == 0|| 
                     txtProdQuantity.getText().trim().length() == 0 || cmboSupp.getValue() == null ||
                     cmboStore.getValue() == null)
             {
@@ -1869,10 +1905,10 @@ Button btnRemoveSupp = new Button("Remove Supplier");
     //            int suppLoc = cmboSupp.getSelectionModel().getSelectedIndex();
 
                 prodList.add(new Product(txtProdName.getText(), 
-                        Integer.valueOf(txtProdQuantity.getText()),
-                        Double.valueOf(txtUnitPrice.getText()), 
-                        storeList.get(cmboStore.getSelectionModel().getSelectedIndex()), txtProdDesc.getText(), 
-                        (String) cmboCategory.getValue(), suppList.get(cmboSupp.getSelectionModel().getSelectedIndex()), tempImage));
+                    Integer.valueOf(txtProdQuantity.getText()),
+                    Double.valueOf(txtUnitPrice.getText()), Double.valueOf(txtUnitCost.getText()),
+                    storeList.get(cmboStore.getSelectionModel().getSelectedIndex()), txtProdDesc.getText(), 
+                    (String) cmboCategory.getValue(), suppList.get(cmboSupp.getSelectionModel().getSelectedIndex()), tempImage));
     //                    (String) cmboCategory.getValue(), suppList.get(suppLoc), tempImage));
     //            for(int i = 0; i<categoryList.size(); i++){
     //                if((categoryList.get(i).equalsIgnoreCase((String)cmboCategory.getValue())))
@@ -1887,8 +1923,7 @@ Button btnRemoveSupp = new Button("Remove Supplier");
 
                 alert.setTitle("Success!");
                 alert.setHeaderText("The product has been added!");
-                alert.showAndWait();
-                //insert code to add product to object
+                alert.showAndWait();              
 
                 thirdStage.close();
                 txtProdName.clear();	
@@ -1904,14 +1939,6 @@ Button btnRemoveSupp = new Button("Remove Supplier");
                 {
                     prodData.add(prod);
                 }
-
-                 /*txtProdName.clear();
-                txtProdQuantity.clear();
-                txtProdDesc.clear();
-
-                cmboCategory.getSelectionModel().clearSelection();
-                cmboStore.getSelectionModel().clearSelection();
-                cmboSupp.getSelectionModel().clearSelection();*/
             }
         });
         
