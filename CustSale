@@ -27,7 +27,7 @@ public class CustSale {
     //Fromatter for money figures
     DecimalFormat formatter = new DecimalFormat("#0.00");
     
-    private ArrayList<Product> saleProducts = new ArrayList();
+    public ArrayList<Product> saleProducts = new ArrayList();
     
     public static ObservableList obsSale = FXCollections.observableArrayList();
     
