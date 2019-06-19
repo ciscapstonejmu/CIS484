@@ -3,6 +3,7 @@ package pkg484groupproj;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import java.io.Serializable;
 
 public class Store implements Serializable{
     
