@@ -2,6 +2,7 @@ package pkg484groupproj;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -18,6 +19,8 @@ public class Expense {
     private double remainingBalance;
     private Store payableStore;
     private String store;
+    public ArrayList<String> datesPaid = new ArrayList<>();
+    public ArrayList<Double> pmtsMade = new ArrayList<>();
     public static ObservableList obsExpense = FXCollections.observableArrayList();
 
     
