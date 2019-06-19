@@ -1,11 +1,11 @@
 package pkg484groupproj;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import java.io.Serializable;
 
-public class Store implements Serializable{
+public class Store{
     
     
     private int storeID;
@@ -26,7 +26,7 @@ public class Store implements Serializable{
         obsStore.add(this.storeName);
     }
     
-    public int getID()
+    public int getStoreID()
     {
         return this.storeID;
     }
