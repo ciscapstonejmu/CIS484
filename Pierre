@@ -272,6 +272,7 @@ public class GUI extends Application
     ComboBox cmboEmpCat = new ComboBox(empCategory);
     TextField txtEmpCat = new TextField();
     Button editEmp = new Button("Save Edits");
+    Button removeEmp = new Button("Remove Employee");
     
     // Expense Management
     Label lblExpMan = new Label("Management");
@@ -705,29 +706,12 @@ public class GUI extends Application
         btnviewSupp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnConfirmSuppChanges.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         editProd.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        btnAddEmp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        btnEditEmp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        btnAddExp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        btnAddOrder.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        btnAddProd.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        btnEditExp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        btnEmpDisplay.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnEnterTime.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        btnHandleImage.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        btnMonthDisplay.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        btnPEEmp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        btnPOSDisplay.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        btnPayExp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        btnPvEDisplay.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        btnRemoveProd.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        btnViewOrder.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        createSupp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnSelectExpense.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnConfirmPayExp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnSetDiscount.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        
         btnRingSale.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        btnEnterTime.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        removeEmp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         
         //BUTTONS third + pane (10pt font)
         addEmp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
@@ -2305,7 +2289,26 @@ public class GUI extends Application
                 thirdStage.close();
             }
         });
-        
+        removeEmp.setOnAction(e -> {
+                if(cmboEmp.getValue() == null)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Please select an employee to edit!");
+                alert.showAndWait();
+            }
+            else
+            {
+                int remove = cmboEmp.getSelectionModel().getSelectedIndex();
+                cmboEmp.getSelectionModel().clearSelection();
+                empList.remove(remove);
+                cmboEmp.getItems().remove(remove);            
+            }
+            empData.clear();
+            for(Employee emp: empList)
+            {
+                empData.add(emp);
+            }            
+        });
         btnEditEmp.setOnAction(e -> {
             // They have no way of selecting an employee rn
             if(cmboEmp.getValue() == null)
@@ -2357,6 +2360,14 @@ public class GUI extends Application
                    if(eC.getJobTitle().equalsIgnoreCase((String)job.get(i)))
                    {
                        cmboJob.getSelectionModel().select(i);
+                   }
+                }
+                for(int i = 0; i<job.size(); i++)
+                {                   
+                   if(i == job.size()-1 && eC.getJobTitle().equalsIgnoreCase((String)job.get(i))== false)
+                   {
+                       cmboJob.getItems().add(eC.getJobTitle());
+                       cmboJob.getSelectionModel().selectLast();                       
                    }
                 }
                 for(int i = 0; i<storeList.size(); i++)
