@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class Store {
+public class Store implements Serializable{
     
     
     private int storeID;
