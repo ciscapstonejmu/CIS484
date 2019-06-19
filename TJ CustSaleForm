@@ -447,6 +447,25 @@ public class CustSaleForm{
                         GUI.empList.get(saleEmp), GUI.memList.get(saleMem),
                         this.saleProducts));
             
+                                        /*
+                CustSale c1 = new CustSale(dateOfSale, GUI.storeList.get(saleStore),
+                        GUI.empList.get(saleEmp), GUI.memList.get(saleMem),
+                        this.saleProducts);
+                
+                for(int i = 0; i<this.saleProducts.size(); i++)
+                {
+                if(saleProducts.get(i).getProductID() == GUI.prodList.get(i).getProductID())
+                {
+                    int temp = GUI.prodList.get(i).getQuantity();
+                    int remove = saleProducts.get(i).getQuantity();
+                    temp = temp - remove; 
+                    GUI.prodList.remove(i);
+                    GUI.prodList.get(i).setQuantity(temp);
+                    break;
+                }
+                }
+                */
+                
                 CustSale thisSale = GUI.saleList.get(saleCount-1);
                 receiptOutput.appendText(recItems);
                 receiptOutput.appendText("\n" + thisSale.toString());
