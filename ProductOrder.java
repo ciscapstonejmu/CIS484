@@ -114,7 +114,14 @@ public class ProductOrder {
     {
         return this.unitCost;
     }
-    
+    public double getUnitPrice()
+    {
+        return this.unitPrice;
+    }
+    public void setUnitPrice(double unitPrice)
+    {
+        this.unitPrice = unitPrice;
+    }
     public void setSubtotal(double subtotal)
     {
         this.subtotal = subtotal;
