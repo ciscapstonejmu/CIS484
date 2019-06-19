@@ -11,7 +11,7 @@ public class Store{
     private int storeID;
     private String storeName;
     private String storeAddress;
-    private ArrayList<Expense> associatedExpenses = new ArrayList<>(); 
+    public ArrayList<Expense> associatedExpenses = new ArrayList<>(); 
     public static int nextID = 0;
     public static ObservableList obsStore = FXCollections.observableArrayList();
     
