@@ -1,0 +1,106 @@
+// Name: Alec Loughran, Seif Abdou, Robel Ahferom, Christian Yun
+// Roles: UI Developer, UI Developer, Class Developer, Class Developer
+package ProjectPart2;
+
+import java.util.ArrayList;
+public class Student {
+    
+    private String firstName;
+    private String lastName;
+    private String studentYear;
+    private String studentMajor;
+    private double GPA;
+    private String studentEmail;
+    private int studentID;
+    
+    private static int nextStudentID = 1000;
+    public static ArrayList<Student> studentList = new ArrayList<>();
+    
+    public Student(String name, int year, String major, double GPA, String email){
+        
+        
+        setStudentYear(year);
+        this.studentMajor = major;
+        this.GPA = GPA;
+        this.studentEmail = email;
+        int k = name.indexOf(' ');
+        this.firstName = name.substring(0, k);
+        this.lastName = name.substring(k+1);
+        this.studentID = nextStudentID++;
+        studentList.add(this);
+    
+    }
+    public Student(int studentID, String name, int year, String major, double GPA, String email){
+        
+         setStudentYear(year);
+        this.studentMajor = major;
+        this.GPA = GPA;
+        this.studentEmail = email;
+        int k = name.indexOf(' ');
+        this.firstName = name.substring(0, k);
+        this.lastName = name.substring(k+1);
+        this.studentID = nextStudentID++;
+        studentList.add(this);
+        this.nextStudentID = studentID + 1;
+    }
+    
+    public void setGPA(double GPA)
+    {
+        this.GPA = GPA;
+    }
+    public double getGPA()
+    {
+        return this.GPA;
+    }
+    public String getName()
+    {
+        return this.lastName+ ", " + this.firstName;
+    }
+    public int getStudentID()
+    {
+        return this.studentID;
+    }
+    public void setStudentEmail(String email)
+    {
+        this.studentEmail = email;
+    }
+    public String getStudentEmail()
+    {
+     return this.studentEmail; 
+    }
+    public String getStudentYear()
+    {
+        return this.studentYear;
+    }
+    public void setStudentYear(int year)
+    {
+        switch (year) {
+            case 1:
+                this.studentYear = "Freshman";
+                break;
+            case 2:
+                this.studentYear = "Sophomore";
+                break;
+            case 3:
+                this.studentYear = "Junior";
+                break;
+            case 4:
+                this.studentYear = "Senior";
+                break;
+        }
+    }
+    public String getStudentMajor()
+    {
+        return this.studentMajor;
+    }
+    public void setStudentMajor(String major)
+    {
+        this.studentMajor = major;
+    }
+    public String toString(){
+        return this.lastName +", " + this.firstName;
+    }
+        
+    
+    
+}// end of Student Class
