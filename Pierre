@@ -1939,7 +1939,7 @@ public class GUI extends Application
                     Double.valueOf(txtUnitPrice.getText()), Double.valueOf(txtUnitCost.getText()),
                     storeList.get(cmboStore.getSelectionModel().getSelectedIndex()), txtProdDesc.getText(), 
                     (String) cmboCategory.getValue(), suppList.get(cmboSupp.getSelectionModel().getSelectedIndex()), tempImage));
-                    cmboProd.getItems().add(prodList.get(prodList.size()-1).getProductID() + ": " + prodList.get(prodList.size()-1).getProductName() );
+                    
                     for(int k = 0; k<categoryList.size(); k++)
                     {
                         if((categoryList.get(k).equalsIgnoreCase((String)cmboCategory.getValue())))
