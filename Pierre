@@ -1,3 +1,6 @@
+package pkg484groupproj;
+
+import pkg484groupproj.Store;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
@@ -468,6 +471,10 @@ public class GUI extends Application
     GridPane formPane = new GridPane();
     TextArea txtPOS = new TextArea();
     LocalDate currentDate;
+    String cDate;
+    String yDate;
+    String mDate;
+    String dDate;
     LocalDate firstDay;
     LocalDate firstMonth;
     LocalDate firstYear;
@@ -561,7 +568,7 @@ public class GUI extends Application
         
         currentDate = LocalDate.now();        
         cDate = currentDate.format(DateTimeFormatter.ISO_DATE);
-         yDate = cDate.substring(0, 4);
+        yDate = cDate.substring(0, 4);
         mDate = cDate.substring(5, 7);
         dDate = cDate.substring(8, cDate.length());
         GridPane primaryPane = new GridPane();
@@ -3617,10 +3624,7 @@ public class GUI extends Application
             firstMonth = currentDate.with(TemporalAdjusters.firstDayOfMonth());
             firstYear = currentDate.with(TemporalAdjusters.firstDayOfYear());
             String currentCat = "";
-            moDate = firstMonth.format(DateTimeFormatter.ISO_DATE);
-            yrDate = firstYear.format(DateTimeFormatter.ISO_DATE);
-            String yr = yrDate.substring(0, 4);
-            String mo = moDate.substring(5, 7);
+            
             
             monthNames.add("January");
             monthNames.add("February");
@@ -4266,7 +4270,7 @@ public class GUI extends Application
 
 
     }
-
+/*
     public ResultSet DBCommand(String sqlQuery)
         {
             String URL = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -4414,7 +4418,7 @@ public class GUI extends Application
         }
         }
 */
-
+/*
         public void loadProductsfromDB()
         {
         String query = "SELECT * FROM JAVAUSER.PRODUCT"; 
@@ -4494,5 +4498,5 @@ public class GUI extends Application
             System.out.println(e.toString()); 
         }
         }
-
+*/
 }
