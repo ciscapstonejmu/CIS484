@@ -37,7 +37,7 @@ public class CustSale {
         this.saleDate = saleDate;
         this.store = store;
         this.employee = employee;
-        this.saleProducts = saleProducts;
+        this.saleProducts.addAll(saleProducts);
         
         for(int i=0; i<this.saleProducts.size();i++)
         {
@@ -60,7 +60,7 @@ public class CustSale {
         this.store = store;
         this.employee = employee;
         this.member = member;
-        this.saleProducts = saleProducts;
+        this.saleProducts.addAll(saleProducts);
         
         for(int i=0; i<this.saleProducts.size();i++)
         {
