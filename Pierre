@@ -88,9 +88,7 @@ public class GUI extends Application
     ObservableList<WritableImage> imageList = FXCollections.observableArrayList();
     static ObservableList obsProdOrder = FXCollections.observableArrayList();
     static ComboBox cmboProdOrder = new ComboBox(ProductOrder.obsProdOrder);
-    static ComboBox cmboProdOrder2 = new ComboBox(ProductOrder.obsProdOrder); 
-    //ObservableList<Store> obsStore = FXCollections.observableArrayList();
-    //ComboBox cmboStore = new ComboBox(obsStore);
+    static ComboBox cmboProdOrder2 = new ComboBox(ProductOrder.obsProdOrder);
     public static ObservableList<CustSale> obsSale = FXCollections.observableArrayList();
     public static ComboBox cmboSale = new ComboBox(obsSale);
     public static ObservableList<Supplier> obsSupp = FXCollections.observableArrayList(); 
@@ -98,6 +96,7 @@ public class GUI extends Application
     public static ComboBox cmboSupp2 = new ComboBox(Supplier.obsSupp);
     public static ObservableList<Member> obsMem = FXCollections.observableArrayList();
     public static ComboBox<Member> cmboMem = new ComboBox(Member.obsMem);
+    static ObservableList<ProductOrder> obsRecOrder = FXCollections.observableArrayList();
 //    ObservableList 
     static ObservableList<Expense> obsExpense = FXCollections.observableArrayList();
     ComboBox cmboExpense = new ComboBox(Expense.obsExpense);
@@ -318,7 +317,8 @@ public class GUI extends Application
     Label lblEditExp = new Label("Edit Expense");
     Button editExp = new Button("Edit Expense");
     static ObservableList<Expense> obsUnpaidExp = FXCollections.observableArrayList();
-    ComboBox cmboUnpaidExp = new ComboBox(obsUnpaidExp);
+    ComboBox cmboUnpaidExp = new ComboBox(unpaidExp);
+    static ObservableList unpaidExp = FXCollections.observableArrayList();
     Button btnConfirmPayExp = new Button("Pay Expense");
     Button btnSelectExpense = new Button("Select This Expense");
 
@@ -621,6 +621,15 @@ public class GUI extends Application
             obsCategory.add("BAKED GOODS");
             obsCategory.add("FROZEN FOODS");
             obsCategory.add("OTHER");
+            
+            expCategoryList.add("Store Mortgage");
+            expCategoryList.add("Utilities");
+            expCategoryList.add("Lawn Care");
+            expCategoryList.add("System Maintenance");
+            expCategoryList.add("Payroll");
+            expCategoryList.add("Inventory Purchase");
+            expStatusList.add("Paid");
+            expStatusList.add("Ongoing");
             //Populate ArrayLists to calculate hoursWorked for payroll
         for(int i = 0; i <31; i++)
         {
@@ -864,7 +873,7 @@ public class GUI extends Application
         menuPayroll.getItems().add(new MenuItem("Payroll"));
         menuReports.getItems().add(new MenuItem("POS Report"));
         menuReports.getItems().add(new MenuItem("Employee Report"));
-        menuReports.getItems().add(new MenuItem("Monthly Expenense Report"));
+        menuReports.getItems().add(new MenuItem("Monthly Expense Report"));
         menuReports.getItems().add(new MenuItem("Profit v. Expense Report"));
         menuSystem.getItems().add(new MenuItem("Sign Out"));
         
@@ -921,6 +930,7 @@ public class GUI extends Application
         TableColumn tbProdName = new TableColumn("Name");
         TableColumn tbProdQuantity = new TableColumn("Quantity");
         TableColumn tbProdPrice = new TableColumn("Price");
+        TableColumn tbProdCost = new TableColumn("Cost");
         TableColumn tbProdDesc = new TableColumn("Description");
         TableColumn tbProdCategory = new TableColumn("Category");
         TableColumn tbProdLocation = new TableColumn("Location");
@@ -937,6 +947,7 @@ public class GUI extends Application
         tbProdName.setCellValueFactory(new PropertyValueFactory<Product, String>("productName"));
         tbProdQuantity.setCellValueFactory(new PropertyValueFactory<Product, Integer>("quantity"));
         tbProdPrice.setCellValueFactory(new PropertyValueFactory<Product, Double>("price"));
+        tbProdCost.setCellValueFactory(new PropertyValueFactory<Product, Double>("cost"));
         tbProdDesc.setCellValueFactory(new PropertyValueFactory<Product, String>("foodDescription"));
         tbProdCategory.setCellValueFactory(new PropertyValueFactory<Product, String>("category"));
         tbProdLocation.setCellValueFactory(new PropertyValueFactory<Product, String>("location"));
@@ -964,7 +975,7 @@ public class GUI extends Application
          tbExpRemainBalance.setCellValueFactory(new PropertyValueFactory<Expense, Double>("remainingBalance"));
         tbExpDate.setCellValueFactory(new PropertyValueFactory<Expense, String>("date"));
         tbExpStatus.setCellValueFactory(new PropertyValueFactory<Expense, String>("status"));
-         tbExpStore.setCellValueFactory(new PropertyValueFactory<Expense, String>("payableStore"));
+         tbExpStore.setCellValueFactory(new PropertyValueFactory<Expense, String>("store"));
         
         //Store Table       
         TableColumn tbStoreID = new TableColumn("ID");
@@ -1234,7 +1245,7 @@ public class GUI extends Application
             
         });
         
-            prodTable.getColumns().addAll(tbProdName, tbProdQuantity, tbProdPrice, tbProdDesc, tbProdCategory, tbProdLocation, tbProdSupplier);        
+            prodTable.getColumns().addAll(tbProdName, tbProdQuantity, tbProdPrice,tbProdCost, tbProdDesc, tbProdCategory, tbProdLocation, tbProdSupplier);        
             menuAdmin.getMenus().get(1).getItems().get(1).setOnAction(e -> {
             // Inventory Management
             
@@ -1731,7 +1742,7 @@ public class GUI extends Application
             fifthPane.add(lblProdDesc, 0, 5); 
             fifthPane.add(txtProdDesc, 0, 6); 
             fifthPane.add(lblSubTotal, 1, 9); 
-            fifthPane.add(btnCalcProdSubTotal, 0, 11);
+            fifthPane.add(btnCalcProdSubTotal, 0, 12);
             fifthPane.add(txtSubTotal, 1, 10); 
             fifthPane.add(lblUnitPrice, 1, 7); //how much thrify sells the product for 
             fifthPane.add(txtUnitPrice, 1, 8); 
@@ -1750,7 +1761,7 @@ public class GUI extends Application
             fifthPane.add(cmboStore, 2, 4); //when picking which store the product is for, should be selected from already existing stores created 
             txtSubTotal.setEditable(false);
 
-            fifthPane.add(btnCompleteOrder, 0, 10);
+            fifthPane.add(btnCompleteOrder, 0, 11);
         }); 
         
         btnCalcProdSubTotal.setOnAction(e -> {
@@ -2231,12 +2242,18 @@ public class GUI extends Application
              int prodQ;
              int totalQuantity;
         
-             if(cmboProdOrder2.getValue() == null){
+             if(cmboProdOrder2.getValue() == null)
+             {
                 alert.setTitle("Error!");
                 alert.setHeaderText("Please select a product order to Recieve!");
                 alert.showAndWait();
-            }
-             else {
+             }
+             else 
+             {
+                 
+                obsRecOrder.add(poC);
+                expList.add(new Expense("Inventory Purchase", poC.getProdOName() + ", " + poC.getStore(), 0, poC.getSubtotal(),currentDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")), poC.getStoreLoc()));
+                obsExpense.add(expList.get(expList.size()-1));
                 for (int j = 0; j < prodList.size(); j++) 
                 {
                       if(poC.getProdOName().equalsIgnoreCase(prodList.get(j).getProductName()) && poC.getSupplier().equalsIgnoreCase(prodList.get(j).getSupplier())
@@ -2255,16 +2272,21 @@ public class GUI extends Application
                       }
                       else if(j == prodList.size()-1 && poC.getProdOName().equalsIgnoreCase(prodList.get(j).getProductName())== false) 
                       {
-                        prodList.add(new Product(poC.getProdOName(), poC.getUnitCost(), poC.getQuantity(), poC.getStoreLoc(), poC.getPODesc(), poC.getCategory(),
+                        prodList.add(new Product(poC.getProdOName(), poC.getUnitCost(), poC.getUnitPrice(), poC.getQuantity(), poC.getStoreLoc(), poC.getPODesc(), poC.getCategory(),
                         poC.getAssociatedSupplier())); 
-                        prodOrderList.remove(j); 
-                        cmboProdOrder.getItems().remove(j);
+                        prodOrderList.remove(prodORemove);
+                        cmboProdOrder.getItems().remove(prodORemove);
                       }
                 }
                 prodData.clear();
                 for(Product prod: prodList)
                 {
                     prodData.add(prod);
+                }
+                expData.clear();
+                for(Expense exp: expList)
+                {
+                    expData.add(exp);
                 }
                 alert.setTitle("Success!");
                 alert.setHeaderText("The product order has been received!");
@@ -2685,10 +2707,11 @@ public class GUI extends Application
 
                 //System.out.println(obsExpense.size());
                 //expList.add(new Expense(category, description, amountPaid, totalAmount, date));
-                obsExpense.add (new Expense((String) expCategory.get(cmboExpCategory.getSelectionModel().getSelectedIndex()),
+                expList.add(new Expense((String) expCategory.get(cmboExpCategory.getSelectionModel().getSelectedIndex()),
                     txtExpDesc.getText(), Double.parseDouble(txtAmount.getText()), Double.parseDouble(txtTtlAmount.getText()),
                     expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")), (Store) obsExpStore.get(cmboExpStore.getSelectionModel().getSelectedIndex())));
-                expList.add(obsExpense.get(obsExpense.size()-1));
+                obsExpense.add(expList.get(expList.size()-1));
+                
                 expStoreVar = cmboExpStore.getSelectionModel().getSelectedIndex();
                 
                 
@@ -2758,14 +2781,7 @@ public class GUI extends Application
                 txtTtlAmount.setText(String.valueOf(exC.getTotalAmount()));                
             
 
-                expCategoryList.add("Store Mortgage");
-                expCategoryList.add("Utilities");
-                expCategoryList.add("Lawn Care");
-                expCategoryList.add("System Maintenance");
-                expCategoryList.add("Payroll");
-                expCategoryList.add("Inventory Purchase");
-                expStatusList.add("Paid");
-                expStatusList.add("Ongoing");
+                
 
                 expVar = cmboExpense.getSelectionModel().getSelectedIndex();
 
@@ -2845,6 +2861,7 @@ public class GUI extends Application
                     if (expList.get(i).getStatus().equalsIgnoreCase("ONGOING")) 
                     {
                         obsUnpaidExp.add(expList.get(i));
+                        unpaidExp.add(expList.get(i).getExpenseID() + ": " + expList.get(i).getDescription() + ", " + expList.get(i).getRemainingBalance());
                     }
                 }
             System.out.println(expList.size() + " wap");
@@ -2861,7 +2878,7 @@ public class GUI extends Application
             eighthPane.add(txtDisplayExpAmount, 0, 7);
             eighthPane.add(btnConfirmPayExp, 0, 8);
             txtExpCurrentAmount.setEditable(true);
-            txtDisplayExpAmount.setEditable(true);
+            txtDisplayExpAmount.setEditable(false);
             eighthStage.show();
 
             System.out.println(unpaidExpVar + " / " + obsUnpaidExp.size());
@@ -2880,11 +2897,13 @@ public class GUI extends Application
             {
             unpaidExpVar = cmboUnpaidExp.getSelectionModel().getSelectedIndex();
             txtExpCurrentAmount.setText(String.valueOf(obsUnpaidExp.get(unpaidExpVar).getAmountPaid()));
+            txtDisplayExpAmount.setText(String.valueOf(obsUnpaidExp.get(unpaidExpVar).getRemainingBalance()));
             }
         });
         btnConfirmPayExp.setOnAction(e -> {
 
             obsUnpaidExp.get(unpaidExpVar).payExpense(Double.valueOf(txtChoosePayment.getText()));
+            obsUnpaidExp.get(unpaidExpVar).setDateLP(currentDate);
             txtDisplayExpAmount.setText(String.valueOf(obsUnpaidExp.get(unpaidExpVar).getRemainingBalance()));
 
             if (obsUnpaidExp.get(unpaidExpVar).getAmountPaid() > obsUnpaidExp.get(unpaidExpVar).getTotalAmount()) 
@@ -2905,26 +2924,20 @@ public class GUI extends Application
             {
                 alert.setTitle("Success!");
                 alert.setHeaderText("Your payment has been recorded!");
-                alert.showAndWait();
-                txtExpDesc.clear();
-                txtAmount.clear();
-                cmboExpCategory.getSelectionModel().clearSelection();
-                cmboStatus.getSelectionModel().clearSelection();
-                expDate.getEditor().clear();
-                eighthStage.close();
+                alert.showAndWait(); 
             }
             if (obsUnpaidExp.get(unpaidExpVar).getRemainingBalance() == 0) 
             {
                 alert.setTitle("Success!");
                 alert.setHeaderText("You have fully paid this expense!");
                 alert.showAndWait();
-                txtExpDesc.clear();
-                txtAmount.clear();
-                cmboExpCategory.getSelectionModel().clearSelection();
-                cmboStatus.getSelectionModel().clearSelection();
-                expDate.getEditor().clear();
-                eighthStage.close();
             }
+            txtExpDesc.clear();
+            txtAmount.clear();
+            cmboExpCategory.getSelectionModel().clearSelection();
+            cmboStatus.getSelectionModel().clearSelection();
+            expDate.getEditor().clear();
+            eighthStage.close();
 
         });
 
@@ -2962,6 +2975,7 @@ public class GUI extends Application
                 expVar = cmboExpense.getSelectionModel().getSelectedIndex();
                 obsExpense.remove(obsExpense.get(expVar));
                 expList.remove(expList.get(expVar));
+                cmboExpense.getItems().remove(expVar);
 
                 alert.setTitle("Success!");
                 alert.setHeaderText("Expense has been Removed!");
