@@ -46,7 +46,7 @@ public class ProductOrder {
         this.prodName = prodName;
         this.supplier = supplier; 
         this.storeLoc = storeLoc; 
-        this.store = storeLoc.getName(); 
+        this.store = storeLoc.getStoreName(); 
         this.supp = supp; 
         this.supplier = supp.getName(); 
         this.category = category; 
@@ -130,10 +130,10 @@ public class ProductOrder {
         return this.storeLoc; 
     }
     public void setStore(String store) {
-        this.store = storeLoc.getName(); 
+        this.store = storeLoc.getStoreName(); 
     }
     public String getStore() {
-        return this.storeLoc.getName(); 
+        return this.storeLoc.getStoreName(); 
     }
     public void setSupp(Supplier supp) {
         this.supp = supp; 
