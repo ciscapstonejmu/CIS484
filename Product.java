@@ -244,6 +244,10 @@ public class Product implements Serializable{
     {
         return this.quantity;
     }
+    public void addQuantity(int quantity)
+    {
+        this.quantity += quantity;
+    }
     
     public void setPrice(double price)
     {
