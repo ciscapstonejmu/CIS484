@@ -2749,8 +2749,7 @@ public class GUI extends Application
 
                 obsExpense.get(expVar).setDescription(txtExpDesc.getText());
                 obsExpense.get(expVar).setCategory(expCategoryList.get(cmboExpCategory.getSelectionModel().getSelectedIndex()));
-                obsExpense.get(expVar).setAmountPaid(Double.parseDouble(txtAmount.getText()));
-                obsExpense.get(expVar).setStatus(expStatusList.get(cmboStatus.getSelectionModel().getSelectedIndex()));
+                obsExpense.get(expVar).setAmountPaid(Double.parseDouble(txtAmount.getText()));                
                 obsExpense.get(expVar).setDate(expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")));
                         alert.setTitle("Success");
                         alert.setHeaderText("This expense has been edited!");
