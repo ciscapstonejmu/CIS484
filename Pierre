@@ -360,7 +360,9 @@ public class GUI extends Application
 
     Label lblRemoveStore = new Label("Select a Store to Remove");
     Button btnConfirmRemoveStore = new Button("Remove Store");
-
+    
+    Label lblAddStore = new Label("Add Store");
+    Label lblEditStore = new Label("Edit Store");
     //Label lblChooseExp = new Label("Choose and expense to edit:");
     //Button editExp = new Button("Edit Expense");
     /*
@@ -853,6 +855,8 @@ public class GUI extends Application
         lblEditEmp.setStyle("-fx-font: bold 14pt \"bookman\";");
         lblESupplier.setStyle("-fx-font: bold 14pt \"bookman\";");
         lblHandleImage.setStyle("-fx-font: bold 14pt \"bookman\";");
+        lblAddStore.setStyle("-fx-font: bold 14pt \"bookman\";");
+        lblEditStore.setStyle("-fx-font: bold 14pt \"bookman\";");
         
         GridPane secondPane = new GridPane();
         
@@ -3247,8 +3251,12 @@ public class GUI extends Application
         });
 
            btnAddStore.setOnAction(e -> {
-
+            txtStoreName.clear();
+            txtStoreAddress.clear();
+               
             tenthPane.getChildren().clear();
+            
+            tenthPane.add(lblAddStore, 0, 0);
             tenthPane.add(lblStoreName, 0, 1);
             tenthPane.add(txtStoreName, 0, 2);
             tenthPane.add(lblStoreAddress, 1, 1);
@@ -3309,6 +3317,7 @@ public class GUI extends Application
             else
             {
                 tenthPane.getChildren().clear();
+                tenthPane.add(lblEditStore, 0, 0);
                 tenthPane.add(lblStoreName, 0, 1);
                 tenthPane.add(txtStoreName, 0, 2);
                 tenthPane.add(lblStoreAddress, 1, 1);
@@ -3355,6 +3364,8 @@ public class GUI extends Application
             alert.setTitle("Success!");
             alert.setHeaderText("The store has been edited!");
             alert.showAndWait();
+            txtStoreName.clear();
+            txtStoreAddress.clear();
             tenthStage.close();
             }
         });
