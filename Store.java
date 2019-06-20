@@ -133,7 +133,7 @@ public class Store implements Serializable{
     public String toString()
     {
         String str = "";
-        str += "ID: " + this.storeID + " , Name: " + this.storeName + " , Address: " + this.storeAddress;
+        str += "ID: " + this.storeID + ", Name: " + this.storeName + ", Address: " + this.storeAddress;
         return str;
     }
            
