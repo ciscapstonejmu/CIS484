@@ -3307,6 +3307,7 @@ public class GUI3 extends Application
         menuAdmin.getMenus().get(1).getItems().get(4).setOnAction(e -> {
             // Discount Management
             discountPane.getChildren().clear();
+            txtCDiscount.setText(String.valueOf(CustSale.getDiscPct()));
             discountStage.setTitle("Set Member Discount");
             discountStage.show();
             txtSetDiscount.clear();
@@ -3319,14 +3320,14 @@ public class GUI3 extends Application
             discountPane.add(txtSetDiscount, 1, 2);
             discountPane.add(btnSetDiscount, 1, 3);
 
-            //txtCDiscount.setText(String.valueOf(CustSale.getDiscPct()));
+            
             txtCDiscount.setEditable(false);
 
         });
         
         btnSetDiscount.setOnAction(e -> {
 
-            //CustSale.setDiscPct(Double.valueOf(txtSetDiscount.getText()));
+            CustSale.setDiscPct(Double.valueOf(txtSetDiscount.getText()));
 
             alert.setTitle("Success!");
             alert.setHeaderText("Discount Updated!");
