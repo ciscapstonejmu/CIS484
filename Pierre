@@ -4547,7 +4547,53 @@ for (int i = 0; i< suppList.size(); i++)
                     "' , '" + emp.getPassword() + emp.getStore().getStoreID() + "' )";
             emplQuery = "INSERT INTO EMPLOYEE (EMPLOYEEID, EMPLOYFNAME, EMPLOYLNAME, EMPLOYEMAIL, EMPLOYPHONENUMBER, EMPLOYADDRESS, EMPLOYHOURLY, EMPLOYJOBTITLE, EMPLOYTIMEWORKED, EMPLOYTYPE, EMPLOYCATEGORY, EMPLOYUSERNAME, EMPLOYPASSWORD, STOREID) VALUES" + emplData;
          }
+        
+        for (int i = 0; i < memList.size(); i++)
+        {
+            String membData = " ";
+            String membQuery = " ";
 
+            membData = " ('" + memList.get(i).getID() + "' , '" + memList.get(i).getFName() + "' , '" + memList.get(i).getLName() + "' , '" + memList.get(i).getPhone() + 
+                    "' , '" + memList.get(i).getEmail() + " ')";
+            membQuery = "INSERT INTO MEMBER (MEMBERID, FNAME, LNAME, PHONENUMBER, EMAIL) VALUES" + membData;
+            DBCommand(membQuery);
+
+        }
+
+        for (int i = 0; i < prodList.size(); i++)
+        {
+            String prodtData = " ";
+            String prodtQuery = " ";
+
+            prodtData = " ('" + prodList.get(i).getProductID() + "' , '" + prodList.get(i).getProductName() + "' , '" + prodList.get(i).getQuantity() + "' , '" + prodList.get(i).getPrice() +
+                    "' , '" + prodList.get(i).getStore().getStoreName() + "' , '" + prodList.get(i).getFoodDescription() + "' , '" + prodList.get(i).getCategory() + "' , '" + prodList.get(i).getStore().getStoreID() +
+                    "' , '" + prodList.get(i).getSupp().getID() + "' )";
+            prodtQuery = "INSERT INTO PRODUCT (PRODUCTID, NAME, QUANTITY, PRICE, STORE, DESCRIPTION, CATEGORY, STOREID, SUPPLIERID) VALUES" + prodtData;
+            DBCommand(prodtQuery);
+        }
+
+        for (int i = 0; i < prodOrderList.size(); i++)
+        {
+            String prodOrdData = " ";
+            String prodOrdQuery = " ";
+
+            prodOrdData = " ('" + prodOrderList.get(i).getID() + "' , '" + prodOrderList.get(i).getQuantity() + "' , '" + prodOrderList.get(i).getProdOName() + "' , '" + prodOrderList.get(i).getUnitCost() + "' , '" + prodOrderList.get(i).getSubtotal() +
+                    "' , '" + prodOrderList.get(i).getDeliveryDate() + "' , '" + prodOrderList.get(i).getDate() + "' , '" + prodOrderList.get(i).getCategory() + "' , '" + prodOrderList.get(i).getStoreLoc().getStoreID() + "' , '" + prodOrderList.get(i).getAssociatedSupplier().getID() + "' )";
+            prodOrdQuery = "INSERT INTO PRODUCTORDER (PRODUCTORDERID, QUANTITY, NAME, UNITCOST, SUBTOTAL, DELIVERYDATE, PODATE, SUPPLIER, CATEGORY, STOREID, SUPPLIERID) VALUES" + prodOrdData;
+            DBCommand(prodOrdQuery);
+        }
+
+
+        for (Employee emp: empList) {
+            String emplData = " ";
+            String emplQuery = " ";
+
+            emplData = " ('" + emp.getEmployeeID() + "' , '" + emp.getFirstName() + "' , '" + emp.getLastName() + "' , '" + emp.getEmail() + "' , '" +
+                    emp.getPhoneNumber() + "' , '" + emp.getAddress() + "' , '" + emp.getHourly() + "' , '" + emp.getJobTitle() +
+                    "' , '" + emp.getTimeWorked() + emp.getEmployeeType() + "' , '" + emp.getEmployeeCategory() + "' , '" + emp.getUsername() +
+                    "' , '" + emp.getPassword() + emp.getStore().getStoreID() + "' )";
+            emplQuery = "INSERT INTO EMPLOYEE (EMPLOYEEID, EMPLOYFNAME, EMPLOYLNAME, EMPLOYEMAIL, EMPLOYPHONENUMBER, EMPLOYADDRESS, EMPLOYHOURLY, EMPLOYJOBTITLE, EMPLOYTIMEWORKED, EMPLOYTYPE, EMPLOYCATEGORY, EMPLOYUSERNAME, EMPLOYPASSWORD, STOREID) VALUES" + emplData;
+         }
 
     }
 
