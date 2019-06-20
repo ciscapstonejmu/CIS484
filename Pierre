@@ -1949,7 +1949,24 @@ public class GUI extends Application
             cmboCategory.setEditable(true);
             thirdPane.add(addProd, 0, 16);
         });
-        
+        addProd.setOnAction(e -> {
+            //product added clicked
+            if(txtProdName.getText().trim().length() == 0 || txtProdDesc.getText().trim().length() == 0 ||
+                    cmboCategory.getValue() == null || txtUnitPrice.getText().trim().length() == 0 || txtUnitCost.getText().trim().length() == 0|| 
+                    txtProdQuantity.getText().trim().length() == 0 || cmboSupp.getValue() == null ||
+                    cmboStore.getValue() == null)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Enter Data!");
+                alert.showAndWait();
+            }
+            else
+            {
+                int storeLocation = cmboStore.getSelectionModel().getSelectedIndex(); 
+                String storeLocation2 = Integer.toString(storeLocation); 
+                int productCategory = cmboCategory.getSelectionModel().getSelectedIndex();  
+
+    //           int suppLoc = cmboSupp.getSelectionModel().getSelectedIndex();
         if(prodList.size()>0){
             for(int i = 0; i<prodList.size(); i++)
             {
