@@ -4176,6 +4176,10 @@ public class GUI extends Application
                        // System.out.println(totalMoney + " given " + catSales.get(i) + " for" + categoryList.get(i));
                         catMoney.add(totalMoney);
                         totalMoney = 0;
+                    }
+            }
+            }
+                    }); 
        btnPOSDisplay.setOnAction(e -> {
            
             currentDate = LocalDate.now();
