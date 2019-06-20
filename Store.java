@@ -81,7 +81,7 @@ public class Store implements Serializable{
         }
         return str;
     }
-    public double calculateProfit(String month)
+    public double calculateMonthProfit(String month)
     {
     String DateRn = LocalDate.now().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")).substring(0, 2);
     this.cost = 0.0;
@@ -99,6 +99,30 @@ public class Store implements Serializable{
     for(int i = 0; i<this.associatedRevenue.size(); i++)
     {    
      if(this.associatedRevenue.get(i).getSaleDate().substring(0, 2).equalsIgnoreCase(DateRn))
+        {
+          this.revenue += this.associatedRevenue.get(i).getSubtotal();
+        }        
+    }
+    return revenue-cost; 
+    }
+    public double calculateYearProfit(String year)
+    {
+    String DateRn = LocalDate.now().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")).substring(6);
+    this.cost = 0.0;
+    this.revenue = 0.0;
+    for(int i = 0; i<this.associatedExpenses.size(); i++){
+        for(int k = 0; k<this.associatedExpenses.get(i).datesPaid.size(); k++)
+        {
+           if(this.associatedExpenses.get(i).datesPaid.get(k).substring(6).equalsIgnoreCase(DateRn))
+           {
+            this.cost += this.associatedExpenses.get(i).pmtsMade.get(k);
+           } 
+        }
+        
+    }
+    for(int i = 0; i<this.associatedRevenue.size(); i++)
+    {    
+     if(this.associatedRevenue.get(i).getSaleDate().substring(6).equalsIgnoreCase(DateRn))
         {
           this.revenue += this.associatedRevenue.get(i).getSubtotal();
         }        
