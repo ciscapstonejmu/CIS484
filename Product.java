@@ -297,9 +297,8 @@ public class Product implements Serializable{
     public String toStringSale()
     {
         String str = "";
-        str += "ID: " + this.productID + " , Name: " + this.productName +  
-                " , Price: " + formatter.format(this.price) + " , Description: " + this.foodDescription 
-                + " , Category: " + this.category;
+        str += "ID: " + this.productID + " " + this.productName +  
+                " , Price: " + formatter.format(this.price);
         return str;
     }
 }
