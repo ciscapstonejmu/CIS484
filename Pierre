@@ -4063,6 +4063,232 @@ public class GUI extends Application
                        // System.out.println(totalMoney + " given " + catSales.get(i) + " for" + categoryList.get(i));
                         catMoney.add(totalMoney);
                         totalMoney = 0;
+        btnPOSDisplay.setOnAction(e -> {
+           
+            currentDate = LocalDate.now();
+            firstDay = currentDate.with(WeekFields.of(Locale.US).dayOfWeek(),1);
+            firstMonth = currentDate.with(TemporalAdjusters.firstDayOfMonth());
+            firstYear = currentDate.with(TemporalAdjusters.firstDayOfYear());
+            String currentCat = "";
+            
+            
+            monthNames.add("January");
+            monthNames.add("February");
+            monthNames.add("March");
+            monthNames.add("April");
+            monthNames.add("May");
+            monthNames.add("June");
+            monthNames.add("July");
+            monthNames.add("August");
+            monthNames.add("September");
+            monthNames.add("October");
+            monthNames.add("November");
+            monthNames.add("December");
+            
+            reportSales.clear();
+            catSales.clear();
+            catMoney.clear();
+            for(int i =0; i<categoryList.size(); i++)
+                {
+                    catSales.add(0);
+                } 
+            //Create Array for Week-Daily
+           
+            if(cmboType.getValue() == null || cmboStore.getValue() == null)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Error! Please Enter Data!");
+                alert.showAndWait();
+            }
+            else if (saleList.isEmpty())
+            {
+                        String output = "";
+                        output += "Point of Sales Report:";
+                        output += "\n========================================================\n";
+                        output += "No Sales For This Time Period";
+                        txtPOS.setText(output);
+
+            }
+            else
+            {
+            
+            String output = "";
+           
+            output += "Point of Sales Report:";
+            output += "\n========================================================\n";
+            int type = 0;
+            type = cmboType.getSelectionModel().getSelectedIndex();
+            int storeloc = 0;
+            String saleStore = "";
+            String storeName = "";
+            storeloc = cmboStore.getSelectionModel().getSelectedIndex();
+            storeName = storeList.get(storeloc).getStoreName();
+            int totalSales = 0;
+            double totalMoney = 0.0;
+            
+            System.out.println(saleList.get(0).getStoreName() + " vs " + storeName);
+
+            if(type == 0)
+            {
+                output += "Week Daily Total Sales\n";
+                output += "Store: " + cmboStore.getValue().toString();
+                output += "\n------------------------------------------------------\n";             
+            
+            for(int b = 0; b<7; b++)
+            {
+                endDate = firstDay.plusDays(1);
+                
+                for(int i = 0; i<saleList.size(); i++)
+                {
+                    productDate = LocalDate.parse(saleList.get(i).getSaleDate(), DateTimeFormatter.ofPattern("MM-dd-yyyy"));
+                    saleStore = saleList.get(i).getStoreName();
+                    
+                    if( productDate.isBefore(endDate)&& productDate.isEqual(firstDay)&& saleStore.equals(storeName))
+                    {   //yyyy-mm-dd
+                         reportSales.add(saleList.get(i));
+                         totalSales += 1;
+                         totalMoney += saleList.get(i).getSubtotal();
+                    }  
+                }
+                output +=( "Total Number of Sales on " + firstDay.format(DateTimeFormatter.ISO_DATE) + ": " + totalSales + " for a total revenue of $" + totalMoney + "\n");
+                firstDay = endDate;
+                totalSales = 0;
+                totalMoney = 0;
+            }
+                totalMoney = 0;                
+                output += "\n------------------------------------------------------\n";
+                output += "Product Categories Sold\n";
+                for(int i = 0; i < categoryList.size(); i++)
+                    {                        
+                        for(int k = 0; k<reportSales.size(); k++)
+                        {
+                           for(int m = 0; m<reportSales.get(k).saleProducts.size(); m++)
+                           {
+                              currentCat = reportSales.get(k).saleProducts.get(m).getCategory();
+                              if(currentCat.equalsIgnoreCase(categoryList.get(i)))
+                              {
+                               totalMoney += reportSales.get(k).saleProducts.get(m).getPrice();
+                               int temp = catSales.get(i);
+                               temp += 1;
+                               catSales.remove(i);
+                               catSales.add(i, temp);
+                              }
+                           }                       
+                        }
+                        catMoney.add(totalMoney);
+                        totalMoney = 0;
+                        output += categoryList.get(i) + ": " + catSales.get(i) + ", Sales: " + catMoney.get(i) + "\n";
+                    }
+            }   
+            else if (type == 1)
+            {
+                output += "Month Weekly Total Sales\n";
+                output += "Store: " + cmboStore.getValue().toString();
+                output += "\n------------------------------------------------------\n";
+                for(int b = 0; b<6; b++)
+                {
+                    endDate = firstMonth.plusWeeks(1);
+                    for(int i = 0; i<saleList.size(); i++)
+                    {
+                        productDate = LocalDate.parse(saleList.get(i).getSaleDate(), DateTimeFormatter.ofPattern("MM-dd-yyyy"));
+                        saleStore = saleList.get(i).getStoreName();
+
+                        if( productDate.isBefore(endDate)&& (productDate.isAfter(firstMonth)|| productDate.isEqual(firstMonth))&& saleStore.equals(storeName))
+                        {   //yyyy-mm-dd
+                             reportSales.add(saleList.get(i));
+                             totalSales++;
+                             totalMoney += saleList.get(i).getSubtotal();
+                        }  
+                    }
+                    output +=( "Total Number of Sales for " + firstMonth.format(DateTimeFormatter.ISO_DATE) + " is: " + totalSales + " for a total revenue of $" + totalMoney + "\n");
+                    firstMonth = endDate;
+                    totalSales = 0;
+                    totalMoney = 0;
+                    if(firstMonth.getMonthValue()!= currentDate.getMonthValue())
+                    {
+                        break;
+                    }
+                }
+                totalMoney = 0;
+                output += "\n------------------------------------------------------\n";
+                output += "Product Categories Sold\n";
+                for(int i = 0; i < categoryList.size(); i++)
+                    {                        
+                        for(int k = 0; k<reportSales.size(); k++)
+                        {
+                           for(int m = 0; m<reportSales.get(k).saleProducts.size(); m++)
+                           {
+                              currentCat = reportSales.get(k).saleProducts.get(m).getCategory();
+                              if(currentCat.equalsIgnoreCase(categoryList.get(i)))
+                              {
+                               totalMoney += reportSales.get(k).saleProducts.get(m).getPrice();
+                               int temp = catSales.get(i);
+                               temp += 1;
+                               catSales.remove(i);
+                               catSales.add(i, temp);
+                              }
+                           }                       
+                        }
+                        catMoney.add(totalMoney);
+                        totalMoney = 0;
+                        output += categoryList.get(i) + ": " + catSales.get(i) + ", Sales: " + catMoney.get(i) + "\n";
+                    }
+            }  
+            else if (type == 2)
+            {
+                output += "Year Monthly Total Sales\n";
+                output += "Store: " + cmboStore.getValue().toString();
+                output += "\n------------------------------------------------------\n";                
+                for(int i =0; i<categoryList.size(); i++)
+                {
+                    catSales.add(0);
+                }  
+                for(int b = 0; b<12; b++)
+                {
+                    endDate = firstYear.plusMonths(1);
+                    
+                    for(int i = 0; i<saleList.size(); i++)
+                    {
+                        productDate = LocalDate.parse(saleList.get(i).getSaleDate(), DateTimeFormatter.ofPattern("MM-dd-yyyy"));
+                        saleStore = saleList.get(i).getStoreName();
+
+                        if( productDate.isBefore(endDate)&& (productDate.isAfter(firstYear)|| productDate.isEqual(firstYear)) && saleStore.equals(storeName))
+                        {   //yyyy-mm-dd
+                             reportSales.add(saleList.get(i));
+                             totalSales++;
+                             totalMoney += saleList.get(i).getSubtotal();
+                        }  
+                    }
+                    output += ("Total Number of Sales for the month of: " + monthNames.get(b) + ": " + totalSales + " for a total revenue of $" + totalMoney + "\n");
+                    firstYear = endDate;
+                    totalSales = 0;
+                    totalMoney = 0;
+                    
+                }
+                totalMoney = 0;
+                output += "\n------------------------------------------------------\n";
+                output += "Product Categories Sold\n";
+                for(int i = 0; i < categoryList.size(); i++)
+                    {                        
+                        for(int k = 0; k<reportSales.size(); k++)
+                        {
+                           for(int m = 0; m<reportSales.get(k).saleProducts.size(); m++)
+                           {
+                              currentCat = reportSales.get(k).saleProducts.get(m).getCategory();
+                              if(currentCat.equalsIgnoreCase(categoryList.get(i)))
+                              {
+                               totalMoney += reportSales.get(k).saleProducts.get(m).getPrice();
+                               int temp = catSales.get(i);
+                               temp += 1;
+                               catSales.remove(i);
+                               catSales.add(i, temp);
+                              }
+
+                           }                       
+                        }
+                       // System.out.println(totalMoney + " given " + catSales.get(i) + " for" + categoryList.get(i));
+                        catMoney.add(totalMoney);
+                        totalMoney = 0;
                         output += categoryList.get(i) + ": " + catSales.get(i) + ", Sales: " + catMoney.get(i) + "\n";
                     }
             }
@@ -4113,9 +4339,12 @@ public class GUI extends Application
                         output += categoryList.get(i) + ": " + catSales.get(i) + ", Sales: " + catMoney.get(i) + "\n";
                     }                    
             }
+
             //create loop or whatever to print out PvE based on store
             txtPOS.setText(output);
-
+            alert.setTitle("Success!");
+            alert.setHeaderText("Data Displayed!");
+            alert.showAndWait();
             
             cmboType.getSelectionModel().clearSelection();
             cmboStore.getSelectionModel().clearSelection();
