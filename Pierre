@@ -42,7 +42,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 
-public class GUI extends Application 
+public class GUI3 extends Application 
 {
     // Sign In Menu
     Label lblThrifty = new Label("Thrifty");
@@ -1747,7 +1747,7 @@ public class GUI extends Application
             orderDate.getEditor().clear();
             calendar.getEditor().clear();
             txtProdQuantity.clear();
-            txtSubTotal.clear();
+            txtSubTotal.clear(); 
             cmboSupp.getSelectionModel().clearSelection();
             cmboStore.getSelectionModel().clearSelection();
             
@@ -1917,8 +1917,8 @@ public class GUI extends Application
             thirdPane.add(txtUnitPrice, 0, 6);
             thirdPane.add(lblUnitCost, 1, 5); //how much thrifty bought item for 
             thirdPane.add(txtUnitCost, 1, 6); 
-            thirdPane.add(lblQuantity, 1, 3);
-            thirdPane.add(txtProdQuantity, 1, 4);
+            thirdPane.add(lblQuantity, 1, 1);
+            thirdPane.add(txtProdQuantity, 1, 2);
             thirdPane.add(lblSupplier, 0, 7); 
             thirdPane.add(cmboSupp, 0, 8); 
             thirdPane.add(lblImage, 0, 9);
