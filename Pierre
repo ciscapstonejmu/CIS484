@@ -4176,7 +4176,7 @@ public class GUI extends Application
                        // System.out.println(totalMoney + " given " + catSales.get(i) + " for" + categoryList.get(i));
                         catMoney.add(totalMoney);
                         totalMoney = 0;
-        btnPOSDisplay.setOnAction(e -> {
+       btnPOSDisplay.setOnAction(e -> {
            
             currentDate = LocalDate.now();
             firstDay = currentDate.with(WeekFields.of(Locale.US).dayOfWeek(),1);
@@ -4671,7 +4671,7 @@ public class GUI extends Application
             tabPText.setContent(txtPvE);
         });
         
-        btnPvEDisplay.setOnAction(e -> {
+ btnPvEDisplay.setOnAction(e -> { //only expenses right now, figuring out profit is the main issue
             if(cmboYear.getValue() == null)
             {
                 alert.setTitle("Error!");
@@ -4686,30 +4686,38 @@ public class GUI extends Application
             output += "Profit v. Expense Report:";
             output += "\n========================================================\n";
             output += "Year: " + cmboYear.getValue().toString();
-            output += "\n------------------------------------------------------\n";
+            output += "------------------------------------------------------\n";
             for (int i = 0; i < obsStore.size(); i++)
             {
-                output += "\n" + storeList.get(i).getName() + " : "; 
+                output += "\n";
+                output += "\n" + storeList.get(i).getStoreName() + " : ";
+                output += "\n";
+                
             for (int j = 0; j < expCategory.size(); j++)
            {
-               output +=  "\n" + expCategory.get(j) + " : ";
+               output += "\n";
+               output += expCategory.get(j) + " : ";
                for (int k = 0; k < obsExpense.size(); k++)
                {
                    if (obsExpense.get(k).getCategory().equalsIgnoreCase(expCategory.get(j)))
                    {
                        expTotal += obsExpense.get(k).getTotalAmount();
                        output += expTotal;
-                       expTotal = 0.0;
-                   }
+                       
+                   }            
+               }        
 
-               }
-               output += "\n";
            }
+//                output += "Total Expense:" + expTotal;
+//               expTotal = 0.0; incorrect
                 
                 //create loop or whatever to print out PvE based on store and year
 
 
                 txtPvE.setText(output);
+                alert.setTitle("Success!");
+                alert.setHeaderText("Data Displayed!");
+                alert.showAndWait();
 
                 tabPText.setContent(txtPvE);
 
