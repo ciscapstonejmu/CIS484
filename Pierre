@@ -184,7 +184,7 @@ public class GUI extends Application
     TextField txtProdQuantity = new TextField();
     Label lblImage = new Label("Image");
     Button btnImage = new Button("Add Image");
-    btnAddImage2 = new Button("Add Image");
+    Button btnAddImage2 = new Button("Add Image");
     ImageView myImageView = new ImageView();
     ImageView imageViewTwo = new ImageView();
     BufferedImage tempImage = null;
