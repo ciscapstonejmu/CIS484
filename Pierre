@@ -1808,6 +1808,12 @@ public class GUI3 extends Application
             }
             else
             {
+            double quantity = Integer.parseInt(txtProdQuantity.getText());
+            double cost = Double.parseDouble(txtUnitCost.getText()); 
+            double subTotal = quantity * cost; 
+            String subTotal2 = ""; 
+            subTotal2 = Double.toString(subTotal); 
+            txtSubTotal.setText(subTotal2); 
             String date = calendar.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
             String orderDate2 = orderDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
             prodOrderList.add(new ProductOrder(Integer.parseInt(txtProdQuantity.getText()), txtProdName.getText(), Double.parseDouble(txtUnitCost.getText()), Double.parseDouble(txtUnitPrice.getText()),
@@ -1817,6 +1823,7 @@ public class GUI3 extends Application
             alert.setTitle("Success!");
             alert.setHeaderText("The product order has been created!");
             alert.showAndWait();
+            
             //insert code to add product to object
 
              fifthStage.close();  
