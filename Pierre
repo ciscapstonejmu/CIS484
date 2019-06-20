@@ -2795,7 +2795,7 @@ public class GUI extends Application
             expVB.setPadding(new Insets(10, 20, 10 , 20));
            
             
-            expVB.getChildren().addAll(lblExp, lblExpMan, btnAddExp, cmboExpense, btnAddExp, btnPayExp, btnEditExp
+            expVB.getChildren().addAll(lblExp, lblExpMan, cmboExpense, btnAddExp, btnPayExp, btnEditExp
                     , btnRemExp, btnAddExpType, btnRemExpType);
             // remove expense is currently not in here
             border.setTop(menuAdmin);
@@ -3220,7 +3220,7 @@ public class GUI extends Application
             storeVB.setSpacing(10);
             storeVB.setPadding(new Insets(10, 20, 10, 20));
 
-            storeVB.getChildren().addAll(lblStoreMan, btnAddStore, cmboStore, btnAddStore, btnEditStore, btnRemoveStore);
+            storeVB.getChildren().addAll(lblStoreMan, btnAddStore, cmboStore, btnEditStore, btnRemoveStore);
             border.setTop(menuAdmin);
             border.setLeft(storeVB);
             border.setCenter(storeTable);
