@@ -1,96 +1,96 @@
 Create Table Store
 (storeID Integer Primary Key,
-StoreName VarChar(25),
-StoreAddress VarChar(25));
+StoreName VarChar(300),
+StoreAddress VarChar(300));
 
 Create Table Supplier
 (supplierID Integer Primary Key,
-SupplierName VarChar(25),
-SupplierPhone VarChar(25),
-SupplierEmail VarChar(25),
-SupplierAddress VarChar(25),
-ContactName VarChar(25),
-ContactPhone VarChar(25),
-ContactEmail VarChar(25));
+SupplierName VarChar(300),
+SupplierPhone VarChar(300),
+SupplierEmail VarChar(300),
+SupplierAddress VarChar(300),
+ContactName VarChar(300),
+ContactPhone VarChar(300),
+ContactEmail VarChar(300));
 
 Create Table Customer
 (customerID Integer Primary Key,
-CustName VarChar(25),
-CustEmail VarChar(25),
-CustPhone VarChar(25),
-CustAddress VarChar(25),
-CustPayMethod VarChar(25));
+CustName VarChar(300),
+CustEmail VarChar(300),
+CustPhone VarChar(300),
+CustAddress VarChar(300),
+CustPayMethod VarChar(300));
 
 
 Create Table Employee
 (employeeID Integer Primary Key,
-EmployFName VarChar(25),
-EmployLName VarChar(25),
-EmployEmail VarChar(25),
-EmployPhoneNumber VarChar(25),
-EmployAddress VarChar(25),
-EmployHourly VarChar(25),
-EmployJobTitle VarChar(25), 
-EmployTimeWorked VarChar(25),
-EmployType VarChar(25),
-EmployCategory VarChar(25),
-EmployUserName VarChar(25),
-EmployPassword VarChar(25),
+EmployFName VarChar(300),
+EmployLName VarChar(300),
+EmployEmail VarChar(300),
+EmployPhoneNumber VarChar(300),
+EmployAddress VarChar(300),
+EmployHourly VarChar(300),
+EmployJobTitle VarChar(300), 
+EmployTimeWorked VarChar(300),
+EmployType VarChar(300),
+EmployCategory VarChar(300),
+EmployUserName VarChar(300),
+EmployPassword VarChar(300),
 storeID Integer,
 Foreign Key (storeID) REFERENCES Store);
 
 Create Table Expense
 (expenseID Integer Primary Key,
-Category VarChar(25),
-Description VarChar(25),
-Status VarChar(25),
-AmountPaid VarChar(25),
-TotalAmount VarChar(25),
-RemainingBalance VarChar(25),
-expDate VarChar(25),
+Category VarChar(300),
+Description VarChar(300),
+Status VarChar(300),
+AmountPaid VarChar(300),
+TotalAmount VarChar(300),
+RemainingBalance VarChar(300),
+expDate VarChar(300),
 storeID Integer,
 Foreign Key (storeID) REFERENCES Store);
 
 
 Create Table Member
 (memberID Integer Primary Key,
-FName VarChar(25),
-LName VarChar(25),
-PhoneNumber VarChar(25),
-Email VarChar(25));
+FName VarChar(300),
+LName VarChar(300),
+PhoneNumber VarChar(300),
+Email VarChar(300));
 
 Create Table Payroll
 (payrollID Integer Primary Key,
-PayrollPeriod VarChar(25),
-TimeStart VarChar(25),
-TimeEnd VarChar(25),
-HoursWorked VarChar(25),
-Schedule VarChar(25),
-ScheduleDay VarChar(25),
-ArrTimeIn VarChar(25),
-ArrTimeOut VarChar(25),
-TotalWork VarChar(25),
-AmountPaid VarChar(25),
+PayrollPeriod VarChar(300),
+TimeStart VarChar(300),
+TimeEnd VarChar(300),
+HoursWorked VarChar(300),
+Schedule VarChar(300),
+ScheduleDay VarChar(300),
+ArrTimeIn VarChar(300),
+ArrTimeOut VarChar(300),
+TotalWork VarChar(300),
+AmountPaid VarChar(300),
 employeeID Integer,
 Foreign Key (employeeID) REFERENCES Employee);
 
 CREATE TABLE PRODUCT(PRODUCTID INTEGER PRIMARY KEY,
-NAME VARCHAR(25), QUANTITY VARCHAR(25), PRICE VARCHAR(25),
-COST VARCHAR(25), DESCRIPTION VARCHAR(25),
-CATEGORY VARCHAR(25), STOREID INTEGER, SUPPLIERID INTEGER,
+NAME VARCHAR(300), QUANTITY VARCHAR(300), PRICE VARCHAR(300),
+COST VARCHAR(300), DESCRIPTION VARCHAR(300),
+CATEGORY VARCHAR(300), STOREID INTEGER, SUPPLIERID INTEGER,
 FOREIGN KEY(SUPPLIERID) REFERENCES SUPPLIER,
 FOREIGN KEY(STOREID) REFERENCES STORE);
 
 
 Create Table ProductOrder
 (productOrderID Integer Primary Key,
-Quantity VarChar(25),
-Name VarChar(25),
-UnitCost VarChar(25), UnitPrice VarChar(25),
-Subtotal VarChar(25),
-DeliveryDate VarChar(25),
-poDate VarChar(25),
-Category VarChar(25),
+Quantity VarChar(300),
+Name VarChar(300),
+UnitCost VarChar(300), UnitPrice VarChar(300),
+Subtotal VarChar(300),
+DeliveryDate VarChar(300),
+poDate VarChar(300),
+Category VarChar(300),
 storeID Integer,
 supplierID Integer,
 Foreign Key (storeID) REFERENCES Store,
