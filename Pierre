@@ -2258,11 +2258,7 @@ public class GUI extends Application
         }); 
            
         btnRecShip.setOnAction(e -> {
-            int prodORemove = cmboProdOrder2.getSelectionModel().getSelectedIndex(); 
-            poC = prodOrderList.get(prodORemove);
-            int poQ = poC.getQuantity();
-            int prodQ;
-            int totalQuantity;
+            
 
             if(cmboProdOrder2.getValue() == null)
             {
@@ -2272,7 +2268,11 @@ public class GUI extends Application
             }
             else 
             {
-
+               int prodORemove = cmboProdOrder2.getSelectionModel().getSelectedIndex(); 
+               poC = prodOrderList.get(prodORemove);
+               int poQ = poC.getQuantity();
+               int prodQ;
+               int totalQuantity;
                obsRecOrder.add(poC);
                expList.add(new Expense("Inventory Purchase", poC.getProdOName() + ", " + poC.getStore(), 0, poC.getSubtotal(),currentDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")), poC.getStoreLoc()));
                obsExpense.add(expList.get(expList.size()-1));
@@ -3888,7 +3888,7 @@ public class GUI extends Application
                 
                 for(int i = 0; i<saleList.size(); i++)
                 {
-                    productDate = LocalDate.parse(saleList.get(i).getSaleDate());
+                    productDate = LocalDate.parse(saleList.get(i).getSaleDate(), DateTimeFormatter.ofPattern("MM-dd-yyyy"));
                     saleStore = saleList.get(i).getStoreName();
                     
                     if( productDate.isBefore(endDate)&& productDate.isEqual(firstDay)&& saleStore.equals(storeName))
@@ -3938,7 +3938,7 @@ public class GUI extends Application
                     endDate = firstMonth.plusWeeks(1);
                     for(int i = 0; i<saleList.size(); i++)
                     {
-                        productDate = LocalDate.parse(saleList.get(i).getSaleDate());
+                        productDate = LocalDate.parse(saleList.get(i).getSaleDate(), DateTimeFormatter.ofPattern("MM-dd-yyyy"));
                         saleStore = saleList.get(i).getStoreName();
 
                         if( productDate.isBefore(endDate)&& (productDate.isAfter(firstMonth)|| productDate.isEqual(firstMonth))&& saleStore.equals(storeName))
@@ -3997,7 +3997,7 @@ public class GUI extends Application
                     
                     for(int i = 0; i<saleList.size(); i++)
                     {
-                        productDate = LocalDate.parse(saleList.get(i).getSaleDate());
+                        productDate = LocalDate.parse(saleList.get(i).getSaleDate(), DateTimeFormatter.ofPattern("MM-dd-yyyy"));
                         saleStore = saleList.get(i).getStoreName();
 
                         if( productDate.isBefore(endDate)&& (productDate.isAfter(firstYear)|| productDate.isEqual(firstYear)) && saleStore.equals(storeName))
@@ -4042,8 +4042,7 @@ public class GUI extends Application
             }
             else if (type == 3)
             {
-                System.out.println(LocalDate.parse(saleList.get(0).getSaleDate()));
-                System.out.println(currentDate);
+                
                 output += "Total Sales Today\n";
                 output += "Store: " + cmboStore.getValue().toString();
                 output += "\n------------------------------------------------------\n";                
@@ -4051,7 +4050,7 @@ public class GUI extends Application
                 
                 for(int i = 0; i<saleList.size(); i++)
                 {
-                     productDate = LocalDate.parse(saleList.get(i).getSaleDate());
+                     productDate = LocalDate.parse(saleList.get(i).getSaleDate(), DateTimeFormatter.ofPattern("MM-dd-yyyy"));
                      saleStore = saleList.get(i).getStoreName();
                     if(productDate.isEqual(currentDate) && saleStore.equalsIgnoreCase(storeName))
                     {   //yyyy-mm-dd
