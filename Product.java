@@ -188,7 +188,10 @@ public class Product implements Serializable{
     {
         this.quantity += quantity;
     }
-    
+    public void sellQuantity(int quantity)
+    {
+        this.quantity -= quantity;
+    }
     public void setPrice(double price)
     {
         this.price = price;
