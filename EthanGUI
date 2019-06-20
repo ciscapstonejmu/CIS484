@@ -3099,6 +3099,10 @@ public class GUI extends Application
             {
                 System.out.println(storeData.get(i).toString() + " storeData");
             }
+            for (int i = 0; i < storeList.size(); i++)
+                {
+                    System.out.println(storeList.get(i).toString());
+                }
             /*for (int i = 0; i < obsStore.size(); i++)
             {
             System.out.println(obsStore.get(i).toString());
@@ -4412,15 +4416,41 @@ public class GUI extends Application
 //            DBCommand(spQuery); 
 //        }
 
-        for (Supplier supp: suppList) {
+        for (int i = 0; i< suppList.size(); i++)
+        {
            String suppData = " "; 
            String suppQuery = " "; 
 
-            suppData = " ('" + supp.getID() + "' , '" + supp.getName() + "' , '" + supp.getSupplierPhone() + "' , '" + supp.getSupplierPhone() + "' , '" +
-                    supp.getSupplierEmail() + "' , '" + supp.getSupplierAddress() + "' , '" + supp.getContactName() + "' , '" + supp.getContactPhone() + "' , '" +
-                    supp.getContactEmail() + " ' )";
+            suppData = " ('" + suppList.get(i).getID() + "' , '" + suppList.get(i).getName() + "' , '" + suppList.get(i).getSupplierPhone() + "' , '" + suppList.get(i).getSupplierPhone() + "' , '" +
+                    suppList.get(i).getSupplierEmail() + "' , '" + suppList.get(i).getSupplierAddress() + "' , '" + suppList.get(i).getContactName() + "' , '" + suppList.get(i).getContactPhone() + "' , '" +
+                    suppList.get(i).getContactEmail() + " ' )";
             suppQuery = "INSERT INTO SUPPLIER (SUPPLIERID, SUPPLIERNAME, SUPPLIERPHONE, SUPPLIEREMAIL, SUPPLIERADDRESS, CONTACTNAME, CONTACTPHONE, CONTACTEMAIL) VALUES" + suppData;
             DBCommand(suppQuery);
+        }
+        for (int i = 0; i < storeList.size(); i++) {
+            String storData = " ";
+            String storQuery = " ";
+            
+            storData = " ('" + str.getStoreID() + "' , '" + str.getStoreName() + "' , '" + str.getStoreAddress() + " ')";
+            storQuery = "INSERT INTO STORE (STOREID, STORENAME, STOREADDRESS) VALUES" + storData;
+            DBCommand(storQuery);
+        }
+        for (Employee emp: empList) {
+            String emplData = " ";
+            String emplQuery = " ";
+            
+            emplData = " ('" + emp.getEmployeeID() + "' , '" + emp.getFirstName() + "' , '" + emp.getLastName() + "' , '" + emp.getEmail() + "' , '" +
+                    emp.getPhoneNumber() + "' , '" + emp.getAddress() + "' , '" + emp.getHourly() + "' , '" + emp.getJobTitle() +
+                    "' , '" + emp.getTimeWorked() + emp.getEmployeeType() + "' , '" + emp.getEmployeeCategory() + "' , '" + emp.getUsername() +
+                    "' , '" + emp.getPassword() + emp.getStore().getStoreID() + "' )";
+            emplQuery = "INSERT INTO EMPLOYEE (EMPLOYEEID, EMPLOYFNAME, EMPLOYLNAME, EMPLOYEMAIL, EMPLOYPHONENUMBER, EMPLOYADDRESS, EMPLOYHOURLY, EMPLOYJOBTITLE, EMPLOYTIMEWORKED, EMPLOYTYPE, EMPLOYCATEGORY, EMPLOYUSERNAME, EMPLOYPASSWORD, STOREID) VALUES" + emplData;
+         }
+        
+        for (Member mem: memList) {
+            String membData = " ";
+            //String memb
+        }
+            
         }
 
 
