@@ -76,9 +76,9 @@ public class GUI extends Application
 
     
     //Observabble Lists/Combo Boxes
-    ObservableList obsEmp = FXCollections.observableArrayList();
+    ObservableList<Employee> obsEmp = FXCollections.observableArrayList();
     ComboBox cmboEmp = new ComboBox(Employee.obsEmp); 
-    ObservableList obsProd = FXCollections.observableArrayList();
+    ObservableList<Product> obsProd = FXCollections.observableArrayList();
     ComboBox cmboProd = new ComboBox(Product.obsProd); 
     ComboBox cmboProd2 = new ComboBox(Product.obsProd);
     ObservableList<Customer> obsCust = FXCollections.observableArrayList();
@@ -86,7 +86,7 @@ public class GUI extends Application
     static ObservableList<Store> obsStore = FXCollections.observableArrayList();
     static ComboBox cmboStore = new ComboBox(Store.obsStore);
     ObservableList<WritableImage> imageList = FXCollections.observableArrayList();
-    static ObservableList obsProdOrder = FXCollections.observableArrayList();
+    static ObservableList<ProductOrder> obsProdOrder = FXCollections.observableArrayList();
     static ComboBox cmboProdOrder = new ComboBox(ProductOrder.obsProdOrder);
     static ComboBox cmboProdOrder2 = new ComboBox(ProductOrder.obsProdOrder);
     public static ObservableList<CustSale> obsSale = FXCollections.observableArrayList();
@@ -544,12 +544,6 @@ public class GUI extends Application
     @Override
     public void start(Stage primaryStage) 
     {
-        loadSuppliersfromDB();
-        loadCustSaleFromDB();
-        loadExpensesFromDB();
-        loadMembersfromDB();
-        loadProductOrdersfromDB();
-        loadStoresfromDB();
         /*
         //Database example from class (Unsure how to imlement yet)
         String jdbcConnectionURL = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -2783,7 +2777,7 @@ public class GUI extends Application
                 //thirdPane.add(lblExpStore, 0, 7);
                 //thirdPane.add(cmboStore, 0, 8);
                 thirdPane.add(editExp, 0, 7);
-
+                expDate.setValue(LocalDate.now());
                 exC = expList.get(cmboExpense.getSelectionModel().getSelectedIndex());
                 txtExpDesc.setText(exC.getDescription());
                 //expDate.setText(exC.getDate());
@@ -4307,7 +4301,7 @@ public class GUI extends Application
         launch(args);
     }
     
-       @Override
+      @Override
     public void stop(){
 
 
@@ -4426,41 +4420,18 @@ public class GUI extends Application
             strQuery = "INSERT INTO STORE (STOREID, STORENAME, STOREADDRESS) VALUES" + strData;
         }
 
-//        for (int i = 0; i < obsSupp.size(); i++)
-//        {
-//            Supplier sp = (Supplier) obsSupp.get(i);
-//            spData = " ('" + sp.getID() + "' , '" + sp.getName() + "' , '" + sp.getSupplierPhone() + "' , '" +
-//                    sp.getSupplierEmail() + "' , '" + sp.getSupplierAddress() + "' , '" + sp.getContactName() + "' , '" + sp.getContactPhone() + "' , '" +
-//                    sp.getContactEmail() + " ' )";
-//            spQuery = "INSERT INTO SUPPLIER (SUPPLIERID, SUPPLIERNAME, SUPPLIERPHONE, SUPPLIEREMAIL, SUPPLIERADDRESS, CONTACTNAME, CONTACTPHONE, CONTACTEMAIL) VALUES" + spData;
-//            DBCommand(spQuery); 
-//        }
-
-        for (Supplier supp: suppList) {
-           String suppData = " "; 
-           String suppQuery = " "; 
-
-            suppData = " ('" + supp.getID() + "' , '" + supp.getName() + "' , '" + supp.getSupplierPhone() + "' , '" +
-                    supp.getSupplierEmail() + "' , '" + supp.getSupplierAddress() + "' , '" + supp.getContactName() + "' , '" + supp.getContactPhone() + "' , '" +
-                    supp.getContactEmail() + " ' )";
-            suppQuery = "INSERT INTO SUPPLIER (SUPPLIERID, SUPPLIERNAME, SUPPLIERPHONE, SUPPLIEREMAIL, SUPPLIERADDRESS, CONTACTNAME, CONTACTPHONE, CONTACTEMAIL) VALUES" + suppData;
-            DBCommand(suppQuery);
+        for (int i = 0; i < obsSupp.size(); i++)
+        {
+            Supplier sp = (Supplier) obsSupp.get(i);
+            spData = " ('" + sp.getID() + "' , '" + sp.getName() + "' , '" + sp.getSupplierPhone() + "' , '" + sp.getSupplierPhone() + "' , '" +
+                    sp.getSupplierEmail() + "' , '" + sp.getSupplierAddress() + "' , '" + sp.getContactName() + "' , '" + sp.getContactPhone() + "' , '" +
+                    sp.getContactEmail() + " ' )";
+            spQuery = "INSERT INTO SUPPLIER (SUPPLIERID, SUPPLIERNAME, SUPPLIERPHONE, SUPPLIEREMAIL, SUPPLIERADDRESS, CONTACTNAME, CONTACTPHONE, CONTACTEMAIL) VALUES" + spData;
         }
 
 
     }
-    
-        //get database connection method (useable if oracle is on your computer
-    /*
-    public static Connection getDBConnection(String url, String user, String pass) throws SQLException
-    {
-        OracleDataSource ds = new OracleDataSource();
-        ds.SETURL(url);
-        return ds.getConnection(user, pass);
-    }
-*/
-
-
+/*
     public ResultSet DBCommand(String sqlQuery)
         {
             String URL = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -4526,53 +4497,53 @@ public class GUI extends Application
             System.out.println(e.toString()); 
         }
     }
-//        public void loadEmployeesfromDB()
-//        {
-//        String query = "SELECT * FROM JAVAUSER.EMPLOYEE"; 
-//        ResultSet resultset = DBCommand(query); 
-//
-//        try
-//        {
-//            while(resultset.next())
-//            {
-//                obsEmp.add(new Employee ( resultset.getString ( "FIRSTNAME"), resultset.getString("LASTNAME"), resultset.getString("EMAIL"), resultset.getString("PHONENUMBER"), resultset.getString("ADDRESS"), resultset.getDouble("SALARY"), resultset.getString("JOBTITLE"), resultset.getString("EMPLOYEETYPE"), resultset.getString("EMPLOYEETYPE"), resultset.getObject("STORE")));
-//            }
-//
-//        }
-//        catch(SQLException e) 
-//        {
-//            System.out.println(e.toString()); 
-//        }
-//        }
+        public void loadEmployeesfromDB()
+        {
+        String query = "SELECT * FROM JAVAUSER.EMPLOYEE"; 
+        ResultSet resultset = DBCommand(query); 
 
-//            public void loadEmployeesFromDB()
-//            {
-//
-//                String sdQuery;
-//                ResultSet employeeResults;
-//
-//                try
-//                {
-//                    sdQuery = "SELECT * FROM SYSTEM.STUDENT;";
-//                    employeeResults = sendDBCommand(sdQuery);
-//
-//
-//                    while(employeeResults.next())
-//                    {
-//                        empData.add(new Employee(Integer.parseInt(employeeResults.getString(1)),
-//                                employeeResults.getString(2), employeeResults.getString(3),
-//                                employeeResults.getString(4), employeeResults.getString(5),
-//                                Double.parseDouble(employeeResults.getString(6)), employeeResults.getString(7), employeeResults.getString(8), employeeResults.getString(9))
-//                                );
-//
-//                    }
-//                }
-//                catch(SQLException e)
-//                {
-//                    System.out.println(e.toString());
-//
-//                }
-//            }
+        try
+        {
+            while(resultset.next())
+            {
+                obsEmp.add(new Employee ( resultset.getString ( "FIRSTNAME"), resultset.getString("LASTNAME"), resultset.getString("EMAIL"), resultset.getString("PHONENUMBER"), resultset.getString("ADDRESS"), resultset.getDouble("SALARY"), resultset.getString("JOBTITLE"), resultset.getString("EMPLOYEETYPE"), resultset.getString("EMPLOYEETYPE"), resultset.getObject("STORE")));
+            }
+
+        }
+        catch(SQLException e) 
+        {
+            System.out.println(e.toString()); 
+        }
+        }
+
+            public void loadEmployeesFromDB()
+            {
+
+                String sdQuery;
+                ResultSet employeeResults;
+
+                try
+                {
+                    sdQuery = "SELECT * FROM SYSTEM.STUDENT;";
+                    employeeResults = sendDBCommand(sdQuery);
+
+
+                    while(employeeResults.next())
+                    {
+                        empData.add(new Employee(Integer.parseInt(employeeResults.getString(1)),
+                                employeeResults.getString(2), employeeResults.getString(3),
+                                employeeResults.getString(4), employeeResults.getString(5),
+                                Double.parseDouble(employeeResults.getString(6)), employeeResults.getString(7), employeeResults.getString(8), employeeResults.getString(9))
+                                );
+
+                    }
+                }
+                catch(SQLException e)
+                {
+                    System.out.println(e.toString());
+
+                }
+            }
         public void loadMembersfromDB()
         {
         String query = "SELECT * FROM JAVAUSER.MEMBER"; 
@@ -4591,43 +4562,43 @@ public class GUI extends Application
             System.out.println(e.toString()); 
         }
         }
-//
-//       public void loadPayrollfromDB()
-//        {
-//        String query = "SELECT * FROM JAVAUSER.PAYROLL"; 
-//        ResultSet resultset = DBCommand(query); 
-//
-//        try{
-//            while(resultset.next()){
-//                obsEmp.add(new Payroll (resultset.getObject("EMPLOYEE")));
-//            }
-//
-//        }
-//        catch(SQLException e) {
-//            System.out.println(e.toString()); 
-//        }
-//        }
-//
 
-//        public void loadProductsfromDB()
-//        {
-//        String query = "SELECT * FROM JAVAUSER.PRODUCT"; 
-//        ResultSet resultset = DBCommand(query); 
-//
-//        try
-//        {
-//            while(resultset.next())
-//            {
-//                obsProd.add(new Product ( resultset.getString("NAME"), resultset.getInt("QUANTITY"), resultset.getDouble("PRICE"), resultset.getObject("STORE"), 
-//                        resultset.getString("DESCRIPTION"), resultset.getString("CATEGORY"), resultset.getObject("SUPPLIER"), resultset.getObject("IMAGE")));
-//            }
-//
-//        }
-//        catch(SQLException e) 
-//        {
-//            System.out.println(e.toString()); 
-//        }
-//        }
+       /* public void loadPayrollfromDB()
+        {
+        String query = "SELECT * FROM JAVAUSER.PAYROLL"; 
+        ResultSet resultset = DBCommand(query); 
+
+        try{
+            while(resultset.next()){
+                obsEmp.add(new Payroll (resultset.getObject("EMPLOYEE")));
+            }
+
+        }
+        catch(SQLException e) {
+            System.out.println(e.toString()); 
+        }
+        }
+*/
+/*
+        public void loadProductsfromDB()
+        {
+        String query = "SELECT * FROM JAVAUSER.PRODUCT"; 
+        ResultSet resultset = DBCommand(query); 
+
+        try
+        {
+            while(resultset.next())
+            {
+                obsProd.add(new Product ( resultset.getString("NAME"), resultset.getInt("QUANTITY"), resultset.getDouble("PRICE"), resultset.getObject("STORE"), 
+                        resultset.getString("DESCRIPTION"), resultset.getString("CATEGORY"), resultset.getObject("SUPPLIER"), resultset.getObject("IMAGE")));
+            }
+
+        }
+        catch(SQLException e) 
+        {
+            System.out.println(e.toString()); 
+        }
+        }
 
         public void loadProductOrdersfromDB()
         {
@@ -4672,7 +4643,7 @@ public class GUI extends Application
         {
         String query = "SELECT * FROM JAVAUSER.SUPPLIER"; 
         ResultSet resultset = DBCommand(query); 
-        System.out.println("please");
+
         try
         {
             while(resultset.next())
@@ -4688,5 +4659,5 @@ public class GUI extends Application
             System.out.println(e.toString()); 
         }
         }
-
+*/
 }
