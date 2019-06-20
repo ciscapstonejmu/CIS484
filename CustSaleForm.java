@@ -31,8 +31,8 @@ public class CustSaleForm{
     public Label lblSaleCust = new Label("Customer:");
     public Label lblClubMem = new Label("Thrifty Club Member?");
     public Label lblMem = new Label("Club Member:");
-    public Label lblYes = new Label("Yes");
-    public Label lblNo = new Label("No");
+    public Label lblYes = new Label("                            Yes");
+    public Label lblNo = new Label("                            No");
     public Label lblSaleProd = new Label("Product:");
     public Label lblSaleProdQuan = new Label("Quantity:");
     public Label lblRingSale = new Label("Customer Sale Form");
