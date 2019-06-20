@@ -1650,16 +1650,24 @@ public class GUI extends Application
             
         });
         btnRemoveSupp.setOnAction(e -> {
-            Supplier tempSupp = sC; 
+            Supplier tempSupp = sC;
+            int rmvSup = cmboSupp2.getSelectionModel().getSelectedIndex();
+            String suppQuery; 
+            ResultSet suppRS; 
+
             for(int i = 0; i<suppList.size(); i++)
             {
                 if(tempSupp.getID() == suppList.get(i).getID())
                 {
                     suppList.remove(i);
                     cmboSupp2.getItems().remove(i);
+                    suppQuery = "DELETE FROM JAVAUSER.SUPPLIER WHERE SUPPLIERID = " + tempSupp.getID();
+                    suppRS = sendDBCommand(suppQuery);
                     break;                    
                 }           
             }
+            
+           
             alert.setTitle("Success!");
             alert.setHeaderText("The supplier has been removed!");
             alert.showAndWait();
