@@ -74,18 +74,13 @@ AmountPaid VarChar(25),
 employeeID Integer,
 Foreign Key (employeeID) REFERENCES Employee);
 
-Create Table Product
-(productID Integer Primary Key,
-Name VarChar(25),
-Quantity VarChar(25),
-Price VarChar(25),
-Cost VarChar(25),
-Description VarChar(25),
-Category VarChar(25),
-storeID Integer,
-supplierID Integer,
-Foreign Key (storeID) REFERENCES Store,
-Foreign Key (supplierID) REFERENCES Supplier);
+CREATE TABLE PRODUCT(PRODUCTID INTEGER PRIMARY KEY,
+NAME VARCHAR(25), QUANTITY VARCHAR(25), PRICE VARCHAR(25),
+COST VARCHAR(25), DESCRIPTION VARCHAR(25),
+CATEGORY VARCHAR(25), STOREID INTEGER, SUPPLIERID INTEGER,
+FOREIGN KEY(SUPPLIERID) REFERENCES SUPPLIER,
+FOREIGN KEY(STOREID) REFERENCES STORE);
+
 
 Create Table ProductOrder
 (productOrderID Integer Primary Key,
