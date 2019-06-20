@@ -4475,6 +4475,53 @@ public class GUI extends Application
                     sp.getContactEmail() + " ' )";
             spQuery = "INSERT INTO SUPPLIER (SUPPLIERID, SUPPLIERNAME, SUPPLIERPHONE, SUPPLIEREMAIL, SUPPLIERADDRESS, CONTACTNAME, CONTACTPHONE, CONTACTEMAIL) VALUES" + spData;
         }
+        
+       
+for (int i = 0; i< suppList.size(); i++)
+        {
+           String suppData = " "; 
+           String suppQuery = " "; 
+
+            suppData = " ('" + suppList.get(i).getID() + "' , '" + suppList.get(i).getName() + "' , '" + suppList.get(i).getSupplierPhone() + "' , '" + suppList.get(i).getSupplierPhone() + "' , '" +
+                    suppList.get(i).getSupplierEmail() + "' , '" + suppList.get(i).getSupplierAddress() + "' , '" + suppList.get(i).getContactName() + "' , '" + suppList.get(i).getContactPhone() + "' , '" +
+                    suppList.get(i).getContactEmail() + " ' )";
+            suppQuery = "INSERT INTO SUPPLIER (SUPPLIERID, SUPPLIERNAME, SUPPLIERPHONE, SUPPLIEREMAIL, SUPPLIERADDRESS, CONTACTNAME, CONTACTPHONE, CONTACTEMAIL) VALUES" + suppData;
+            DBCommand(suppQuery);
+        }
+        for (int i = 0; i < storeList.size(); i++) {
+            String storData = " ";
+            String storQuery = " ";
+            
+            storData = " ('" + storeList.get(i).getStoreID() + "' , '" + storeList.get(i).getStoreName() + "' , '" + storeList.get(i).getStoreAddress() + " ')";
+            storQuery = "INSERT INTO STORE (STOREID, STORENAME, STOREADDRESS) VALUES" + storData;
+            DBCommand(storQuery);
+            
+        
+        }
+        
+        for (int i = 0; i < expList.size(); i++)
+        {
+            String expnData = " ";
+            String expnQuery = " ";
+            
+            expnData = " ('" + expList.get(i).getExpenseID() + "' , '" + expList.get(i).getCategory() + "' , '" + 
+                    expList.get(i).getDescription() + "' , '" + expList.get(i).getStatus() + "' , '" + expList.get(i).getAmountPaid() +
+                    "' , '" + expList.get(i).getTotalAmount() + "' , '" + expList.get(i).getRemainingBalance() + "' , '" + expList.get(i).getDate() +
+                    "' , '" + expList.get(i).getPayableStore().getStoreID() + " )'";
+            expnQuery = "INSERT INTO EXPENSE (EXPENSEID, CATEGORY, DESCRIPTION, STATUS, AMOUNTPAID, TOTALAMOUNT, REMAININGBALANCE, EXPDATE, STOREID) VALUES" + expnData;
+            DBCommand(expnQuery);
+            
+        }
+        for (Employee emp: empList) {
+            String emplData = " ";
+            String emplQuery = " ";
+            
+            emplData = " ('" + emp.getEmployeeID() + "' , '" + emp.getFirstName() + "' , '" + emp.getLastName() + "' , '" + emp.getEmail() + "' , '" +
+                    emp.getPhoneNumber() + "' , '" + emp.getAddress() + "' , '" + emp.getHourly() + "' , '" + emp.getJobTitle() +
+                    "' , '" + emp.getTimeWorked() + emp.getEmployeeType() + "' , '" + emp.getEmployeeCategory() + "' , '" + emp.getUsername() +
+                    "' , '" + emp.getPassword() + emp.getStore().getStoreID() + "' )";
+            emplQuery = "INSERT INTO EMPLOYEE (EMPLOYEEID, EMPLOYFNAME, EMPLOYLNAME, EMPLOYEMAIL, EMPLOYPHONENUMBER, EMPLOYADDRESS, EMPLOYHOURLY, EMPLOYJOBTITLE, EMPLOYTIMEWORKED, EMPLOYTYPE, EMPLOYCATEGORY, EMPLOYUSERNAME, EMPLOYPASSWORD, STOREID) VALUES" + emplData;
+         }
 
 
     }
