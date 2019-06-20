@@ -79,7 +79,7 @@ Create Table Product
 Name VarChar(25),
 Quantity VarChar(25),
 Price VarChar(25),
-Store VarChar(25),
+Cost VarChar(25),
 Description VarChar(25),
 Category VarChar(25),
 storeID Integer,
