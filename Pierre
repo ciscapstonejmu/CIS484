@@ -85,7 +85,7 @@ public class GUI extends Application
     ComboBox cmboCust = new ComboBox(obsCust); 
     static ObservableList<Store> obsStore = FXCollections.observableArrayList();
     static ComboBox cmboStore = new ComboBox(Store.obsStore);
-    ObservableList<WritableImage> imageList = FXCollections.observableArrayList();
+    ObservableList<BufferedImage> imageList = FXCollections.observableArrayList();
     static ObservableList<ProductOrder> obsProdOrder = FXCollections.observableArrayList();
     static ComboBox cmboProdOrder = new ComboBox(ProductOrder.obsProdOrder);
     static ComboBox cmboProdOrder2 = new ComboBox(ProductOrder.obsProdOrder);
@@ -186,7 +186,7 @@ public class GUI extends Application
     Button btnImage = new Button("Add Image");
     Button btnAddImage2 = new Button("Add Image");
     ImageView myImageView = new ImageView();
-    ImageView imageViewTwo = new ImageView();
+    ImageView myImageViewTwo = new ImageView();
     BufferedImage tempImage = null;
     Button addProd = new Button("Add Product");
     TextField txtSupplier = new TextField(); 
