@@ -2223,7 +2223,7 @@ public class GUI extends Application
                 thirdPane.add(myImageView, 1, 11, 4, 4);
                 myImageView.setFitHeight(130);
                 myImageView.setFitWidth(130);
-                imageList.add(iImage); 
+                imageList.add(tempImage); 
                 
             }
             catch(Exception ex)
