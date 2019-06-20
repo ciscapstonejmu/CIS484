@@ -261,9 +261,6 @@ public class CustSaleForm{
                         saleOut += "\n";
                         txtSaleOutput.appendText(saleOut);            
                         recItems += saleOut;
-                        alert.setTitle("Success!");
-                        alert.setHeaderText("Sale Has Been Added!");
-                        alert.showAndWait();
                     }
                     else
                     {
@@ -295,9 +292,6 @@ public class CustSaleForm{
                         saleOut += "\n";
                         txtSaleOutput.appendText(saleOut);            
                         recItems += saleOut;
-                        alert.setTitle("Success!");
-                        alert.setHeaderText("Sale Has Been Added!");
-                        alert.showAndWait();
                     }
                     else
                     {
@@ -314,7 +308,7 @@ public class CustSaleForm{
         });
         
         btnAddMember.setOnAction(e -> {
-            
+            addMemPane.getChildren().clear();
             addMemStage.setTitle("Add a Thrifty Member");
             addMemStage.show();
             addMemPane.setAlignment(Pos.TOP_CENTER);
@@ -367,6 +361,7 @@ public class CustSaleForm{
         });
         
         btnSearchMem.setOnAction(e -> {
+            searchMemPane.getChildren().clear();
             searchMemStage.setTitle("Search Member by Phone Number");
             searchMemStage.show();
             searchMemPane.setAlignment(Pos.TOP_CENTER);
@@ -379,11 +374,18 @@ public class CustSaleForm{
         });
         
         btnFindMem.setOnAction(e -> {
+            if(GUI.memList.isEmpty())
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("No members added!");
+                alert.showAndWait();
+                
+                searchMemStage.close();
+            }
             try{
             for(int i=0; i<GUI.memList.size(); i++)
             {
-                if(GUI.memList.get(i).getPhone() != null 
-                        && GUI.memList.get(i).getPhone().contains(txtSCustPhone.getText()))
+                if(GUI.memList.get(i).getPhone().contains(txtSCustPhone.getText()))
                 {
                     int thisMem = i;
                     GUI.cmboMem.getSelectionModel().select(i);
@@ -394,7 +396,7 @@ public class CustSaleForm{
             
                     searchMemStage.close();
                 }
-                else
+                else if(i == GUI.memList.size()-1 && GUI.memList.get(i).getPhone().contains(txtSCustPhone.getText())== false)
                 {
                     alertError.setTitle("Error");
                     alertError.setHeaderText("Phone Number Not Found!");
