@@ -86,7 +86,7 @@ Create Table ProductOrder
 (productOrderID Integer Primary Key,
 Quantity VarChar(25),
 Name VarChar(25),
-UnitCost VarChar(25),
+UnitCost VarChar(25), UnitPrice VarChar(25),
 Subtotal VarChar(25),
 DeliveryDate VarChar(25),
 poDate VarChar(25),
