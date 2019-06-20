@@ -3510,34 +3510,141 @@ public class GUI extends Application
             addTimeSheet.setMaxWidth(Double.MAX_VALUE);
             btnSavePay.setMaxWidth(Double.MAX_VALUE);
             
-                vPay.getChildren().addAll(lblPayroll, lblPEEmp, cmboEmp, btnPEEmp);
+            vPay.getChildren().addAll(lblPayroll, lblPEEmp, cmboEmp, btnPEEmp);
             
             border.setCenter(txtPayroll);
             border.setTop(menuAdmin);
             border.setLeft(vPay);
             
         });
-        
-        btnEnterTime.setOnAction(e -> {
-
-
-            tempPay = null;
-            cmboPeriod.getItems().clear();
-            if(currentUser.payRoll.isEmpty())
+        btnPEEmp.setOnAction(e -> {
+           tempPay = null;
+           eC = null;
+           cmboPeriod.getItems().clear();
+           eC = empList.get(cmboEmp.getSelectionModel().getSelectedIndex());
+           
+           if(eC.payRoll.isEmpty())
             {
-                currentUser.payRoll.add(new Payroll(currentUser));
-                tempPay = currentUser.payRoll.get(0);
+                eC.payRoll.add(new Payroll(eC));
+                tempPay = eC.payRoll.get(0);
                 cmboPeriod.getItems().add(tempPay.getPayrollPeriod());
                 cmboPeriod.getSelectionModel().select(0);
             }
             else
             {
-                for(int i = 0; i<currentUser.payRoll.size(); i++)
+                for(int i = 0; i<eC.payRoll.size(); i++)
                 {
-                    cmboPeriod.getItems().add(i,currentUser.payRoll.get(i).getPayrollPeriod());
+                    cmboPeriod.getItems().add(i,eC.payRoll.get(i).getPayrollPeriod());
                 }
-                cmboPeriod.getSelectionModel().select(currentUser.payRoll.size()-1);
-                tempPay = currentUser.payRoll.get(currentUser.payRoll.size()-1);
+                cmboPeriod.getSelectionModel().select(eC.payRoll.size()-1);
+                tempPay = eC.payRoll.get(eC.payRoll.size()-1);
+            }
+            lblSun.setText(tempPay.schedule.get(0) + ": " + tempPay.scheduleDay.get(0));
+            lblMon.setText(tempPay.schedule.get(1)+ ": " + tempPay.scheduleDay.get(1));
+            lblTues.setText(tempPay.schedule.get(2)+ ": " + tempPay.scheduleDay.get(2));
+            lblWed.setText(tempPay.schedule.get(3)+ ": " + tempPay.scheduleDay.get(3));
+            lblThur.setText(tempPay.schedule.get(4)+ ": " + tempPay.scheduleDay.get(4));
+            lblFri.setText(tempPay.schedule.get(5)+ ": " + tempPay.scheduleDay.get(5));
+            lblSat.setText(tempPay.schedule.get(6)+ ": " + tempPay.scheduleDay.get(6));
+
+            if(!tempPay.arrTimeIn.isEmpty())
+            {
+                try
+                {
+                    cmboSunTimeIn.getSelectionModel().select(timeI.get(tempPay.arrTimeIn.get(0)));
+                    cmboMonTimeIn.getSelectionModel().select(timeI.get(tempPay.arrTimeIn.get(1)));
+                    cmboTuesTimeIn.getSelectionModel().select(timeI.get(tempPay.arrTimeIn.get(2)));
+                    cmboWedTimeIn.getSelectionModel().select(timeI.get(tempPay.arrTimeIn.get(3)));
+                    cmboThurTimeIn.getSelectionModel().select(timeI.get(tempPay.arrTimeIn.get(4)));
+                    cmboFriTimeIn.getSelectionModel().select(timeI.get(tempPay.arrTimeIn.get(5)));
+                    cmboSatTimeIn.getSelectionModel().select(timeI.get(tempPay.arrTimeIn.get(6)));
+                }
+                catch(Exception ex)
+                {
+
+                }
+            }
+            if(!tempPay.arrTimeOut.isEmpty())
+            {
+                try
+                {                    
+                    cmboSunTimeOut.getSelectionModel().select(timeO.get(tempPay.arrTimeOut.get(0)));
+                    cmboMonTimeOut.getSelectionModel().select(timeO.get(tempPay.arrTimeOut.get(1)));
+                    cmboTuesTimeOut.getSelectionModel().select(timeO.get(tempPay.arrTimeOut.get(2)));
+                    cmboWedTimeOut.getSelectionModel().select(timeO.get(tempPay.arrTimeOut.get(3)));
+                    cmboThurTimeOut.getSelectionModel().select(timeO.get(tempPay.arrTimeOut.get(4)));
+                    cmboFriTimeOut.getSelectionModel().select(timeO.get(tempPay.arrTimeOut.get(5)));
+                    cmboSatTimeOut.getSelectionModel().select(timeO.get(tempPay.arrTimeOut.get(6)));
+                }
+                catch(Exception ex)
+                {
+
+                }
+            }
+            thirdPane.getChildren().clear();
+            thirdStage.setTitle("Enter Time");
+            thirdStage.show();
+            thirdPane.setAlignment(Pos.TOP_CENTER);
+
+            thirdPane.add(cmboPeriod,0,0);
+            thirdPane.add(btnSelect, 1,0);
+            thirdPane.add(addTimeSheet, 2, 0,2,1);
+            thirdPane.add(lblTimeIn, 1, 1);
+            thirdPane.add(lblTimeOut, 2, 1);
+            thirdPane.add(lblSun, 0, 2);
+            thirdPane.add(cmboSunTimeIn, 1, 2);
+            thirdPane.add(cmboSunTimeOut, 2, 2);
+            thirdPane.add(lblMon, 0, 3);
+            thirdPane.add(cmboMonTimeIn, 1, 3);
+            thirdPane.add(cmboMonTimeOut, 2, 3);
+            thirdPane.add(lblTues, 0, 4);
+            thirdPane.add(cmboTuesTimeIn, 1, 4);
+            thirdPane.add(cmboTuesTimeOut, 2, 4);
+            thirdPane.add(lblWed, 0, 5);
+            thirdPane.add(cmboWedTimeIn, 1, 5);
+            thirdPane.add(cmboWedTimeOut, 2, 5);
+            thirdPane.add(lblThur, 0, 6);
+            thirdPane.add(cmboThurTimeIn, 1, 6);
+            thirdPane.add(cmboThurTimeOut, 2, 6);
+            thirdPane.add(lblFri, 0, 7);
+            thirdPane.add(cmboFriTimeIn, 1, 7);
+            thirdPane.add(cmboFriTimeOut, 2, 7);
+            thirdPane.add(lblSat, 0, 8);
+            thirdPane.add(cmboSatTimeIn, 1, 8);
+            thirdPane.add(cmboSatTimeOut, 2, 8);
+            thirdPane.add(btnEnterTimes, 1, 9);
+            thirdPane.add(btnSavePay, 1,10);
+            thirdPane.add(showHours,2,9);
+            thirdPane.add(day1,3,2);
+            thirdPane.add(day2,3,3);
+            thirdPane.add(day3,3,4);
+            thirdPane.add(day4,3,5);
+            thirdPane.add(day5,3,6);
+            thirdPane.add(day6,3,7);
+            thirdPane.add(day7,3,8);
+
+        });
+        
+        btnEnterTime.setOnAction(e -> {
+            tempPay = null;
+            eC = null;
+            cmboPeriod.getItems().clear();
+            eC = currentUser;
+            if(eC.payRoll.isEmpty())
+            {
+                eC.payRoll.add(new Payroll(eC));
+                tempPay = eC.payRoll.get(0);
+                cmboPeriod.getItems().add(tempPay.getPayrollPeriod());
+                cmboPeriod.getSelectionModel().select(0);
+            }
+            else
+            {
+                for(int i = 0; i<eC.payRoll.size(); i++)
+                {
+                    cmboPeriod.getItems().add(i,eC.payRoll.get(i).getPayrollPeriod());
+                }
+                cmboPeriod.getSelectionModel().select(eC.payRoll.size()-1);
+                tempPay = eC.payRoll.get(eC.payRoll.size()-1);
             }
             lblSun.setText(tempPay.schedule.get(0) + ": " + tempPay.scheduleDay.get(0));
             lblMon.setText(tempPay.schedule.get(1)+ ": " + tempPay.scheduleDay.get(1));
@@ -3631,11 +3738,11 @@ public class GUI extends Application
             String select = (String)cmboPeriod.getValue();
             int checkEmptyIn = 0;
             int checkEmptyOut = 0;
-            for(int i = 0; i<currentUser.payRoll.size(); i++)
+            for(int i = 0; i<eC.payRoll.size(); i++)
             {
-                if(currentUser.payRoll.get(i).getPayrollPeriod().equalsIgnoreCase(select))
+                if(eC.payRoll.get(i).getPayrollPeriod().equalsIgnoreCase(select))
                 {
-                    tempPay = currentUser.payRoll.get(i);
+                    tempPay = eC.payRoll.get(i);
                     break;
                 }
             }
@@ -3725,12 +3832,10 @@ public class GUI extends Application
             thirdPane.add(day5,3,6);
             thirdPane.add(day6,3,7);
             thirdPane.add(day7,3,8);
-
-
         });
            
         addTimeSheet.setOnAction(e -> {
-            Payroll addPayroll = new Payroll(currentUser);
+            Payroll addPayroll = new Payroll(eC);
             if(tempPay.payrollPeriod.equalsIgnoreCase(addPayroll.payrollPeriod))
             {
                 alert.setTitle("Error!");
@@ -3739,7 +3844,7 @@ public class GUI extends Application
             }
             else
             {
-                currentUser.payRoll.add(new Payroll(currentUser));
+                eC.payRoll.add(new Payroll(eC));
             }
 
         });
@@ -3760,7 +3865,7 @@ public class GUI extends Application
         });
 
         btnEnterTimes.setOnAction(e ->{
-            if(tempPay.submitted == true)
+            if(tempPay.submitted == true && currentUser.getEmployeeCategory().equalsIgnoreCase("Manager") == false)
             {
              alert.setTitle("Repeat Submission!");
              alert.setHeaderText("This timesheet has already been submitted");
@@ -3845,9 +3950,30 @@ public class GUI extends Application
             alert.setTitle("Success!");
             alert.setHeaderText("The timesheet has been submitted!");
             alert.showAndWait();
-            System.out.println(currentUser.getFirstName() + " has worked " + currentUser.getTimeWorked() + "hours during " + tempPay.getPayrollPeriod());
-            tempPay = null;
-            
+            System.out.println(eC.getFirstName() + " has worked " + eC.getTimeWorked() + "hours during " + tempPay.getPayrollPeriod());
+            for(int i = 0; i<eC.payRoll.size(); i++)
+            {
+                if(eC.payRoll.get(i).getPayrollPeriod().equalsIgnoreCase((String)cmboPeriod.getValue()))
+                {
+                    eC.payRoll.remove(i);
+                    eC.payRoll.add(i, tempPay);
+                    tempPay = null;
+                    break;
+                }
+            }
+            for(int i = 0; i<empList.size(); i++)
+            {
+                if(empList.get(i).getEmployeeID()== eC.getEmployeeID())
+               {
+                    Employee temp = eC;
+                    empList.remove(i);
+                    empList.add(i, temp);
+                    cmboEmp.getItems().remove(i);
+                    cmboEmp.getItems().add(i, temp.getEmployeeID() + " " + temp.getFirstName() + " " + eC.getLastName());
+                    eC = null;
+                    break;
+                }
+            }
             thirdStage.close();
             cmboSunTimeIn.getSelectionModel().clearSelection();
             cmboMonTimeIn.getSelectionModel().clearSelection();
