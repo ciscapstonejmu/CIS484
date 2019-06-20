@@ -331,7 +331,7 @@ public class GUI extends Application
     TextField txtDisplayExpAmount = new TextField();
 
     Label lblNewExpenseTypeHeader = new Label("Add New Expense Type");
-    Label lblAddNewExpenseType = new Label("Enter an expense type to add");
+    Label lblAddNewExpenseType = new Label("Enter an Expense Type to add");
     TextField txtAddNewExpenseType = new TextField();
     Button btnConfirmNewExp = new Button("Add New Expense Type");
 
@@ -740,7 +740,17 @@ public class GUI extends Application
         btnSetDiscount.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnRingSale.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         removeEmp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        btnRecShip.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnRecShip.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnRemExp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnRemExpType.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnAddExpType.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnConfirmNewExp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnConfirmRemExpType.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        
+        
+        
+        btnEnterTime.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        
         //BUTTONS third + pane (10pt font)
         addEmp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         addExp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
@@ -795,6 +805,7 @@ public class GUI extends Application
         cmboSupp.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         cmboPeriod.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         cmboUnpaidExp.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
+        cmboExpStore.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         
         cmboType.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         cmboYear.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
@@ -832,6 +843,8 @@ public class GUI extends Application
         lblMngDiscount.setStyle("-fx-font: bold 14pt \"bookman\";");
         lblPO.setStyle("-fx-font: bold 14pt \"bookman\";");
         lblEPO.setStyle("-fx-font: bold 14pt \"bookman\";");
+        lblNewExpenseTypeHeader.setStyle("-fx-font: bold 14pt \"bookman\";");
+        lblRemoveExpTypeHeader.setStyle("-fx-font: bold 14pt \"bookman\";");
         
         GridPane secondPane = new GridPane();
         
@@ -978,12 +991,12 @@ public class GUI extends Application
          tbExpStore.setCellValueFactory(new PropertyValueFactory<Expense, String>("store"));
         
         //Store Table       
-        TableColumn tbStoreID = new TableColumn("ID");
+        //TableColumn tbStoreID = new TableColumn("ID");
         TableColumn tbStoreName = new TableColumn("Name");
         TableColumn tbStoreAddress = new TableColumn("Address");
 
         //ValueFactory for Store Table
-        tbStoreID.setCellValueFactory(new PropertyValueFactory<Store, Integer>("storeID"));
+        //tbStoreID.setCellValueFactory(new PropertyValueFactory<Store, Integer>("storeID"));
         tbStoreName.setCellValueFactory(new PropertyValueFactory<Store, String>("storeName"));
         tbStoreAddress.setCellValueFactory(new PropertyValueFactory<Store, String>("storeAddress"));
 
@@ -1077,7 +1090,7 @@ public class GUI extends Application
         border.setRight(rightPane);
         rightPane.setStyle("-fx-background-color: lightskyblue;");
         leftPane.setStyle("-fx-background-color: lightskyblue;");
-        Scene secondScene = new Scene(border, 1050, 650);
+        Scene secondScene = new Scene(border, 1125, 700);
         Stage secondStage = new Stage();
         secondStage.setScene(secondScene);
         menuAdmin.setMinWidth(secondScene.getWidth());
@@ -1249,9 +1262,13 @@ public class GUI extends Application
             menuAdmin.getMenus().get(1).getItems().get(1).setOnAction(e -> {
             // Inventory Management
             
+            
             secondPane.getChildren().clear();
             formPane.getChildren().clear();
             border.getChildren().clear();
+            cmboProd.getSelectionModel().clearSelection();
+            cmboSupp2.getSelectionModel().clearSelection();
+            cmboProdOrder2.getSelectionModel().clearSelection();
             secondPane.setAlignment(Pos.TOP_CENTER);
             secondStage.setTitle("Inventory Management");
             
@@ -1633,6 +1650,7 @@ public class GUI extends Application
         btnviewSupp.setOnAction(e -> {
             // View Suppliers
             fifthPane.getChildren().clear();
+            cmboSupp.getSelectionModel().clearSelection();
             fifthStage.setTitle("View Suppliers");
             fifthStage.show();
             fifthPane.setAlignment(Pos.TOP_CENTER);
@@ -1663,6 +1681,7 @@ public class GUI extends Application
             suppOutput.setText(tempSupp.toString());   
             cmboSupp.getSelectionModel().clearSelection();
             }
+            
         }); 
         btnViewAllSupp.setOnAction(e -> {
             String suppOutput2 = ""; 
@@ -1691,6 +1710,9 @@ public class GUI extends Application
             {
                 prodData.add(prod);
             }
+            alert.setTitle("Success!");
+            alert.setHeaderText("The product has been discontinued!");
+            alert.showAndWait();
 
         }); 
         
@@ -1732,7 +1754,7 @@ public class GUI extends Application
             fifthStage.show();
             fifthPane.setAlignment(Pos.TOP_CENTER);
 
-            fifthPane.add(lblPO, 0, 0); 
+            fifthPane.add(lblPO, 0, 0, 3, 1); 
             fifthPane.add(lblProdName, 0, 1);
             fifthPane.add(txtProdName, 0, 2);
             fifthPane.add(lblUnitCost, 1,5); //how much the product costs thrifty to purchase
@@ -1814,6 +1836,7 @@ public class GUI extends Application
         
         btnViewOrder.setOnAction(e -> {
             fifthPane.getChildren().clear();
+            cmboProdOrder.getSelectionModel().clearSelection();
             fifthStage.setTitle("View Product Orders");
             fifthStage.show();
             fifthPane.setAlignment(Pos.TOP_CENTER);
@@ -1887,8 +1910,8 @@ public class GUI extends Application
             thirdPane.add(txtProdName, 0, 2);
             thirdPane.add(lblProdDesc, 0, 3);
             thirdPane.add(txtProdDesc, 0, 4);
-            thirdPane.add(lblCategory, 1, 1);
-            thirdPane.add(cmboCategory, 1, 2);
+            thirdPane.add(lblCategory, 1, 3);
+            thirdPane.add(cmboCategory, 1, 4);
             thirdPane.add(lblUnitPrice, 0, 5); //how much thrifty sells item for
             thirdPane.add(txtUnitPrice, 0, 6);
             thirdPane.add(lblUnitCost, 1, 5); //how much thrifty bought item for 
@@ -2213,7 +2236,6 @@ public class GUI extends Application
                     if (i == imageChosen)
                         imageList.remove(i); 
                         imageList.set(imageChosen, iImage);
-                        
                 }
                      
                 myImageView.setFitHeight(130);
@@ -2236,61 +2258,61 @@ public class GUI extends Application
         }); 
            
         btnRecShip.setOnAction(e -> {
-             int prodORemove = cmboProdOrder2.getSelectionModel().getSelectedIndex(); 
-             poC = prodOrderList.get(prodORemove);
-             int poQ = poC.getQuantity();
-             int prodQ;
-             int totalQuantity;
-        
-             if(cmboProdOrder2.getValue() == null)
-             {
-                alert.setTitle("Error!");
-                alert.setHeaderText("Please select a product order to Recieve!");
-                alert.showAndWait();
-             }
-             else 
-             {
-                 
-                obsRecOrder.add(poC);
-                expList.add(new Expense("Inventory Purchase", poC.getProdOName() + ", " + poC.getStore(), 0, poC.getSubtotal(),currentDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")), poC.getStoreLoc()));
-                obsExpense.add(expList.get(expList.size()-1));
-                for (int j = 0; j < prodList.size(); j++) 
-                {
-                      if(poC.getProdOName().equalsIgnoreCase(prodList.get(j).getProductName()) && poC.getSupplier().equalsIgnoreCase(prodList.get(j).getSupplier())
-                              && poC.getStore().equals(prodList.get(j).getLocation()) && poC.getCategory().equalsIgnoreCase(prodList.get(j).getCategory()) 
-                              && poC.getPODesc().equalsIgnoreCase(prodList.get(j).getFoodDescription()))
-                      {
-                          prodQ = prodList.get(j).getQuantity();
-                          pC = prodList.get(j);
-                          totalQuantity = poQ + prodQ;
-                          pC.setQuantity(totalQuantity);
-                          prodList.remove(j);
-                          prodList.add(j,pC);
-                          break;
-                      }
-                      else if(j == prodList.size()-1 && poC.getProdOName().equalsIgnoreCase(prodList.get(j).getProductName())== false) 
-                      {
-                        prodList.add(new Product(poC.getProdOName(), poC.getUnitCost(), poC.getUnitPrice(), poC.getQuantity(), poC.getStoreLoc(), poC.getPODesc(), poC.getCategory(),
-                        poC.getAssociatedSupplier())); 
-                        break;
-                      }
-                }
-                prodOrderList.remove(prodORemove);
-                cmboProdOrder.getItems().remove(prodORemove);
-                prodData.clear();
-                for(Product prod: prodList)
-                {
-                    prodData.add(prod);
-                }
-                expData.clear();
-                for(Expense exp: expList)
-                {
-                    expData.add(exp);
-                }
-                alert.setTitle("Success!");
-                alert.setHeaderText("The product order has been received!");
-                alert.showAndWait(); 
-             }
+            int prodORemove = cmboProdOrder2.getSelectionModel().getSelectedIndex(); 
+            poC = prodOrderList.get(prodORemove);
+            int poQ = poC.getQuantity();
+            int prodQ;
+            int totalQuantity;
+
+            if(cmboProdOrder2.getValue() == null)
+            {
+               alert.setTitle("Error!");
+               alert.setHeaderText("Please select a product order to Recieve!");
+               alert.showAndWait();
+            }
+            else 
+            {
+
+               obsRecOrder.add(poC);
+               expList.add(new Expense("Inventory Purchase", poC.getProdOName() + ", " + poC.getStore(), 0, poC.getSubtotal(),currentDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")), poC.getStoreLoc()));
+               obsExpense.add(expList.get(expList.size()-1));
+               for (int j = 0; j < prodList.size(); j++) 
+               {
+                     if(poC.getProdOName().equalsIgnoreCase(prodList.get(j).getProductName()) && poC.getSupplier().equalsIgnoreCase(prodList.get(j).getSupplier())
+                             && poC.getStore().equals(prodList.get(j).getLocation()) && poC.getCategory().equalsIgnoreCase(prodList.get(j).getCategory()) 
+                             && poC.getPODesc().equalsIgnoreCase(prodList.get(j).getFoodDescription()))
+                     {
+                         prodQ = prodList.get(j).getQuantity();
+                         pC = prodList.get(j);
+                         totalQuantity = poQ + prodQ;
+                         pC.setQuantity(totalQuantity);
+                         prodList.remove(j);
+                         prodList.add(j,pC);
+                         break;
+                     }
+                     else if(j == prodList.size()-1 && poC.getProdOName().equalsIgnoreCase(prodList.get(j).getProductName())== false) 
+                     {
+                       prodList.add(new Product(poC.getProdOName(), poC.getUnitCost(), poC.getUnitPrice(), poC.getQuantity(), poC.getStoreLoc(), poC.getPODesc(), poC.getCategory(),
+                       poC.getAssociatedSupplier())); 
+                       break;
+                     }
+               }
+               prodOrderList.remove(prodORemove);
+               cmboProdOrder.getItems().remove(prodORemove);
+               prodData.clear();
+               for(Product prod: prodList)
+               {
+                   prodData.add(prod);
+               }
+               expData.clear();
+               for(Expense exp: expList)
+               {
+                   expData.add(exp);
+               }
+               alert.setTitle("Success!");
+               alert.setHeaderText("The product order has been received!");
+               alert.showAndWait(); 
+            }
         });
         
         
@@ -2300,11 +2322,11 @@ public class GUI extends Application
         
         menuAdmin.getMenus().get(1).getItems().get(0).setOnAction(e -> {
             // Employee Management
-              
             
             secondPane.getChildren().clear();
             formPane.getChildren().clear();
             border.getChildren().clear();
+            cmboEmp.getSelectionModel().clearSelection();
             secondPane.setAlignment(Pos.TOP_CENTER);
             secondStage.setTitle("Employee Management");
             
@@ -2622,7 +2644,7 @@ public class GUI extends Application
             secondPane.getChildren().clear();
             formPane.getChildren().clear();
             border.getChildren().clear();
-            cmboStore.getSelectionModel().clearSelection();
+            cmboExpense.getSelectionModel().clearSelection();
            
             secondPane.setAlignment(Pos.TOP_CENTER);
             secondStage.setTitle("Expense Management");
@@ -2937,12 +2959,24 @@ public class GUI extends Application
                 alert.setTitle("Success!");
                 alert.setHeaderText("Your payment has been recorded!");
                 alert.showAndWait(); 
+                txtExpDesc.clear();
+                txtAmount.clear();
+                cmboExpCategory.getSelectionModel().clearSelection();
+                cmboStatus.getSelectionModel().clearSelection();
+                expDate.getEditor().clear();
+                eighthStage.close();
             }
             if (obsUnpaidExp.get(unpaidExpVar).getRemainingBalance() == 0) 
             {
                 alert.setTitle("Success!");
                 alert.setHeaderText("You have fully paid this expense!");
                 alert.showAndWait();
+                txtExpDesc.clear();
+                txtAmount.clear();
+                cmboExpCategory.getSelectionModel().clearSelection();
+                cmboStatus.getSelectionModel().clearSelection();
+                expDate.getEditor().clear();
+                eighthStage.close();
             }
            
             eighthStage.close();
@@ -2951,6 +2985,8 @@ public class GUI extends Application
 
         btnAddExpType.setOnAction(e -> {
             ninthPane.getChildren().clear();
+            txtAddNewExpenseType.clear();
+            ninthStage.setTitle("Add Expense Type");
             ninthPane.add(lblNewExpenseTypeHeader, 0, 0);
             ninthPane.add(lblAddNewExpenseType, 0, 1);
             ninthPane.add(txtAddNewExpenseType, 0, 2);
@@ -2964,9 +3000,9 @@ public class GUI extends Application
             expCategory.add(txtAddNewExpenseType.getText());
 
             alert.setTitle("Success!");
-            alert.setHeaderText("The expense type has been added!");
+            alert.setHeaderText("The Expense Type has been added!");
             alert.showAndWait();
-            
+            txtAddNewExpenseType.clear();
 
             ninthStage.close();
 
@@ -2998,7 +3034,7 @@ public class GUI extends Application
         });
 
         btnRemExpType.setOnAction(e -> {
-
+            cmboExpCategory.getSelectionModel().clearSelection();
             ninthPane.getChildren().clear();
             ninthPane.add(lblRemoveExpTypeHeader, 0, 0);
             ninthPane.add(lblChooseExpType, 0, 1);
@@ -3021,18 +3057,19 @@ public class GUI extends Application
                 alert.setTitle("Success!");
                 alert.setHeaderText("The expense type has been removed!");
                 alert.showAndWait();
-
+                cmboExpCategory.getSelectionModel().clearSelection();
                 ninthStage.close();
             }
         });
         
-        storeTable.getColumns().addAll(tbStoreID, tbStoreName, tbStoreAddress);
+        storeTable.getColumns().addAll(tbStoreName, tbStoreAddress);
         menuAdmin.getMenus().get(1).getItems().get(3).setOnAction(e -> {
             // Store Management
 
             tenthPane.getChildren().clear();
             formPane.getChildren().clear();
             border.getChildren().clear();
+            cmboStore.getSelectionModel().clearSelection();
 
             secondPane.setAlignment(Pos.TOP_CENTER);
             secondStage.setTitle("Store Management");
@@ -3094,6 +3131,8 @@ public class GUI extends Application
             alert.setTitle("Success!");
             alert.setHeaderText("The store has been added!");
             alert.showAndWait();
+            txtStoreName.clear();
+            txtStoreAddress.clear();
             //insert code to add employee to object
 
             tenthStage.close();
@@ -3264,6 +3303,7 @@ public class GUI extends Application
             discountPane.getChildren().clear();
             discountStage.setTitle("Set Member Discount");
             discountStage.show();
+            txtSetDiscount.clear();
             discountPane.setAlignment(Pos.TOP_CENTER);
 
             discountPane.add(lblMngDiscount, 0, 0, 3, 1);
@@ -3744,6 +3784,8 @@ public class GUI extends Application
             secondPane.getChildren().clear();
             formPane.getChildren().clear();
             border.getChildren().clear();
+            cmboType.getSelectionModel().clearSelection();
+            cmboStore.getSelectionModel().clearSelection();
             
             secondPane.setAlignment(Pos.TOP_CENTER);
             formPane.setAlignment(Pos.TOP_LEFT);
@@ -4061,6 +4103,7 @@ public class GUI extends Application
             secondPane.getChildren().clear();
             formPane.getChildren().clear();
             border.getChildren().clear();
+            cmboStore.getSelectionModel().clearSelection();
             
             secondPane.setAlignment(Pos.TOP_CENTER);
             
@@ -4135,6 +4178,8 @@ public class GUI extends Application
            secondPane.getChildren().clear();
            formPane.getChildren().clear();
            border.getChildren().clear();
+           cmboYear.getSelectionModel().clearSelection();
+           cmboMonth.getSelectionModel().clearSelection();
            
            secondPane.setAlignment(Pos.TOP_CENTER);
            secondStage.setTitle("Monthly Expense Report");
@@ -4226,6 +4271,8 @@ public class GUI extends Application
             secondPane.getChildren().clear();
             formPane.getChildren().clear();
             textPane.getChildren().clear();
+            cmboYear.getSelectionModel().clearSelection();
+            
             secondPane.setAlignment(Pos.TOP_CENTER);
             textPane.setAlignment(Pos.TOP_LEFT);
             textPane.setVgap(10);
