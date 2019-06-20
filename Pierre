@@ -3295,6 +3295,11 @@ public class GUI extends Application
         btnRingSale.setOnAction(e -> {
             
             CustSaleForm newSale = new CustSaleForm(this);
+            prodData.clear();
+                for(Product prod: prodList)
+                {
+                    prodData.add(prod);
+                }
             
         });
         
