@@ -1,0 +1,38 @@
+//after main: 
+public void loadSuppliersFromDB()
+        {
+        String suppQuery; 
+        ResultSet suppRS; 
+        suppQuery = "SELECT * FROM SUPPLIER";   
+        suppRS = sendDBCommand(suppQuery); 
+        try {
+         
+           while(suppRS.next())
+            {
+                suppList.add(new Supplier(suppRS.getString("SUPPLIERNAME"), suppRS.getString("SUPPLIERPHONE"),
+                        suppRS.getString("SUPPLIEREMAIL"), suppRS.getString("SUPPLIERADDRESS"), suppRS.getString("CONTACTNAME"),
+                        suppRS.getString("CONTACTPHONE"), suppRS.getString("CONTACTEMAIL")));
+            }
+        }
+        
+        catch(SQLException e) {
+            System.out.println(e.toString()); 
+        }
+        //under stop method 
+        for (int i = 0; i < suppList.size(); i++) {
+            
+           String suppData = " "; 
+           String suppQuery = " "; 
+
+            suppData = " ('" + (suppList.get(i).getID() +1) + "' , '" + suppList.get(i).getName() + "' , '" + suppList.get(i).getSupplierPhone() + "' , '"  +
+                    suppList.get(i).getSupplierEmail() + "' , '" + suppList.get(i).getSupplierAddress() + "' , '" + suppList.get(i).getContactName() + "' , '" + suppList.get(i).getContactPhone() + "' , '" +
+                    suppList.get(i).getContactEmail() + " ' )";
+            suppQuery = "INSERT INTO SUPPLIER (SUPPLIERID, SUPPLIERNAME, SUPPLIERPHONE, SUPPLIEREMAIL, SUPPLIERADDRESS, CONTACTNAME, CONTACTPHONE, CONTACTEMAIL) VALUES" + suppData;
+            sendDBCommand(suppQuery); 
+        }
+        //under start method 
+        loadSuppliersFromDB(); 
+         for(int i = 0; i < suppList.size(); i++) {
+            Supplier.obsSupp.add(suppList.get(i).getName()); 
+        }
+       
