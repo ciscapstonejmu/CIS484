@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+
 public class Supplier implements Serializable{
     
     private int supplierID;
@@ -120,11 +121,11 @@ public class Supplier implements Serializable{
     public String toString()
     {
         String str = "";
-        str += "Supplier ID: " + this.supplierID + " , Supplier Name: " + this.supplierName + " , Suppler Phone Number: " +
-                this.supplierPhone + " , Supplier Email: " + this.supplierEmail + 
-                " , Supplier Address: " + this.supplierAddress + " , Sales Contact Name: " + this.salesContactName +
-                " , Sales Contact Phone Number: " + this.salesContactPhoneNumber + 
-                " , Sales Contact Email: " + this.salesContactEmail;
+        str += "Supplier ID: " + this.supplierID + ", Supplier Name: " + this.supplierName + ", Suppler Phone Number: " +
+                this.supplierPhone + ", Supplier Email: " + this.supplierEmail + 
+                ", Supplier Address: " + this.supplierAddress + ", Sales Contact Name: " + this.salesContactName +
+                ", Sales Contact Phone Number: " + this.salesContactPhoneNumber + 
+                ", Sales Contact Email: " + this.salesContactEmail;
          return str;
     }
     
