@@ -422,7 +422,8 @@ public class CustSaleForm{
             int saleStore = cmboSaleStore.getSelectionModel().getSelectedIndex();
             int saleEmp = cmboSaleEmp.getSelectionModel().getSelectedIndex();
             int saleMem = GUI.cmboMem.getSelectionModel().getSelectedIndex();
-            
+            GUI.prodList.clear();
+            GUI.prodList.addAll(currentSale);
             String dateOfSale = saleDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
             
             if(GUI.cmboMem.getSelectionModel().isEmpty())
@@ -453,6 +454,7 @@ public class CustSaleForm{
                 cmboSaleEmp.getSelectionModel().clearSelection();
                 cmboSaleProd.getSelectionModel().clearSelection();
                 GUI.cmboMem.getSelectionModel().clearSelection();
+                
             }
             else
             {
