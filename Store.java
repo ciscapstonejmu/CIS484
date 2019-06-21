@@ -70,7 +70,12 @@ public class Store implements Serializable{
     {
         return this.associatedExpenses.size();
     }
-    
+    public void addRevenue(CustSale sale){
+        this.associatedRevenue.add(sale);
+    }
+    public void removeExpense(CustSale sale){
+        this.associatedRevenue.remove(sale);
+    }
     public String DisplayExpenses()
     {
         String str = "";
@@ -133,7 +138,7 @@ public class Store implements Serializable{
     public String toString()
     {
         String str = "";
-        str += "ID: " + this.storeID + ", Name: " + this.storeName + ", Address: " + this.storeAddress;
+        str += "ID: " + this.storeID + " , Name: " + this.storeName + " , Address: " + this.storeAddress;
         return str;
     }
            
