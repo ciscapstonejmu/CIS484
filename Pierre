@@ -4921,131 +4921,6 @@ public class GUI extends Application
     
       @Override
     public void stop(){
-
-
-        String cstData; //Customer
-        String emData; //Employee
-        String exData; //Expense
-        String memData; //Member
-        String payData; //Payroll
-        String prData; //Product
-        String poData; //ProductOrder
-        String strData; //Store
-        String spData; //Supplier
-
-        String cstQuery;
-        String emQuery;
-        String exQuery;
-        String memQuery;
-        String payQuery;
-        String prQuery;
-        String poQuery;
-        String strQuery;
-        String spQuery;
-
-
-
-        for (int i = 0; i < obsCust.size(); i++)
-        {
-            Customer cst = (Customer) obsCust.get(i);
-            cstData = " ('" + cst.getID() + "' , '" + cst.getName() + "' , '" + cst.getEmail() + "' , '" + cst.getPhoneNumber() + "' , '" +
-                    cst.getAddress() + "' , '" + cst.getPaymentMethod() + "')";
-            cstQuery = "INSERT INTO CUSTOMER (CUSTOMERID, NAME, EMAIL, PHONENUMBER, ADDRESS, PAYMENTMETHOD) VALUES" + cstData;
-
-        }
-
-        for (int i = 0; i < empData.size(); i++)
-        {
-            Employee em = (Employee) empData.get(i);
-            Store str = (Store) em.getStore();
-            emData = "('" + em.getEmployeeID() + "' , '" + em.getFirstName() + 
-                    "' , '" + em.getLastName() + "' , '" + em.getEmail() + "' , '" + 
-                    em.getPhoneNumber() + "' , '" + em.getAddress() + "' , '" + em.getSalary() +
-                    "' , '" + em.getJobTitle() + "' , '" + em.getEmployeeType() + "' , '" + em.getEmployeeCategory() +
-                    "' , '" + em.getStore() +  "' )";
-            emQuery = "INSERT INTO EMPLOYEE (EMPLOYEEID, FIRSTNAME, LASTNAME, EMAIL, PHONENUMBER, ADDRESS, SALARY, JOBTITLE, EMPLOYEETYPE, EMPLOYEECATEGORY, STORE) VALUES" + emData;
-            strData = "('" + str.getStoreID() + "' , '" + str.getStoreName() + "' , '" + str.getStoreAddress() + "' )";
-            strQuery = "INSERT INTO STORE (STOREID, STORENAME, STOREADDRESS) VALUES" + strData;
-        }
-
-        for (int i = 0; i < expData.size(); i++)
-        {
-            Expense ex = (Expense) expData.get(i);
-            exData = " ('" + ex.getExpenseID() + "' , '" + ex.getCategory() + "' , '" + ex.getDescription() + 
-                    "' , '" + ex.getAmountPaid() + "' , '" + ex.getTotalAmount() + "' , '" + ex.getDate() + "' )";
-            exQuery = "INSERT INTO EXPENSE (EXPENSEID, CATEGORY, DESCRIPTION, AMOUNTPAID, TOTALAMOUNT, DATE) VALUES" + exData;
-        }
-
-        for (int i = 0; i < obsMem.size(); i++)
-        {
-            Member mem = (Member) obsMem.get(i);
-            memData = " ('" + mem.getID() + "' , '" + mem.getFName() + "' , '" + mem.getLName() + "' , '" + mem.getPhone() + "' , '" +
-                    mem.getEmail() + "' )";
-            memQuery = "INSERT INTO MEMBER (MEMBERID, FNAME, LNAME, PHONENUMBER, EMAIL) VALUES" + memData;
-        }
-
-        for (int i = 0; i < empData.size(); i++)
-        {
-            for (int j = 0; j < empData.get(i).payRoll.size(); j++)
-            {
-                Payroll pay = (Payroll) empData.get(i).payRoll.get(j);
-                Employee em = (Employee) empData.get(i).payRoll.get(j).getEmp();
-                /*payData = " ('" + pay.getID() + "' , '" + pay.getPayrollPeriod() + "' , '" + pay.getStart() + "' , '" + pay.end + "' , '" + pay.hoursWorked + 
-                        "' , '" + pay.schedule + "' , '" + pay.scheduleDay + "' , '" + pay.arrTimeIn + "' , '" + pay.arrTimeOut + "' , '" + pay.totalWork +
-                        "' , '" + pay.getAmountPaid() + "' )";
-                payQuery = "INSERT INTO PAYROLL (PAYROLLID, PAYROLLPERIOD, START, END, HOURSWORKED, SCHEDULE, SCHEDULEDAY, ARRTIMEIN, ARRTIMEOUT, TOTALWORK, AMOUNTPAID) VALUES" + payData;
-            */
-                payData = " ('" + pay.getID() + "' , '" + pay.getEmp() + "' )";
-                payQuery = "INSERT INTO PAYROLL (PAYROLLID, EMPLOYEE) VALUES" + payData;
-                }
-        }
-
-
-        for (int i = 0; i < prodData.size(); i++)
-        {
-            Product pr = (Product) prodData.get(i);
-            Supplier sp = (Supplier) pr.getSupp();
-            prData = " ('" + pr.getProductID() + "' , '" + pr.getProductName() + "' , '" + pr.getQuantity() + "' , '" + pr.getPrice() +
-                    "' , '" + pr.getStore() + "' , '" + pr.getFoodDescription() + "' , '" + pr.getCategory() + "' , '" + pr.getSupplier() +
-                    "' , '" + pr.getImage() + "' )";
-            prQuery = "INSERT INTO PRODUCT (PRODUCTID, NAME, QUANTITY, PRICE, STORE, DESCRIPTION, CATEGORY, SUPPLIER) VALUES" + prData;
-            spData = " ('" + sp.getID() + "' , '" + sp.getName() + "' , '" + sp.getSupplierPhone() + "' , '" + sp.getSupplierPhone() + "' , '" +
-                    sp.getSupplierEmail() + "' , '" + sp.getSupplierAddress() + "' , '" + sp.getContactName() + "' , '" + sp.getContactPhone() + "' , '" +
-                    sp.getContactEmail() + " ' )";
-            spQuery = "INSERT INTO SUPPLIER (SUPPLIERID, SUPPLIERNAME, SUPPLIERPHONE, SUPPLIEREMAIL, SUPPLIERADDRESS, CONTACTNAME, CONTACTPHONE, CONTACTEMAIL) VALUES" + spData;
-        }
-
-        for (int i = 0; i < obsProdOrder.size(); i++)
-        {
-            ProductOrder po = (ProductOrder) obsProdOrder.get(i);
-            Supplier sp = (Supplier) po.getAssociatedSupplier();
-            Store str = (Store) po.getStoreLoc();
-            poData = " ('" + po.getID() + "' , '" + po.getQuantity() + "' , '" + po.getProdOName() + "' , '" + po.getUnitCost() + "' , '" + po.getSubtotal() +
-                    "' , '" + po.getDeliveryDate() + "' , '" + po.getDate() + "' , '" + po.getSupplier() + "' , '" + po.getStore() + "' , '" + po.getCategory() + "' )";
-            poQuery = "INSERT INTO PRODUCTORDER (PRODUCTORDERID, QUANTITY, NAME, UNITCOST, SUBTOTAL, DELIVERYDATE, DATE, SUPPLIER, STORE, CATEGORY) VALUES" + poData;
-            spData = " ('" + sp.getID() + "' , '" + sp.getName() + "' , '" + sp.getSupplierPhone() + "' , '" + sp.getSupplierPhone() + "' , '" +
-                    sp.getSupplierEmail() + "' , '" + sp.getSupplierAddress() + "' , '" + sp.getContactName() + "' , '" + sp.getContactPhone() + "' , '" +
-                    sp.getContactEmail() + " ' )";
-            spQuery = "INSERT INTO SUPPLIER (SUPPLIERID, SUPPLIERNAME, SUPPLIERPHONE, SUPPLIEREMAIL, SUPPLIERADDRESS, CONTACTNAME, CONTACTPHONE, CONTACTEMAIL) VALUES" + spData;
-            strData = "('" + str.getStoreID() + "' , '" + str.getStoreName() + "' , '" + str.getStoreAddress() + "' )";
-            strQuery = "INSERT INTO STORE (STOREID, STORENAME, STOREADDRESS) VALUES" + strData;
-        }
-
-        for (int i = 0; i < storeData.size(); i++)
-        {
-            Store str = (Store) obsStore.get(i);
-            strData = "('" + str.getStoreID() + "' , '" + str.getStoreName() + "' , '" + str.getStoreAddress() + "' )";
-            strQuery = "INSERT INTO STORE (STOREID, STORENAME, STOREADDRESS) VALUES" + strData;
-        }
-
-        for (int i = 0; i < obsSupp.size(); i++)
-        {
-            Supplier sp = (Supplier) obsSupp.get(i);
-            spData = " ('" + sp.getID() + "' , '" + sp.getName() + "' , '" + sp.getSupplierPhone() + "' , '" + sp.getSupplierPhone() + "' , '" +
-                    sp.getSupplierEmail() + "' , '" + sp.getSupplierAddress() + "' , '" + sp.getContactName() + "' , '" + sp.getContactPhone() + "' , '" +
-                    sp.getContactEmail() + " ' )";
-            spQuery = "INSERT INTO SUPPLIER (SUPPLIERID, SUPPLIERNAME, SUPPLIERPHONE, SUPPLIEREMAIL, SUPPLIERADDRESS, CONTACTNAME, CONTACTPHONE, CONTACTEMAIL) VALUES" + spData;
-        }
         
        
 for (int i = 0; i< suppList.size(); i++)
@@ -5059,15 +4934,14 @@ for (int i = 0; i< suppList.size(); i++)
             suppQuery = "INSERT INTO SUPPLIER (SUPPLIERID, SUPPLIERNAME, SUPPLIERPHONE, SUPPLIEREMAIL, SUPPLIERADDRESS, CONTACTNAME, CONTACTPHONE, CONTACTEMAIL) VALUES" + suppData;
             DBCommand(suppQuery);
         }
-        for (int i = 0; i < storeList.size(); i++) {
+       for (int i = 0; i < storeList.size(); i++) {
             String storData = " ";
             String storQuery = " ";
             
             storData = " ('" + storeList.get(i).getStoreID() + "' , '" + storeList.get(i).getStoreName() + "' , '" + storeList.get(i).getStoreAddress() + " ')";
-            storQuery = "INSERT INTO STORE (STOREID, STORENAME, STOREADDRESS) VALUES" + storData;
+            storQuery = "INSERT INTO JAVAUSER.STORE (STOREID, STORENAME, STOREADDRESS) VALUES" + storData;
             DBCommand(storQuery);
             
-        
         }
         
         for (int i = 0; i < expList.size(); i++)
@@ -5078,8 +4952,8 @@ for (int i = 0; i< suppList.size(); i++)
             expnData = " ('" + expList.get(i).getExpenseID() + "' , '" + expList.get(i).getCategory() + "' , '" + 
                     expList.get(i).getDescription() + "' , '" + expList.get(i).getStatus() + "' , '" + expList.get(i).getAmountPaid() +
                     "' , '" + expList.get(i).getTotalAmount() + "' , '" + expList.get(i).getRemainingBalance() + "' , '" + expList.get(i).getDate() +
-                    "' , '" + expList.get(i).getPayableStore().getStoreID() + " )'";
-            expnQuery = "INSERT INTO EXPENSE (EXPENSEID, CATEGORY, DESCRIPTION, STATUS, AMOUNTPAID, TOTALAMOUNT, REMAININGBALANCE, EXPDATE, STOREID) VALUES" + expnData;
+                    "' , '" + expList.get(i).getPayableStore().getStoreID() + " ')";
+            expnQuery = "INSERT INTO JAVAUSER.EXPENSE (EXPENSEID, CATEGORY, DESCRIPTION, STATUS, AMOUNTPAID, TOTALAMOUNT, REMAININGBALANCE, EXPDATE, STOREID) VALUES" + expnData;
             DBCommand(expnQuery);
             
         }
@@ -5113,8 +4987,8 @@ for (int i = 0; i< suppList.size(); i++)
 
             prodtData = " ('" + prodList.get(i).getProductID() + "' , '" + prodList.get(i).getProductName() + "' , '" + prodList.get(i).getQuantity() + "' , '" + prodList.get(i).getPrice() +
                     "' , '" + prodList.get(i).getStore().getStoreName() + "' , '" + prodList.get(i).getFoodDescription() + "' , '" + prodList.get(i).getCategory() + "' , '" + prodList.get(i).getStore().getStoreID() +
-                    "' , '" + prodList.get(i).getSupp().getID() + "' )";
-            prodtQuery = "INSERT INTO PRODUCT (PRODUCTID, NAME, QUANTITY, PRICE, STORE, DESCRIPTION, CATEGORY, STOREID, SUPPLIERID) VALUES" + prodtData;
+                    "' , '" + prodList.get(i).getSupp().getID() + " ')";
+            prodtQuery = "INSERT INTO JAVAUSER.PRODUCT (PRODUCTID, NAME, QUANTITY, PRICE, COST, DESCRIPTION, CATEGORY, STOREID, SUPPLIERID) VALUES" + prodtData;
             DBCommand(prodtQuery);
         }
 
@@ -5123,25 +4997,24 @@ for (int i = 0; i< suppList.size(); i++)
             String prodOrdData = " ";
             String prodOrdQuery = " ";
 
-            prodOrdData = " ('" + prodOrderList.get(i).getID() + "' , '" + prodOrderList.get(i).getQuantity() + "' , '" + prodOrderList.get(i).getProdOName() + "' , '" + prodOrderList.get(i).getUnitCost() + "' , '" + prodOrderList.get(i).getSubtotal() +
-                    "' , '" + prodOrderList.get(i).getDeliveryDate() + "' , '" + prodOrderList.get(i).getDate() + "' , '" + prodOrderList.get(i).getCategory() + "' , '" + prodOrderList.get(i).getStoreLoc().getStoreID() + "' , '" + prodOrderList.get(i).getAssociatedSupplier().getID() + "' )";
-            prodOrdQuery = "INSERT INTO PRODUCTORDER (PRODUCTORDERID, QUANTITY, NAME, UNITCOST, SUBTOTAL, DELIVERYDATE, PODATE, SUPPLIER, CATEGORY, STOREID, SUPPLIERID) VALUES" + prodOrdData;
+            prodOrdData = " ('" + prodOrderList.get(i).getID() + "' , '" + prodOrderList.get(i).getQuantity() + "' , '" + prodOrderList.get(i).getProdOName() + "' , '" + prodOrderList.get(i).getUnitCost() + "' , '" + prodOrderList.get(i).getUnitPrice() + "' , '" + prodOrderList.get(i).getSubtotal() +
+                    "' , '" + prodOrderList.get(i).getDeliveryDate() + "' , '" + prodOrderList.get(i).getDate() + "' , '" + prodOrderList.get(i).getCategory() + "' , '" + prodOrderList.get(i).getStoreLoc().getStoreID() + "' , '" + prodOrderList.get(i).getAssociatedSupplier().getID() + " ')";
+            prodOrdQuery = "INSERT INTO JAVAUSER.PRODUCTORDER (PRODUCTORDERID, QUANTITY, NAME, UNITCOST, UNITPRICE, SUBTOTAL, DELIVERYDATE, PODATE, CATEGORY, STOREID, SUPPLIERID) VALUES " + prodOrdData;
             DBCommand(prodOrdQuery);
         }
 
 
-        for (Employee emp: empList) {
+        for (int i = 0; i < empList.size(); i++) {
             String emplData = " ";
             String emplQuery = " ";
 
-            emplData = " ('" + emp.getEmployeeID() + "' , '" + emp.getFirstName() + "' , '" + emp.getLastName() + "' , '" + emp.getEmail() + "' , '" +
-                    emp.getPhoneNumber() + "' , '" + emp.getAddress() + "' , '" + emp.getHourly() + "' , '" + emp.getJobTitle() +
-                    "' , '" + emp.getTimeWorked() + emp.getEmployeeType() + "' , '" + emp.getEmployeeCategory() + "' , '" + emp.getUsername() +
-                    "' , '" + emp.getPassword() + emp.getStore().getStoreID() + "' )";
-            emplQuery = "INSERT INTO EMPLOYEE (EMPLOYEEID, EMPLOYFNAME, EMPLOYLNAME, EMPLOYEMAIL, EMPLOYPHONENUMBER, EMPLOYADDRESS, EMPLOYHOURLY, EMPLOYJOBTITLE, EMPLOYTIMEWORKED, EMPLOYTYPE, EMPLOYCATEGORY, EMPLOYUSERNAME, EMPLOYPASSWORD, STOREID) VALUES" + emplData;
+            emplData = " ('" + empList.get(i).getEmployeeID() + "' , '" + empList.get(i).getFirstName() + "' , '" + empList.get(i).getLastName() + "' , '" + empList.get(i).getEmail() + "' , '" +
+                    empList.get(i).getPhoneNumber() + "' , '" + empList.get(i).getAddress() + "' , '" + empList.get(i).getHourly() + "' , '" + empList.get(i).getJobTitle() +
+                    "' , '" + empList.get(i).getTimeWorked() + empList.get(i).getEmployeeType() + "' , '" + empList.get(i).getEmployeeCategory() + "' , '" + empList.get(i).getUsername() +
+                    "' , '" + empList.get(i).getPassword() + empList.get(i).getStore().getStoreID() + " ')";
+            emplQuery = "INSERT INTO JAVAUSER.EMPLOYEE (EMPLOYEEID, EMPLOYFNAME, EMPLOYLNAME, EMPLOYEMAIL, EMPLOYPHONENUMBER, EMPLOYADDRESS, EMPLOYHOURLY, EMPLOYJOBTITLE, EMPLOYTIMEWORKED, EMPLOYTYPE, EMPLOYCATEGORY, EMPLOYUSERNAME, EMPLOYPASSWORD, STOREID) VALUES " + emplData;
+            DBCommand(emplQuery);
          }
-
-    }
 
     public ResultSet DBCommand(String sqlQuery)
         {
