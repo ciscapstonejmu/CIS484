@@ -4844,50 +4844,62 @@ public class GUI extends Application
             }
             else
             {
-
-                String output = "";
+            String year = cmboYear.getValue().toString();    
+            String output = "";
             double expTotal = 0.0;
             output += "Profit v. Expense Report:";
             output += "\n========================================================\n";
-            output += "Year: " + cmboYear.getValue().toString();
+            output += "Year: " + year;
             output += "------------------------------------------------------\n";
             for (int i = 0; i < obsStore.size(); i++)
             {
                 output += "\n";
                 output += "\n" + storeList.get(i).getStoreName() + " : ";
                 output += "\n";
-                
+                output += "Total Expense: " + storeList.get(i).annualExpense(year) + "\n";
+                output += "Total Revenue: " + storeList.get(i).annualRevenue(year) + "\n";
+                double catTotal = 0.0;
             for (int j = 0; j < expCategory.size(); j++)
            {
+               
                output += "\n";
-               output += expCategory.get(j) + " : ";
-               for (int k = 0; k < obsExpense.size(); k++)
+               output += expCategory.get(j) + ": ";
+               for (int k = 0; k < storeList.get(i).associatedExpenses.size(); k++)
                {
-                   if (obsExpense.get(k).getCategory().equalsIgnoreCase(expCategory.get(j)))
+                   if (storeList.get(i).associatedExpenses.get(k).getCategory().equalsIgnoreCase(expCategory.get(j)))
                    {
-                       expTotal += obsExpense.get(k).getTotalAmount();
-                       output += expTotal;
-                       
+                       for(int m = 0; m<storeList.get(i).associatedExpenses.get(k).datesPaid.size(); m++)
+                       {
+                        if(storeList.get(i).associatedExpenses.get(k).datesPaid.get(m).substring(6).equalsIgnoreCase(year))
+                        {
+                         catTotal += storeList.get(i).associatedExpenses.get(k).pmtsMade.get(m);
+                         output += catTotal;   
+                        
+                        }   
+                           
+                       }
+                        
                    }            
                }        
 
            }
-//                output += "Total Expense:" + expTotal;
+            
 //               expTotal = 0.0; incorrect
                 
                 //create loop or whatever to print out PvE based on store and year
 
 
                 txtPvE.setText(output);
-                alert.setTitle("Success!");
-                alert.setHeaderText("Data Displayed!");
-                alert.showAndWait();
-
-                tabPText.setContent(txtPvE);
-
-                cmboStore.getSelectionModel().clearSelection();
-                cmboYear.getSelectionModel().clearSelection();
+               
             }
+            alert.setTitle("Success!");
+            alert.setHeaderText("Data Displayed!");
+            alert.showAndWait();
+
+            tabPText.setContent(txtPvE);
+
+            cmboStore.getSelectionModel().clearSelection();
+            cmboYear.getSelectionModel().clearSelection();
             }
         });
     }
