@@ -57,7 +57,7 @@ public class GUI extends Application
     TextField txtStoreLoc = new TextField();
     boolean isAuthorized = false;
     boolean found = false;
-    static Employee currentUser;
+    Employee currentUser;
     
     //Array Lists
     static ArrayList<Employee> savedEmp;
