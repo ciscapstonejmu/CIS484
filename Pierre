@@ -3950,6 +3950,16 @@ public class GUI extends Application
             alert.setTitle("Success!");
             alert.setHeaderText("The timesheet has been submitted!");
             alert.showAndWait();
+            expList.add(new Expense("Payroll", eC.getFirstName() + " " + eC.getLastName(), 0, tempPay.getAmountPaid(),currentDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")), eC.getStore()));
+            obsExpense.add(expList.get(expList.size()-1));
+            for(int i = 0; i<storeList.size(); i++)
+            {
+                if(storeList.get(i).getStoreName().equalsIgnoreCase(expList.get(expList.size()-1).getStore()))
+                {
+                  storeList.get(i).addExpense(expList.get(expList.size()-1));
+                  obsStore.get(i).addExpense(expList.get(expList.size()-1));
+                }   
+            }
             System.out.println(eC.getFirstName() + " has worked " + eC.getTimeWorked() + "hours during " + tempPay.getPayrollPeriod());
             for(int i = 0; i<eC.payRoll.size(); i++)
             {
