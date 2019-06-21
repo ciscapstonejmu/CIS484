@@ -154,6 +154,14 @@ public class Payroll implements Serializable{
             this.totalWork+= dub;
             this.emp.setTimeWorked(totalWork);
         }
+        if(this.emp.getEmployeeCategory().equalsIgnoreCase("Part Time"))
+        {
+            this.amountPaid = totalWork * this.emp.getHourly();
+        }
+        else
+        {
+            this.amountPaid = (this.emp.getSalary()/52);
+        }
     }
     public String toString(){
         String print = this.emp.getFirstName() + " " + this.emp.getLastName() + "\n" + this.payrollPeriod;
