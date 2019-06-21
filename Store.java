@@ -88,6 +88,7 @@ public class Store implements Serializable{
     }
     public double calculateMonthProfit(String month)
     {
+    double profit = 0;
     String DateRn = LocalDate.now().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")).substring(0, 2);
     this.cost = 0.0;
     this.revenue = 0.0;
@@ -108,10 +109,12 @@ public class Store implements Serializable{
           this.revenue += this.associatedRevenue.get(i).getSubtotal();
         }        
     }
-    return revenue-cost; 
+    profit = revenue - cost;
+    return profit; 
     }
     public double calculateYearProfit(String year)
     {
+    double profit = 0.0;
     String DateRn = LocalDate.now().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")).substring(6);
     this.cost = 0.0;
     this.revenue = 0.0;
@@ -132,7 +135,8 @@ public class Store implements Serializable{
           this.revenue += this.associatedRevenue.get(i).getSubtotal();
         }        
     }
-    return revenue-cost; 
+    profit = revenue - cost;
+    return profit; 
     }
             
     public String toString()
