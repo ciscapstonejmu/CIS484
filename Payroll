@@ -78,7 +78,7 @@ public class Payroll implements Serializable{
         }
         else
         {
-            this.amountPaid = (this.emp.getSalary()/26);
+            this.amountPaid = (this.emp.getSalary()/52);
         }
         this.payrollID = nextID++;
         
