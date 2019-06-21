@@ -452,7 +452,7 @@ public class CustSaleForm{
                 
                 CustSale thisSale = GUI.saleList.get(saleCount-1);
                 GUI.storeList.get(saleStore).associatedRevenue.add(thisSale);
-                GUI.obsStore.get(saleStore).associatedRevenue.add(thisSale);
+                
                 
                 
                 receiptOutput.appendText(recItems);
@@ -480,7 +480,7 @@ public class CustSaleForm{
                         this.saleProducts));
                 CustSale thisSale = GUI.saleList.get(saleCount-1);
                 GUI.storeList.get(saleStore).associatedRevenue.add(thisSale);
-                GUI.obsStore.get(saleStore).associatedRevenue.add(thisSale);
+               
                 
                 receiptOutput.appendText(recItems);
                 receiptOutput.appendText("\n" + thisSale.toString());
