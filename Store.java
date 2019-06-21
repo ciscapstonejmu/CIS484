@@ -95,6 +95,19 @@ public class Store implements Serializable{
         }
         return tR;
     }
+    public double annualExpense(String year)
+    {
+        double tR = 0.0;
+        for(int i = 0; i<this.associatedExpenses.size(); i++){
+            for(int k = 0; k<associatedExpenses.get(i).datesPaid.size(); k++)
+            {
+               if(this.associatedExpenses.get(i).datesPaid.get(k).substring(6).equalsIgnoreCase(year)){
+                tR += this.associatedExpenses.get(i).pmtsMade.get(k);} 
+            }
+            
+        }
+        return tR;
+    }
     public double calculateMonthProfit(String month)
     {
     double profit = 0;
