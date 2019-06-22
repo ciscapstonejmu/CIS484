@@ -517,8 +517,20 @@ public class CustSaleForm{
             GUI.cmboMem.getSelectionModel().clearSelection();
             receiptOutput.clear();
             txtSaleOutput.clear();
+            cbYes.setSelected(false);
+            cbNo.setSelected(false);
+            btnAddMember.setDisable(false);
+            btnAddMember.setDisable(false);
+            btnSearchMem.setDisable(false);
+            GUI.cmboMem.setDisable(false);
+            
+            
             
             primaryPane.getChildren().clear();
+            
+            txtSaleOutput.appendText("Sale Items: " + "\n");
+            txtSaleOutput.appendText("--------------------------"
+                + "----------------------------------------\n");
             
             primaryPane.add(lblRingSale, 0, 0, 3, 1);
             primaryPane.add(lblSaleDate, 0, 1,2,1);
