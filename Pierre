@@ -537,6 +537,7 @@ public class GUI extends Application
     Menu menuSystem = new Menu("System");
     
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    DecimalFormat decimal = new DecimalFormat("0.00");
     
     // Our Database Connection method needs these 
     // objects. We declare them here and point them
@@ -4197,7 +4198,7 @@ public class GUI extends Application
                          totalMoney += saleList.get(i).getSubtotal();
                     }  
                 }
-                output +=( "Total Number of Sales on " + firstDay.format(DateTimeFormatter.ISO_DATE) + ": " + totalSales + " for a total revenue of $" + totalMoney + "\n");
+                output +=( "Total Number of Sales on " + firstDay.format(DateTimeFormatter.ISO_DATE) + ": " + totalSales + " for a total revenue of $" + decimal.format(totalMoney) + "\n");
                 firstDay = endDate;
                 totalSales = 0;
                 totalMoney = 0;
@@ -4224,7 +4225,7 @@ public class GUI extends Application
                         }
                         catMoney.add(totalMoney);
                         totalMoney = 0;
-                        output += categoryList.get(i) + ": " + catSales.get(i) + ", Sales: " + catMoney.get(i) + "\n";
+                        output += categoryList.get(i) + ": " + catSales.get(i) + ", Sales: " + decimal.format(catMoney.get(i)) + "\n";
                     }
             }   
             else if (type == 1)
@@ -4247,7 +4248,7 @@ public class GUI extends Application
                              totalMoney += saleList.get(i).getSubtotal();
                         }  
                     }
-                    output +=( "Total Number of Sales for " + firstMonth.format(DateTimeFormatter.ISO_DATE) + " is: " + totalSales + " for a total revenue of $" + totalMoney + "\n");
+                    output +=( "Total Number of Sales for " + firstMonth.format(DateTimeFormatter.ISO_DATE) + " is: " + totalSales + " for a total revenue of $" + decimal.format(totalMoney) + "\n");
                     firstMonth = endDate;
                     totalSales = 0;
                     totalMoney = 0;
@@ -4306,7 +4307,7 @@ public class GUI extends Application
                              totalMoney += saleList.get(i).getSubtotal();
                         }  
                     }
-                    output += ("Total Number of Sales for the month of: " + monthNames.get(b) + ": " + totalSales + " for a total revenue of $" + totalMoney + "\n");
+                    output += ("Total Number of Sales for the month of: " + monthNames.get(b) + ": " + totalSales + " for a total revenue of $" + decimal.format(totalMoney) + "\n");
                     firstYear = endDate;
                     totalSales = 0;
                     totalMoney = 0;
@@ -4427,7 +4428,7 @@ public class GUI extends Application
                          totalMoney += saleList.get(i).getSubtotal();
                     }  
                 }
-                output +=( "Total Number of Sales on " + firstDay.format(DateTimeFormatter.ISO_DATE) + ": " + totalSales + " for a total revenue of $" + totalMoney + "\n");
+                output +=( "Total Number of Sales on " + firstDay.format(DateTimeFormatter.ISO_DATE) + ": " + totalSales + " for a total revenue of $" + decimal.format(totalMoney) + "\n");
                 firstDay = endDate;
                 totalSales = 0;
                 totalMoney = 0;
@@ -4454,7 +4455,7 @@ public class GUI extends Application
                         }
                         catMoney.add(totalMoney);
                         totalMoney = 0;
-                        output += categoryList.get(i) + ": " + catSales.get(i) + ", Sales: " + catMoney.get(i) + "\n";
+                        output += categoryList.get(i) + ": " + catSales.get(i) + ", Sales: $" + decimal.format(catMoney.get(i)) + "\n";
                     }
             }   
             else if (type == 1)
@@ -4477,7 +4478,7 @@ public class GUI extends Application
                              totalMoney += saleList.get(i).getSubtotal();
                         }  
                     }
-                    output +=( "Total Number of Sales for " + firstMonth.format(DateTimeFormatter.ISO_DATE) + " is: " + totalSales + " for a total revenue of $" + totalMoney + "\n");
+                    output +=( "Total Number of Sales for " + firstMonth.format(DateTimeFormatter.ISO_DATE) + " is: " + totalSales + " for a total revenue of $" + decimal.format(totalMoney) + "\n");
                     firstMonth = endDate;
                     totalSales = 0;
                     totalMoney = 0;
@@ -4508,7 +4509,7 @@ public class GUI extends Application
                         }
                         catMoney.add(totalMoney);
                         totalMoney = 0;
-                        output += categoryList.get(i) + ": " + catSales.get(i) + ", Sales: " + catMoney.get(i) + "\n";
+                        output += categoryList.get(i) + ": " + catSales.get(i) + ", Sales: $" + decimal.format(catMoney.get(i)) + "\n";
                     }
             }  
             else if (type == 2)
@@ -4536,7 +4537,7 @@ public class GUI extends Application
                              totalMoney += saleList.get(i).getSubtotal();
                         }  
                     }
-                    output += ("Total Number of Sales for the month of: " + monthNames.get(b) + ": " + totalSales + " for a total revenue of $" + totalMoney + "\n");
+                    output += ("Total Number of Sales for the month of: " + monthNames.get(b) + ": " + totalSales + " for a total revenue of $" + decimal.format(totalMoney) + "\n");
                     firstYear = endDate;
                     totalSales = 0;
                     totalMoney = 0;
@@ -4566,7 +4567,7 @@ public class GUI extends Application
                        // System.out.println(totalMoney + " given " + catSales.get(i) + " for" + categoryList.get(i));
                         catMoney.add(totalMoney);
                         totalMoney = 0;
-                        output += categoryList.get(i) + ": " + catSales.get(i) + ", Sales: " + catMoney.get(i) + "\n";
+                        output += categoryList.get(i) + ": " + catSales.get(i) + ", Sales: $" + decimal.format(catMoney.get(i)) + "\n";
                     }
             }
             else if (type == 3)
@@ -4613,7 +4614,7 @@ public class GUI extends Application
                         }
                         catMoney.add(totalMoney);
                         totalMoney = 0;
-                        output += categoryList.get(i) + ": " + catSales.get(i) + ", Sales: " + catMoney.get(i) + "\n";
+                        output += categoryList.get(i) + ": " + catSales.get(i) + ", Sales: $" + decimal.format(catMoney.get(i)) + "\n";
                     }                    
             }
 
@@ -4672,7 +4673,7 @@ public class GUI extends Application
             else
             {
                 String output = "";
-                DecimalFormat decimal = new DecimalFormat("0.00");
+                
                 output += "Employee Report:";
                 output += "\n========================================================\n";
                 output += "Store: " + cmboStore.getValue().toString(); //use store var
@@ -4770,13 +4771,13 @@ public class GUI extends Application
                         if (expList.get(i).getStatus().equalsIgnoreCase("Paid"))
                         {
                         output += ", Status: " + expList.get(i).getStatus();
-                        output += ", Total Paid: " + expList.get(i).getTotalAmount();
+                        output += ", Total Paid: $" + decimal.format(expList.get(i).getTotalAmount());
                         }
                         else if (expList.get(i).getStatus().equalsIgnoreCase("Ongoing"))
                         {
                         output += ", Status: " + expList.get(i).getStatus();
-                        output += ", Amount Paid: " + expList.get(i).getAmountPaid();
-                        output += ", Amount Total: " + expList.get(i).getTotalAmount();
+                        output += ", Amount Paid: $" + decimal.format(expList.get(i).getAmountPaid());
+                        output += ", Amount Total: $" + decimal.format(expList.get(i).getTotalAmount());
                         }
 
                         output += "\n";
@@ -4856,8 +4857,8 @@ public class GUI extends Application
                 output += "\n";
                 output += "\n" + storeList.get(i).getStoreName() + " : ";
                 output += "\n";
-                output += "Total Expense: " + storeList.get(i).annualExpense(year) + "\n";
-                output += "Total Revenue: " + storeList.get(i).annualRevenue(year) + "\n";
+                output += "Total Expense: $" + decimal.format(storeList.get(i).annualExpense(year)) + "\n";
+                output += "Total Revenue: $" + decimal.format(storeList.get(i).annualRevenue(year)) + "\n";
                 double catTotal = 0.0;
             for (int j = 0; j < expCategory.size(); j++)
            {
