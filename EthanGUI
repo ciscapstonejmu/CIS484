@@ -5108,6 +5108,7 @@ for (int i = 0; i < suppList.size(); i++) {
                 exp.setDate(exprs.getString("EXPDATE"));
                 System.out.println("oh hi mark");
                 exp.setStore(storeList.get(exprs.getInt("STOREID")));
+                exp.setPayableStoreName(storeList.get(exprs.getInt("STOREID")).getStoreName());
                 System.out.println(exp.getStore());
                 
                 expList.add(exp);
