@@ -24,6 +24,19 @@ public class Expense {
     
     public static int nextID = 0;
     
+    public Expense()
+    {
+        this.category = "NO CATEGORY";
+        this.description = "NO DESCRIPTION";
+        this.date = "NO DATE";
+        this.status = "NO STATUS";
+        this.amountPaid = 0.0;
+        this.totalAmount = 0.0;
+        this.remainingBalance = 0.0;
+        this.store = "NO STORE";
+    }
+    
+    
         public Expense(String category, String description, double amountPaid, double totalAmount, String date)
     {
         this.category = category;
