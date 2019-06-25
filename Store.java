@@ -20,6 +20,11 @@ public class Store implements Serializable{
     public static int nextID = 0;
     public static ObservableList obsStore = FXCollections.observableArrayList();
     
+      public Store()
+    {
+        this.storeName = "NO NAME";
+        this.storeAddress = "NO ADDRESS";
+    }
     
     
     public Store (String storeName, String storeAddress)
