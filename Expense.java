@@ -170,6 +170,11 @@ public class Expense {
         return this.remainingBalance;
     }
     
+    public void setPayableStoreName (String store)
+    {
+        this.store;
+    }
+    
     public void payExpense(double payment)
     {
         this.amountPaid += payment;
