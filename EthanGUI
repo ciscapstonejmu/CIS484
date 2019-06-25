@@ -2812,6 +2812,11 @@ public class GUI extends Application
         });
         expTable.getColumns().addAll(tbExpID, tbExpCategory, tbExpDesc, tbExpAmountPaid, tbExpAmountTotal, tbExpDate, tbExpStatus, tbExpStore);  
         menuAdmin.getMenus().get(1).getItems().get(2).setOnAction(e -> {
+        for (int i = 0; i < expList.size(); i++)
+        {
+            System.out.println(expList.get(i).getPayableStore().getStoreID());
+        }
+        
            // Expense Management
            
             secondPane.getChildren().clear();
