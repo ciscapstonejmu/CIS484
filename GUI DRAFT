@@ -613,22 +613,7 @@ public class GUI extends Application
         primaryPane.setHgap(10);
         primaryPane.setVgap(10);
         
-//            Store store1 = new Store("Harrisonburg", "123 lane");
-//            Store store2 = new Store ("New Market", "456 lane");
-//            Store store3 = new Store ("Staunton", "789 lane");           
-//            Store store4 = new Store ("Waynesboro", "456 way");
-//            Store store5 = new Store ("Charlottesville", "123 way");
-//            obsStore.add(store1);
-//            obsStore.add(store2);
-//            obsStore.add(store3);
-//            obsStore.add(store4);
-//            obsStore.add(store5);
-//            obsExpStore.add(store1);	
-//            obsExpStore.add(store2);	
-//            obsExpStore.add(store3);	
-//            obsExpStore.add(store4);	
-//            obsExpStore.add(store5);
-//            storeList.addAll(obsStore);
+            
 //            
 //            
 //            categoryList.add("PRODUCE");
@@ -1145,7 +1130,61 @@ public class GUI extends Application
         Stage discountStage = new Stage();
         discountStage.setScene(discountScene);
         
-        //Import data from files
+        //Import data from files        
+        try
+        {
+            ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("suppliers.dat"));
+
+            suppList.addAll((ArrayList<Supplier>)(instanceObjectInput.readObject()));
+            for(Supplier supp : suppList)
+            {
+               Supplier.nextID++;
+               Supplier.obsSupp.add(supp.getName());
+            }
+            instanceObjectInput.close();
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Given:" + ex + "Suppliers were not imported");
+            suppList.add(new Supplier("Food Supplier", "571-GODUKES", "food@supplier.com","800 S Main Street", "Less drinks", "571-GOHOKIES", "contact@supplier.com"));
+            suppList.add(new Supplier("Beverage Supplier", "571-GODUKES", "beverage@supplier.com","800 S Main Street", "Less food", "571-GOHOKIES", "contact@supplier.com"));
+            suppList.add(new Supplier("Snack Supplier", "571-GODUKES", "snack@supplier.com","800 S Main Street", "More you", "571-GOHOKIES", "contact@supplier.com"));
+            for(Supplier supp : suppList)
+            {
+               Supplier.obsSupp.add(supp.getName());
+            }
+        }
+        
+        try
+        {
+            ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("stores.dat"));
+
+            storeList.addAll((ArrayList<Store>)(instanceObjectInput.readObject()));
+            for(Store str : storeList){
+                Store.nextID++;
+                Store.obsStore.add(str);
+                obsExpStore.add(str);
+                storeData.add(str);
+           }
+
+           instanceObjectInput.close();
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Given:" + ex + "Stores were not imported");
+            storeList.add(new Store("Harrisonburg", "123 lane"));
+            storeList.add(new Store ("New Market", "456 lane"));
+            storeList.add(new Store ("Staunton", "789 lane"));           
+            storeList.add(new Store ("Waynesboro", "456 way"));
+            storeList.add(new Store ("Charlottesville", "123 way"));
+            for(Store str : storeList){
+                Store.obsStore.add(str);
+                obsStore.add(str);
+                obsExpStore.add(str);
+                storeData.add(str);
+           }
+            
+        }
         try
         {
             ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("employees.dat"));
@@ -1163,22 +1202,11 @@ public class GUI extends Application
         {
             System.out.println("Given:" + ex + "Employees were not imported");
             empList.add(new Employee("javauser","javapass"));
-        }
-        try
-        {
-            ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("suppliers.dat"));
-
-            suppList.addAll((ArrayList<Supplier>)(instanceObjectInput.readObject()));
-            for(Supplier supp : suppList)
-            {
-               Supplier.nextID++;
-               Supplier.obsSupp.add(supp.getName());
-            }
-            instanceObjectInput.close();
-        }
-        catch(Exception ex)
-        {
-            System.out.println("Given:" + ex + "Suppliers were not imported");
+            empList.add(new Employee("assoc","pass"));
+            for(Employee emp : empList){
+                Employee.obsEmp.add(emp.getEmployeeID()+ " " + emp.getFirstName() + " " + emp.getLastName());
+                empData.add(emp);
+           }
         }
         try
         {
@@ -1196,23 +1224,14 @@ public class GUI extends Application
         catch(Exception ex)
         {
             System.out.println("Given:" + ex + "Products were not imported");
-        }
-        try
-        {
-            ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("stores.dat"));
-
-            storeList.addAll((ArrayList<Store>)(instanceObjectInput.readObject()));
-            for(Store str : storeList){
-                Store.nextID++;
-                Store.obsStore.add(str.getStoreName());
-                storeData.add(str);
+            prodList.add(new Product("Cheetos", 15.00,5.00,100,storeList.get(0), "Cheesy Goodness", "SNACK FOODS", suppList.get(2)));
+            prodList.add(new Product("Steak", 50.00,10.00, 30, storeList.get(0), "Makes you want Mooo-re", "FROZEN FOODS", suppList.get(0)));
+            prodList.add(new Product("MtnDew: GameFuel", 5.00, 2.00, 30, storeList.get(0), "Become a 12 year old dissing everyones moms", "BEVERAGES", suppList.get(1)));
+            
+            for(Product prod : prodList){
+                Product.obsProd.add(prod.getProductID() +": "+ prod.getProductName());
+                prodData.add(prod);
            }
-
-           instanceObjectInput.close();
-        }
-        catch(Exception ex)
-        {
-            System.out.println("Given:" + ex + "Stores were not imported");
         }
         try
         {
@@ -1262,6 +1281,8 @@ public class GUI extends Application
         catch(Exception ex)
         {
             System.out.println("Given:" + ex + "Expense Categories were not imported");
+            expCategory.addAll("Store Mortgage","Utilities", "Lawn Care", "System Maintenance", "Payroll", "Inventory Purchases");
+            expCategoryList.addAll(expCategory);
         }
         
         try
@@ -1325,6 +1346,8 @@ public class GUI extends Application
         catch(Exception ex)
         {
             System.out.println("Given:" + ex + "Jobs were not imported");
+            job.addAll("Cashier", "Bagger", "Cleaner", "Shelfer", "Organizer","Customer Service", "General Manager", "Area Manager");
+            jobTitles.addAll(job);
         }
         btnSignIn.setOnAction(e -> {
             // code to validate log in, has to have two handlers for admin and worker
