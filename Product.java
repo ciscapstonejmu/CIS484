@@ -33,6 +33,17 @@ public class Product implements Serializable{
     
     //Fromatter for money figures
     DecimalFormat formatter = new DecimalFormat("#0.00");
+    
+    public Product()
+    {
+        this.productName = "NO NAME";
+        this.quantity = 0;
+        this.price = 0.0;
+        this.cost = 0.0;
+        this.foodDescription = "NO DESCRIPTION";
+        this.category = "NO CATEGORY";
+        
+    }
 
      public Product(String productName, int quantity, double price, double cost, Store store, String foodDescription, String category, Supplier supp, BufferedImage image)
     {
@@ -272,9 +283,16 @@ public class Product implements Serializable{
     public Store getStore() {
         return this.store; 
     }
+    
+    public void setSupp(Supplier supp) {
+        this.supp = supp;
+    }
     public Supplier getSupp(){
         return this.supp;
     }
+    
+    //public setSuppName
+    
     public void updateSupp(Supplier supp) {
         this.supp = supp; 
         this.supplier = supp.getName(); 
