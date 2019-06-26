@@ -2471,7 +2471,7 @@ public class GUI extends Application
         btnChangeImage.setOnAction(e -> {
             if(cmboProd2.getValue() == null){
                 alert.setTitle("Error!");
-                alert.setHeaderText("Please select a product order to change the image!");
+                alert.setHeaderText("Please select a product to change the image!");
                 alert.showAndWait();
             }
              else {
