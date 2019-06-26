@@ -41,7 +41,7 @@ import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
-import javafx.scene.chart.PieChart;
+import javafx.scene.chart.*;
 
 public class GUI extends Application 
 {
@@ -531,6 +531,8 @@ public class GUI extends Application
     ObservableList<PieChart.Data> pieChartPOS = FXCollections.observableArrayList();
 
     
+    
+    
     // Menu Bar for Admin
     MenuBar menuAdmin = new MenuBar();
     Menu menuHome = new Menu("Main Menu");
@@ -578,6 +580,20 @@ public class GUI extends Application
         }
 
         */ 
+        
+        
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        final BarChart<String, Number> bc = new BarChart<String, Number>(xAxis, yAxis);
+        bc.setTitle("Point of Sales Report");
+        xAxis.setLabel("Category");
+        yAxis.setLabel("Sales");
+        
+        final CategoryAxis xAxisP = new CategoryAxis();
+        final NumberAxis yAxisP = new NumberAxis();
+        final BarChart<String, Number> bcP = new BarChart<String, Number>(xAxisP, yAxisP);
+        bcP.setTitle("Profit v. Expense Report");
+        yAxisP.setLabel("Sales");
         
         currentDate = LocalDate.now();        
         cDate = currentDate.format(DateTimeFormatter.ISO_DATE);
@@ -4633,15 +4649,17 @@ public class GUI extends Application
             cmboType.getSelectionModel().clearSelection();
             cmboStore.getSelectionModel().clearSelection();
             
-            pieChartPOS.clear();
-            String category;
+            bc.getData().clear();
+            bc.setMaxWidth(900);
+            
+            XYChart.Series series1 = new XYChart.Series();
+            series1.setName("Sales");
                 for (int i = 0; i < categoryList.size(); i++)
                 {
-                    category = categoryList.get(i) + " $" + decimal.format(catMoney.get(i));
-                    pieChartPOS.add(new PieChart.Data(category, catMoney.get(i)));
+                    series1.getData().add(new XYChart.Data(categoryList.get(i), catMoney.get(i)));
                 }
-                pieChart.setData(pieChartPOS);
-                tabPOSChart.setContent(pieChart);
+                bc.getData().add(series1);
+                tabPOSChart.setContent(bc);
             }
     
         });
@@ -4915,6 +4933,25 @@ public class GUI extends Application
 
             tabPText.setContent(txtPvE);
 
+            
+            
+            bcP.getData().clear();
+            bcP.setMaxWidth(900);
+            String year5 = cmboYear.getValue().toString();
+            XYChart.Series seriesP = new XYChart.Series();
+            seriesP.setName("Profit");
+            XYChart.Series seriesE = new XYChart.Series();
+            seriesE.setName("Expense");
+            for(int i = 0; i < 1; i++)
+            {
+                seriesP.getData().add(new XYChart.Data(storeList.get(i).getStoreName(), storeList.get(i).annualRevenue(year5)));
+                seriesE.getData().add(new XYChart.Data(storeList.get(i).getStoreName(), storeList.get(i).annualExpense(year5)));
+            }
+            bcP.getData().add(seriesE);
+            bcP.getData().add(seriesP);
+            tabPBar.setContent(bcP);
+            
+            
             cmboStore.getSelectionModel().clearSelection();
             cmboYear.getSelectionModel().clearSelection();
             }
