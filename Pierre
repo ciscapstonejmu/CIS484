@@ -1238,6 +1238,7 @@ public class GUI extends Application
                 btnEditSupp.setDisable(true); //disable edit Supplier
                 btnAddOrder.setDisable(true); //disable create product order
                 btnViewOrder.setDisable(true); //disable view product order
+                btnManagePass.setDisable(true); //manage other employee passwords
 
                 if(createSupp.isPressed())
                 {
