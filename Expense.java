@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+
 public class Expense {
     private int expenseID;
     private String category;
@@ -24,6 +25,7 @@ public class Expense {
     
     public static int nextID = 0;
     
+        
     public Expense()
     {
         this.category = "NO CATEGORY";
@@ -35,9 +37,7 @@ public class Expense {
         this.remainingBalance = 0.0;
         this.store = "NO STORE";
     }
-    
-    
-        public Expense(String category, String description, double amountPaid, double totalAmount, String date)
+    public Expense(String category, String description, double amountPaid, double totalAmount, String date)
     {
         this.category = category;
         this.description = description;
@@ -170,15 +170,20 @@ public class Expense {
         return this.remainingBalance;
     }
     
-    public void setPayableStoreName (String store)
+    public void setPayableStoreName(String store)
     {
-        this.store;
+        this.store = store;
     }
     
     public void payExpense(double payment)
     {
         this.amountPaid += payment;
         this.remainingBalance = this.totalAmount - this.amountPaid;
+    }
+    
+    public void setNextID ()
+    {
+        this.expenseID = nextID++;
     }
     
     
