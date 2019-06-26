@@ -63,7 +63,9 @@ public class Product implements Serializable{
         this.image = image;
         this.productID = nextID++;
         this.store = store; 
-        this.cost = cost; 
+        this.cost = cost;  
+        images.add(image);
+        this.imageLoc = images.size() - 1;
         obsProd.add(this.productID + ": " + this.productName);
         
         if (category.equalsIgnoreCase("PRODUCE"))
@@ -125,9 +127,7 @@ public class Product implements Serializable{
         this.image = image;        
         this.productID = nextID++;
         this.store = store; 
-        this.cost = cost; 
-        images.add(image);
-        this.imageLoc = images.size() - 1;
+        this.cost = cost;
         obsProd.add(this.productID + ": " + this.productName);
         
         
