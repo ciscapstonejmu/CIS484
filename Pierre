@@ -2983,6 +2983,16 @@ public class GUI extends Application
                 alert.setHeaderText("Error! Please Enter Data!");
                 alert.showAndWait();
             }
+            else if(!(txtAmount.getText().matches("\\d{0,15}([\\.]\\d{0,4})?")))
+            {
+                alert.setHeaderText("Please enter an amount!");
+                alert.showAndWait();
+            }
+            else if (!(txtTtlAmount.getText().matches("\\d{0,15}([\\.]\\d{0,4})?")))
+            {
+                alert.setHeaderText("Please enter an amount!");
+                alert.showAndWait();
+            }
             else
             {
                 String description = txtExpDesc.getText();
