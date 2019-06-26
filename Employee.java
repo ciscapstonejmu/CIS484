@@ -21,6 +21,7 @@ public class Employee implements Serializable{
     public static int nextID = 0;    
     public static ArrayList<Employee> empAcc = new ArrayList<>();
     public static ArrayList<Employee> admins = new ArrayList<>();
+    public static ArrayList<Employee> assoc = new ArrayList<>();
     private String employeeType; 
     private String employeeCategory; 
     public String storeLoc;
@@ -84,6 +85,42 @@ public class Employee implements Serializable{
        admins.add(this);
         
     }
+    //Associate Employee
+        public Employee(String firstName, String lastName, String no){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.Email = "jmudukes@jmu.edu";
+        this.phoneNumber = "571-GODUKES";
+        this.address = "800 S Main St";
+        this.salary = 100000.00;
+        this.jobTitle = "System Admin";
+        this.employeeType = "Full Time";
+        this.storeLoc = "Harrisonburg";
+        this.employeeCategory = "Associate";
+        this.employeeID = nextID++;
+        this.username = firstName;
+        this.password = lastName;
+        if(assoc.size() > 0)
+        {
+        int counter = 0;
+        int loop = 0;
+        while(loop < assoc.size())
+        {
+            Employee temp = assoc.get(loop);
+            if(temp.firstName.equalsIgnoreCase(this.firstName))
+            {
+               counter++;
+            }
+            loop++;
+        }
+        if(counter > 0)
+            {
+                this.username = this.username + counter;  
+            }            
+        }
+       assoc.add(this);
+    }
+    
     
     public Employee(String firstName, String lastName, String Email, String phoneNumber, String address, double salary, String jobTitle,
             String employeeType, String employeeCategory, Store store )  
