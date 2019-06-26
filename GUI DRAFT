@@ -76,6 +76,7 @@ public class GUI extends Application
     static ArrayList<Supplier> suppList = new ArrayList<>(); 
     static ArrayList<Member> memList = new ArrayList();
     static ArrayList<String> categoryList = new ArrayList<>();
+    static ArrayList<String> jobTitles = new ArrayList<>();
 
     
     //Observabble Lists/Combo Boxes
@@ -266,7 +267,8 @@ public class GUI extends Application
     TextField txtPhone = new TextField();
     Label lblAddress = new Label("Address");
     TextField txtAddress = new TextField();
-    static ObservableList<String> job = FXCollections.observableArrayList("Cashier", "Bagger", "Cleaner", "Shelfer", "Organizer","Customer Service", "General Manager", "Area Manager");
+    //static ObservableList<String> job = FXCollections.observableArrayList("Cashier", "Bagger", "Cleaner", "Shelfer", "Organizer","Customer Service", "General Manager", "Area Manager");
+    static ObservableList<String> job = FXCollections.observableArrayList();
     static ComboBox cmboJob = new ComboBox(job);
     Label lblJobTitle = new Label("Job Title");
     Label lblSalary = new Label("Salary");
@@ -300,8 +302,9 @@ public class GUI extends Application
     TextField txtExpDesc = new TextField();
     Label lblDate = new Label("Date");
     DatePicker expDate = new DatePicker();
-    ObservableList<String> expCategory = FXCollections.observableArrayList("Store Mortgage",
-            "Utilities", "Lawn Care", "System Maintenance", "Payroll", "Inventory Purchases");
+     ObservableList<String> expCategory = FXCollections.observableArrayList();
+//    ObservableList<String> expCategory = FXCollections.observableArrayList("Store Mortgage",
+//            "Utilities", "Lawn Care", "System Maintenance", "Payroll", "Inventory Purchases");
     ComboBox cmboExpCategory = new ComboBox(expCategory);
     Label lblStatus = new Label("Status");
     ObservableList<String> obsStatus = FXCollections.observableArrayList("Paid", "Ongoing");
@@ -323,8 +326,8 @@ public class GUI extends Application
     Label lblEditExp = new Label("Edit Expense");
     Button editExp = new Button("Edit Expense");
     static ObservableList<Expense> obsUnpaidExp = FXCollections.observableArrayList();
+    static ObservableList unpaidExp = FXCollections.observableArrayList();    
     ComboBox cmboUnpaidExp = new ComboBox(unpaidExp);
-    static ObservableList unpaidExp = FXCollections.observableArrayList();
     Button btnConfirmPayExp = new Button("Pay Expense");
     Button btnSelectExpense = new Button("Select This Expense");
 
@@ -607,57 +610,56 @@ public class GUI extends Application
         primaryPane.setAlignment(Pos.CENTER);
         
         // "yyyy-mm-dd"
-        
         primaryPane.setHgap(10);
         primaryPane.setVgap(10);
         
-            Store store1 = new Store("Harrisonburg", "123 lane");
-            Store store2 = new Store ("New Market", "456 lane");
-            Store store3 = new Store ("Staunton", "789 lane");           
-            Store store4 = new Store ("Waynesboro", "456 way");
-            Store store5 = new Store ("Charlottesville", "123 way");
-            obsStore.add(store1);
-            obsStore.add(store2);
-            obsStore.add(store3);
-            obsStore.add(store4);
-            obsStore.add(store5);
-            obsExpStore.add(store1);	
-            obsExpStore.add(store2);	
-            obsExpStore.add(store3);	
-            obsExpStore.add(store4);	
-            obsExpStore.add(store5);
-            storeList.addAll(obsStore);
-            
-            
-            categoryList.add("PRODUCE");
-            categoryList.add("DAIRY");
-            categoryList.add("BEVERAGES");
-            categoryList.add("CANDY");
-            categoryList.add("CANNED FOODS");
-            categoryList.add("PASTA");
-            categoryList.add("SNACK FOODS");
-            categoryList.add("BAKED GOODS");
-            categoryList.add("FROZEN FOODS");
-            categoryList.add("OTHER");
-            obsCategory.add("PRODUCE");
-            obsCategory.add("DAIRY");
-            obsCategory.add("BEVERAGES");
-            obsCategory.add("CANDY");
-            obsCategory.add("CANNED FOODS");
-            obsCategory.add("PASTA");
-            obsCategory.add("SNACK FOODS");
-            obsCategory.add("BAKED GOODS");
-            obsCategory.add("FROZEN FOODS");
-            obsCategory.add("OTHER");
-            
-            expCategoryList.add("Store Mortgage");
-            expCategoryList.add("Utilities");
-            expCategoryList.add("Lawn Care");
-            expCategoryList.add("System Maintenance");
-            expCategoryList.add("Payroll");
-            expCategoryList.add("Inventory Purchase");
-            expStatusList.add("Paid");
-            expStatusList.add("Ongoing");
+//            Store store1 = new Store("Harrisonburg", "123 lane");
+//            Store store2 = new Store ("New Market", "456 lane");
+//            Store store3 = new Store ("Staunton", "789 lane");           
+//            Store store4 = new Store ("Waynesboro", "456 way");
+//            Store store5 = new Store ("Charlottesville", "123 way");
+//            obsStore.add(store1);
+//            obsStore.add(store2);
+//            obsStore.add(store3);
+//            obsStore.add(store4);
+//            obsStore.add(store5);
+//            obsExpStore.add(store1);	
+//            obsExpStore.add(store2);	
+//            obsExpStore.add(store3);	
+//            obsExpStore.add(store4);	
+//            obsExpStore.add(store5);
+//            storeList.addAll(obsStore);
+//            
+//            
+//            categoryList.add("PRODUCE");
+//            categoryList.add("DAIRY");
+//            categoryList.add("BEVERAGES");
+//            categoryList.add("CANDY");
+//            categoryList.add("CANNED FOODS");
+//            categoryList.add("PASTA");
+//            categoryList.add("SNACK FOODS");
+//            categoryList.add("BAKED GOODS");
+//            categoryList.add("FROZEN FOODS");
+//            categoryList.add("OTHER");
+//            obsCategory.add("PRODUCE");
+//            obsCategory.add("DAIRY");
+//            obsCategory.add("BEVERAGES");
+//            obsCategory.add("CANDY");
+//            obsCategory.add("CANNED FOODS");
+//            obsCategory.add("PASTA");
+//            obsCategory.add("SNACK FOODS");
+//            obsCategory.add("BAKED GOODS");
+//            obsCategory.add("FROZEN FOODS");
+//            obsCategory.add("OTHER");
+//            
+//            expCategoryList.add("Store Mortgage");
+//            expCategoryList.add("Utilities");
+//            expCategoryList.add("Lawn Care");
+//            expCategoryList.add("System Maintenance");
+//            expCategoryList.add("Payroll");
+//            expCategoryList.add("Inventory Purchase");
+//            expStatusList.add("Paid");
+//            expStatusList.add("Ongoing");
             //Populate ArrayLists to calculate hoursWorked for payroll
         for(int i = 0; i <31; i++)
         {
@@ -808,6 +810,7 @@ public class GUI extends Application
         btnRemoveSupp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnChangePass.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnManagePass.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        removeEmp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         //small form labels and combobox
         empCat.setStyle("-fx-font: 9pt \"bookman\";");
         empType.setStyle("-fx-font: 9pt \"bookman\";");
@@ -1151,7 +1154,6 @@ public class GUI extends Application
             instanceObjectInput.close();
             for(Employee emp : empList){
                 Employee.nextID++;
-                emp.setStore(store1);
                 Employee.obsEmp.add(emp.getEmployeeID()+ " " + emp.getFirstName() + " " + emp.getLastName());
                 empData.add(emp);
            }
@@ -1307,6 +1309,21 @@ public class GUI extends Application
         catch(Exception ex)
         {
             System.out.println("Given:" + ex + "Sales were not imported");
+        }
+        try
+        {
+            ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("jobtitles.dat"));
+
+            jobTitles.addAll((ArrayList<String>)(instanceObjectInput.readObject()));
+            for(String str : jobTitles){
+                job.add(str);
+            }
+
+           instanceObjectInput.close();
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Given:" + ex + "Jobs were not imported");
         }
         btnSignIn.setOnAction(e -> {
             // code to validate log in, has to have two handlers for admin and worker
@@ -2629,7 +2646,7 @@ public class GUI extends Application
             empVB.setSpacing(10);
             empVB.setPadding(new Insets(10, 20, 10 , 20));
             
-            empVB.getChildren().addAll(lblEmp, lblEmpMan, btnAddEmp, cmboEmp, btnEditEmp, btnChangePass, btnManagePass);
+            empVB.getChildren().addAll(lblEmp, lblEmpMan, btnAddEmp, cmboEmp, btnEditEmp, btnChangePass, btnManagePass, removeEmp);
             
             border.setLeft(empVB);
             empTable.setItems(empData);
@@ -2715,6 +2732,7 @@ public class GUI extends Application
                     }
                     else if(i == job.size()-1 && job.get(i).equalsIgnoreCase((String)cmboJob.getValue()) == false)
                     {
+                        jobTitles.add((String)cmboJob.getValue());
                         job.add((String)cmboJob.getValue());
                     }
 
@@ -3029,6 +3047,7 @@ public class GUI extends Application
                 }
                 expList.add(temp);
                 obsExpense.add(temp);
+                
                 
                 expStoreVar = cmboExpStore.getSelectionModel().getSelectedIndex();
                 
@@ -5188,6 +5207,16 @@ public class GUI extends Application
         {
            ObjectOutputStream instanceObjectOutput = new ObjectOutputStream(new FileOutputStream("sales.dat"));
            instanceObjectOutput.writeObject(saleList);
+           instanceObjectOutput.close();
+        }
+        catch(Exception ex)
+        {
+         System.out.println(ex);
+        }
+        try
+        {
+           ObjectOutputStream instanceObjectOutput = new ObjectOutputStream(new FileOutputStream("jobtitles.dat"));
+           instanceObjectOutput.writeObject(jobTitles);
            instanceObjectOutput.close();
         }
         catch(Exception ex)
