@@ -594,22 +594,6 @@ public class GUI extends Application
         primaryPane.setHgap(10);
         primaryPane.setVgap(10);
         
-            Store store1 = new Store("Harrisonburg", "123 lane");
-            Store store2 = new Store ("New Market", "456 lane");
-            Store store3 = new Store ("Staunton", "789 lane");           
-            Store store4 = new Store ("Waynesboro", "456 way");
-            Store store5 = new Store ("Charlottesville", "123 way");
-            obsStore.add(store1);
-            obsStore.add(store2);
-            obsStore.add(store3);
-            obsStore.add(store4);
-            obsStore.add(store5);
-            obsExpStore.add(store1);	
-            obsExpStore.add(store2);	
-            obsExpStore.add(store3);	
-            obsExpStore.add(store4);	
-            obsExpStore.add(store5);
-            storeList.addAll(obsStore);
             
             
             categoryList.add("PRODUCE");
@@ -642,14 +626,16 @@ public class GUI extends Application
             expStatusList.add("Paid");
             expStatusList.add("Ongoing");
             
-        loadExpensesFromDB();
-         for (int i = 0; i < expList.size(); i++) {
-             Expense.obsExpense.add(expList.get(i).getDescription());
-        }
+  
         loadStoresFromDB();
+        
         for (int i = 0; i < storeList.size(); i++)
         {
             Store.obsStore.add(storeList.get(i).getStoreName());
+        }
+        loadExpensesFromDB();
+         for (int i = 0; i < expList.size(); i++) {
+             Expense.obsExpense.add(expList.get(i).getDescription());
         }
         loadEmployeesFromDB();
         for (int i = 0; i < empList.size(); i++)
@@ -1153,7 +1139,7 @@ public class GUI extends Application
             instanceObjectInput.close();
             for(Employee emp : empList){
                 Employee.nextID++;
-                emp.setStore(store1);
+                emp.setStore(storeList.get(0));
                 Employee.obsEmp.add(emp.getEmployeeID()+ " " + emp.getFirstName() + " " + emp.getLastName());
                 empData.add(emp);
            }
@@ -1667,13 +1653,11 @@ public class GUI extends Application
         eighthStage.close();
             
         });
-        //Remove Supplier Lambda
         btnRemoveSupp.setOnAction(e -> {
             Supplier tempSupp = sC;
             int rmvSup = cmboSupp2.getSelectionModel().getSelectedIndex();
             String suppQuery; 
             ResultSet suppRS; 
-
             for(int i = 0; i<suppList.size(); i++)
             {
                 if(tempSupp.getID() == suppList.get(i).getID())
@@ -1681,13 +1665,12 @@ public class GUI extends Application
                     suppList.remove(i);
                     cmboSupp2.getItems().remove(i);
                     suppQuery = "DELETE FROM JAVAUSER.SUPPLIER WHERE SUPPLIERID = " + tempSupp.getID();
-                    suppRS = sendDBCommand(suppQuery);
+                    suppRS = DBCommand(suppQuery);
                     break;                    
-                }           
+                }
+                
+                //deleteSupplier(suppList.get(rmvSup).getID());
             }
-            
-            //deleteSupplier(suppList.get(rmvSup).getID());
-
             alert.setTitle("Success!");
             alert.setHeaderText("The supplier has been removed!");
             alert.showAndWait();
@@ -3061,6 +3044,7 @@ public class GUI extends Application
             cmboExpCategory.getSelectionModel().clearSelection();
             cmboStatus.getSelectionModel().clearSelection();
             expDate.getEditor().clear();
+            /*
             String editExpQuery = " ";
             editExpQuery = "UPDATE JAVAUSER.EXPENSE SET CATEGORY = '" + exC.getCategory() + "', DESCRIPTION = '" + exC.getDescription() + "', STATUS = '" + exC.getStatus() + 
                     "', AMOUNTPAID = '" + exC.getAmountPaid() + "', TOTALAMOUNT = '" + exC.getTotalAmount() + "', REMAININGBALANCE = '" + exC.getRemainingBalance() +
@@ -3068,7 +3052,7 @@ public class GUI extends Application
             System.out.println(editExpQuery);
             DBCommand(editExpQuery);
             
-            
+            */
         });
         
         btnPayExp.setOnAction(e -> {
@@ -5014,7 +4998,7 @@ for (int i = 0; i < suppList.size(); i++) {
             emplData = " ('" + empList.get(i).getEmployeeID() + "' , '" + empList.get(i).getFirstName() + "' , '" + empList.get(i).getLastName() + "' , '" + empList.get(i).getEmail() + "' , '" +
                     empList.get(i).getPhoneNumber() + "' , '" + empList.get(i).getAddress() + "' , '" + empList.get(i).getHourly() + "' , '" + empList.get(i).getJobTitle() +
                     "' , '" + empList.get(i).getTimeWorked() + empList.get(i).getEmployeeType() + "' , '" + empList.get(i).getEmployeeCategory() + "' , '" + empList.get(i).getUsername() +
-                    "' , '" + empList.get(i).getPassword() + empList.get(i).getStore().getStoreID() + " ')";
+                    "' , '" + empList.get(i).getPassword() + "' , '" + empList.get(i).getStore().getStoreID() + " ')";
             emplQuery = "INSERT INTO EMPLOYEE (EMPLOYEEID, EMPLOYFNAME, EMPLOYLNAME, EMPLOYEMAIL, EMPLOYPHONENUMBER, EMPLOYADDRESS, EMPLOYHOURLY, EMPLOYJOBTITLE, EMPLOYTIMEWORKED, EMPLOYTYPE, EMPLOYCATEGORY, EMPLOYUSERNAME, EMPLOYPASSWORD, STOREID) VALUES" + emplData;
             DBCommand(emplQuery);
         }
@@ -5038,7 +5022,7 @@ for (int i = 0; i < suppList.size(); i++) {
 
             prodtData = " ('" + prodList.get(i).getProductID() + "' , '" + prodList.get(i).getProductName() + "' , '" + prodList.get(i).getQuantity() + "' , '" + prodList.get(i).getPrice() +
                     "' , '" + prodList.get(i).getStore().getStoreName() + "' , '" + prodList.get(i).getFoodDescription() + "' , '" + prodList.get(i).getCategory() + "' , '" + prodList.get(i).getStore().getStoreID() +
-                    "' , '" + prodList.get(i).getSupp().getID() + " ')";
+                    "' , '" + prodList.get(i).getSupp().getID() + "')";
             prodtQuery = "INSERT INTO JAVAUSER.PRODUCT (PRODUCTID, NAME, QUANTITY, PRICE, COST, DESCRIPTION, CATEGORY, STOREID, SUPPLIERID) VALUES" + prodtData;
             DBCommand(prodtQuery);
         }
@@ -5062,9 +5046,10 @@ for (int i = 0; i < suppList.size(); i++) {
 
             emplData = " ('" + empList.get(i).getEmployeeID() + "' , '" + empList.get(i).getFirstName() + "' , '" + empList.get(i).getLastName() + "' , '" + empList.get(i).getEmail() + "' , '" +
                     empList.get(i).getPhoneNumber() + "' , '" + empList.get(i).getAddress() + "' , '" + empList.get(i).getHourly() + "' , '" + empList.get(i).getJobTitle() +
-                    "' , '" + empList.get(i).getTimeWorked() + empList.get(i).getEmployeeType() + "' , '" + empList.get(i).getEmployeeCategory() + "' , '" + empList.get(i).getUsername() +
-                    "' , '" + empList.get(i).getPassword() + empList.get(i).getStore().getStoreID() + " ')";
+                    "' , '" + empList.get(i).getTimeWorked() + "' , '" + empList.get(i).getEmployeeType() + "' , '" + empList.get(i).getEmployeeCategory() + "' , '" + empList.get(i).getUsername() +
+                    "' , '" + empList.get(i).getPassword() + "' , '" + empList.get(i).getStore().getStoreID() + "')";
             emplQuery = "INSERT INTO JAVAUSER.EMPLOYEE (EMPLOYEEID, EMPLOYFNAME, EMPLOYLNAME, EMPLOYEMAIL, EMPLOYPHONENUMBER, EMPLOYADDRESS, EMPLOYHOURLY, EMPLOYJOBTITLE, EMPLOYTIMEWORKED, EMPLOYTYPE, EMPLOYCATEGORY, EMPLOYUSERNAME, EMPLOYPASSWORD, STOREID) VALUES " + emplData;
+            System.out.println(emplData);
             DBCommand(emplQuery);
          }
     }
@@ -5104,6 +5089,7 @@ for (int i = 0; i < suppList.size(); i++) {
             while (exprs.next())
             {
                 Expense exp = new Expense();
+                exp.setNextID();
                 exp.setCategory(exprs.getString("CATEGORY"));
                 exp.setDescription(exprs.getString("DESCRIPTION"));
                 exp.setStatus(exprs.getString("STATUS"));
@@ -5242,11 +5228,14 @@ for (int i = 0; i < suppList.size(); i++) {
         {
             while(strs.next())
             {
+                
                 Store str = new Store();
+                str.setNextID();
                 str.setName(strs.getString("STORENAME"));
                 str.setAddress(strs.getString("STOREADDRESS"));
                 
                 storeList.add(str);
+                obsStore.add(str);
 
             }
         }
