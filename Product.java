@@ -4,12 +4,16 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.ImageView;
 import javax.imageio.ImageIO;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Product implements Serializable{
     private int productID;
@@ -30,7 +34,8 @@ public class Product implements Serializable{
     public static int nextID = 0;
     private double cost;
     public static ObservableList obsProd = FXCollections.observableArrayList(); 
-    
+    public int imageLoc;
+    transient static List<BufferedImage> images;
     //Fromatter for money figures
     DecimalFormat formatter = new DecimalFormat("#0.00");
     
@@ -117,10 +122,12 @@ public class Product implements Serializable{
         this.category = category;
         this.supp = supp; 
         this.supplier = supp.getName();
-        this.image = image;
+        this.image = image;        
         this.productID = nextID++;
         this.store = store; 
         this.cost = cost; 
+        images.add(image);
+        this.imageLoc = images.size() - 1;
         obsProd.add(this.productID + ": " + this.productName);
         
         
@@ -272,7 +279,11 @@ public class Product implements Serializable{
     {
         this.image = image;
     }
-    
+    public void addImage(BufferedImage image){
+        this.image = image;
+        images.add(image);
+        this.imageLoc = images.size()-1;
+    }
     public BufferedImage getImage()
     {
         return this.image;
@@ -318,5 +329,21 @@ public class Product implements Serializable{
         str += "ID: " + this.productID + " " + this.productName +  
                 " , Price: " + formatter.format(this.price);
         return str;
+    }
+    public static void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeInt(images.size()); // how many images are serialized?
+        for (BufferedImage eachImage : images) {
+            ImageIO.write(eachImage, "png", out); // png is lossless
+        }
+    }
+
+    public static void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        final int imageCount = in.readInt();
+        images = new ArrayList<BufferedImage>(imageCount);
+        for (int i=0; i<imageCount; i++) {
+            images.add(ImageIO.read(in));
+        }
     }
 }
