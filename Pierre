@@ -4922,6 +4922,7 @@ public class GUI extends Application
             formPane.getChildren().clear();
             textPane.getChildren().clear();
             cmboYear.getSelectionModel().clearSelection();
+            bcP.getData().clear();
             
             secondPane.setAlignment(Pos.TOP_CENTER);
             textPane.setAlignment(Pos.TOP_LEFT);
