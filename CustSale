@@ -9,7 +9,7 @@ public class CustSale {
     
     //DataFields
     private String saleID; 
-    private static int saleIDCount = 0; 
+    public static int saleIDCount = 0; 
     //private String saleCategory; 
     private String saleDate;
     private Customer customer;
