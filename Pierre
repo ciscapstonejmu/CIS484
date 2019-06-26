@@ -79,6 +79,7 @@ public class GUI extends Application
     //Observabble Lists/Combo Boxes
     ObservableList<Employee> obsEmp = FXCollections.observableArrayList();
     ComboBox cmboEmp = new ComboBox(Employee.obsEmp); 
+    ComboBox cmboEmp2 = new ComboBox(Employee.obsEmp);
     ObservableList<Product> obsProd = FXCollections.observableArrayList();
     ComboBox cmboProd = new ComboBox(Product.obsProd); 
     ComboBox cmboProd2 = new ComboBox(Product.obsProd);
@@ -252,6 +253,7 @@ public class GUI extends Application
     Label lblLName = new Label("Last Name");
     TextField txtLName = new TextField();
     Employee eC = null;
+    Employee eC2 = null;
     Product pC = null; 
     Supplier sC = null; 
     Store stC = null;
@@ -532,7 +534,19 @@ public class GUI extends Application
 
     Button btnChangePass = new Button("Change Password");
     Button btnManagePass = new Button("Manage Passwords");
-    
+    Label lblChangePass = new Label("Change Password");
+    Label lblCurrentPass = new Label("Current Password");
+    Label lblNewPass = new Label("New Password");
+    TextField txtCurrentPass = new TextField();
+    TextField txtNewPass = new TextField();
+    Button btnChangePassword = new Button("Change Password");
+    Label lblManagePass = new Label("Manage Passwords");
+    Label lblSelectEmp = new Label("Select Employee");
+    Label lblCurrentPassword = new Label("Current Password");
+    Label lblNewPassword = new Label("New Password");
+    TextField txtCurrentPassword = new TextField();
+    TextField txtNewPassword = new TextField();
+    Button btnAdminChangePass = new Button("Change Password");
     
     // Menu Bar for Admin
     MenuBar menuAdmin = new MenuBar();
@@ -772,7 +786,8 @@ public class GUI extends Application
         btnAddExpType.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnConfirmNewExp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnConfirmRemExpType.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
-        
+        btnChangePassword.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnAdminChangePass.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         
         
         btnEnterTime.setStyle("-fx-font: 12pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
@@ -846,6 +861,7 @@ public class GUI extends Application
         cmboProd.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill: white;");
         cmboProd2.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill: white;");
         cmboProdOrder2.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill: white;");
+        cmboEmp2.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill: white;");
         
         lblInvMan.setStyle("-fx-font: bold 20pt \"bookman\";");
         lblInv.setStyle("-fx-font: bold 20pt \"bookman\";");
@@ -881,6 +897,8 @@ public class GUI extends Application
         lblHandleImage.setStyle("-fx-font: bold 14pt \"bookman\";");
         lblAddStore.setStyle("-fx-font: bold 14pt \"bookman\";");
         lblEditStore.setStyle("-fx-font: bold 14pt \"bookman\";");
+        lblChangePass.setStyle("-fx-font: bold 14pt \"bookman\";");
+        lblManagePass.setStyle("-fx-font: bold 14pt \"bookman\";");
         
         GridPane secondPane = new GridPane();
         
@@ -2509,13 +2527,14 @@ public class GUI extends Application
             btnEditEmp.setMaxWidth(Double.MAX_VALUE);
             btnAddEmp.setMaxWidth(Double.MAX_VALUE);
             btnChangePass.setMaxWidth(Double.MAX_VALUE);
+            cmboEmp2.setMaxWidth(Double.MAX_VALUE);
             btnManagePass.setMaxWidth(Double.MAX_VALUE);
 
             VBox empVB = new VBox();
             empVB.setSpacing(10);
             empVB.setPadding(new Insets(10, 20, 10 , 20));
             
-            empVB.getChildren().addAll(lblEmp, lblEmpMan, btnAddEmp, cmboEmp, btnEditEmp, btnChangePass, btnManagePass);
+            empVB.getChildren().addAll(lblEmp, lblEmpMan, btnAddEmp, cmboEmp, btnEditEmp, btnChangePass, cmboEmp2, btnManagePass);
             
             border.setLeft(empVB);
             empTable.setItems(empData);
@@ -2815,6 +2834,75 @@ public class GUI extends Application
 
             thirdStage.close();
         });
+        
+        btnChangePass.setOnAction(e -> {
+            thirdPane.getChildren().clear();
+            
+            thirdStage.setTitle("Change Password");
+            thirdStage.show();
+            thirdPane.setAlignment(Pos.TOP_CENTER);
+            
+            thirdPane.add(lblChangePass, 0, 0);
+            thirdPane.add(lblCurrentPass, 0, 1);
+            thirdPane.add(txtCurrentPass, 0, 2);
+            txtCurrentPass.setEditable(false);
+            thirdPane.add(lblNewPass, 0, 3);
+            thirdPane.add(txtNewPass, 0, 4);
+            thirdPane.add(btnChangePassword, 0, 5);
+                                    
+        });
+        
+        btnChangePassword.setOnAction(e -> {
+            // once btn change password is clicked
+            // insert code
+            
+            
+            
+            
+            
+        });
+        
+        btnManagePass.setOnAction(e -> {
+            if(cmboEmp2.getValue() == null)
+            {
+                alert.setTitle("Error!");
+                alert.setHeaderText("Please select an employee to change password!");
+                alert.showAndWait();
+            }
+
+            else
+            {
+            eC2 = empList.get(cmboEmp2.getSelectionModel().getSelectedIndex());
+            cmboEmp2.getSelectionModel().clearSelection();
+
+            
+            thirdPane.getChildren().clear();
+            
+            thirdStage.setTitle("Manage Passwords");
+            thirdStage.show();
+            thirdPane.setAlignment(Pos.TOP_CENTER);
+            
+            thirdPane.add(lblManagePass, 0, 0);
+            thirdPane.add(lblCurrentPassword, 0, 1);
+            thirdPane.add(txtCurrentPassword, 0, 2);
+            txtCurrentPassword.setEditable(false);
+            thirdPane.add(lblNewPassword, 0, 3);
+            thirdPane.add(txtNewPassword, 0, 4);
+            thirdPane.add(btnAdminChangePass, 0, 5);
+            
+            txtCurrentPassword.setText(eC2.getPassword());
+            }
+        });
+        
+        btnAdminChangePass.setOnAction(e -> {
+            // onces manage pass change is clicked
+            
+            
+            
+            txtCurrentPassword.clear();
+            txtNewPassword.clear();
+        });
+        
         expTable.getColumns().addAll(tbExpID, tbExpCategory, tbExpDesc, tbExpAmountPaid, tbExpAmountTotal, tbExpDate, tbExpStatus, tbExpStore);  
         menuAdmin.getMenus().get(1).getItems().get(2).setOnAction(e -> {
            // Expense Management
@@ -3010,11 +3098,11 @@ public class GUI extends Application
                 exC.setCategory((String) cmboExpCategory.getValue());
             }
             
-            if (exC.getAmountPaid() < exC.getTotalAmount()) 
+            if (exC.getAmountPaid() > exC.getTotalAmount()) 
             {
                 exC.setStatus("Ongoing");
             }
-            if (exC.getAmountPaid() >= exC.getTotalAmount()) 
+            if (exC.getAmountPaid() <= exC.getTotalAmount()) 
             {
                 exC.setStatus("Paid");
             }
