@@ -41,6 +41,7 @@ import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
+import javafx.scene.chart.PieChart;
 
 public class GUI extends Application 
 {
@@ -526,6 +527,8 @@ public class GUI extends Application
     GridPane textPane = new GridPane();
     TextArea txtPvE = new TextArea();
     String pveOutput = "";	
+    PieChart pieChart = new PieChart();
+    ObservableList<PieChart.Data> pieChartPOS = FXCollections.observableArrayList();
 
     
     // Menu Bar for Admin
@@ -4079,6 +4082,9 @@ public class GUI extends Application
             });
         
         
+        tbPOS.getTabs().add(tabPOSText);
+        tbPOS.getTabs().add(tabPOSChart);
+        
         menuAdmin.getMenus().get(3).getItems().get(0).setOnAction(e -> {
             // Point of Sales Report
             secondPane.getChildren().clear();
@@ -4091,8 +4097,7 @@ public class GUI extends Application
             formPane.setAlignment(Pos.TOP_LEFT);
             formPane.setVgap(10);
             secondStage.setTitle("Point of Sales Report");
-            tbPOS.getTabs().add(tabPOSText);
-            tbPOS.getTabs().add(tabPOSChart);
+            
             tbPOS.setMinWidth(secondScene.getWidth());
             
             cmboType.setMaxWidth(Double.MAX_VALUE);
@@ -4339,6 +4344,7 @@ public class GUI extends Application
                         totalMoney = 0;
                     }
             }
+                
             }
                     }); 
        btnPOSDisplay.setOnAction(e -> {
@@ -4626,6 +4632,16 @@ public class GUI extends Application
             
             cmboType.getSelectionModel().clearSelection();
             cmboStore.getSelectionModel().clearSelection();
+            
+            pieChartPOS.clear();
+            String category;
+                for (int i = 0; i < categoryList.size(); i++)
+                {
+                    category = categoryList.get(i) + " " + totalMoney;
+                    pieChartPOS.add(new PieChart.Data(category, totalMoney));
+                }
+                pieChart.setData(pieChartPOS);
+                tabPOSChart.setContent(pieChart);
             }
     
         });
