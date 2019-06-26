@@ -1177,7 +1177,8 @@ public class GUI extends Application
             storeList.add(new Store ("Staunton", "789 lane"));           
             storeList.add(new Store ("Waynesboro", "456 way"));
             storeList.add(new Store ("Charlottesville", "123 way"));
-            for(Store str : storeList){;
+            for(Store str : storeList){
+                Store.obsStore.add(str);
                 obsStore.add(str);
                 obsExpStore.add(str);
                 storeData.add(str);
@@ -1227,8 +1228,7 @@ public class GUI extends Application
             prodList.add(new Product("Steak", 50.00,10.00, 30, storeList.get(0), "Makes you want Mooo-re", "FROZEN FOODS", suppList.get(0)));
             prodList.add(new Product("MtnDew: GameFuel", 5.00, 2.00, 30, storeList.get(0), "Become a 12 year old dissing everyones moms", "BEVERAGES", suppList.get(1)));
             
-            for(Product prod : prodList){
-                Product.obsProd.add(prod.getProductID() +": "+ prod.getProductName());
+            for(Product prod : prodList){                
                 prodData.add(prod);
            }
         }
@@ -1313,11 +1313,11 @@ public class GUI extends Application
         }
         catch(Exception ex)
         {
-            System.out.println("Given:" + ex + "Products were not imported");
+            System.out.println("Given:" + ex + "Product Categories were not imported");
         }
         try
         {
-            ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("products.dat"));
+            ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("sales.dat"));
 
             saleList.addAll((ArrayList<CustSale>)(instanceObjectInput.readObject()));
             for(CustSale sale : saleList){
