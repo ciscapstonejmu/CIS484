@@ -3010,11 +3010,11 @@ public class GUI extends Application
                 exC.setCategory((String) cmboExpCategory.getValue());
             }
             
-            if (exC.getAmountPaid() > exC.getTotalAmount()) 
+            if (exC.getAmountPaid() < exC.getTotalAmount()) 
             {
                 exC.setStatus("Ongoing");
             }
-            if (exC.getAmountPaid() <= exC.getTotalAmount()) 
+            if (exC.getAmountPaid() >= exC.getTotalAmount()) 
             {
                 exC.setStatus("Paid");
             }
