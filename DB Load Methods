@@ -1,0 +1,82 @@
+public void loadExpensesFromDB()
+{
+String query = "SELECT * FROM EXPENSE ORDER BY EXPENSEID ASC";
+
+int incrementor = 0;
+ResultSet exprs = DBCommand(query);
+try
+{
+
+String category = exprs.getString(2);
+String description = exprs.getString(3);
+String status = exprs.getString(4);
+Double amountPaid = exprs.getDouble(5);
+Double totalAmount = exprs.getDouble(6);
+Double remainingBalance = exprs.getDouble(7);
+String expDate = exprs.getString(8);
+int storeID = exprs.getInt(9);
+
+Expense expTable = new Expense (category, description, status, amountPaid, expDate);
+expTable.setStore(storeList.get(storeID));
+expTable.setNextID(++incrementor);
+obsExpense.clear();
+expList.add(expTable);
+
+for (Expense ex: expList)
+{
+    obsExpense.add(ex);
+}
+
+}
+catch (SQLException e)
+{
+    System.out.println(e);
+}
+
+}
+
+public void loadEmployeesFromDB()
+{
+String query = "SELECT * FROM EMPLOYEE ORDER BY EMPLOYEEID ASC";
+
+int incrementor = 0;
+ResultSet emprs = DBCommand(query);
+try
+{
+
+String employFName = emprs.getString(2);
+String employLName = emprs.getString(3);
+String employEmail = emprs.getString(4);
+String employPhoneNumber = emprs.getString(5);
+String employAddress = emprs.getString(6);
+Double employHourly = emprs.getDouble(7);
+String employJobTitle = emprs.getString(8);
+Double employTimeWorked = emprs.getDouble(9);
+String employType = emprs.getString(10);
+String employCategory = emprs.getString(11);
+String employUserName = emprs.getString(12);
+String employPassword = emprs.getString(13);
+int storeID = emprs.getInt(14);
+
+Employee empTable = new Employee(employFName, employLName, employEmail, employPhoneNumber, employAddress, employHourly, employJobTitle, employType, employCategory, storeList.get(storeID));
+
+empTable.setUsername(employUserName);
+empTable.setPassword(employPassword);
+empTable.setTimeWorked(employTimeWorked);
+
+empTable.setNextID(++incrementor);
+obsEmp.clear();
+empList.add(empTable);
+
+for (Employee emp: empList)
+{
+    obsEmp.add(emp);
+}
+}
+catch (SQLException ex)
+{
+    System.out.println(ex.toString());
+
+}
+}
+
