@@ -530,7 +530,8 @@ public class GUI extends Application
     PieChart pieChart = new PieChart();
     ObservableList<PieChart.Data> pieChartPOS = FXCollections.observableArrayList();
 
-    
+    Button btnChangePass = new Button("Change Password");
+    Button btnManagePass = new Button("Manage Passwords");
     
     
     // Menu Bar for Admin
@@ -803,6 +804,9 @@ public class GUI extends Application
         btnSavePO.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnCancelPO.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
         btnRemoveSupp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnChangePass.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        btnManagePass.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: dodgerblue; -fx-text-fill: white;");
+        
         //small form labels and combobox
         empCat.setStyle("-fx-font: 9pt \"bookman\";");
         empType.setStyle("-fx-font: 9pt \"bookman\";");
@@ -2503,12 +2507,14 @@ public class GUI extends Application
             cmboEmp.setMaxWidth(Double.MAX_VALUE);
             btnEditEmp.setMaxWidth(Double.MAX_VALUE);
             btnAddEmp.setMaxWidth(Double.MAX_VALUE);
+            btnChangePass.setMaxWidth(Double.MAX_VALUE);
+            btnManagePass.setMaxWidth(Double.MAX_VALUE);
 
             VBox empVB = new VBox();
             empVB.setSpacing(10);
             empVB.setPadding(new Insets(10, 20, 10 , 20));
             
-            empVB.getChildren().addAll(lblEmp, lblEmpMan, btnAddEmp, cmboEmp, btnEditEmp);
+            empVB.getChildren().addAll(lblEmp, lblEmpMan, btnAddEmp, cmboEmp, btnEditEmp, btnChangePass, btnManagePass);
             
             border.setLeft(empVB);
             empTable.setItems(empData);
