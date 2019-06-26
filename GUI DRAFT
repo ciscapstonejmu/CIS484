@@ -1220,7 +1220,7 @@ public class GUI extends Application
         {
             System.out.println("Given:" + ex + "Employees were not imported");
             empList.add(new Employee("javauser","javapass"));
-            empList.add(new Employee("assoc","pass"));
+            empList.add(new Employee("assoc","pass", "no"));
             for(Employee emp : empList){
                 Employee.obsEmp.add(emp.getEmployeeID()+ " " + emp.getFirstName() + " " + emp.getLastName());
                 empData.add(emp);
@@ -1381,6 +1381,10 @@ public class GUI extends Application
                     if(temp.getEmployeeCategory().equalsIgnoreCase("Manager"))
                    {
                        isAuthorized = true;
+                   }
+                    if(temp.getEmployeeCategory().equalsIgnoreCase("Associate"))
+                   {
+                       isAuthorized = false;
                    }
                }
            }
