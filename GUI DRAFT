@@ -1162,7 +1162,7 @@ public class GUI extends Application
         catch(Exception ex)
         {
             System.out.println("Given:" + ex + "Employees were not imported");
-            empList.add(new Employee("javauser","javapass");
+            empList.add(new Employee("javauser","javapass"));
         }
         try
         {
