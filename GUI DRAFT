@@ -1177,8 +1177,7 @@ public class GUI extends Application
             storeList.add(new Store ("Staunton", "789 lane"));           
             storeList.add(new Store ("Waynesboro", "456 way"));
             storeList.add(new Store ("Charlottesville", "123 way"));
-            for(Store str : storeList){
-                Store.obsStore.add(str);
+            for(Store str : storeList){;
                 obsStore.add(str);
                 obsExpStore.add(str);
                 storeData.add(str);
