@@ -2977,36 +2977,22 @@ public class GUI extends Application
                 //thirdPane.add(lblExpStore, 0, 7);
                 //thirdPane.add(cmboStore, 0, 8);
                 thirdPane.add(editExp, 0, 7);
-                expDate.setValue(LocalDate.now());
-                exC = expList.get(cmboExpense.getSelectionModel().getSelectedIndex());
+                
+                expVar = cmboExpense.getSelectionModel().getSelectedIndex();
+                exC = expList.get(expVar);
+                expDate.setValue(LocalDate.parse(exC.getDate()));
                 txtExpDesc.setText(exC.getDescription());
                 //expDate.setText(exC.getDate());
-                cmboExpCategory.setPromptText(exC.getCategory());
+                cmboExpCategory.setValue(exC.getCategory());
                 txtAmount.setText(String.valueOf(exC.getAmountPaid()));
                 txtTtlAmount.setText(String.valueOf(exC.getTotalAmount()));                
-            
-
-                
-
-                expVar = cmboExpense.getSelectionModel().getSelectedIndex();
-
-                txtExpDesc.setText(obsExpense.get(expVar).getDescription());
-                //LocalDate localExpDate = LocalDate.parse(obsExpense.get(expVar).getDate());
-                //expDate.setValue(localExpDate);
-                cmboExpCategory.setValue(obsExpense.get(expVar).getCategory());                
-                txtAmount.setText((String.valueOf(obsExpense.get(expVar).getAmountPaid())));
-
-                obsExpense.get(expVar).setDescription(txtExpDesc.getText());
-                obsExpense.get(expVar).setCategory(expCategoryList.get(cmboExpCategory.getSelectionModel().getSelectedIndex()));
-                obsExpense.get(expVar).setAmountPaid(Double.parseDouble(txtAmount.getText()));                
-                obsExpense.get(expVar).setDate(expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")));
-                        
+                 
                 }
         });
         
         editExp.setOnAction(e -> {
 
-            exC = expList.get(cmboExpense.getSelectionModel().getSelectedIndex());
+            
             if (txtExpDesc.getText() != null) 
             {
                 exC.setDescription(txtExpDesc.getText());
@@ -3033,7 +3019,9 @@ public class GUI extends Application
                 exC.setStatus("Paid");
             }
             exC.setRemainingBalance(exC.getTotalAmount() - exC.getAmountPaid());
-            //exC.setDate((expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"))));
+            exC.setDate((expDate.getValue().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"))));
+            expList.remove(expVar);
+            expList.add(expVar, exC);
             alert.setTitle("Success!");
             alert.setHeaderText("Expense has been Edited!");
             alert.showAndWait();
@@ -3048,6 +3036,7 @@ public class GUI extends Application
             cmboExpCategory.getSelectionModel().clearSelection();
             cmboStatus.getSelectionModel().clearSelection();
             expDate.getEditor().clear();
+            exC = null;
         });
         
         btnPayExp.setOnAction(e -> {
