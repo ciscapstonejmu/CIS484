@@ -12,8 +12,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.image.ImageView;
 import javax.imageio.ImageIO;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Product implements Serializable{
     private int productID;
@@ -25,7 +25,7 @@ public class Product implements Serializable{
     private String foodDescription;
     private String category;
     private int aisle;
-    private BufferedImage image;
+    public boolean hasImage = false;
     private int saleYear;
     private String supplier;
     private Supplier supp; 
@@ -34,8 +34,7 @@ public class Product implements Serializable{
     public static int nextID = 0;
     private double cost;
     public static ObservableList obsProd = FXCollections.observableArrayList(); 
-    public int imageLoc;
-    transient static List<BufferedImage> images;
+    private File img;
     //Fromatter for money figures
     DecimalFormat formatter = new DecimalFormat("#0.00");
     
@@ -50,7 +49,7 @@ public class Product implements Serializable{
         
     }
 
-     public Product(String productName, int quantity, double price, double cost, Store store, String foodDescription, String category, Supplier supp, BufferedImage image)
+     public Product(String productName, int quantity, double price, double cost, Store store, String foodDescription, String category, Supplier supp, File img)
     {
         this.productName = productName;
         this.quantity = quantity;
@@ -60,12 +59,11 @@ public class Product implements Serializable{
         this.category = category;
         this.supp = supp; 
         this.supplier = supp.getName();
-        this.image = image;
+        this.img = img;
+        this.hasImage = true;
         this.productID = nextID++;
         this.store = store; 
-        this.cost = cost;  
-        images.add(image);
-        this.imageLoc = images.size() - 1;
+        this.cost = cost; 
         obsProd.add(this.productID + ": " + this.productName);
         
         if (category.equalsIgnoreCase("PRODUCE"))
@@ -123,10 +121,11 @@ public class Product implements Serializable{
         this.foodDescription = foodDescription;
         this.category = category;
         this.supp = supp; 
-        this.supplier = supp.getName();       
+        this.supplier = supp.getName();
+        this.img = null;
         this.productID = nextID++;
         this.store = store; 
-        this.cost = cost;
+        this.cost = cost; 
         obsProd.add(this.productID + ": " + this.productName);
         
         
@@ -274,18 +273,14 @@ public class Product implements Serializable{
         return this.aisle;
     }
     
-    public void setImage (BufferedImage image)
+    public void setImage (File file) 
     {
-        this.image = image;
+        this.img = file;
     }
-    public void addImage(BufferedImage image){
-        this.image = image;
-        images.add(image);
-        this.imageLoc = images.size()-1;
-    }
-    public BufferedImage getImage()
+    
+    public BufferedImage getImage() throws IOException 
     {
-        return this.image;
+        return ImageIO.read(img);
     }
     public void setStore(Store store) {
         this.store = store; 
@@ -300,9 +295,13 @@ public class Product implements Serializable{
     public Supplier getSupp(){
         return this.supp;
     }
-    
-    //public setSuppName
-    
+    public void setFile(File file){
+        this.img = file;
+        this.hasImage = true;
+    }
+    public File getFile(){
+        return this.img;
+    }
     public void updateSupp(Supplier supp) {
         this.supp = supp; 
         this.supplier = supp.getName(); 
@@ -329,4 +328,5 @@ public class Product implements Serializable{
                 " , Price: " + formatter.format(this.price);
         return str;
     }
+   
 }
