@@ -1334,6 +1334,26 @@ public class GUI extends Application
         catch(Exception ex)
         {
             System.out.println("Given:" + ex + "Product Categories were not imported");
+            categoryList.add("PRODUCE");
+            categoryList.add("DAIRY");
+            categoryList.add("BEVERAGES");
+            categoryList.add("CANDY");
+            categoryList.add("CANNED FOODS");
+            categoryList.add("PASTA");
+            categoryList.add("SNACK FOODS");
+            categoryList.add("BAKED GOODS");
+            categoryList.add("FROZEN FOODS");
+            categoryList.add("OTHER");
+            obsCategory.add("PRODUCE");
+            obsCategory.add("DAIRY");
+            obsCategory.add("BEVERAGES");
+            obsCategory.add("CANDY");
+            obsCategory.add("CANNED FOODS");
+            obsCategory.add("PASTA");
+            obsCategory.add("SNACK FOODS");
+            obsCategory.add("BAKED GOODS");
+            obsCategory.add("FROZEN FOODS");
+            obsCategory.add("OTHER");
         }
         try
         {
