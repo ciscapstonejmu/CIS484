@@ -22,22 +22,6 @@ INSERT INTO Supplier (supplierID, SupplierName, SupplierPhone, SupplierEmail, Su
 
 
 
-
-
-INSERT INTO Employee (employeeID, EmployFName, EmployLName, EmployEmail, EmployPhoneNumber, EmployAddress, EmploySalary, EmployJobTitle, EmployType, EmployCategory, storeID) Values (0, 'javauser', 'javapass', 'javauser@thrifty.com', '484-JAVA', '331 Netbeans Street', '1000000', 'Bagger', 'Full-Time', 'Manager', '0');
-
-INSERT INTO Employee (employeeID, EmployFName, EmployLName, EmployEmail, EmployPhoneNumber, EmployAddress, EmploySalary, EmployJobTitle, EmployType, EmployCategory, storeID) Values (0, 'assoc', 'pass', 'associate@thrifty.com', '123-4567', '123 Default Circle', '50000', 'Bagger', 'Part-Time', 'Associate', '3');
-
-INSERT INTO Employee (employeeID, EmployFName, EmployLName, EmployEmail, EmployPhoneNumber, EmployAddress, EmploySalary, EmployJobTitle, EmployType, EmployCategory, storeID) Values (0, 'Bob', 'Bobson', 'bbobson@thrifty.com', '555-5555', '123 Casting Street', '50000', 'Bagger', 'Full-Time', 'Associate', '3');
-
- INSERT INTO Employee (employeeID, EmployFName, EmployLName, EmployEmail, EmployPhoneNumber, EmployAddress, EmploySalary, EmployJobTitle, EmployType, EmployCategory, storeID) Values (0, 'Laura', 'Lawson', 'llawson@thrifty.com', '666-6666', '456 Datafield Lane', '68000', 'General Manager', 'Full-Time', 'Manager', '4');
-
-INSERT INTO Employee (employeeID, EmployFName, EmployLName, EmployEmail, EmployPhoneNumber, EmployAddress, EmploySalary, EmployJobTitle, EmployType, EmployCategory, storeID) Values (0, 'Rick', 'Rickson', 'rrickson@thrifty.com', '777-7777', '789 Sprocket Avenue', '790000', 'Area Manager', 'Full-Time', 'Manager', '2');
-
-INSERT INTO Employee (employeeID, EmployFName, EmployLName, EmployEmail, EmployPhoneNumber, EmployAddress, EmploySalary, EmployJobTitle, EmployType, EmployCategory, storeID) Values (0, 'Bertha', 'Berthasen', 'bberthason@thrifty.com', '555-5555', '123 JFX Lane', '50000', 'Bagger', 'Part-Time', 'Associate', '3');
-
-
-
 INSERT INTO Expense (expenseID, Category, Description, Status, AmountPaid, TotalAmount, RemainingBal, ExpDate, storeID) Values (0, 'Utilities', 'Water Bill', 'Paid', '300.0', '300.0', '0.0', '6-23-2019', 1);
 
 INSERT INTO Expense (expenseID, Category, Description, Status, AmountPaid, TotalAmount, RemainingBal, ExpDate, storeID) Values (1, 'Lawn Care', 'Mowing', 'Ongoing', '70.0', '100.0', '30.0', '6-26-2019', 3);
