@@ -15,8 +15,7 @@ public class Employee implements Serializable{
     private String address;
     private double salary;
     private double hourly;
-    private String jobTitle; 
-    private double timeWorked;
+    private String jobTitle;
     public static ObservableList obsEmp = FXCollections.observableArrayList();
     public static int nextID = 0;    
     public static ArrayList<Employee> empAcc = new ArrayList<>();
@@ -28,7 +27,6 @@ public class Employee implements Serializable{
     private Store store;
     private String username;
     private String password;
-    //public ObservableList empPayroll = FXCollections.observableArrayList();
     public ArrayList<Payroll> payRoll = new ArrayList<>();
     
     
@@ -40,8 +38,7 @@ public class Employee implements Serializable{
                 this.Email = "NO Email";
                 this.phoneNumber = " ";
                 this.address = "NO ADDRESS";
-                this.salary = 0.0;                
-                this.timeWorked = 0.0;
+                this.salary = 0.0;
                 this.employeeID = nextID++;
                 this.jobTitle = " ";                
                 this.storeLoc = " ";
@@ -133,9 +130,9 @@ public class Employee implements Serializable{
         this.salary = salary;
         this.employeeID = nextID++;
         this.jobTitle = jobTitle; 
-        this.employeeType = employeeType; //ceo, manager, or regular 
-        this.employeeCategory = employeeCategory; //full time or part time
-        if(this.employeeCategory.equalsIgnoreCase("Part Time"))
+        this.employeeType = employeeType; 
+        this.employeeCategory = employeeCategory; 
+        if(this.employeeType.equalsIgnoreCase("Part Time"))
             this.hourly = salary;
         this.store = store;
         this.storeLoc = store.getStoreName();
@@ -164,49 +161,6 @@ public class Employee implements Serializable{
         
     }
     
-    public Employee(String Email, String phoneNumber, String address, double salary, double timeWorked)
-    {
-        //this.employeeName = employeeName;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.salary = salary;
-        this.timeWorked = timeWorked;
-    }
-    
-     public Employee(String firstName, String lastName, String Email, String phoneNumber, String address, double salary, String jobTitle)
-    {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.Email = Email;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.salary = salary;  
-        employeeID = nextID++;
-        this.jobTitle = jobTitle; 
-        this.username = firstName;
-        this.password = lastName;
-        if(admins.size() > 0)
-        {
-        int counter = 0;
-        int loop = 0;
-        while(loop < admins.size())
-        {
-            Employee temp = admins.get(loop);
-            if(temp.firstName.equalsIgnoreCase(this.firstName))
-            {
-               counter++;
-            }
-            loop++;
-        }
-        if(counter > 0)
-            {
-                this.username = this.username + counter;  
-            }            
-        }
-       admins.add(this);
-        
-    
-    }
     
     public int getEmployeeID()
     {
@@ -345,8 +299,8 @@ public class Employee implements Serializable{
     {
         String str = "";
         str += "ID: " + this.employeeID + " , Username: "+ this.username + " , First Name: " + this.firstName +  " , Last Name: " + this.lastName + ", Email: " + this.Email +
-                ", Phone Number: " + this.phoneNumber + " , Address: " + this.address + " , Salary: " +
-                this.salary + " , Time Worked: " + this.timeWorked;
+                ", Phone Number: " + this.phoneNumber + " , Address: " + this.address + " , Salary: $" +
+                this.salary;
         return str;
                 
     }
