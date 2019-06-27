@@ -12,11 +12,13 @@ INSERT INTO Store (storeID, StoreName, StoreAddress) Values (4, 'Vegas', '456 Wa
 
 INSERT INTO Supplier (supplierID, SupplierName, SupplierPhone, SupplierEmail, SupplierAddress, ContactName, ContactPhone, ContactEmail) Values (0, 'Food Supplier', '555-1234', 'food@gmail.com', '1233 Food Lane', 'Frank Food', '555-4567', 'ffood@gmail.com');
 
-INSERT INTO Supplier (supplierID, SupplierName, SupplierPhone, SupplierEmail, SupplierAddress, ContactName, ContactPhone, ContactEmail) Values (1, 'Beverage Supplier', '555-2897', 'beverage@gmail.com', '4599 Beverage Street', 'Jacques Beverage', 'jbeverage@gmail.com');
+INSERT INTO Supplier (supplierID, SupplierName, SupplierPhone, SupplierEmail, SupplierAddress, ContactName, ContactPhone, ContactEmail) Values (1, 'Beverage Supplier', '555-2897', 'beverage@gmail.com', '4599 Beverage Street', 'Jacques Beverage', '555-7834', 'jbeverage@gmail.com');
 
-INSERT INTO Supplier (supplierID, SupplierName, SupplierPhone, SupplierEmail, SupplierAddress, ContactName, ContactPhone, ContactEmail) Values (2, 'Fruit Supplier', '555-0922', 'fruitsco@gmail.com', '1270 Apple Avenue', 'Amelia Appleseed', 'afruitsco@gmail.com ');
+INSERT INTO Supplier (supplierID, SupplierName, SupplierPhone, SupplierEmail, SupplierAddress, ContactName, ContactPhone, ContactEmail) Values (2, 'Fruit Supplier', '555-0922', 'fruitsco@gmail.com', '1270 Apple Avenue', 'Amelia Appleseed', '555-3478', 'afruitsco@gmail.com ');
 
-INSERT INTO Supplier (supplierID, SupplierName, SupplierPhone, SupplierEmail, SupplierAddress, ContactName, ContactPhone, ContactEmail) Values (3, 'Vegetable Supplier', '555-8155', 'vegetables@gmail.com', '3430 Celery Circle', '
+INSERT INTO Supplier (supplierID, SupplierName, SupplierPhone, SupplierEmail, SupplierAddress, ContactName, ContactPhone, ContactEmail) Values (3, 'Vegetable Supplier', '555-8155', 'vegetables@gmail.com', '3430 Celery Circle', 'Chris Celery', '555-9076', 'cvegetables@gmail.com');
+
+INSERT INTO Supplier (supplierID, SupplierName, SupplierPhone, SupplierEmail, SupplierAddress, ContactName, ContactPhone, ContactEmail) Values (4, 'Pizza Supplier', '555-6453', 'pizza@gmail.com', '890 Pepperoni Road', 'Peter Peterson', '555-9054', 'peterpizza@gmail.com');
 
 
 
