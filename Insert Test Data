@@ -1,0 +1,93 @@
+INSERT INTO Store (storeID, StoreName, StoreAddress) Values (0, 'Harrisonburg', '123 Lane');
+
+INSERT INTO Store (storeID, StoreName, StoreAddress) Values (1, 'Staunton', '456 Lane');
+
+INSERT INTO Store (storeID, StoreName, StoreAddress) Values (2, 'Charlottesville', '789 Lane');
+
+INSERT INTO Store (storeID, StoreName, StoreAddress) Values(3, 'Winchester', '123 Way');
+
+INSERT INTO Store (storeID, StoreName, StoreAddress) Values (4, 'Vegas', '456 Way');
+
+
+
+INSERT INTO Supplier (supplierID, SupplierName, SupplierPhone, SupplierEmail, SupplierAddress, ContactName, ContactPhone, ContactEmail) Values (0, 'Food Supplier', '555-1234', 'food@gmail.com', '1233 Food Lane', 'Frank Food', '555-4567', 'ffood@gmail.com');
+
+INSERT INTO Supplier (supplierID, SupplierName, SupplierPhone, SupplierEmail, SupplierAddress, ContactName, ContactPhone, ContactEmail) Values (1, 'Beverage Supplier', '555-2897', 'beverage@gmail.com', '4599 Beverage Street', 'Jacques Beverage', 'jbeverage@gmail.com');
+
+INSERT INTO Supplier (supplierID, SupplierName, SupplierPhone, SupplierEmail, SupplierAddress, ContactName, ContactPhone, ContactEmail) Values (2, 'Fruit Supplier', '555-0922', 'fruitsco@gmail.com', '1270 Apple Avenue', 'Amelia Appleseed', 'afruitsco@gmail.com ');
+
+INSERT INTO Supplier (supplierID, SupplierName, SupplierPhone, SupplierEmail, SupplierAddress, ContactName, ContactPhone, ContactEmail) Values (3, 'Vegetable Supplier', '555-8155', 'vegetables@gmail.com', '3430 Celery Circle', '
+
+
+
+
+
+INSERT INTO Employee (employeeID, EmployFName, EmployLName, EmployEmail, EmployPhoneNumber, EmployAddress, EmploySalary, EmployJobTitle, EmployType, EmployCategory, storeID) Values (0, 'javauser', 'javapass', 'javauser@thrifty.com', '484-JAVA', '331 Netbeans Street', '1000000', 'Bagger', 'Full-Time', 'Manager', '0');
+
+INSERT INTO Employee (employeeID, EmployFName, EmployLName, EmployEmail, EmployPhoneNumber, EmployAddress, EmploySalary, EmployJobTitle, EmployType, EmployCategory, storeID) Values (0, 'assoc', 'Bobson', 'associate@thrifty.com', '123-4567', '123 Default Circle', '50000', 'Bagger', 'Part-Time', 'Associate', '3');
+
+INSERT INTO Employee (employeeID, EmployFName, EmployLName, EmployEmail, EmployPhoneNumber, EmployAddress, EmploySalary, EmployJobTitle, EmployType, EmployCategory, storeID) Values (0, 'Bob', 'Bobson', 'bbobson@thrifty.com', '555-5555', '123 Casting Street', '50000', 'Bagger', 'Full-Time', 'Associate', '3');
+
+ INSERT INTO Employee (employeeID, EmployFName, EmployLName, EmployEmail, EmployPhoneNumber, EmployAddress, EmploySalary, EmployJobTitle, EmployType, EmployCategory, storeID) Values (0, 'Laura', 'Lawson', 'llawson@thrifty.com', '666-6666', '456 Datafield Lane', '68000', 'General Manager', 'Full-Time', 'Manager', '4');
+
+INSERT INTO Employee (employeeID, EmployFName, EmployLName, EmployEmail, EmployPhoneNumber, EmployAddress, EmploySalary, EmployJobTitle, EmployType, EmployCategory, storeID) Values (0, 'Rick', 'Rickson', 'rrickson@thrifty.com', '777-7777', '789 Sprocket Avenue', '790000', 'Area Manager', 'Full-Time', 'Manager', '2');
+
+INSERT INTO Employee (employeeID, EmployFName, EmployLName, EmployEmail, EmployPhoneNumber, EmployAddress, EmploySalary, EmployJobTitle, EmployType, EmployCategory, storeID) Values (0, 'Bertha', 'Berthasen', 'bberthason@thrifty.com', '555-5555', '123 JFX Lane', '50000', 'Bagger', 'Part-Time', 'Associate', '3');
+
+
+
+INSERT INTO Expense (expenseID, Category, Description, Status, AmountPaid, TotalAmount, RemainingBal, ExpDate, storeID) Values (0, 'Utilities', 'Water Bill', 'Paid', '300.0', '300.0', '0.0', '6-23-2019', 1);
+
+INSERT INTO Expense (expenseID, Category, Description, Status, AmountPaid, TotalAmount, RemainingBal, ExpDate, storeID) Values (1, 'Lawn Care', 'Mowing', 'Ongoing', '70.0', '100.0', '30.0', '6-26-2019', 3);
+
+INSERT INTO Expense (expenseID, Category, Description, Status, AmountPaid, TotalAmount, RemainingBal, ExpDate, storeID) Values (2, 'Payroll', 'Pay Salaries', 'Paid', '300000', '300000', '0', '6-22-2019', 4);
+
+INSERT INTO Expense (expenseID, Category, Description, Status, AmountPaid, TotalAmount, RemainingBal, ExpDate, storeID) Values (3, 'Inventory Purchases', 'Buy Salami', '1700', '2000', '300', '6-17-2019', 3);
+
+INSERT INTO Expense (expenseID, Category, Description, Status, AmountPaid, TotalAmount, RemainingBal, ExpDate, storeID) Values (4, 'Utilities', 'Electricity Bill', 'Ongoing', '400.0', '450.0', '50.0', '6-5-2019', 2);
+
+
+INSERT INTO PRODUCT (productID, Name, Quantity, Price, Cost, Description, Category, 'storeID', 'supplierID') Values (0, 'Cheetos', '15', '3.0', '1.5', 'Has Cheese?', 'Snack Foods', '0', '3');
+
+INSERT INTO PRODUCT (productID, Name, Quantity, Price, Cost, Description, Category, 'storeID', 'supplierID') Values (1, 'Pizza', '7', '8.99', '3.0', 'Lots of Pepperoni', 'Frozen Foods', '2', '1');
+
+INSERT INTO PRODUCT (productID, Name, Quantity, Price, Cost, Description, Category, 'storeID', 'supplierID') Values (2, 'Milk', '30', '7.89', '0.99', 'Fresh from the Farm!', 'Dairy', '3', '0');
+
+INSERT INTO PRODUCT (productID, Name, Quantity, Price, Cost, Description, Category, 'storeID', 'supplierID') Values (3, 'Coca Cola', '48', '2.99', '0.30', 'Still Better Than Pepsi', 'Beverages', '4', '1');
+
+INSERT INTO PRODUCT (productID, Name, Quantity, Price, Cost, Description, Category, 'storeID', 'supplierID') Values (4, 'Beets', '150', '1.99', '0.45', 'Not Made by Dr. Dre', 'Canned Foods', '1', '2');
+
+
+
+INSERT INTO PRODUCTORDER (productOrderID, Quantity, Name, Description, UnitCost, UnitPrice, Subtotal, DeliveryDate, poDate, Category, storeID, supplierID) Values (0, '35', 'Beverage Order', 'Refilling Soda Stock', '0.70', '2.99', '2.29', '6-23-2019', '6-15-2019', '0', '2');
+
+INSERT INTO PRODUCTORDER (productOrderID, Quantity, Name, Description, UnitCost, UnitPrice, Subtotal, DeliveryDate, poDate, Category, storeID, supplierID) Values (1, '135', 'Produce Order', 'Refilling Produce Stock', '0.35', '3.95', '6-12-2019', '6-18-2019', '2', '3');
+
+INSERT INTO PRODUCTORDER (productOrderID, Quantity, Name, Description, UnitCost, UnitPrice, Subtotal, DeliveryDate, poDate, Category, storeID, supplierID) Values (2, '650', 'Vegetable Order', 'Refilling Vegetable Stock', '0.65', '1.99', '6-25-2019', '6-27-2019', '0', '1');
+
+INSERT INTO PRODUCTORDER (productOrderID, Quantity, Name, Description, UnitCost, UnitPrice, Subtotal, DeliveryDate, poDate, Category, storeID, supplierID) Values (3, '520', 'Pizza Order', 'Refilling Frozen Pizza Stock', '1.00', '8.99', '6-17-2019', '6-25-2019', '4', '3');
+
+INSERT INTO PRODUCTORDER (productOrderID, Quantity, Name, Description, UnitCost, UnitPrice, Subtotal, DeliveryDate, poDate, Category, storeID, supplierID) Values (4, '800', 'Waffle Order', 'Refill Waffle Stock', '0.01', '3.99', '6-12-2019', '6-13-2019', '1', '1');
+
+
+INSERT INTO Member (memberID, FName, LName, PhoneNumber, Email) Values (0, 'Ron', 'Swanson', '555-0988', 'rswanson@gmail.com');
+
+INSERT INTO Member (memberID, FName, LName, PhoneNumber, Email) Values (1, 'Leslie', 'Knope', '555-1235', 'lknope@gmail.com');
+
+INSERT INTO Member (memberID, FName, LName, PhoneNumber, Email) Values (2, 'Tom', 'Haverford', '555-5033', 'thaverford@gmail.com');
+
+INSERT INTO Member (memberID, FName, LName, PhoneNumber, Email) Values (3, 'Ann', 'Perkins', '555-4406', 'aperkins@gmail.com');
+
+INSERT INTO Member (memberID, FName, LName, PhoneNumber, Email) Values (4, 'Jerry', 'Gergich', '555-8890', 'jgergich@gmail.com');
+
+
+
+
+
+
+
+ 
+
+ 
+
+ 
