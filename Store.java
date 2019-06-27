@@ -60,7 +60,10 @@ public class Store implements Serializable{
     {
         return this.storeAddress;
     }
-    
+      public void setNextID(int storeID)
+    {
+        this.storeID = storeID; 
+    }
     public void addExpense(Expense exp)
     {
         this.associatedExpenses.add(exp);
