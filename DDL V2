@@ -21,6 +21,19 @@ CustPhone VarChar(300),
 CustAddress VarChar(300),
 CustPayMethod VarChar(300));
 
+Create Table CustSale
+(saleID Integer Primary Key,
+SaleDate VarChar(300),
+MembStatus VarChar(300),
+Subtotal VarChar(300),
+Tax VarChar(300),
+Discount VarChar(300),
+storeID Integer,
+employeeeID Integer,
+memberID Integer,
+Foreign Key (storeID) REFERENCES Store);
+Foreign Key (employeeID) REFERENCES Employee);
+
 
 Create Table Employee
 (employeeID Integer Primary Key,
@@ -43,10 +56,8 @@ Create Table Expense
 (expenseID Integer Primary Key,
 Category VarChar(300),
 Description VarChar(300),
-Status VarChar(300),
 AmountPaid VarChar(300),
 TotalAmount VarChar(300),
-RemainingBalance VarChar(300),
 expDate VarChar(300),
 storeID Integer,
 Foreign Key (storeID) REFERENCES Store);
