@@ -38,7 +38,9 @@ public class Member implements Serializable {
     {
         return this.memberID;
     }
-    
+     public void setID(int i ) {
+        this.memberID = "Member" + i; 
+    }
     public void setFName(String fName)
     {
         this.memFName = fName;
