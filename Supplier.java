@@ -33,9 +33,24 @@ public class Supplier implements Serializable{
        
         supplierID = nextID++;
     }
+     public Supplier()
+    {
+        this.supplierName = "NO NAME";
+        this.supplierPhone = "NO PHONE";
+        this.supplierAddress = "NO ADDRESS";
+        this.supplierEmail = "NO EMAIL"; 
+        this.supplierCountry = "NO COUNTRY";
+        this.salesContactName = "NO NAME";
+        this.salesContactPhoneNumber = "NO NUMBER";
+        this.salesContactEmail = "NO EMAIL";
+        this.salesContactAddress = "NO ADDRESS";
+    }
     public int getID()
     {
         return this.supplierID;
+    }
+    public void setID(int nextID) {
+        this.supplierID = nextID; 
     }
     public void setName(String supplierName)
     {
