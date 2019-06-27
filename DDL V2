@@ -49,15 +49,18 @@ Foreign Key (employeeID) REFERENCES Employee);
  storeID Integer,
  Foreign Key (storeID) REFERENCES Store);
  
-Create Table Expense
-(expenseID Integer Primary Key,
-Category VarChar(300),
-Description VarChar(300),
-AmountPaid VarChar(300),
-TotalAmount VarChar(300),
-expDate VarChar(300),
-storeID Integer,
-Foreign Key (storeID) REFERENCES Store);
+ CREATE TABLE EXPENSE
+  2  (EXPENSEID INTEGER PRIMARY KEY,
+  3  CATEGORY VARCHAR(300),
+  4  DESCRIPTION VARCHAR(300),
+  5  STATUS VARCHAR (300),
+  6  AMOUNTPAID VARCHAR (300),
+  7  TOTALAMOUNT VARCHAR(300),
+  8  REMAININGBAL VARCHAR (300),
+  9  EXPDATE VARCHAR(300),
+ 10  STOREID INTEGER,
+ 11  FOREIGN KEY (STOREID) REFERENCES STORE);
+
 
 
 Create Table Member
