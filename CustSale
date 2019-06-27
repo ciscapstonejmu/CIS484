@@ -6,14 +6,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.*;
 
-public class CustSale implements Serializable{
+public class CustSale implements Serializable {
     
     //DataFields
     private String saleID; 
-    public static int saleIDCount = 0; 
-    //private String saleCategory; 
+    public static int saleIDCount = 0;
     private String saleDate;
-    private Customer customer;
     private Member member;
     private boolean isMem;
     private String memStat;
