@@ -53,31 +53,30 @@ public class Expense implements Serializable{
        
     }
     
-    public Expense(String category, String description, double amountPaid, double amount, String date, Store store)
+    public Expense(String category, String description, String status, double amountPaid, double totalAmount, double remainingBalance, String date, Store store)
     {
         this.category = category;
         this.description = description;
         this.amountPaid = amountPaid;
-        this.totalAmount = amount;
+        this.totalAmount = totalAmount;
         this.date = date;
         this.status = status;
         this.remainingBalance = totalAmount - amountPaid;
+        if (amountPaid < totalAmount)
+        {
+            this.status = "Ongoing";
+ 
+        }
+        if (amountPaid >= totalAmount)
+        {
+            this.status = "Paid";
+        }
         this.payableStore = store;
         this.store = this.payableStore.getStoreName() + ", " + this.payableStore.getStoreAddress();
         //this.payableStore = payableStore;
        
         
         this.expenseID = nextID++;
-        
-        if (amountPaid < amount)
-        {
-            this.status = "Ongoing";
- 
-        }
-        if (amountPaid >= amount)
-        {
-            this.status = "Paid";
-        }
         
         obsExpense.add(expenseID + " : " + this.date + " , " + this.description);
         
@@ -182,9 +181,9 @@ public class Expense implements Serializable{
         this.remainingBalance = this.totalAmount - this.amountPaid;
     }
     
-    public void setNextID ()
+    public void setNextID (int i)
     {
-        this.expenseID = nextID++;
+        this.expenseID = i;
     }
     
     
