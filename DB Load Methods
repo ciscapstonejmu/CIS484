@@ -138,7 +138,7 @@ String category = pors.getString(10);
 int storeID = pors.getInt(11);
 int supplierID = pors.getInt(12);
 
-ProductOrder poTable = new ProductOrder(quantity, name, unitCost, unitPrice, subtotal, deliveryDate, orderDate, suppList.get(supplierID), storeList.get(storeID), category, poDate);
+ProductOrder poTable = new ProductOrder(quantity, name, unitCost, unitPrice, subtotal, deliveryDate, poDate, suppList.get(supplierID), storeList.get(storeID), category, poDate);
 
 
 poTable.setNextID(++incrementor);
