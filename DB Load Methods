@@ -6,6 +6,8 @@ int incrementor = 0;
 ResultSet exprs = DBCommand(query);
 try
 {
+    while(exprs.next())
+    {
 
 String category = exprs.getString(2);
 String description = exprs.getString(3);
@@ -28,6 +30,7 @@ for (Expense ex: expList)
 }
 
 }
+}
 catch (SQLException e)
 {
     System.out.println(e);
@@ -43,6 +46,8 @@ int incrementor = 0;
 ResultSet emprs = DBCommand(query);
 try
 {
+    while(emprs.next())
+    {
 
 String employFName = emprs.getString(2);
 String employLName = emprs.getString(3);
@@ -73,6 +78,7 @@ for (Employee emp: empList)
     obsEmp.add(emp);
 }
 }
+}
 catch (SQLException ex)
 {
     System.out.println(ex.toString());
@@ -88,6 +94,8 @@ int incrementor = 0;
 ResultSet prors = DBCommand(query);
 try
 {
+    while (prors.next())
+    {
 
 String name = prors.getString(2);
 Integer quantity = prors.getInt(3);
@@ -109,6 +117,7 @@ for (Product prod: prodList)
 }
 
 }
+}
 catch (SQLException e)
 {
     System.out.println(e);
@@ -125,6 +134,8 @@ int incrementor = 0;
 ResultSet pors = DBCommand(query);
 try
 {
+    while(pors.next())
+    {
 
 int quantity = pors.getInt(2);
 String name = pors.getString(3);
@@ -148,6 +159,80 @@ prodOrderList.add(poTable);
 for (ProductOrder po: prodOrderList)
 {
     obsProdOrder.add(po);
+}
+}
+}
+catch (SQLException ex)
+{
+    System.out.println(ex.toString());
+
+}
+}
+
+public void loadMembersFromDB()
+{
+String query = "SELECT * FROM MEMBER ORDER BY MEMBERID ASC";
+
+int incrementor = 0;
+ResultSet memrs = DBCommand(query);
+try
+{
+    while(memrs.next())
+    {
+
+String fName = memrs.getString(2);
+String lName = memrs.getString(3);
+String phoneNumber = memrs.getString(4);
+String email = memrs.getString(5);
+
+Member memTable = new Member(fName, lName, phoneNumber, email);
+
+memTable.setNextID(++incrementor);
+obsMem.clear();
+memList.add(memTable);
+
+for (Member mem: memList)
+{
+    obsMem.add(mem);
+}
+}
+}
+catch (SQLException ex)
+{
+    System.out.println(ex.toString());
+
+}
+}
+
+public void loadCustSalesFromDB()
+{
+String query = "SELECT * FROM CUSTSALE ORDER BY CUSTSALEID ASC";
+
+int incrementor = 0;
+ResultSet csrs = DBCommand(query);
+try
+{
+    while(csrs.next())
+    {
+
+String saleDate = csrs.getString(2);
+int storeID = csrs.getInt(3);
+int employeeID = csrs.getInt(4);
+int memberID = csrs.getInt(5);
+ArrayList<Product> saleProducts = new ArrayList();
+
+
+
+CustSale csTable = new CustSale(saleDate, storeList.get(storeID), empList.get(employeeID), memList.get(memberID), saleProducts);
+
+csTable.setNextID(++incrementor);
+obsSale.clear();
+saleList.add(csTable);
+
+for (CustSale cs: saleList)
+{
+    obsSale.add(cs);
+}
 }
 }
 catch (SQLException ex)
