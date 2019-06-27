@@ -166,7 +166,8 @@ public class Employee implements Serializable{
     {
         return this.employeeID;
     }
-    
+     public void setNextID(int nextID) {
+        this.employeeID = nextID; 
     
     public void setFName (String firstName)
     {
