@@ -61,15 +61,15 @@ INSERT INTO PRODUCT (productID, Name, Quantity, Price, Cost, Description, Catego
 
 
 
-INSERT INTO PRODUCTORDER (productOrderID, Quantity, Name, Description, UnitCost, UnitPrice, Subtotal, DeliveryDate, poDate, Category, storeID, supplierID) Values (0, '35', 'Beverage Order', 'Refilling Soda Stock', '0.70', '2.99', '2.29', '6-23-2019', '6-15-2019', 'Beverages', 0, 2);
+INSERT INTO PRODUCTORDER (productOrderID, Quantity, Name, Description, UnitCost, UnitPrice, Subtotal, DeliveryDate, poDate, Category, storeID, supplierID) Values (0, '35', 'Beverage Order', 'Refilling Soda Stock', '0.70', '2.99', '24.5', '6-23-2019', '6-15-2019', 'Beverages', 0, 2);
 
-INSERT INTO PRODUCTORDER (productOrderID, Quantity, Name, Description, UnitCost, UnitPrice, Subtotal, DeliveryDate, poDate, Category, storeID, supplierID) Values (1, '135', 'Produce Order', 'Refilling Produce Stock', '0.35', '3.95', '6-12-2019', '6-18-2019', 'Produce', 2, 3);
+INSERT INTO PRODUCTORDER (productOrderID, Quantity, Name, Description, UnitCost, UnitPrice, Subtotal, DeliveryDate, poDate, Category, storeID, supplierID) Values (1, '135', 'Produce Order', 'Refilling Produce Stock', '0.35', '3.95', '47.25', '6-12-2019', '6-18-2019', 'Produce', 2, 3);
 
-INSERT INTO PRODUCTORDER (productOrderID, Quantity, Name, Description, UnitCost, UnitPrice, Subtotal, DeliveryDate, poDate, Category, storeID, supplierID) Values (2, '650', 'Vegetable Order', 'Refilling Vegetable Stock', '0.65', '1.99', '6-25-2019', '6-27-2019', 'Produce', 0, 1);
+INSERT INTO PRODUCTORDER (productOrderID, Quantity, Name, Description, UnitCost, UnitPrice, Subtotal, DeliveryDate, poDate, Category, storeID, supplierID) Values (2, '650', 'Vegetable Order', 'Refilling Vegetable Stock', '0.65', '1.99', '422.5', '6-25-2019', '6-27-2019', 'Produce', 0, 1);
 
-INSERT INTO PRODUCTORDER (productOrderID, Quantity, Name, Description, UnitCost, UnitPrice, Subtotal, DeliveryDate, poDate, Category, storeID, supplierID) Values (3, '520', 'Pizza Order', 'Refilling Frozen Pizza Stock', '1.00', '8.99', '6-17-2019', '6-25-2019', 'Frozen Foods', 4, 3);
+INSERT INTO PRODUCTORDER (productOrderID, Quantity, Name, Description, UnitCost, UnitPrice, Subtotal, DeliveryDate, poDate, Category, storeID, supplierID) Values (3, '520', 'Pizza Order', 'Refilling Frozen Pizza Stock', '1.00', '8.99', '520.0', '6-17-2019', '6-25-2019', 'Frozen Foods', 4, 3);
 
-INSERT INTO PRODUCTORDER (productOrderID, Quantity, Name, Description, UnitCost, UnitPrice, Subtotal, DeliveryDate, poDate, Category, storeID, supplierID) Values (4, '800', 'Waffle Order', 'Refill Waffle Stock', '0.01', '3.99', '6-12-2019', '6-13-2019', 'Frozen Foods', 1, 1);
+INSERT INTO PRODUCTORDER (productOrderID, Quantity, Name, Description, UnitCost, UnitPrice, Subtotal, DeliveryDate, poDate, Category, storeID, supplierID) Values (4, '800', 'Waffle Order', 'Refill Waffle Stock', '0.01', '3.99', '8.0','6-12-2019', '6-13-2019', 'Frozen Foods', 1, 1);
 
 
 INSERT INTO Member (memberID, FName, LName, PhoneNumber, Email) Values (0, 'Ron', 'Swanson', '555-0988', 'rswanson@gmail.com');
