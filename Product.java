@@ -180,7 +180,9 @@ public class Product implements Serializable{
     {
         return this.productID;
     }
-    
+     public void setProductID(int i ) {
+        this.productID = i; 
+    }
     public void setProductName(String productName)
     {
         this.productName = productName;
