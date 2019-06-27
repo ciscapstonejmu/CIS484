@@ -4389,8 +4389,7 @@ btnDisProd.setOnAction(e -> {
                   obsStore.get(i).addExpense(expList.get(expList.size()-1));
                 }   
             }
-            System.out.println(eC.getFirstName() + " has worked " + eC.getTimeWorked() + "hours during " + tempPay.getPayrollPeriod());
-            for(int i = 0; i<eC.payRoll.size(); i++)
+            System.out.println(eC.getFirstName() + " has worked " + tempPay.totalWork + " hours during " + tempPay.getPayrollPeriod() + " and is paid $" + tempPay.getAmountPaid());            for(int i = 0; i<eC.payRoll.size(); i++)
             {
                 if(eC.payRoll.get(i).getPayrollPeriod().equalsIgnoreCase((String)cmboPeriod.getValue()))
                 {
