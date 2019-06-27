@@ -1228,27 +1228,12 @@ public class GUI extends Application
         }
         try
         {
-            ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("images.dat"));
-
-            Product.readObject(instanceObjectInput);
-
-           instanceObjectInput.close();
-        }
-        catch(Exception ex)
-        {
-            
-        }
-        try
-        {
             ObjectInputStream instanceObjectInput = new ObjectInputStream(new FileInputStream("products.dat"));
 
             prodList.addAll((ArrayList<Product>)(instanceObjectInput.readObject()));
             for(Product prod : prodList){
                 Product.nextID++;
                 Product.obsProd.add(prod.getProductID() +": "+ prod.getProductName());
-                if(prod.imageLoc >= 0){
-                    prod.setImage(Product.images.get(prod.imageLoc));
-                }
                 prodData.add(prod);
            }
 
@@ -5326,16 +5311,6 @@ public class GUI extends Application
            instanceObjectOutput.writeObject(suppList);
            instanceObjectOutput.close();
            
-        }
-        catch(Exception ex)
-        {
-         System.out.println(ex);
-        }
-        try
-        {
-           ObjectOutputStream instanceObjectOutput = new ObjectOutputStream(new FileOutputStream("images.dat"));
-           Product.writeObject(instanceObjectOutput);
-           instanceObjectOutput.close();  
         }
         catch(Exception ex)
         {
