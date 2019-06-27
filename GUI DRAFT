@@ -1713,6 +1713,16 @@ public class GUI extends Application
                 alert.setHeaderText("Error! Please Enter Data!");
                 alert.showAndWait();
             }
+            else if(!(txtSuppEmail.getText().contains("@")))
+                {
+                    alert.setHeaderText("Error! Please enter a valid email!");
+                    alert.showAndWait();
+                }
+            else if(!(txtSuppContactEmail.getText().contains("@")))
+                {
+                    alert.setHeaderText("Error! Please enter a valid email!");
+                    alert.showAndWait();
+                }
             else
             {
 //                String email = "";
