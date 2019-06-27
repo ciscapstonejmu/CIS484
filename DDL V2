@@ -46,8 +46,7 @@ Foreign Key (employeeID) REFERENCES Employee);
  EmployJobTitle VarChar(300),
  EmployType VarChar(300),
  EmployCategory VarChar(300),
-
-storeID Integer,
+ storeID Integer,
  Foreign Key (storeID) REFERENCES Store);
  
 Create Table Expense
