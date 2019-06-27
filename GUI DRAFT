@@ -2588,7 +2588,7 @@ btnDisProd.setOnAction(e -> {
                 try {
                     tempImage = prodList.get(imageChosen).getImage();
                 } catch (IOException ex) {
-                    Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("Could not retrieve image");
                 }
             WritableImage theImage =  SwingFXUtils.toFXImage(tempImage, null);
             myImageViewTwo.setFitHeight(130);
@@ -2823,16 +2823,6 @@ btnDisProd.setOnAction(e -> {
             {
                 alert.setTitle("Error!");
                 alert.setHeaderText("Error! Please Enter Data!");
-                alert.showAndWait();
-            }
-            else if(!(txtEmail.getText().contains("@")))
-                {
-                    alert.setHeaderText("Error! Please enter a valid email!");
-                    alert.showAndWait();
-                }
-            else if(!(txtSalary.getText().matches("\\d{0,15}([\\.]\\d{0,4})?")))
-            {
-                alert.setHeaderText("Error! Please enter a valid salary!");
                 alert.showAndWait();
             }
             else
