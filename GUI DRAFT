@@ -2165,6 +2165,21 @@ public class GUI extends Application
                 alert.setHeaderText("Error! Please Enter Data!");
                 alert.showAndWait();
             }
+            else if(!(txtUnitPrice.getText().matches("\\d{0,15}([\\.]\\d{0,4})?")))
+            {
+                alert.setHeaderText("Error! Please enter an amount!");
+                alert.showAndWait();
+            }
+            else if(!(txtUnitCost.getText().matches("\\d{0,15}([\\.]\\d{0,4})?")))
+            {
+                alert.setHeaderText("Error! Please enter an amount!");
+                alert.showAndWait();
+            }
+            else if(!(txtProdQuantity.getText().matches("\\d{0,15}?")))
+            {
+                alert.setHeaderText("Error! Please enter an amount!");
+                alert.showAndWait();
+            }
             else
             {
                 int storeLocation = cmboStore.getSelectionModel().getSelectedIndex(); 
