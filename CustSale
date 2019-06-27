@@ -5,7 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.*;
 
-public class CustSale {
+public class CustSale implements Serializable{
     
     //DataFields
     private String saleID; 
