@@ -36,20 +36,19 @@ Foreign Key (employeeID) REFERENCES Employee);
 
 
  Create Table Employee
-  2  (employeeID Integer Primary Key,
-  3  EmployFName VarChar(300),
-  4  EmployLName VarChar(300),
-  5  EmployEmail VarChar(300),
-  6  EmployPhoneNumber VarChar(300),
-  7  EmployAddress VarChar(300),
-  8  EmploySalary VarChar(300),
-  9  EmployJobTitle VarChar(300),
- 10  EmployType VarChar(300),
- 11  EmployCategory VarChar(300),
- 12  EmployUserName VarChar(300),
- 13  EmployPassword VarChar(300),
- 14  storeID Integer,
- 15  Foreign Key (storeID) REFERENCES Store);
+ (employeeID Integer Primary Key,
+ EmployFName VarChar(300),
+ EmployLName VarChar(300),
+ EmployEmail VarChar(300),
+  EmployPhoneNumber VarChar(300),
+ EmployAddress VarChar(300),
+ EmploySalary VarChar(300),
+ EmployJobTitle VarChar(300),
+ EmployType VarChar(300),
+ EmployCategory VarChar(300),
+
+storeID Integer,
+ Foreign Key (storeID) REFERENCES Store);
  
 Create Table Expense
 (expenseID Integer Primary Key,
