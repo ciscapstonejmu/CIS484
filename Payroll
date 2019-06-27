@@ -61,25 +61,6 @@ public class Payroll implements Serializable{
         this.payrollPeriod = nowDate + "-" + endDate;
         this.submitted = false;
         this.emp = emp;
-        if(hoursWorked.size() > 0)
-        {
-            for(int i = 0; i <hoursWorked.size(); i++)
-            {
-                this.totalWork += hoursWorked.get(i);
-            }
-        }
-        else
-        {
-            this.totalWork = 0.0;
-        }
-        if(this.emp.getEmployeeCategory().equalsIgnoreCase("Part Time"))
-        {
-            this.amountPaid = totalWork * this.emp.getHourly();
-        }
-        else
-        {
-            this.amountPaid = (this.emp.getSalary()/52);
-        }
         this.payrollID = nextID++;
         
     }
@@ -152,13 +133,12 @@ public class Payroll implements Serializable{
         for(Double dub : this.hoursWorked)
         {
             this.totalWork+= dub;
-            this.emp.setTimeWorked(totalWork);
         }
-        if(this.emp.getEmployeeCategory().equalsIgnoreCase("Part Time"))
+        if(this.emp.getEmployeeType().equalsIgnoreCase("Part Time"))
         {
             this.amountPaid = totalWork * this.emp.getHourly();
         }
-        else
+        if(this.emp.getEmployeeType().equalsIgnoreCase("Full Time"))
         {
             this.amountPaid = (this.emp.getSalary()/52);
         }
