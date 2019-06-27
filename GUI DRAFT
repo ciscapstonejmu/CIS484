@@ -60,6 +60,7 @@ public class GUI extends Application
     TextField txtStoreLoc = new TextField();
     boolean isAuthorized = false;
     boolean found = false;
+    File tempImg = null;
     Employee currentUser;
     
     //Array Lists
@@ -2213,7 +2214,7 @@ public class GUI extends Application
                     Integer.valueOf(txtProdQuantity.getText()),
                     Double.valueOf(txtUnitPrice.getText()), Double.valueOf(txtUnitCost.getText()),
                     storeList.get(cmboStore.getSelectionModel().getSelectedIndex()), txtProdDesc.getText(), 
-                    (String) cmboCategory.getValue(), suppList.get(cmboSupp.getSelectionModel().getSelectedIndex()), tempImage));
+                    (String) cmboCategory.getValue(), suppList.get(cmboSupp.getSelectionModel().getSelectedIndex()), tempImg));
                     obsProd.add(prodList.get(prodList.size() - 1));
                     for(int k = 0; k<categoryList.size(); k++)
                     {
@@ -2236,7 +2237,7 @@ public class GUI extends Application
                     Integer.valueOf(txtProdQuantity.getText()),
                     Double.valueOf(txtUnitPrice.getText()), Double.valueOf(txtUnitCost.getText()),
                     storeList.get(cmboStore.getSelectionModel().getSelectedIndex()), txtProdDesc.getText(), 
-                    (String) cmboCategory.getValue(), suppList.get(cmboSupp.getSelectionModel().getSelectedIndex()), tempImage));
+                    (String) cmboCategory.getValue(), suppList.get(cmboSupp.getSelectionModel().getSelectedIndex()), tempImg));
                      obsProd.add(prodList.get(prodList.size() - 1));
                     for(int k = 0; k<categoryList.size(); k++)
                     {
@@ -2448,16 +2449,16 @@ public class GUI extends Application
             File file = fileChooser.showOpenDialog(thirdStage);
             
             try{
+                prodList.get(imageChosen).setFile(file);
+                obsProd.get(imageChosen).setFile(file);
+                tempImg = file;
                 tempImage = ImageIO.read(file);
                 WritableImage iImage = SwingFXUtils.toFXImage(tempImage, null);
                 
-                
                 myImageView.setImage(iImage);
-                thirdPane.add(myImageView, 1, 11, 4, 4);
                 myImageView.setFitHeight(130);
                 myImageView.setFitWidth(130);
-                imageList.add(tempImage); 
-                
+                thirdPane.add(myImageView, 1, 11, 4, 4);  
             }
             catch(Exception ex)
             {
@@ -2496,26 +2497,13 @@ public class GUI extends Application
             File file = fileChooser.showOpenDialog(thirdStage);
             
             try{
+                prodList.get(imageChosen).setFile(file);
+                obsProd.get(imageChosen).setFile(file);
                 tempImage = ImageIO.read(file);
-                prodList.get(imageChosen).setImage(tempImage);
-                obsProd.get(imageChosen).setImage(tempImage);
-                             
-                for(int i = 0; i < imageList.size(); i++)
-                {
-                    if (i == imageChosen)
-                        imageList.remove(i); 
-                        imageList.set(imageChosen, tempImage);                        
-                }
-                     
                 
-                
-            }
-            catch(Exception ex){
-                
-            }
-            alert.setTitle("Success!");
-            alert.setHeaderText("The product image has been changed!");
-            alert.showAndWait();
+                alert.setTitle("Success!");
+                alert.setHeaderText("The product image has been changed!");
+                alert.showAndWait();
                 myImageViewTwo.setImage(SwingFXUtils.toFXImage(tempImage, null));
                 myImageViewTwo.setFitHeight(130);
                 myImageViewTwo.setFitWidth(130);
@@ -2532,9 +2520,15 @@ public class GUI extends Application
                 fourthPane.add(btnAddImage2, 2, 2); 
                 fourthPane.add(myImageViewTwo, 1, 11, 6, 5);
             }
+            catch(Exception ex){
+                
+            }
+            
+            }
         });
         
         btnViewImage.setOnAction(e -> {
+            tempImage = null;
             int prodSelect = cmboProd2.getSelectionModel().getSelectedIndex(); 
             Product tempProd2 = prodList.get(prodSelect); 
               if(cmboProd2.getValue() == null){
@@ -2542,7 +2536,7 @@ public class GUI extends Application
                 alert.setHeaderText("Please select a product to view the image!");
                 alert.showAndWait();
             }
-              else if(tempProd2.getImage() == null) {
+              else if(tempProd2.hasImage == false) {
                   alert.setTitle("Error!");
                   alert.setHeaderText("This product does not have an image!");
                   alert.showAndWait();
@@ -2561,9 +2555,16 @@ public class GUI extends Application
               }
               else {
             
-            imageChosen = cmboProd2.getSelectionModel().getSelectedIndex(); 
-            WritableImage theImage =  SwingFXUtils.toFXImage(prodList.get(imageChosen).getImage(), null);
+            imageChosen = cmboProd2.getSelectionModel().getSelectedIndex();
             
+                try {
+                    tempImage = prodList.get(imageChosen).getImage();
+                } catch (IOException ex) {
+                    Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            WritableImage theImage =  SwingFXUtils.toFXImage(tempImage, null);
+            myImageViewTwo.setFitHeight(130);
+            myImageViewTwo.setFitWidth(130);
             myImageViewTwo.setImage(theImage);
             fourthPane.getChildren().clear();
             fourthStage.setTitle("View/Edit an Image");
@@ -2589,51 +2590,51 @@ public class GUI extends Application
                 alert.setHeaderText("Please select a product to add the image!");
                 alert.showAndWait();
             }
-             else if(tempProd2.getImage() != null) {
-                  alert.setTitle("Error!");
-                  alert.setHeaderText("This product already has an image! To change, please select Change image.");
-                  alert.showAndWait();
-              }
-             else {
-                FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Choose Image");
-                File file = fileChooser.showOpenDialog(thirdStage);
+             else if(tempProd2.hasImage == true) {
+                     alert.setTitle("Error!");
+                     alert.setHeaderText("This product already has an image! To change, please select Change image.");
+                     alert.showAndWait();
+                 }
+                 else {
+                     FileChooser fileChooser = new FileChooser();
+                     fileChooser.setTitle("Choose Image");
+                     File file = fileChooser.showOpenDialog(thirdStage);
+                     
+                     try{
+                         tempImage = ImageIO.read(file);
+                         
+                         prodList.get(prodSelect).setFile(file);
+                         obsProd.get(prodSelect).setFile(file);
+                         
+                     }
+                     catch(Exception ex){
+                         
+                     }
+                     alert.setTitle("Success!");
+                     alert.setHeaderText("The product image has been added!");
+                     alert.showAndWait();
+                     myImageViewTwo.setFitHeight(130);
+                     myImageViewTwo.setFitWidth(130);
+                     myImageViewTwo.setImage(SwingFXUtils.toFXImage(tempImage, null));
+                     fourthPane.getChildren().clear();
+                     fourthStage.setTitle("View/Edit an Image");
+                     fourthStage.show();
+                     fourthPane.setAlignment(Pos.TOP_LEFT);
+                     
+                     
+                     fourthPane.add(lblSelectProd, 0, 0);
+                     fourthPane.add(cmboProd2, 1, 0);
+                     fourthPane.add(btnViewImage, 0, 2);
+                     fourthPane.add(btnChangeImage, 1, 2);
+                     fourthPane.add(btnAddImage2, 2, 2);
+                     
+                     
+                     fourthPane.add(myImageViewTwo, 1, 11, 6, 5);
+                     
+                     imageList.add(tempImage);
+                 }
             
-            try{
-              
-                tempImage = ImageIO.read(file);
-                prodList.get(imageChosen).setImage(tempImage);
-                obsProd.get(imageChosen).setImage(tempImage);
-                
-                
-                
-            }
-            catch(Exception ex){
-                
-            }
-            alert.setTitle("Success!");
-            alert.setHeaderText("The product image has been added!");
-            alert.showAndWait();
-            myImageViewTwo.setImage(SwingFXUtils.toFXImage(tempImage, null));
-                fourthPane.getChildren().clear();
-                fourthStage.setTitle("View/Edit an Image");
-                fourthStage.show();
-                fourthPane.setAlignment(Pos.TOP_LEFT);
-            
-            
-                fourthPane.add(lblSelectProd, 0, 0);
-                fourthPane.add(cmboProd2, 1, 0);
-                fourthPane.add(btnViewImage, 0, 2);
-                fourthPane.add(btnChangeImage, 1, 2);
-                fourthPane.add(btnAddImage2, 2, 2); 
-                
-                
-                fourthPane.add(myImageViewTwo, 1, 11, 6, 5);
-                myImageViewTwo.setFitHeight(130);
-                myImageViewTwo.setFitWidth(130);
-                imageList.add(tempImage); 
-             } 
-        }); 
+        });
            
         btnRecShip.setOnAction(e -> {
             
