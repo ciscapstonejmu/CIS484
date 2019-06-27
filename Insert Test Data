@@ -24,7 +24,7 @@ INSERT INTO Supplier (supplierID, SupplierName, SupplierPhone, SupplierEmail, Su
 
 INSERT INTO Employee (employeeID, EmployFName, EmployLName, EmployEmail, EmployPhoneNumber, EmployAddress, EmploySalary, EmployJobTitle, EmployType, EmployCategory, storeID) Values (0, 'javauser', 'javapass', 'javauser@thrifty.com', '484-JAVA', '331 Netbeans Street', '1000000', 'Bagger', 'Full-Time', 'Manager', '0');
 
-INSERT INTO Employee (employeeID, EmployFName, EmployLName, EmployEmail, EmployPhoneNumber, EmployAddress, EmploySalary, EmployJobTitle, EmployType, EmployCategory, storeID) Values (0, 'assoc', 'Bobson', 'associate@thrifty.com', '123-4567', '123 Default Circle', '50000', 'Bagger', 'Part-Time', 'Associate', '3');
+INSERT INTO Employee (employeeID, EmployFName, EmployLName, EmployEmail, EmployPhoneNumber, EmployAddress, EmploySalary, EmployJobTitle, EmployType, EmployCategory, storeID) Values (0, 'assoc', 'pass', 'associate@thrifty.com', '123-4567', '123 Default Circle', '50000', 'Bagger', 'Part-Time', 'Associate', '3');
 
 INSERT INTO Employee (employeeID, EmployFName, EmployLName, EmployEmail, EmployPhoneNumber, EmployAddress, EmploySalary, EmployJobTitle, EmployType, EmployCategory, storeID) Values (0, 'Bob', 'Bobson', 'bbobson@thrifty.com', '555-5555', '123 Casting Street', '50000', 'Bagger', 'Full-Time', 'Associate', '3');
 
