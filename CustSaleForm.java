@@ -54,7 +54,6 @@ public class CustSaleForm{
   
     
     public ComboBox cmboSaleProd = new ComboBox(Product.obsProd);
-    public ComboBox cmboSaleCust = new ComboBox(Customer.obsCust);
     public ComboBox cmboSaleStore = new ComboBox(Store.obsStore);
     public ComboBox cmboSaleEmp = new ComboBox(Employee.obsEmp);
     
@@ -116,13 +115,10 @@ public class CustSaleForm{
         cmboSaleStore.setMinWidth(2);
         primaryPane.add(lblSaleEmp, 0, 3,2,1);
         primaryPane.add(cmboSaleEmp, 2, 3);
-        cmboSaleCust.setMinWidth(2);
         primaryPane.add(lblClubMem, 0, 4, 2,1);
-        //primaryPane.add(cmboIsMem, 1, 3);
         primaryPane.add(lblYes, 0, 5);
         
         primaryPane.add(lblNo, 0, 6);
-       // cmboIsMem.setMinWidth(4);
         primaryPane.add(cbYes, 1, 5);
         primaryPane.add(cbNo, 1, 6);
         primaryPane.add(lblMem, 1, 7,1,1);
@@ -133,8 +129,6 @@ public class CustSaleForm{
         primaryPane.add(lblSaleProd, 1, 10,1,1);
         primaryPane.add(cmboSaleProd, 2, 10);
         cmboSaleProd.setMaxWidth(Double.MAX_VALUE);
-        //primaryPane.add(lblSaleProdQuan, 0, 5);
-        //primaryPane.add(txtSaleProdQuan, 1, 5);
         primaryPane.add(btnAddToSale, 2, 11, 1, 1);
         primaryPane.add(btnRepeatBuy, 0, 11, 2, 1);
         primaryPane.add(btnCompleteSale, 0, 12, 2, 1);
@@ -178,23 +172,17 @@ public class CustSaleForm{
         lblRingSale.setStyle("-fx-font: bold 20pt \"bookman\";");
                    
         saleDate.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
-        //cmboIsMem.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         cmboSaleStore.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         cmboSaleEmp.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
-        cmboSaleCust.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
-        //cmboIsMem.setStyle("-fx-font: 9pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         cmboSaleProd.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         GUI.cmboMem.setStyle("-fx-font: 10pt \"bookman\"; -fx-background-color: lightskyblue; -fx-text-fill:white;");
         
-        //txtSaleProdQuan.setPrefWidth(20);
         saleDate.setValue(LocalDate.now());
         saleDate.setPrefWidth(118);
         cmboSaleStore.setPrefWidth(118);
-        cmboSaleCust.setPrefWidth(118);
         cmboSaleEmp.setPrefWidth(118);
         GUI.cmboMem.setPrefWidth(118);
         
-        //cmboIsMem.setPrefWidth(118);
         cmboSaleProd.setPrefWidth(118);
         
         lblAddMem.setStyle("-fx-font: bold 14pt \"Arial\";");
@@ -541,13 +529,10 @@ public class CustSaleForm{
             cmboSaleStore.setMinWidth(2);
             primaryPane.add(lblSaleEmp, 0, 3,2,1);
             primaryPane.add(cmboSaleEmp, 2, 3);
-            cmboSaleCust.setMinWidth(2);
             primaryPane.add(lblClubMem, 0, 4, 2,1);
-            //primaryPane.add(cmboIsMem, 1, 3);
             primaryPane.add(lblYes, 0, 5);
         
             primaryPane.add(lblNo, 0, 6);
-            // cmboIsMem.setMinWidth(4);
             primaryPane.add(cbYes, 1, 5);
             primaryPane.add(cbNo, 1, 6);
             primaryPane.add(lblMem, 1, 7,1,1);
@@ -558,8 +543,6 @@ public class CustSaleForm{
             primaryPane.add(lblSaleProd, 1, 10,1,1);
             primaryPane.add(cmboSaleProd, 2, 10);
             cmboSaleProd.setMaxWidth(Double.MAX_VALUE);
-            //primaryPane.add(lblSaleProdQuan, 0, 5);
-            //primaryPane.add(txtSaleProdQuan, 1, 5);
             primaryPane.add(btnAddToSale, 2, 11, 1, 1);
             primaryPane.add(btnRepeatBuy, 0, 11, 2, 1);
             primaryPane.add(btnCompleteSale, 0, 12, 2, 1);
