@@ -1842,17 +1842,27 @@ public class GUI extends Application
         eighthStage.close();
             
         });
+        //Remove Supplier Lambda
         btnRemoveSupp.setOnAction(e -> {
-            Supplier tempSupp = sC; 
+            Supplier tempSupp = sC;
+            int rmvSup = cmboSupp2.getSelectionModel().getSelectedIndex();
+            String suppQuery; 
+            ResultSet suppRS; 
+
             for(int i = 0; i<suppList.size(); i++)
             {
                 if(tempSupp.getID() == suppList.get(i).getID())
                 {
                     suppList.remove(i);
                     cmboSupp2.getItems().remove(i);
+                    suppQuery = "DELETE FROM JAVAUSER.SUPPLIER WHERE SUPPLIERID = " + tempSupp.getID();
+                    suppRS = sendDBCommand(suppQuery);
                     break;                    
                 }           
             }
+            
+            //deleteSupplier(suppList.get(rmvSup).getID());
+
             alert.setTitle("Success!");
             alert.setHeaderText("The supplier has been removed!");
             alert.showAndWait();
@@ -1906,7 +1916,7 @@ public class GUI extends Application
             suppOutput.setText(suppOutput2); 
         });
         
-        btnDisProd.setOnAction(e -> {
+btnDisProd.setOnAction(e -> {
             if(cmboProd.getValue() == null){	            
                 alert.setTitle("Error!");	           
                 alert.setHeaderText("Please select a product to discontinue!");	          
@@ -1914,10 +1924,28 @@ public class GUI extends Application
             }	
             else
             {
-            int remove = cmboProd.getSelectionModel().getSelectedIndex();	           
-            cmboProd.getSelectionModel().clearSelection();
-            prodList.remove(remove);
-            cmboProd.getItems().remove(remove);            
+//            int remove = cmboProd.getSelectionModel().getSelectedIndex();	           
+//            cmboProd.getSelectionModel().clearSelection();
+//            prodList.remove(remove);
+//            cmboProd.getItems().remove(remove); 
+            
+            Product tempProd = pC;
+            int rmvProd = cmboProd.getSelectionModel().getSelectedIndex();
+            String prodQuery; 
+            ResultSet prodRS; 
+
+            for(int i = 0; i<prodList.size(); i++)
+            {
+                if(tempProd.getProductID() == prodList.get(i).getProductID())
+                {
+                    prodList.remove(i);
+                    cmboProd.getItems().remove(i);
+                    prodQuery = "DELETE FROM JAVAUSER.PRODUCT WHERE PRODUCTID = " + tempProd.getProductID();
+                    prodRS = sendDBCommand(prodQuery);
+                    break;                    
+                }           
+            }
+            
             }
             prodData.clear();
             for(Product prod: prodList)
