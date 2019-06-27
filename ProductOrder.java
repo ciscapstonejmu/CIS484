@@ -136,7 +136,9 @@ public class ProductOrder {
     {
         this.deliveryDate = deliveryDate;
     }
-    
+      public void setID(int i ) {
+        this.productOrderID = i; 
+    }
     public String getDeliveryDate()
     {
         return this.deliveryDate;
@@ -189,7 +191,7 @@ public class ProductOrder {
         str += "ID: " + this.productOrderID + ", Order Date: " + this.orderDate + ", Quantity: " +
                 this.quantity + ", Unit Cost: $" + this.unitCost + ", Subtotal: $" + this.subtotal + ", Delivery Date: " + this.deliveryDate + 
                 ", Category: " + this.category + ", Supplier: " + this.supplier
-                + ", Store: " + this.store; 
+                + ", Store: " + this.store + ", Description: " + this.PODesc; 
         //str += "ID: " + this.productOrderID + " , Order Date: " + this.orderDate + " , Quantity: " + this.quantity; 
         //str+= 
         return str;
