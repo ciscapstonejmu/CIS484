@@ -45,7 +45,39 @@ public class Expense implements Serializable{
         this.amountPaid = amountPaid;
         this.totalAmount = totalAmount;
         this.date = date;
-        this.status = status;
+        if (amountPaid < totalAmount)
+        {
+            this.status = "Ongoing";
+ 
+        }
+        if (amountPaid >= totalAmount)
+        {
+            this.status = "Paid";
+        }
+        
+        expenseID = nextID++;
+        obsExpense.add(this.date + ": " + this.category);
+        
+       
+    }
+    public Expense(String category, String description, double amountPaid, double totalAmount, String date, Store store)
+    {
+        this.category = category;
+        this.description = description;
+        this.amountPaid = amountPaid;
+        this.totalAmount = totalAmount;
+        this.date = date;
+        if (amountPaid < totalAmount)
+        {
+            this.status = "Ongoing";
+ 
+        }
+        if (amountPaid >= totalAmount)
+        {
+            this.status = "Paid";
+        }
+        this.payableStore = store;
+        this.store = this.payableStore.getStoreName() + ", " + this.payableStore.getStoreAddress();
         
         expenseID = nextID++;
         obsExpense.add(this.date + ": " + this.category);
