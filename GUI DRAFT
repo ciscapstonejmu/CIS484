@@ -2691,7 +2691,7 @@ btnDisProd.setOnAction(e -> {
                int prodQ;
                int totalQuantity;
                obsRecOrder.add(poC);
-               expList.add(new Expense("Inventory Purchase", poC.getProdOName() + ", " + poC.getStore(), 0, poC.getSubtotal(),currentDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")), poC.getStoreLoc()));
+               expList.add(new Expense("Inventory Purchase", poC.getProdOName() + ", " + poC.getStore(), "Ongoing",0,poC.getSubtotal(), poC.getSubtotal(),currentDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")), poC.getStoreLoc()));
                obsExpense.add(expList.get(expList.size()-1));
                for (int j = 0; j < prodList.size(); j++) 
                {
