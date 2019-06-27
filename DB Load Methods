@@ -80,3 +80,79 @@ catch (SQLException ex)
 }
 }
 
+public void loadProductsFromDB()
+{
+String query = "SELECT * FROM PRODUCT ORDER BY PRODUCTID ASC";
+
+int incrementor = 0;
+ResultSet prors = DBCommand(query);
+try
+{
+
+String name = prors.getString(2);
+Integer quantity = prors.getInt(3);
+Double price = prors.getDouble(4);
+Double cost = prors.getDouble(5);
+String description = prors.getString(6);
+String category = prors.getString(7);
+int storeID = prors.getInt(8);
+int supplierID = prors.getInt(9);
+
+Product prodTable = new Product (productName, price, cost, quantity, storeList.get(storeID), description, category, suppList.get(supplierID));
+prodTable.setNextID(++incrementor);
+obsProd.clear();
+prodList.add(prodTable);
+
+for (Product prod: prodList)
+{
+    obsProd.add(prod);
+}
+
+}
+catch (SQLException e)
+{
+    System.out.println(e);
+}
+
+}
+
+
+public void loadProductOrdersFromDB()
+{
+String query = "SELECT * FROM PRODUCTORDER ORDER BY PRODUCTORDERID ASC";
+
+int incrementor = 0;
+ResultSet pors = DBCommand(query);
+try
+{
+
+int quantity = pors.getInt(2);
+String name = pors.getString(3);
+String description = pors.getString(4);
+Double unitCost = pors.getDouble(5);
+Double unitPrice = pors.getDouble(6);
+Double subtotal = pors.getDouble(7);
+String deliveryDate = pors.getString(8);
+String poDate = pors.getString(9);
+String category = pors.getString(10);
+int storeID = pors.getInt(11);
+int supplierID = pors.getInt(12);
+
+ProductOrder poTable = new ProductOrder(quantity, name, unitCost, unitPrice, subtotal, deliveryDate, orderDate, suppList.get(supplierID), storeList.get(storeID), category, poDate);
+
+
+poTable.setNextID(++incrementor);
+obsProdOrder.clear();
+prodOrderList.add(poTable);
+
+for (ProductOrder po: prodOrderList)
+{
+    obsProdOrder.add(po);
+}
+}
+catch (SQLException ex)
+{
+    System.out.println(ex.toString());
+
+}
+}
