@@ -2825,6 +2825,16 @@ btnDisProd.setOnAction(e -> {
                 alert.setHeaderText("Error! Please Enter Data!");
                 alert.showAndWait();
             }
+            else if(!(txtEmail.getText().contains("@")))
+                {
+                    alert.setHeaderText("Error! Please enter a valid email!");
+                    alert.showAndWait();
+                }
+            else if(!(txtSalary.getText().matches("\\d{0,15}([\\.]\\d{0,4})?")))
+            {
+                alert.setHeaderText("Error! Please enter a valid salary!");
+                alert.showAndWait();
+            }
             else
             {
                 empList.add(new Employee(txtFName.getText(), txtLName.getText(), txtEmail.getText(), txtPhone.getText(), 
